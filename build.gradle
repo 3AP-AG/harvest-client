@@ -1,0 +1,36 @@
+// gradle plugin for junit 5
+buildscript {
+    repositories {
+        mavenCentral()
+        // The following is only necessary if you want to use SNAPSHOT releases.
+        // maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+    }
+    dependencies {
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.3'
+    }
+}
+
+apply plugin: 'org.junit.platform.gradle.plugin'
+apply plugin: 'java'
+
+group 'ch.aaap'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+junitPlatform {
+    details 'tree'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.4.1'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+        testCompile("org.junit.jupiter:junit-jupiter-api:5.0.+")
+        testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.+")
+}

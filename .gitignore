@@ -1,0 +1,9 @@
+# build artefacts
+out
+build
+
+# IDEA project folder
+.idea
+
+# gradle working dir
+.gradle
