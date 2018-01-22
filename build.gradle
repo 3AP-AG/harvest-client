@@ -31,6 +31,10 @@ repositories {
 }
 
 dependencies {
-        testCompile("org.junit.jupiter:junit-jupiter-api:5.0.+")
-        testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.+")
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+    compile 'com.fatboyindustrial.gson-javatime-serialisers:gson-javatime-serialisers:1.1.1'
+    testCompile("org.junit.jupiter:junit-jupiter-api:5.0.+")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.+")
 }
