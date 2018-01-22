@@ -9,9 +9,14 @@ buildscript {
         classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.3'
     }
 }
-
+plugins {
+    // uploading to jcenter.bintray.com
+    // see https://github.com/bintray/gradle-bintray-plugin
+    id "com.jfrog.bintray" version "1.7.3"
+    id "java"
+}
+// plugin for junit 5
 apply plugin: 'org.junit.platform.gradle.plugin'
-apply plugin: 'java'
 
 group 'ch.aaap'
 version '1.0-SNAPSHOT'
