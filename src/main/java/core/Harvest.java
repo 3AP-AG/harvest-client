@@ -1,6 +1,7 @@
 package core;
 
 import com.google.gson.Gson;
+import core.gson.GsonConfiguration;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
