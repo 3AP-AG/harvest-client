@@ -20,6 +20,32 @@ public class TimeEntry {
     private ExternalService externalService;
     private Invoice invoice;
     private double hours;
+    private String notes;
+
+    @SerializedName("is_locked")
+    private boolean locked;
+    private String lockedReason;
+
+    @SerializedName("is_billed")
+    private boolean billed;
+    private Instant timerStartedAt;
+    private LocalTime startedTime;
+    private LocalTime endedTime;
+
+    @SerializedName("is_running")
+    private boolean Running;
+
+    @SerializedName("is_billable")
+    private boolean billable;
+    private boolean budgeted;
+    private double billableRate;
+    private double costRate;
+    private Instant createdAt;
+    private Instant updatedAt;
+
+
+    public TimeEntry() {
+    }
 
     @Override
     public String toString() {
@@ -50,33 +76,6 @@ public class TimeEntry {
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
-    }
-
-    private String notes;
-
-    @SerializedName("is_locked")
-    private boolean locked;
-    private String lockedReason;
-
-    @SerializedName("is_billed")
-    private boolean billed;
-    private Instant timerStartedAt;
-    private LocalTime startedTime;
-    private LocalTime endedTime;
-
-    @SerializedName("is_running")
-    private boolean Running;
-
-    @SerializedName("is_billable")
-    private boolean billable;
-    private boolean budgeted;
-    private double billableRate;
-    private double costRate;
-    private Instant createdAt;
-    private Instant updatedAt;
-
-
-    public TimeEntry() {
     }
 
 }

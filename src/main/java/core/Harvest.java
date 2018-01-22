@@ -9,6 +9,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import service.TimeEntryService;
+import service.UserService;
 
 import java.io.IOException;
 
@@ -17,6 +18,8 @@ public class Harvest {
     private static final String BASE_URL = "https://api.harvestapp.com/v2/";
 
     private TimeEntryService timeEntryService;
+
+    private UserService userService;
 
 
     public Harvest() {
@@ -54,11 +57,16 @@ public class Harvest {
                 .build();
 
         timeEntryService = retrofit.create(TimeEntryService.class);
+        userService = retrofit.create(UserService.class);
 
     }
 
 
     public TimeEntryService getTimeEntryService() {
         return timeEntryService;
+    }
+
+    public UserService getUserService() {
+        return userService;
     }
 }
