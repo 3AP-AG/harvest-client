@@ -1,7 +1,11 @@
 package core;
 
+import api.TimesheetsApi;
+import api.UsersApi;
 import com.google.gson.Gson;
 import core.gson.GsonConfiguration;
+import impl.TimesheetsApiImpl;
+import impl.UsersApiImpl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -17,15 +21,20 @@ public class Harvest {
 
     private static final String BASE_URL = "https://api.harvestapp.com/v2/";
 
-    private TimeEntryService timeEntryService;
+    private TimesheetsApi timesheetsApi;
 
-    private UserService userService;
+    private UsersApi usersApi;
 
 
     public Harvest() {
 
         HttpLoggingInterceptor debugInterceptor = new HttpLoggingInterceptor();
         debugInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+
+        // User token
+        // 1478287. pt.dbjpoCh2g77EVCzIPgJylXKTD5LoEZj7mds47BdxYweJRG1fnmQBKqMvqlV0OxKYubpY6VcBn9iGaF3EerVkpA
+        // 872477
 
         String token = "1476610.pt._0MoGfrcciMq-kyEUHZjxk7yPYCqGY-Y3VNLgzv7nZ2V7PjE6lIpgPWIkWbRwP76gmKybiPy4w1K0IkcHniFgw";
         String accountID = "872477";
@@ -56,17 +65,20 @@ public class Harvest {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-        timeEntryService = retrofit.create(TimeEntryService.class);
-        userService = retrofit.create(UserService.class);
+        TimeEntryService timeEntryService = retrofit.create(TimeEntryService.class);
+        UserService userService = retrofit.create(UserService.class);
+
+        timesheetsApi = new TimesheetsApiImpl(timeEntryService);
+        usersApi = new UsersApiImpl(userService);
 
     }
 
 
-    public TimeEntryService getTimeEntryService() {
-        return timeEntryService;
+    public TimesheetsApi timesheets() {
+        return timesheetsApi;
     }
 
-    public UserService getUserService() {
-        return userService;
+    public UsersApi users() {
+        return usersApi;
     }
 }
