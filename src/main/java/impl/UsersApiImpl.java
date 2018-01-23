@@ -27,7 +27,8 @@ public class UsersApiImpl implements UsersApi {
         Call<Users> call = service.listAll();
         try {
             Response<Users> response = call.execute();
-            return response.body().getUsers();
+            List<User> users = response.body().getUsers();
+            log.debug("Listed {} Users: {}", users.size(), users);
 
         } catch (IOException e) {
             log.error("", e);
