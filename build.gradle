@@ -35,6 +35,13 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.9.1'
     compile 'com.fatboyindustrial.gson-javatime-serialisers:gson-javatime-serialisers:1.1.1'
+    // logging
+    compile 'org.slf4j:slf4j-api:1.7.+'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.10.0'
+    // use log4j for unittests
+    runtime group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.10.0'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.10.0'
+
     testCompile("org.junit.jupiter:junit-jupiter-api:5.0.+")
     testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.+")
     testCompile "org.mockito:mockito-core:1.+"

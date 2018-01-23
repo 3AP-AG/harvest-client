@@ -31,7 +31,7 @@ public class User {
     private long weeklyCapacity;
     private double defaultHourlyRate;
     private double CostRate;
-    private List<Role> roles;
+    private List<String> roles;
     private String avatarUrl;
 
     private Instant createdAt;

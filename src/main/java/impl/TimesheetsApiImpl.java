@@ -3,6 +3,8 @@ package impl;
 import api.TimesheetsApi;
 import domain.TimeEntries;
 import domain.TimeEntry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import retrofit2.Call;
 import retrofit2.Response;
 import service.TimeEntryService;
@@ -13,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class TimesheetsApiImpl implements TimesheetsApi {
+    private final static Logger log = LoggerFactory.getLogger(TimesheetsApiImpl.class);
     private final TimeEntryService service;
 
     public TimesheetsApiImpl(TimeEntryService timeEntryService) {
@@ -25,7 +28,8 @@ public class TimesheetsApiImpl implements TimesheetsApi {
         Call<TimeEntries> call = service.listAll();
         try {
             Response<TimeEntries> response = call.execute();
-            return response.body().getEntries();
+            List<TimeEntry> timeEntries = response.body().getEntries();
+            log.debug("Listed {} TimeEntries: {}", timeEntries.size(), timeEntries);
 
         } catch (IOException e) {
             e.printStackTrace();

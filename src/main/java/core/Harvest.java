@@ -10,6 +10,8 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import service.TimeEntryService;
@@ -18,6 +20,8 @@ import service.UserService;
 import java.io.IOException;
 
 public class Harvest {
+
+    private static final Logger log = LoggerFactory.getLogger(Harvest.class);
 
     private static final String BASE_URL = "https://api.harvestapp.com/v2/";
 
@@ -28,7 +32,10 @@ public class Harvest {
 
     public Harvest() {
 
-        HttpLoggingInterceptor debugInterceptor = new HttpLoggingInterceptor();
+        log.debug("Harvest client initialized");
+
+        Logger httpLogger = LoggerFactory.getLogger("okhttp");
+        HttpLoggingInterceptor debugInterceptor = new HttpLoggingInterceptor(httpLogger::trace);
         debugInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
 
