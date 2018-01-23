@@ -1,5 +1,6 @@
 package impl;
 
+import api.UserCreationInfo;
 import api.UsersApi;
 import domain.User;
 import domain.Users;
@@ -34,5 +35,18 @@ public class UsersApiImpl implements UsersApi {
             log.error("", e);
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public User create(UserCreationInfo creationInfo) {
+        Call<User> call = service.create(creationInfo.getOptions());
+
+        try {
+            Response<User> response = call.execute();
+            return response.body();
+        } catch (IOException e) {
+            log.error("", e);
+        }
+        return null;
     }
 }
