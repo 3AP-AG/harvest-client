@@ -28,8 +28,10 @@ public class UsersApiImpl implements UsersApi {
         Call<Users> call = service.listAll();
         try {
             Response<Users> response = call.execute();
-            List<User> users = response.body().getUsers();
-            log.debug("Listed {} Users: {}", users.size(), users);
+            if (response.isSuccessful()) {
+                List<User> users = response.body().getUsers();
+                log.debug("Listed {} Users: {}", users.size(), users);
+            }
 
         } catch (IOException e) {
             log.error("", e);
@@ -48,5 +50,20 @@ public class UsersApiImpl implements UsersApi {
             log.error("", e);
         }
         return null;
+    }
+
+    @Override
+    public void delete(long userId) {
+        Call<Void> call = service.delete(userId);
+        try {
+            Response<Void> response = call.execute();
+        } catch (IOException e) {
+            log.error("", e);
+        }
+    }
+
+    @Override
+    public void delete(User user) {
+        delete(user.getId());
     }
 }

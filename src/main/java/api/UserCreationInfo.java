@@ -39,6 +39,7 @@ public class UserCreationInfo {
         }
 
         public UserCreationInfo build() {
+            // check mandatory parameters
             return new UserCreationInfo(options);
         }
     }

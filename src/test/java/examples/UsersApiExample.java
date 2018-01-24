@@ -23,7 +23,7 @@ public class UsersApiExample {
         List<User> users = harvest.users().list();
 
         for (User user : users) {
-            System.out.println(user);
+            log.debug("Found user: {}", user);
         }
     }
 
@@ -34,11 +34,17 @@ public class UsersApiExample {
         UserCreationInfo userCreationInfo = new UserCreationInfo.Builder()
                 .firstName("testFirst")
                 .lastName("testLast")
-                .email("test@sample.ch")
+                .email("test@test.ch")
                 .build();
 
         User newUser = harvest.users().create(userCreationInfo);
 
         log.debug("Created User {}", newUser);
+
+        // cleanup
+
+        harvest.users().delete(newUser.getId());
+
+        log.debug("Deleted User {}", newUser);
     }
 }
