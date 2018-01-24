@@ -6,7 +6,7 @@ import okhttp3.ResponseBody;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class RequestProcessingException extends HarvestRuntimeException {
+public class RequestProcessingException extends HarvestHttpException {
 
 
     private static final Logger log = LoggerFactory.getLogger(RequestProcessingException.class);
@@ -20,7 +20,7 @@ public class RequestProcessingException extends HarvestRuntimeException {
     }
 
     public RequestProcessingException(ResponseBody responseBody) {
-        super(initMessage(responseBody));
+        super(responseBody, 422, initMessage(responseBody));
 
     }
 

@@ -1,6 +1,7 @@
 package impl;
 
 import exception.*;
+import okhttp3.ResponseBody;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import retrofit2.Call;
@@ -20,22 +21,23 @@ public class ExceptionHandler {
                 return response.body();
             } else {
                 int code = response.code();
+                ResponseBody errorBody = response.errorBody();
                 switch (code) {
                     case 401:
-                        throw new InvalidAuthorizationException();
+                        throw new InvalidAuthorizationException(errorBody);
                     case 403:
-                        throw new ForbiddenException();
+                        throw new ForbiddenException(errorBody);
                     case 404:
-                        throw new NotFoundException();
+                        throw new NotFoundException(errorBody);
                     case 422:
-                        throw new RequestProcessingException(response.errorBody());
+                        throw new RequestProcessingException(errorBody);
                     case 429:
-                        throw new RateLimitedException();
+                        throw new RateLimitedException(errorBody);
                     case 500:
-                        throw new ServerErrorException();
+                        throw new ServerErrorException(errorBody, 500);
                     default:
                         // ok responses do not get here (e.g. 200)
-                        throw new HarvestRuntimeException(code);
+                        throw new HarvestHttpException(errorBody, code);
                 }
             }
         } catch (IOException e) {

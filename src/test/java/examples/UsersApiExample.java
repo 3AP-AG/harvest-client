@@ -1,8 +1,8 @@
 package examples;
 
-import api.UserCreationInfo;
 import core.Harvest;
 import domain.User;
+import domain.param.UserCreationInfo;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,13 +31,10 @@ public class UsersApiExample {
     @Test
     public void createUser() {
 
-        UserCreationInfo userCreationInfo = new UserCreationInfo.Builder()
-                .firstName("testFirst")
-                .lastName("testLast")
-                .email("test@test.ch")
+        UserCreationInfo userInfo = new UserCreationInfo.Builder("testFirst", "testLast", "test@test.ch")
                 .build();
 
-        User newUser = harvest.users().create(userCreationInfo);
+        User newUser = harvest.users().create(userInfo);
 
         log.debug("Created User {}", newUser);
 

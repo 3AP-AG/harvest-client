@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 public class HarvestRuntimeException extends RuntimeException {
 
     private static final Logger log = LoggerFactory.getLogger(HarvestRuntimeException.class);
-    private int httpCode;
 
     public HarvestRuntimeException() {
     }
@@ -22,12 +21,5 @@ public class HarvestRuntimeException extends RuntimeException {
     public HarvestRuntimeException(Throwable cause) {
         super(cause);
     }
-
-    public HarvestRuntimeException(int httpCode) {
-        this.httpCode = httpCode;
-    }
-
-    public int getHttpCode() {
-        return httpCode;
-    }
+    
 }
