@@ -3,14 +3,13 @@ package impl;
 import api.UsersApi;
 import domain.User;
 import domain.Users;
+import domain.param.UserCreationInfo;
+import domain.param.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import retrofit2.Call;
-import retrofit2.Response;
 import service.UserService;
 
-import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
 public class UsersApiImpl implements UsersApi {
@@ -25,14 +24,49 @@ public class UsersApiImpl implements UsersApi {
     @Override
     public List<User> list() {
         Call<Users> call = service.listAll();
-        try {
-            Response<Users> response = call.execute();
-            List<User> users = response.body().getUsers();
-            log.debug("Listed {} Users: {}", users.size(), users);
+        Users userContainer = ExceptionHandler.callOrThrow(call);
 
-        } catch (IOException e) {
-            log.error("", e);
-        }
-        return Collections.emptyList();
+        List<User> users = userContainer.getUsers();
+        log.debug("Listed {} Users: {}", users.size(), users);
+        return users;
+    }
+
+    @Override
+    public User create(UserCreationInfo creationInfo) {
+        Call<User> call = service.create(creationInfo.getOptions());
+
+        return ExceptionHandler.callOrThrow(call);
+    }
+
+    @Override
+    public User getSelf() {
+        Call<User> call = service.getSelf();
+
+        return ExceptionHandler.callOrThrow(call);
+    }
+
+    @Override
+    public User get(long userId) {
+        Call<User> call = service.get(userId);
+        return ExceptionHandler.callOrThrow(call);
+    }
+
+    @Override
+    public User update(long userId, UserInfo userInfo) {
+
+        Call<User> call = service.update(userId, userInfo.getOptions());
+        return ExceptionHandler.callOrThrow(call);
+
+    }
+
+    @Override
+    public void delete(long userId) {
+        Call<Void> call = service.delete(userId);
+        ExceptionHandler.callOrThrow(call);
+    }
+
+    @Override
+    public void delete(User user) {
+        delete(user.getId());
     }
 }
