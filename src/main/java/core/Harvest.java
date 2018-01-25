@@ -1,8 +1,14 @@
 package core;
 
+import java.io.IOException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.gson.Gson;
+
 import api.TimesheetsApi;
 import api.UsersApi;
-import com.google.gson.Gson;
 import core.gson.GsonConfiguration;
 import impl.TimesheetsApiImpl;
 import impl.UsersApiImpl;
@@ -10,14 +16,10 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import service.TimeEntryService;
 import service.UserService;
-
-import java.io.IOException;
 
 public class Harvest {
 

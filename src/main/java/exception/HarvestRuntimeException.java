@@ -21,5 +21,5 @@ public class HarvestRuntimeException extends RuntimeException {
     public HarvestRuntimeException(Throwable cause) {
         super(cause);
     }
-    
+
 }

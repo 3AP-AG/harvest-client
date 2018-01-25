@@ -1,10 +1,10 @@
 package core.gson;
 
-import com.google.gson.*;
-
 import java.lang.reflect.Type;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+
+import com.google.gson.*;
 
 public class LocalTimeConverter implements JsonSerializer<LocalTime>, JsonDeserializer<LocalTime> {
     private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("h:mma");
@@ -20,4 +20,3 @@ public class LocalTimeConverter implements JsonSerializer<LocalTime>, JsonDeseri
         return FORMATTER.parse(json.getAsString().toUpperCase(), LocalTime::from);
     }
 }
-

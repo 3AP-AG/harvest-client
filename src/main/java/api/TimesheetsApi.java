@@ -1,12 +1,11 @@
 package api;
 
-import domain.TimeEntry;
-
 import java.time.LocalDate;
 import java.util.List;
 
-public interface TimesheetsApi {
+import domain.TimeEntry;
 
+public interface TimesheetsApi {
 
     List<TimeEntry> list();
 

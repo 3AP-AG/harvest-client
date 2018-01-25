@@ -1,10 +1,10 @@
 package domain.param;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UserInfo {
 
@@ -22,7 +22,6 @@ public class UserInfo {
 
     public static class Builder {
         protected Map<String, Object> options = new HashMap<>();
-
 
         public Builder firstName(String firstName) {
             options.put("first_name", firstName);
@@ -47,4 +46,3 @@ public class UserInfo {
     }
 
 }
-

@@ -1,22 +1,23 @@
 package impl;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 import api.UsersApi;
 import domain.User;
 import domain.param.UserCreationInfo;
 import domain.param.UserInfo;
 import exception.NotFoundException;
 import exception.RequestProcessingException;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import util.TestSetupUtil;
-
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class UsersApiImplTest {
 
@@ -35,7 +36,6 @@ class UsersApiImplTest {
     private final static String fixUserEmail = "fix.user@gmail.com";
     private static User fixUser;
 
-
     @BeforeAll
     public static void beforeAll() {
 
@@ -46,7 +46,8 @@ class UsersApiImplTest {
             log.debug("Fix user exists already, nothing to do");
             fixUser = user.get();
         } else {
-            UserCreationInfo creationInfo = new UserCreationInfo.Builder(fixUserFirst, fixUserLast, fixUserEmail).build();
+            UserCreationInfo creationInfo = new UserCreationInfo.Builder(fixUserFirst, fixUserLast, fixUserEmail)
+                    .build();
             fixUser = api.create(creationInfo);
             log.debug("Created Fix user");
         }
@@ -63,8 +64,7 @@ class UsersApiImplTest {
     @Test
     void createExistingEmailFails() {
         RequestProcessingException exception = Assertions.assertThrows(RequestProcessingException.class, () -> {
-            UserCreationInfo creationInfo = new UserCreationInfo
-                    .Builder(fixUserFirst, fixUserLast, fixUserEmail)
+            UserCreationInfo creationInfo = new UserCreationInfo.Builder(fixUserFirst, fixUserLast, fixUserEmail)
                     .build();
 
             api.create(creationInfo);
@@ -76,9 +76,7 @@ class UsersApiImplTest {
     @Test
     void createAndDeleteUser() {
 
-        UserCreationInfo creationInfo = new UserCreationInfo
-                .Builder(userFirst, userLast, userEmail)
-                .build();
+        UserCreationInfo creationInfo = new UserCreationInfo.Builder(userFirst, userLast, userEmail).build();
 
         User user = api.create(creationInfo);
 
@@ -89,10 +87,7 @@ class UsersApiImplTest {
     @Test
     void createAndDeleteUserById() {
 
-
-        UserCreationInfo creationInfo = new UserCreationInfo
-                .Builder(userFirst, userLast, userEmail)
-                .build();
+        UserCreationInfo creationInfo = new UserCreationInfo.Builder(userFirst, userLast, userEmail).build();
 
         User user = api.create(creationInfo);
 
@@ -134,7 +129,6 @@ class UsersApiImplTest {
         User user = api.update(userId, userInfo);
 
         assertEquals(email, user.getEmail());
-
 
         // restore email
 
