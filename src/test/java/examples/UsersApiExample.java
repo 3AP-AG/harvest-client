@@ -1,14 +1,15 @@
 package examples;
 
-import core.Harvest;
-import domain.User;
-import domain.param.UserCreationInfo;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.TestSetupUtil;
 
-import java.util.List;
+import core.Harvest;
+import domain.User;
+import domain.param.UserCreationInfo;
+import util.TestSetupUtil;
 
 public class UsersApiExample {
 
@@ -27,12 +28,10 @@ public class UsersApiExample {
         }
     }
 
-
     @Test
     public void createUser() {
 
-        UserCreationInfo userInfo = new UserCreationInfo.Builder("testFirst", "testLast", "test@test.ch")
-                .build();
+        UserCreationInfo userInfo = new UserCreationInfo.Builder("testFirst", "testLast", "test@test.ch").build();
 
         User newUser = harvest.users().create(userInfo);
 
