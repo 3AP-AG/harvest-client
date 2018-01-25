@@ -1,18 +1,19 @@
 package impl;
 
-import api.TimesheetsApi;
-import domain.TimeEntries;
-import domain.TimeEntry;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import retrofit2.Call;
-import retrofit2.Response;
-import service.TimeEntryService;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import api.TimesheetsApi;
+import domain.TimeEntries;
+import domain.TimeEntry;
+import retrofit2.Call;
+import retrofit2.Response;
+import service.TimeEntryService;
 
 public class TimesheetsApiImpl implements TimesheetsApi {
     private final static Logger log = LoggerFactory.getLogger(TimesheetsApiImpl.class);

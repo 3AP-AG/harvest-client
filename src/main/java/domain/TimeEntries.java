@@ -5,7 +5,6 @@ import java.util.List;
 
 public class TimeEntries {
 
-
     private List<TimeEntry> timeEntries = new ArrayList<>();
 
     public TimeEntries() {

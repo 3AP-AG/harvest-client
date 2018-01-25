@@ -1,9 +1,9 @@
 package domain;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.time.Instant;
 import java.util.List;
+
+import com.google.gson.annotations.SerializedName;
 
 public class User {
 
@@ -39,29 +39,14 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", LastName='" + LastName + '\'' +
-                ", email='" + email + '\'' +
-                ", telephone='" + telephone + '\'' +
-                ", timezone='" + timezone + '\'' +
-                ", hasAccessToAllFutureProjects=" + hasAccessToAllFutureProjects +
-                ", contractor=" + contractor +
-                ", admin=" + admin +
-                ", projectManager=" + projectManager +
-                ", canSeeRates=" + canSeeRates +
-                ", canCreateProjects=" + canCreateProjects +
-                ", canCreateInvoices=" + canCreateInvoices +
-                ", active=" + active +
-                ", weeklyCapacity=" + weeklyCapacity +
-                ", defaultHourlyRate=" + defaultHourlyRate +
-                ", CostRate=" + CostRate +
-                ", roles=" + roles +
-                ", avatarUrl='" + avatarUrl + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
+        return "User{" + "id=" + id + ", firstName='" + firstName + '\'' + ", LastName='" + LastName + '\''
+                + ", email='" + email + '\'' + ", telephone='" + telephone + '\'' + ", timezone='" + timezone + '\''
+                + ", hasAccessToAllFutureProjects=" + hasAccessToAllFutureProjects + ", contractor=" + contractor
+                + ", admin=" + admin + ", projectManager=" + projectManager + ", canSeeRates=" + canSeeRates
+                + ", canCreateProjects=" + canCreateProjects + ", canCreateInvoices=" + canCreateInvoices + ", active="
+                + active + ", weeklyCapacity=" + weeklyCapacity + ", defaultHourlyRate=" + defaultHourlyRate
+                + ", CostRate=" + CostRate + ", roles=" + roles + ", avatarUrl='" + avatarUrl + '\'' + ", createdAt="
+                + createdAt + ", updatedAt=" + updatedAt + '}';
     }
 
     public long getId() {

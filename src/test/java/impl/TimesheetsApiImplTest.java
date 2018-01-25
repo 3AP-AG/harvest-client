@@ -1,4 +1,4 @@
-import static org.junit.jupiter.api.Assertions.*;
+package impl;
 
 class TimesheetsApiImplTest {
 

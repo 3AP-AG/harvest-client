@@ -1,13 +1,12 @@
 package domain;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class TimeEntry {
+import com.google.gson.annotations.SerializedName;
 
+public class TimeEntry {
 
     private long id;
     private LocalDate spentDate;
@@ -43,39 +42,19 @@ public class TimeEntry {
     private Instant createdAt;
     private Instant updatedAt;
 
-
     public TimeEntry() {
     }
 
     @Override
     public String toString() {
-        return "TimeEntry{" +
-                "id=" + id +
-                ", spentDate=" + spentDate +
-                ", user=" + user +
-                ", userAssignment=" + userAssignment +
-                ", client=" + client +
-                ", project=" + project +
-                ", task=" + task +
-                ", taskAssignment=" + taskAssignment +
-                ", externalService=" + externalService +
-                ", invoice=" + invoice +
-                ", hours=" + hours +
-                ", notes='" + notes + '\'' +
-                ", locked=" + locked +
-                ", lockedReason='" + lockedReason + '\'' +
-                ", billed=" + billed +
-                ", timerStartedAt=" + timerStartedAt +
-                ", startedTime=" + startedTime +
-                ", endedTime=" + endedTime +
-                ", Running=" + Running +
-                ", billable=" + billable +
-                ", budgeted=" + budgeted +
-                ", billableRate=" + billableRate +
-                ", costRate=" + costRate +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
+        return "TimeEntry{" + "id=" + id + ", spentDate=" + spentDate + ", user=" + user + ", userAssignment="
+                + userAssignment + ", client=" + client + ", project=" + project + ", task=" + task
+                + ", taskAssignment=" + taskAssignment + ", externalService=" + externalService + ", invoice=" + invoice
+                + ", hours=" + hours + ", notes='" + notes + '\'' + ", locked=" + locked + ", lockedReason='"
+                + lockedReason + '\'' + ", billed=" + billed + ", timerStartedAt=" + timerStartedAt + ", startedTime="
+                + startedTime + ", endedTime=" + endedTime + ", Running=" + Running + ", billable=" + billable
+                + ", budgeted=" + budgeted + ", billableRate=" + billableRate + ", costRate=" + costRate
+                + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + '}';
     }
 
 }

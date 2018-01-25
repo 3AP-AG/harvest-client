@@ -1,13 +1,14 @@
 package impl;
 
-import exception.*;
-import okhttp3.ResponseBody;
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import exception.*;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
-
-import java.io.IOException;
 
 public class ExceptionHandler {
 

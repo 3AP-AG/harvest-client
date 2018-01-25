@@ -1,16 +1,17 @@
 package impl;
 
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import api.UsersApi;
 import domain.User;
 import domain.Users;
 import domain.param.UserCreationInfo;
 import domain.param.UserInfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import retrofit2.Call;
 import service.UserService;
-
-import java.util.List;
 
 public class UsersApiImpl implements UsersApi {
 
