@@ -1,13 +1,10 @@
 package exception;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import okhttp3.ResponseBody;
 
 public class HarvestHttpException extends HarvestRuntimeException {
 
-    private static final Logger log = LoggerFactory.getLogger(HarvestHttpException.class);
+    private static final long serialVersionUID = -214892161508112441L;
     private final ResponseBody responseBody;
     private final int httpCode;
 

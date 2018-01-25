@@ -19,9 +19,8 @@ public class GsonConfiguration {
         // gsonBuilder.registerTypeAdapter(LocalTime.class, new LocalTimeConverter());
 
         // a field 'externalService' is serialized to 'external_service'
-        Gson gson = gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
 
-        return gson;
+        return gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
 
     }
 }

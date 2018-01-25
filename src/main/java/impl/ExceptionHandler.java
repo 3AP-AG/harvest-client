@@ -17,11 +17,14 @@ public class ExceptionHandler {
     public static <T> T callOrThrow(Call<T> call) {
 
         try {
+            log.debug("Executing call {}", call);
             Response<T> response = call.execute();
             if (response.isSuccessful()) {
+                log.debug("Sucess");
                 return response.body();
             } else {
                 int code = response.code();
+                log.debug("Failure -> {}", code);
                 ResponseBody errorBody = response.errorBody();
                 switch (code) {
                     case 401:

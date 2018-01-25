@@ -1,11 +1,8 @@
 package exception;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class HarvestRuntimeException extends RuntimeException {
 
-    private static final Logger log = LoggerFactory.getLogger(HarvestRuntimeException.class);
+    private static final long serialVersionUID = -1859001685154776836L;
 
     public HarvestRuntimeException() {
     }
