@@ -1,5 +1,0 @@
-package impl;
-
-class TimesheetsApiImplTest {
-
-}
