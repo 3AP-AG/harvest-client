@@ -22,18 +22,15 @@ import util.TestSetupUtil;
 class UsersApiImplTest {
 
     private final static Logger log = LoggerFactory.getLogger(UsersApiImplTest.class);
-
-    private static UsersApi api = TestSetupUtil.getClient().users();
-
     // user created and deleted in every test
     private final static String userFirst = "First";
     private final static String userLast = "Last";
-    private final static String userEmail = "test@test.com";
-
+    private final static String userEmail = "test@example.com";
     // user that is assumed to exist already
     private final static String fixUserFirst = "FixFirst";
     private final static String fixUserLast = "FixLast";
-    private final static String fixUserEmail = "fix.user@gmail.com";
+    private final static String fixUserEmail = "fix.user@example.com";
+    private static UsersApi api = TestSetupUtil.getAdminClient().users();
     private static User fixUser;
 
     @BeforeAll
@@ -121,7 +118,7 @@ class UsersApiImplTest {
     @Test
     void testChangeEmail() {
 
-        String email = "new@email.org";
+        String email = "new@example.org";
         long userId = fixUser.getId();
 
         UserInfo userInfo = new UserInfo.Builder().email(email).build();

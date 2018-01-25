@@ -15,8 +15,7 @@ public class UsersApiExample {
 
     private static final Logger log = LoggerFactory.getLogger(UsersApiExample.class);
 
-    private Harvest harvest = TestSetupUtil.getClient();
-
+    private Harvest harvest = TestSetupUtil.getAdminClient();
 
     @Test
     public void listUsers() {

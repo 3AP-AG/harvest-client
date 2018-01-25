@@ -31,34 +31,25 @@ public class Harvest {
 
     private UsersApi usersApi;
 
+    /**
+     * The authentication bearer token used for every request. Can either be a
+     * personal token or a OAuth2 token, see
+     * https://help.getharvest.com/api-v2/authentication-api/authentication/authentication
+     */
+    private String authToken;
 
-    public Harvest() {
+    /** Account id. Only needed for personal tokens */
+    private String accountId;
 
-        log.debug("Harvest client initialized");
+    private String userAgent = "harvest-client (https://github.com/3AP-AG/harvest-client)";
 
-        Logger httpLogger = LoggerFactory.getLogger("okhttp");
-        HttpLoggingInterceptor debugInterceptor = new HttpLoggingInterceptor(httpLogger::trace);
-        debugInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+    public Harvest(String authToken, String accountId) {
 
+        this.authToken = authToken;
+        this.accountId = accountId;
 
-        // User token
-        // 1478287. pt.dbjpoCh2g77EVCzIPgJylXKTD5LoEZj7mds47BdxYweJRG1fnmQBKqMvqlV0OxKYubpY6VcBn9iGaF3EerVkpA
-        // 872477
-
-        String token = "1476610.pt._0MoGfrcciMq-kyEUHZjxk7yPYCqGY-Y3VNLgzv7nZ2V7PjE6lIpgPWIkWbRwP76gmKybiPy4w1K0IkcHniFgw";
-        String accountID = "872477";
-        String userAgent = "harvest-client (https://github.com/3AP-AG/harvest-client)";
-        Interceptor authenticationInterceptor = new Interceptor() {
-            @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
-                Request.Builder ongoing = chain.request().newBuilder();
-                ongoing.addHeader("Authorization", "Bearer " + token);
-                ongoing.addHeader("Harvest-Account-id", accountID);
-                ongoing.addHeader("User-Agent", userAgent);
-                return chain.proceed(ongoing.build());
-            }
-        };
-
+        Interceptor debugInterceptor = initHttpLogging();
+        Interceptor authenticationInterceptor = initAuthentication();
 
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(authenticationInterceptor)
@@ -80,8 +71,28 @@ public class Harvest {
         timesheetsApi = new TimesheetsApiImpl(timeEntryService);
         usersApi = new UsersApiImpl(userService);
 
+        log.debug("Harvest client initialized");
     }
 
+    private Interceptor initAuthentication() {
+        return new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request.Builder ongoing = chain.request().newBuilder();
+                ongoing.addHeader("Authorization", "Bearer " + authToken);
+                ongoing.addHeader("Harvest-Account-id", accountId);
+                ongoing.addHeader("User-Agent", userAgent);
+                return chain.proceed(ongoing.build());
+            }
+        };
+    }
+
+    private Interceptor initHttpLogging() {
+        Logger httpLogger = LoggerFactory.getLogger("okhttp");
+        HttpLoggingInterceptor debugInterceptor = new HttpLoggingInterceptor(httpLogger::trace);
+        debugInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        return debugInterceptor;
+    }
 
     public TimesheetsApi timesheets() {
         return timesheetsApi;
