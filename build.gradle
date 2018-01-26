@@ -9,12 +9,19 @@ buildscript {
         classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.3'
     }
 }
-
+plugins {
+    // uploading to jcenter.bintray.com
+    // see https://github.com/bintray/gradle-bintray-plugin
+    id "com.jfrog.bintray" version "1.8.0"
+    id "java"
+    id 'java-library'
+    id 'maven-publish'
+}
+// plugin for junit 5
 apply plugin: 'org.junit.platform.gradle.plugin'
-apply plugin: 'java'
 
 group 'ch.aaap'
-version '1.0-SNAPSHOT'
+version '0.2'
 
 sourceCompatibility = 1.8
 
@@ -23,14 +30,105 @@ junitPlatform {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.4.1'
+    gradleVersion = '4.5'
 }
 
 repositories {
     mavenCentral()
 }
 
+// Create the pom configuration:
+def pomConfig = {
+    licenses {
+        license {
+            name "MIT License"
+            url "https://opensource.org/licenses/MIT"
+        }
+    }
+    developers {
+        developer {
+            id "mnembrini"
+            name "Marco Nembrini"
+            email "marco.nembrini.co@gmail.com"
+        }
+    }
+
+    scm {
+        url "https://github.com/3AP-AG/harvest-client"
+    }
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+    classifier "sources"
+}
+
+task javadocJar(type: Jar) {
+    from javadoc.outputs
+    classifier "javadoc"
+}
+
+// Create the publication with the pom configuration:
+publishing {
+    publications {
+        all(MavenPublication) {
+            from components.java
+            artifact sourceJar
+            artifact javadocJar
+            // version, groupId and artifact Id taken from the project
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', 'A Java client for the Harvest API')
+                root.appendNode('name', 'harvest-client')
+                root.appendNode('url', 'https://github.com/3AP-AG/harvest-client')
+                root.children().last() + pomConfig
+            }
+        }
+    }
+}
+
 dependencies {
-        testCompile("org.junit.jupiter:junit-jupiter-api:5.0.+")
-        testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.+")
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+    compile 'com.fatboyindustrial.gson-javatime-serialisers:gson-javatime-serialisers:1.1.1'
+    // logging
+    compile 'org.slf4j:slf4j-api:1.7.+'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.10.0'
+    // use log4j for unittests
+    runtime group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.10.0'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.10.0'
+
+    testCompile("org.junit.jupiter:junit-jupiter-api:5.0.+")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.+")
+    testCompile "org.mockito:mockito-core:1.+"
+
+
+}
+
+bintray {
+
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+
+    // what to publish
+    publications = ['all']
+
+    pkg {
+        repo = '3ap'
+        name = 'harvest-client'
+        // TODO register 3ap on bintray
+        //userOrg = '3ap'
+        publish true
+        licenses = ['MIT']
+        vcsUrl = 'https://github.com/3AP-AG/harvest-client.git'
+        version {
+            name = project.version
+            desc = 'Harvest Client ' + project.version
+            released = new Date()
+            vcsTag = 'v' + project.version
+        }
+
+    }
+
 }
