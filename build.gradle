@@ -21,7 +21,7 @@ plugins {
 apply plugin: 'org.junit.platform.gradle.plugin'
 
 group 'ch.aaap'
-version '0.1'
+version '0.2'
 
 sourceCompatibility = 1.8
 
@@ -124,9 +124,9 @@ bintray {
         vcsUrl = 'https://github.com/3AP-AG/harvest-client.git'
         version {
             name = project.version
-            desc = 'Harvest Client 0.1'
+            desc = 'Harvest Client ' + project.version
             released = new Date()
-            //vcsTag = '1.0.0'
+            vcsTag = 'v' + project.version
         }
 
     }
