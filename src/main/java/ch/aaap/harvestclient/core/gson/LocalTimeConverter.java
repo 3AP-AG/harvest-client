@@ -1,4 +1,4 @@
-package core.gson;
+package ch.aaap.harvestclient.core.gson;
 
 import java.lang.reflect.Type;
 import java.time.LocalTime;

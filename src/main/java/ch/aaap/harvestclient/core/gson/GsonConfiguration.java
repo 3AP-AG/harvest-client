@@ -1,4 +1,4 @@
-package core.gson;
+package ch.aaap.harvestclient.core.gson;
 
 import com.fatboyindustrial.gsonjavatime.Converters;
 import com.google.gson.FieldNamingPolicy;

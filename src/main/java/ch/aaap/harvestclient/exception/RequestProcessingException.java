@@ -2,7 +2,7 @@ package ch.aaap.harvestclient.exception;
 
 import com.google.gson.Gson;
 
-import core.gson.GsonConfiguration;
+import ch.aaap.harvestclient.core.gson.GsonConfiguration;
 import okhttp3.ResponseBody;
 
 public class RequestProcessingException extends HarvestHttpException {
