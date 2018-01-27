@@ -6,16 +6,17 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.typesafe.config.ConfigFactory;
+
 import ch.aaap.harvestclient.core.Harvest;
 import ch.aaap.harvestclient.domain.User;
 import ch.aaap.harvestclient.domain.param.UserCreationInfo;
-import ch.aaap.harvestclient.util.TestSetupUtil;
 
 public class UsersApiExample {
 
     private static final Logger log = LoggerFactory.getLogger(UsersApiExample.class);
 
-    private Harvest harvest = TestSetupUtil.getAdminClient();
+    private Harvest harvest = new Harvest(ConfigFactory.load());
 
     @Test
     public void listUsers() {
