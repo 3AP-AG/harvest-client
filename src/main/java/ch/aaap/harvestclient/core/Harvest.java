@@ -48,9 +48,6 @@ public class Harvest {
 
     public Harvest(Config config) {
 
-        String propToken = System.getProperty("harvest.auth.token");
-        System.err.println("Prop token: " + propToken);
-
     	this.baseUrl = config.getString("harvest.baseUrl");
     	this.userAgent = config.getString("harvest.userAgent");
     	this.authToken = config.getString("harvest.auth.token");
