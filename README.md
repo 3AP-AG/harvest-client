@@ -5,12 +5,31 @@
 
 harvest-client is a Java client for the Harvest REST API (https://help.getharvest.com/api-v2/)
 
+## Getting started with Development
+
+### Prerequisites
+* Java 8 (or higher)
+* Gradle
+
+### Run the build end tests
+* Clone or fork this repository
+* Configuring your Harvest account id and authentication token:
+    * Either add the configuration to [reference.conf](src/main/resources/reference.conf)
+    * Or set the following environment properties:
+    ```bash
+        $ export HARVEST_ACCOUNT_ID=YOUR_ACCT_ID
+        $ export HARVEST_AUTH_TOKEN=YOUR_AUTH_TOKEN
+    ```   
+* Run ```gradle build``` in the root directory of the repository
+
+
 ## Introduction
 
 With harvest-client you can use the Harvest v2 API with a nice Java interface:
 
 ```java
-Harvest harvest = new Harvest(authToken, accountId);
+// Run with default configuration
+Harvest harvest = new Harvest();
 // list all users
 List<User> users = harvest.users().list();
 

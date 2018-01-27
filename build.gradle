@@ -33,8 +33,12 @@ junitPlatform {
 // Unfortunately necessary to set a system property for the junitPlatform task
 afterEvaluate {
     def junitPlatformTestTask = tasks.getByName('junitPlatformTest')
-    junitPlatformTestTask.systemProperty "harvest.auth.token", System.getenv("HARVEST_AUTH_TOKEN")
-    junitPlatformTestTask.systemProperty "harvest.auth.accountId", System.getenv("HARVEST_ACCOUNT_ID")
+    if(System.getenv("HARVEST_AUTH_TOKEN") != null) {
+        junitPlatformTestTask.systemProperty "harvest.auth.token", System.getenv("HARVEST_AUTH_TOKEN")
+    }
+    if(System.getenv("HARVEST_ACCOUNT_ID")) {
+        junitPlatformTestTask.systemProperty "harvest.auth.accountId", System.getenv("HARVEST_ACCOUNT_ID")
+    }
 }
 
 task wrapper(type: Wrapper) {
