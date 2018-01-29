@@ -40,7 +40,6 @@ compile 'ch.aaap:harvest-client:$version'
   <groupId>ch.aaap</groupId>
   <artifactId>harvest-client</artifactId>
   <version>$version</version>
-  <type>pom</type>
 </dependency>
 ```
 
