@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 
 import ch.aaap.harvestclient.api.TimesheetsApi;
 import ch.aaap.harvestclient.api.UsersApi;
@@ -25,28 +27,33 @@ public class Harvest {
 
     private static final Logger log = LoggerFactory.getLogger(Harvest.class);
 
-    private static final String BASE_URL = "https://api.harvestapp.com/v2/";
-
-    private TimesheetsApi timesheetsApi;
-
-    private UsersApi usersApi;
+    private final String baseUrl;
 
     /**
      * The authentication bearer token used for every request. Can either be a
      * personal token or a OAuth2 token, see
      * https://help.getharvest.com/api-v2/authentication-api/authentication/authentication
      */
-    private String authToken;
+    private final String authToken;
 
     /** Account id. Only needed for personal tokens */
-    private String accountId;
+    private final String accountId;
 
-    private String userAgent = "harvest-client (https://github.com/3AP-AG/harvest-client)";
+    private final String userAgent;
 
-    public Harvest(String authToken, String accountId) {
+    private TimesheetsApi timesheetsApi;
 
-        this.authToken = authToken;
-        this.accountId = accountId;
+    private UsersApi usersApi;
+
+    public Harvest(Config config) {
+
+        // TODO we might need to allow missing account id for oauth2
+        config.checkValid(ConfigFactory.defaultReference(), "harvest");
+
+        this.baseUrl = config.getString("harvest.baseUrl");
+        this.userAgent = config.getString("harvest.userAgent");
+        this.authToken = config.getString("harvest.auth.token");
+        this.accountId = config.getString("harvest.auth.accountId");
 
         Interceptor debugInterceptor = initHttpLogging();
         Interceptor authenticationInterceptor = initAuthentication();
@@ -60,7 +67,7 @@ public class Harvest {
         Gson gson = GsonConfiguration.getConfiguration();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(baseUrl)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
@@ -72,6 +79,11 @@ public class Harvest {
         usersApi = new UsersApiImpl(userService);
 
         log.debug("Harvest client initialized");
+
+    }
+
+    public Harvest() {
+        this(ConfigFactory.load());
     }
 
     private Interceptor initAuthentication() {
