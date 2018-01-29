@@ -1,6 +1,8 @@
 # ignore whole intellij folder
 /.idea/
 
+# ignore local configuration
+/src/test/resources/*.conf
 
 # Created by https://www.gitignore.io/api/gradle,eclipse,intellij
 

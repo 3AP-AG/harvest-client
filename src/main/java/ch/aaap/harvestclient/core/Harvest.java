@@ -38,21 +38,23 @@ public class Harvest {
 
     /** Account id. Only needed for personal tokens */
     private final String accountId;
-    
+
     private final String userAgent;
-    
+
     private TimesheetsApi timesheetsApi;
 
     private UsersApi usersApi;
 
-
     public Harvest(Config config) {
 
-    	this.baseUrl = config.getString("harvest.baseUrl");
-    	this.userAgent = config.getString("harvest.userAgent");
-    	this.authToken = config.getString("harvest.auth.token");
-    	this.accountId = config.getString("harvest.auth.accountId");
-    	
+        // TODO we might need to allow missing account id for oauth2
+        config.checkValid(ConfigFactory.defaultReference(), "harvest");
+
+        this.baseUrl = config.getString("harvest.baseUrl");
+        this.userAgent = config.getString("harvest.userAgent");
+        this.authToken = config.getString("harvest.auth.token");
+        this.accountId = config.getString("harvest.auth.accountId");
+
         Interceptor debugInterceptor = initHttpLogging();
         Interceptor authenticationInterceptor = initAuthentication();
 
@@ -77,13 +79,13 @@ public class Harvest {
         usersApi = new UsersApiImpl(userService);
 
         log.debug("Harvest client initialized");
-    	
+
     }
-    
+
     public Harvest() {
-    	this(ConfigFactory.load());
+        this(ConfigFactory.load());
     }
-    
+
     private Interceptor initAuthentication() {
         return new Interceptor() {
             @Override

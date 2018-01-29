@@ -1,9 +1,5 @@
 package ch.aaap.harvestclient.impl;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -13,15 +9,15 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.typesafe.config.ConfigFactory;
+import static org.junit.jupiter.api.Assertions.*;
 
 import ch.aaap.harvestclient.api.UsersApi;
-import ch.aaap.harvestclient.core.Harvest;
 import ch.aaap.harvestclient.domain.User;
 import ch.aaap.harvestclient.domain.param.UserCreationInfo;
 import ch.aaap.harvestclient.domain.param.UserInfo;
 import ch.aaap.harvestclient.exception.NotFoundException;
 import ch.aaap.harvestclient.exception.RequestProcessingException;
+import util.TestSetupUtil;
 
 class UsersApiImplTest {
 
@@ -34,7 +30,7 @@ class UsersApiImplTest {
     private final static String fixUserFirst = "FixFirst";
     private final static String fixUserLast = "FixLast";
     private final static String fixUserEmail = "fix.user@example.com";
-    private static UsersApi api = new Harvest(ConfigFactory.load()).users();
+    private static UsersApi api = TestSetupUtil.getAdminAccess().users();
     private static User fixUser;
 
     @BeforeAll
