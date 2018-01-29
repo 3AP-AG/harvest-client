@@ -17,7 +17,7 @@ import ch.aaap.harvestclient.domain.param.UserCreationInfo;
 import ch.aaap.harvestclient.domain.param.UserInfo;
 import ch.aaap.harvestclient.exception.NotFoundException;
 import ch.aaap.harvestclient.exception.RequestProcessingException;
-import ch.aaap.harvestclient.util.TestSetupUtil;
+import util.TestSetupUtil;
 
 class UsersApiImplTest {
 
@@ -30,7 +30,7 @@ class UsersApiImplTest {
     private final static String fixUserFirst = "FixFirst";
     private final static String fixUserLast = "FixLast";
     private final static String fixUserEmail = "fix.user@example.com";
-    private static UsersApi api = TestSetupUtil.getAdminClient().users();
+    private static UsersApi api = TestSetupUtil.getAdminAccess().users();
     private static User fixUser;
 
     @BeforeAll
