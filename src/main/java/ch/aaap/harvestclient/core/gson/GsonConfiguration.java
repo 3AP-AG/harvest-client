@@ -20,7 +20,9 @@ public class GsonConfiguration {
 
         // a field 'externalService' is serialized to 'external_service'
 
-        return gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+        return gsonBuilder
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
 
     }
 }

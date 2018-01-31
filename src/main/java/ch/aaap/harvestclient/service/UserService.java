@@ -1,7 +1,7 @@
 package ch.aaap.harvestclient.service;
 
 import ch.aaap.harvestclient.domain.User;
-import ch.aaap.harvestclient.domain.Users;
+import ch.aaap.harvestclient.domain.pagination.PaginatedUser;
 import ch.aaap.harvestclient.domain.param.UserCreationInfo;
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -9,7 +9,7 @@ import retrofit2.http.*;
 public interface UserService {
 
     @GET("users")
-    Call<Users> listAll();
+    Call<PaginatedUser> list(@Query("page") int page, @Query("per_page") int perPage);
 
     @GET("users/{userId}")
     Call<User> get(@Path("userId") long userId);
