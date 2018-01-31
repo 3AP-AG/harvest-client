@@ -76,6 +76,7 @@ class UsersApiImplTest {
         List<User> users = api.list();
 
         assertTrue(users.size() > 0);
+
     }
 
     @Test
@@ -189,6 +190,26 @@ class UsersApiImplTest {
         toChange.setEmail(fixUserEmail);
 
         api.update(fixUser, toChange);
+    }
+
+    @Test
+    void testChangeDetails() {
+
+        User toChange = new User();
+        toChange.setTimezone("Alaska");
+        toChange.setTelephone("0800 800 288");
+        toChange.setWeeklyCapacity(40, TimeUnit.HOURS);
+        toChange.setDefaultHourlyRate(120.);
+        toChange.setCostRate(220.);
+
+        User user = api.update(fixUser, toChange);
+
+        assertEquals(toChange.getEmail(), user.getEmail());
+        assertEquals(toChange.getTimezone(), user.getTimezone());
+        assertEquals(toChange.getTelephone(), user.getTelephone());
+        assertEquals(toChange.getWeeklyCapacity(), user.getWeeklyCapacity());
+        assertEquals(toChange.getDefaultHourlyRate(), user.getDefaultHourlyRate());
+        assertEquals(toChange.getCostRate(), user.getCostRate());
     }
 
 }
