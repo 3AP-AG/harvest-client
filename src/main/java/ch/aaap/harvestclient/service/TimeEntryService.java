@@ -1,23 +1,23 @@
 package ch.aaap.harvestclient.service;
 
-import ch.aaap.harvestclient.domain.TimeEntries;
+import java.util.Map;
+
 import ch.aaap.harvestclient.domain.TimeEntry;
+import ch.aaap.harvestclient.domain.pagination.PaginatedTimeEntry;
+import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfo;
 import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.PATCH;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
+import retrofit2.http.*;
 
 public interface TimeEntryService {
 
     @GET("time_entries")
-    Call<TimeEntries> listAll();
+    Call<PaginatedTimeEntry> list(@QueryMap() Map<String, Object> options);
 
     @GET("time_entries/{entryId}")
     Call<TimeEntry> get(@Path("entryId") long entryId);
 
     @POST("time_entries")
-    void add(TimeEntry timeEntry);
+    Call<TimeEntry> create(@Body TimeEntryCreationInfo creationInfo);
 
     @PATCH("time_entries/{entryId}")
     void patch(@Path("entryId") long entryId);

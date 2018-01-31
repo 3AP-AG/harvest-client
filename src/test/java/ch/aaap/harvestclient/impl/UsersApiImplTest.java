@@ -14,8 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import ch.aaap.harvestclient.api.UsersApi;
 import ch.aaap.harvestclient.domain.User;
-import ch.aaap.harvestclient.domain.UserReferenceDto;
 import ch.aaap.harvestclient.domain.param.UserCreationInfo;
+import ch.aaap.harvestclient.domain.reference.UserReferenceDto;
 import ch.aaap.harvestclient.exception.NotFoundException;
 import ch.aaap.harvestclient.exception.RequestProcessingException;
 import util.TestSetupUtil;
@@ -23,14 +23,14 @@ import util.TestSetupUtil;
 class UsersApiImplTest {
 
     private final static Logger log = LoggerFactory.getLogger(UsersApiImplTest.class);
-    // user created and deleted in every test
-    private static String userFirst = "First";
-    private static String userLast = "Last";
-    private static String userEmail = "test@example.com";
     // user that is assumed to exist already
     private final static String fixUserFirst = "FixFirst";
     private final static String fixUserLast = "FixLast";
     private final static String fixUserEmail = "fix.user@example.com";
+    // user created and deleted in every test
+    private static String userFirst = "First";
+    private static String userLast = "Last";
+    private static String userEmail = "test@example.com";
     private static UsersApi api = TestSetupUtil.getAdminAccess().users();
     private static User fixUser;
 
@@ -172,7 +172,7 @@ class UsersApiImplTest {
 
     @Test
     void getUserNotExisting() {
-        NotFoundException e = assertThrows(NotFoundException.class, () -> api.get(UserReferenceDto.of(1)));
+        NotFoundException e = assertThrows(NotFoundException.class, () -> api.get(new UserReferenceDto(1)));
         assertEquals(404, e.getHttpCode());
     }
 

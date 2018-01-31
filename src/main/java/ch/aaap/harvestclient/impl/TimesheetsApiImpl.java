@@ -1,41 +1,57 @@
 package ch.aaap.harvestclient.impl;
 
-import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ch.aaap.harvestclient.api.TimesheetsApi;
-import ch.aaap.harvestclient.domain.TimeEntries;
+import ch.aaap.harvestclient.api.filter.TimeEntryListFilter;
 import ch.aaap.harvestclient.domain.TimeEntry;
+import ch.aaap.harvestclient.domain.pagination.PaginatedTimeEntry;
+import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfo;
 import ch.aaap.harvestclient.service.TimeEntryService;
 import retrofit2.Call;
-import retrofit2.Response;
 
 public class TimesheetsApiImpl implements TimesheetsApi {
     private final static Logger log = LoggerFactory.getLogger(TimesheetsApiImpl.class);
+    private static final int PER_PAGE = 100;
     private final TimeEntryService service;
 
     public TimesheetsApiImpl(TimeEntryService timeEntryService) {
         service = timeEntryService;
     }
 
-    // TODO error handling
     @Override
-    public List<TimeEntry> list() {
-        Call<TimeEntries> call = service.listAll();
-        try {
-            Response<TimeEntries> response = call.execute();
-            List<TimeEntry> timeEntries = response.body().getEntries();
-            log.debug("Listed {} TimeEntries: {}", timeEntries.size(), timeEntries);
+    public List<TimeEntry> list(TimeEntryListFilter filter) {
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        Integer nextPage = 1;
+
+        List<TimeEntry> timeEntries = new ArrayList<>();
+
+        while (nextPage != null) {
+            log.debug("Getting page {} of timeentries list", nextPage);
+
+            Map<String, Object> filterMap = filter.toMap();
+            // add pagination settings
+            filterMap.put("page", nextPage);
+            filterMap.put("per_page", PER_PAGE);
+
+            Call<PaginatedTimeEntry> call = service.list(filterMap);
+
+            PaginatedTimeEntry paginatedTimeEntry = ExceptionHandler.callOrThrow(call);
+
+            timeEntries.addAll(paginatedTimeEntry.getTimeEntries());
+            nextPage = paginatedTimeEntry.getNextPage();
         }
-        return Collections.emptyList();
+
+        log.debug("Listed {} timeentries: {}", timeEntries.size(), timeEntries);
+
+        return timeEntries;
+
     }
 
     @Override
@@ -44,7 +60,14 @@ public class TimesheetsApiImpl implements TimesheetsApi {
     }
 
     @Override
-    public void create(long projectId, long taskId, LocalDate spentDate) {
+    public TimeEntry create(TimeEntryCreationInfo creationInfo) {
+
+        Call<TimeEntry> call = service.create(creationInfo);
+        TimeEntry timeEntry = ExceptionHandler.callOrThrow(call);
+
+        log.debug("Created {} ", timeEntry);
+
+        return timeEntry;
 
     }
 
