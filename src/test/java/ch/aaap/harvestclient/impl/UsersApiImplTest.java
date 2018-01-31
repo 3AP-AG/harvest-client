@@ -101,17 +101,6 @@ class UsersApiImplTest {
     }
 
     @Test
-    void createAndDeleteUserById() {
-
-        UserCreationInfo creationInfo = new UserCreationInfo(userFirst, userLast, userEmail);
-
-        User user = api.create(creationInfo);
-
-        // cleanup
-        api.delete(user);
-    }
-
-    @Test
     // fixed by Harvest on 29.1.18
     public void createProjectManager() {
         UserCreationInfo userInfo = new UserCreationInfo(userFirst, userLast, userEmail);
