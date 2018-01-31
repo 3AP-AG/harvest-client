@@ -21,4 +21,7 @@ public interface TimeEntryService {
 
     @PATCH("time_entries/{entryId}")
     void patch(@Path("entryId") long entryId);
+
+    @DELETE("time_entries/{entryId}")
+    Call<Void> delete(@Path("entryId") long entryId);
 }

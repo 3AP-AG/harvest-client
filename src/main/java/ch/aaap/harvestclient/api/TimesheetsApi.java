@@ -6,6 +6,7 @@ import java.util.List;
 import ch.aaap.harvestclient.api.filter.TimeEntryListFilter;
 import ch.aaap.harvestclient.domain.TimeEntry;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfo;
+import ch.aaap.harvestclient.domain.reference.TimeEntryReference;
 
 public interface TimesheetsApi {
 
@@ -23,5 +24,5 @@ public interface TimesheetsApi {
 
     void create(long projectId, long taskId, LocalDate spentDate, long userId);
 
-    void delete(long timeEntryId);
+    void delete(TimeEntryReference timeEntryReference);
 }

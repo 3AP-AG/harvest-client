@@ -6,14 +6,11 @@ import java.time.LocalTime;
 
 import com.google.gson.annotations.SerializedName;
 
-import ch.aaap.harvestclient.domain.reference.ClientReferenceDto;
-import ch.aaap.harvestclient.domain.reference.ProjectReferenceDto;
-import ch.aaap.harvestclient.domain.reference.TaskReferenceDto;
-import ch.aaap.harvestclient.domain.reference.UserReferenceDto;
+import ch.aaap.harvestclient.domain.reference.*;
 
-public class TimeEntry {
+public class TimeEntry implements TimeEntryReference {
 
-    private long id;
+    private Long id;
     private LocalDate spentDate;
     private UserReferenceDto user;
     private UserAssignment userAssignment;
@@ -23,35 +20,36 @@ public class TimeEntry {
     private TaskAssignment taskAssignment;
     private ExternalService externalService;
     private Invoice invoice;
-    private double hours;
+    private Double hours;
     private String notes;
 
     @SerializedName("is_locked")
-    private boolean locked;
+    private Boolean locked;
     private String lockedReason;
 
     @SerializedName("is_billed")
-    private boolean billed;
+    private Boolean billed;
     private Instant timerStartedAt;
     private LocalTime startedTime;
     private LocalTime endedTime;
 
     @SerializedName("is_running")
-    private boolean Running;
+    private Boolean Running;
 
     @SerializedName("is_billable")
-    private boolean billable;
-    private boolean budgeted;
-    private double billableRate;
-    private double costRate;
+    private Boolean billable;
+    private Boolean budgeted;
+    private Double billableRate;
+    private Double costRate;
     private Instant createdAt;
     private Instant updatedAt;
 
-    public long getId() {
+    @Override
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -127,11 +125,11 @@ public class TimeEntry {
         this.invoice = invoice;
     }
 
-    public double getHours() {
+    public Double getHours() {
         return hours;
     }
 
-    public void setHours(double hours) {
+    public void setHours(Double hours) {
         this.hours = hours;
     }
 
@@ -143,11 +141,11 @@ public class TimeEntry {
         this.notes = notes;
     }
 
-    public boolean isLocked() {
+    public Boolean getLocked() {
         return locked;
     }
 
-    public void setLocked(boolean locked) {
+    public void setLocked(Boolean locked) {
         this.locked = locked;
     }
 
@@ -159,11 +157,11 @@ public class TimeEntry {
         this.lockedReason = lockedReason;
     }
 
-    public boolean isBilled() {
+    public Boolean getBilled() {
         return billed;
     }
 
-    public void setBilled(boolean billed) {
+    public void setBilled(Boolean billed) {
         this.billed = billed;
     }
 
@@ -191,43 +189,43 @@ public class TimeEntry {
         this.endedTime = endedTime;
     }
 
-    public boolean isRunning() {
+    public Boolean getRunning() {
         return Running;
     }
 
-    public void setRunning(boolean running) {
+    public void setRunning(Boolean running) {
         Running = running;
     }
 
-    public boolean isBillable() {
+    public Boolean getBillable() {
         return billable;
     }
 
-    public void setBillable(boolean billable) {
+    public void setBillable(Boolean billable) {
         this.billable = billable;
     }
 
-    public boolean isBudgeted() {
+    public Boolean getBudgeted() {
         return budgeted;
     }
 
-    public void setBudgeted(boolean budgeted) {
+    public void setBudgeted(Boolean budgeted) {
         this.budgeted = budgeted;
     }
 
-    public double getBillableRate() {
+    public Double getBillableRate() {
         return billableRate;
     }
 
-    public void setBillableRate(double billableRate) {
+    public void setBillableRate(Double billableRate) {
         this.billableRate = billableRate;
     }
 
-    public double getCostRate() {
+    public Double getCostRate() {
         return costRate;
     }
 
-    public void setCostRate(double costRate) {
+    public void setCostRate(Double costRate) {
         this.costRate = costRate;
     }
 

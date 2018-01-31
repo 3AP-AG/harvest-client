@@ -46,5 +46,7 @@ class TimesheetsApiImplTest {
         assertEquals(first.getProject(), timeEntry.getProject());
         assertEquals(notes, timeEntry.getNotes());
 
+        // cleanup
+        api.delete(timeEntry);
     }
 }

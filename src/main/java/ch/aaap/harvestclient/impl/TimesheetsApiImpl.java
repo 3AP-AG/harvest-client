@@ -13,6 +13,7 @@ import ch.aaap.harvestclient.api.filter.TimeEntryListFilter;
 import ch.aaap.harvestclient.domain.TimeEntry;
 import ch.aaap.harvestclient.domain.pagination.PaginatedTimeEntry;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfo;
+import ch.aaap.harvestclient.domain.reference.TimeEntryReference;
 import ch.aaap.harvestclient.service.TimeEntryService;
 import retrofit2.Call;
 
@@ -77,7 +78,10 @@ public class TimesheetsApiImpl implements TimesheetsApi {
     }
 
     @Override
-    public void delete(long timeEntryId) {
+    public void delete(TimeEntryReference timeEntryReference) {
+        log.debug("Deleting TimeEntry {}", timeEntryReference);
 
+        Call<Void> call = service.delete(timeEntryReference.getId());
+        ExceptionHandler.callOrThrow(call);
     }
 }
