@@ -31,16 +31,11 @@ public class UsersApiExample {
     @Test
     public void createUser() {
 
-        UserCreationInfo userInfo = new UserCreationInfo.Builder("testFirst", "testLast", "test@test.ch").build();
+        UserCreationInfo userInfo = new UserCreationInfo("testFirst", "testLast", "test@test.ch");
 
         User newUser = harvest.users().create(userInfo);
 
-        log.debug("Created User {}", newUser);
-
         // cleanup
-
-        harvest.users().delete(newUser.getId());
-
-        log.debug("Deleted User {}", newUser);
+        harvest.users().delete(newUser);
     }
 }

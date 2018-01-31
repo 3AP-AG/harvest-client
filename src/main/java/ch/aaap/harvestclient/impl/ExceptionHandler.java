@@ -20,7 +20,7 @@ public class ExceptionHandler {
             log.debug("Executing call {}", call);
             Response<T> response = call.execute();
             if (response.isSuccessful()) {
-                log.debug("Sucess");
+                log.debug("Success");
                 return response.body();
             } else {
                 int code = response.code();

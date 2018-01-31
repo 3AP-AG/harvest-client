@@ -9,7 +9,7 @@ import ch.aaap.harvestclient.api.UsersApi;
 import ch.aaap.harvestclient.domain.User;
 import ch.aaap.harvestclient.domain.Users;
 import ch.aaap.harvestclient.domain.param.UserCreationInfo;
-import ch.aaap.harvestclient.domain.param.UserInfo;
+import ch.aaap.harvestclient.domain.reference.UserReference;
 import ch.aaap.harvestclient.service.UserService;
 import retrofit2.Call;
 
@@ -34,7 +34,10 @@ public class UsersApiImpl implements UsersApi {
 
     @Override
     public User create(UserCreationInfo creationInfo) {
-        Call<User> call = service.create(creationInfo.getOptions());
+
+        log.debug("Creating User {}", creationInfo);
+
+        Call<User> call = service.create(creationInfo);
 
         return ExceptionHandler.callOrThrow(call);
     }
@@ -47,27 +50,25 @@ public class UsersApiImpl implements UsersApi {
     }
 
     @Override
-    public User get(long userId) {
-        Call<User> call = service.get(userId);
+    public User get(UserReference userReference) {
+        Call<User> call = service.get(userReference.getId());
         return ExceptionHandler.callOrThrow(call);
     }
 
     @Override
-    public User update(long userId, UserInfo userInfo) {
+    public User update(UserReference userReference, User toChange) {
 
-        Call<User> call = service.update(userId, userInfo.getOptions());
+        log.debug("Changing properties {} for user {}", userReference, toChange);
+
+        Call<User> call = service.update(userReference.getId(), toChange);
         return ExceptionHandler.callOrThrow(call);
 
     }
 
     @Override
-    public void delete(long userId) {
-        Call<Void> call = service.delete(userId);
+    public void delete(UserReference userReference) {
+        log.debug("Deleting user {}", userReference);
+        Call<Void> call = service.delete(userReference.getId());
         ExceptionHandler.callOrThrow(call);
-    }
-
-    @Override
-    public void delete(User user) {
-        delete(user.getId());
     }
 }

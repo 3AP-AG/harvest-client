@@ -1,25 +1,24 @@
 package ch.aaap.harvestclient.domain.param;
 
-import java.util.Map;
+import ch.aaap.harvestclient.domain.User;
+import ch.aaap.harvestclient.exception.HarvestRuntimeException;
 
-public class UserCreationInfo extends UserInfo {
+public class UserCreationInfo extends User {
 
-    private UserCreationInfo(Map<String, Object> options) {
-        super(options);
+    public UserCreationInfo(String firstName, String lastName, String email) {
+        super();
+        setFirstName(firstName);
+        setLastName(lastName);
+        setEmail(email);
     }
 
-    public static class Builder extends UserInfo.Builder {
+    @Override
+    public void setId(Long id) {
+        throw new HarvestRuntimeException("Cannot set id for new User, will be assigned by Harvest");
+    }
 
-        public Builder(String firstName, String lastName, String email) {
-            // these parameters are mandatory
-            firstName(firstName);
-            lastName(lastName);
-            email(email);
-        }
-
-        @Override
-        public UserCreationInfo build() {
-            return new UserCreationInfo(options);
-        }
+    @Override
+    public String toString() {
+        return super.toStringFull();
     }
 }
