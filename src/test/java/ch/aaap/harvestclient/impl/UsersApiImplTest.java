@@ -156,11 +156,10 @@ class UsersApiImplTest {
     @Test
     void getSelf() {
 
-        // TODO this will fail for another authenticated user
         User self = api.getSelf();
 
-        assertEquals("Marco", self.getFirstName());
-        assertEquals("marco.nembrini.co@gmail.com", self.getEmail());
+        assertNotNull(self.getFirstName());
+        assertNotNull(self.getEmail());
     }
 
     @Test
