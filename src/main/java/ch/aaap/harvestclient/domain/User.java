@@ -2,58 +2,90 @@ package ch.aaap.harvestclient.domain;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import com.google.gson.annotations.SerializedName;
 
-public class User {
+import ch.aaap.harvestclient.domain.reference.UserReference;
 
-    private long id;
+public class User implements UserReference {
+
+    private Long id;
     private String firstName;
     private String LastName;
     private String email;
     private String telephone;
     private String timezone;
-    private boolean hasAccessToAllFutureProjects;
+    private Boolean hasAccessToAllFutureProjects;
 
     @SerializedName("is_contractor")
-    private boolean contractor;
+    private Boolean contractor;
+
     @SerializedName("is_admin")
-    private boolean admin;
+
+    private Boolean admin;
     @SerializedName("is_project_manager")
-    private boolean projectManager;
-    private boolean canSeeRates;
-    private boolean canCreateProjects;
-    private boolean canCreateInvoices;
+    private Boolean projectManager;
+    private Boolean canSeeRates;
+    private Boolean canCreateProjects;
+    private Boolean canCreateInvoices;
 
     @SerializedName("is_active")
-    private boolean active;
+    private Boolean active;
 
-    private long weeklyCapacity;
-    private double defaultHourlyRate;
-    private double CostRate;
+    private Long weeklyCapacity;
+    private Double defaultHourlyRate;
+    private Double CostRate;
     private List<String> roles;
     private String avatarUrl;
 
     private Instant createdAt;
     private Instant updatedAt;
 
-    @Override
-    public String toString() {
-        return "User{" + "id=" + id + ", firstName='" + firstName + '\'' + ", LastName='" + LastName + '\''
-                + ", email='" + email + '\'' + ", telephone='" + telephone + '\'' + ", timezone='" + timezone + '\''
-                + ", hasAccessToAllFutureProjects=" + hasAccessToAllFutureProjects + ", contractor=" + contractor
-                + ", admin=" + admin + ", projectManager=" + projectManager + ", canSeeRates=" + canSeeRates
-                + ", canCreateProjects=" + canCreateProjects + ", canCreateInvoices=" + canCreateInvoices + ", active="
-                + active + ", weeklyCapacity=" + weeklyCapacity + ", defaultHourlyRate=" + defaultHourlyRate
-                + ", CostRate=" + CostRate + ", roles=" + roles + ", avatarUrl='" + avatarUrl + '\'' + ", createdAt="
-                + createdAt + ", updatedAt=" + updatedAt + '}';
+    public void setWeeklyCapacity(int amount, TimeUnit unit) {
+        setWeeklyCapacity(unit.toSeconds(amount));
     }
 
-    public long getId() {
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
+    public String toStringFull() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", LastName='" + LastName + '\'' +
+                ", email='" + email + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", timezone='" + timezone + '\'' +
+                ", hasAccessToAllFutureProjects=" + hasAccessToAllFutureProjects +
+                ", contractor=" + contractor +
+                ", admin=" + admin +
+                ", projectManager=" + projectManager +
+                ", canSeeRates=" + canSeeRates +
+                ", canCreateProjects=" + canCreateProjects +
+                ", canCreateInvoices=" + canCreateInvoices +
+                ", active=" + active +
+                ", weeklyCapacity=" + weeklyCapacity +
+                ", defaultHourlyRate=" + defaultHourlyRate +
+                ", CostRate=" + CostRate +
+                ", roles=" + roles +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
+
+    @Override
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -97,91 +129,91 @@ public class User {
         this.timezone = timezone;
     }
 
-    public boolean isHasAccessToAllFutureProjects() {
+    public Boolean getHasAccessToAllFutureProjects() {
         return hasAccessToAllFutureProjects;
     }
 
-    public void setHasAccessToAllFutureProjects(boolean hasAccessToAllFutureProjects) {
+    public void setHasAccessToAllFutureProjects(Boolean hasAccessToAllFutureProjects) {
         this.hasAccessToAllFutureProjects = hasAccessToAllFutureProjects;
     }
 
-    public boolean isContractor() {
+    public Boolean getContractor() {
         return contractor;
     }
 
-    public void setContractor(boolean contractor) {
+    public void setContractor(Boolean contractor) {
         this.contractor = contractor;
     }
 
-    public boolean isAdmin() {
+    public Boolean getAdmin() {
         return admin;
     }
 
-    public void setAdmin(boolean admin) {
+    public void setAdmin(Boolean admin) {
         this.admin = admin;
     }
 
-    public boolean isProjectManager() {
+    public Boolean getProjectManager() {
         return projectManager;
     }
 
-    public void setProjectManager(boolean projectManager) {
+    public void setProjectManager(Boolean projectManager) {
         this.projectManager = projectManager;
     }
 
-    public boolean isCanSeeRates() {
+    public Boolean getCanSeeRates() {
         return canSeeRates;
     }
 
-    public void setCanSeeRates(boolean canSeeRates) {
+    public void setCanSeeRates(Boolean canSeeRates) {
         this.canSeeRates = canSeeRates;
     }
 
-    public boolean isCanCreateProjects() {
+    public Boolean getCanCreateProjects() {
         return canCreateProjects;
     }
 
-    public void setCanCreateProjects(boolean canCreateProjects) {
+    public void setCanCreateProjects(Boolean canCreateProjects) {
         this.canCreateProjects = canCreateProjects;
     }
 
-    public boolean isCanCreateInvoices() {
+    public Boolean getCanCreateInvoices() {
         return canCreateInvoices;
     }
 
-    public void setCanCreateInvoices(boolean canCreateInvoices) {
+    public void setCanCreateInvoices(Boolean canCreateInvoices) {
         this.canCreateInvoices = canCreateInvoices;
     }
 
-    public boolean isActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 
-    public long getWeeklyCapacity() {
+    public Long getWeeklyCapacity() {
         return weeklyCapacity;
     }
 
-    public void setWeeklyCapacity(long weeklyCapacity) {
+    public void setWeeklyCapacity(Long weeklyCapacity) {
         this.weeklyCapacity = weeklyCapacity;
     }
 
-    public double getDefaultHourlyRate() {
+    public Double getDefaultHourlyRate() {
         return defaultHourlyRate;
     }
 
-    public void setDefaultHourlyRate(double defaultHourlyRate) {
+    public void setDefaultHourlyRate(Double defaultHourlyRate) {
         this.defaultHourlyRate = defaultHourlyRate;
     }
 
-    public double getCostRate() {
+    public Double getCostRate() {
         return CostRate;
     }
 
-    public void setCostRate(double costRate) {
+    public void setCostRate(Double costRate) {
         CostRate = costRate;
     }
 

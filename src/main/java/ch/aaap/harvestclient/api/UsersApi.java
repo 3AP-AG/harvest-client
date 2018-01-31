@@ -4,7 +4,7 @@ import java.util.List;
 
 import ch.aaap.harvestclient.domain.User;
 import ch.aaap.harvestclient.domain.param.UserCreationInfo;
-import ch.aaap.harvestclient.domain.param.UserInfo;
+import ch.aaap.harvestclient.domain.reference.UserReference;
 
 public interface UsersApi {
 
@@ -19,11 +19,12 @@ public interface UsersApi {
     /**
      * Create a new User. First name, last name and email are required.
      *
-     * @param creationInfo
-     *            information about the new user.
+     * @param userCreationInfo
+     *            a user creation object with the wanted properties. Null fields
+     *            will get a default value according to the Harvest docs
      * @return the User that was just created
      */
-    User create(UserCreationInfo creationInfo);
+    User create(UserCreationInfo userCreationInfo);
 
     /**
      * Retrieve the currently authenticated user
@@ -35,38 +36,30 @@ public interface UsersApi {
     /**
      * Retrieve an existing user
      *
-     * @param userId
-     *            the id of an existing user
+     * @param userReference
+     *            a reference to an existing User
      * @return the full User object
      */
-    User get(long userId);
+    User get(UserReference userReference);
 
     /**
      * Change an existing user.
      *
-     * @param userId
-     *            the id of the user to be changed
-     * @param userInfo
-     *            contains all the properties to be changed
+     * @param user
+     *            a reference to an existing User
+     * @param toChange
+     *            A user object with the properties to be changed. Null fields will
+     *            be left as is.
      * @return the updated User
      */
-    User update(long userId, UserInfo userInfo);
+    User update(UserReference user, User toChange);
 
     /**
      * Delete a user. Deleting a user is only possible if they have no time entries
      * or expenses associated with them
      *
-     * @param userId
-     *            the id of the user to be deleted
+     * @param userReference
+     *            a reference to an existing User to be deleted
      */
-    void delete(long userId);
-
-    /**
-     * Delete a user. Deleting a user is only possible if they have no time entries
-     * or expenses associated with them
-     *
-     * @param user
-     *            the user to be deleted
-     */
-    void delete(User user);
+    void delete(UserReference userReference);
 }
