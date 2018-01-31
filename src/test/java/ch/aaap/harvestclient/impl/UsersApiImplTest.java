@@ -204,7 +204,6 @@ class UsersApiImplTest {
 
         User user = api.update(fixUser, toChange);
 
-        assertEquals(toChange.getEmail(), user.getEmail());
         assertEquals(toChange.getTimezone(), user.getTimezone());
         assertEquals(toChange.getTelephone(), user.getTelephone());
         assertEquals(toChange.getWeeklyCapacity(), user.getWeeklyCapacity());
