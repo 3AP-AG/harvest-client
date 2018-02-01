@@ -5,6 +5,7 @@ import java.util.Map;
 import ch.aaap.harvestclient.domain.TimeEntry;
 import ch.aaap.harvestclient.domain.pagination.PaginatedTimeEntry;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfo;
+import ch.aaap.harvestclient.domain.param.TimeEntryUpdateInfo;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -20,8 +21,14 @@ public interface TimeEntryService {
     Call<TimeEntry> create(@Body TimeEntryCreationInfo creationInfo);
 
     @PATCH("time_entries/{entryId}")
-    void patch(@Path("entryId") long entryId);
+    Call<TimeEntry> update(@Path("entryId") long entryId, @Body TimeEntryUpdateInfo toChange);
 
     @DELETE("time_entries/{entryId}")
     Call<Void> delete(@Path("entryId") long entryId);
+
+    @PATCH("time_entries/{entryId}/restart")
+    Call<TimeEntry> restart(@Path("entryId") long entryId);
+
+    @PATCH("time_entries/{entryId}/stop")
+    Call<TimeEntry> stop(@Path("entryId") long entryId);
 }

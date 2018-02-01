@@ -1,6 +1,5 @@
 package ch.aaap.harvestclient.impl;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +12,7 @@ import ch.aaap.harvestclient.api.filter.TimeEntryListFilter;
 import ch.aaap.harvestclient.domain.TimeEntry;
 import ch.aaap.harvestclient.domain.pagination.PaginatedTimeEntry;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfo;
+import ch.aaap.harvestclient.domain.param.TimeEntryUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.TimeEntryReference;
 import ch.aaap.harvestclient.service.TimeEntryService;
 import retrofit2.Call;
@@ -56,8 +56,12 @@ public class TimesheetsApiImpl implements TimesheetsApi {
     }
 
     @Override
-    public TimeEntry get(long timeEntryId) {
-        return null;
+    public TimeEntry get(TimeEntryReference timeEntryReference) {
+        Call<TimeEntry> call = service.get(timeEntryReference.getId());
+        TimeEntry entry = ExceptionHandler.callOrThrow(call);
+
+        log.debug("Got entry {}", entry);
+        return entry;
     }
 
     @Override
@@ -73,7 +77,11 @@ public class TimesheetsApiImpl implements TimesheetsApi {
     }
 
     @Override
-    public void create(long projectId, long taskId, LocalDate spentDate, long userId) {
+    public TimeEntry update(TimeEntryReference timeEntryReference, TimeEntryUpdateInfo updatedInfo) {
+
+        log.debug("Updating properties {} for timeentry {}", updatedInfo, timeEntryReference);
+        Call<TimeEntry> call = service.update(timeEntryReference.getId(), updatedInfo);
+        return ExceptionHandler.callOrThrow(call);
 
     }
 
@@ -83,5 +91,26 @@ public class TimesheetsApiImpl implements TimesheetsApi {
 
         Call<Void> call = service.delete(timeEntryReference.getId());
         ExceptionHandler.callOrThrow(call);
+    }
+
+    @Override
+    public TimeEntry restart(TimeEntryReference timeEntryReference) {
+
+        Call<TimeEntry> call = service.restart(timeEntryReference.getId());
+        TimeEntry entry = ExceptionHandler.callOrThrow(call);
+
+        log.debug("Restarted entry {}", entry);
+
+        return entry;
+    }
+
+    @Override
+    public TimeEntry stop(TimeEntryReference timeEntryReference) {
+        Call<TimeEntry> call = service.stop(timeEntryReference.getId());
+        TimeEntry entry = ExceptionHandler.callOrThrow(call);
+
+        log.debug("Stopped entry {}", entry);
+
+        return entry;
     }
 }

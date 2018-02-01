@@ -74,7 +74,7 @@ public class UsersApiImpl implements UsersApi {
     @Override
     public User update(UserReference userReference, User toChange) {
 
-        log.debug("Changing properties {} for user {}", userReference, toChange);
+        log.debug("Updating properties {} for user {}", userReference, toChange);
 
         Call<User> call = service.update(userReference.getId(), toChange);
         return ExceptionHandler.callOrThrow(call);

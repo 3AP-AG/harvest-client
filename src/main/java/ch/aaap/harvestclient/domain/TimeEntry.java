@@ -18,6 +18,8 @@ public class TimeEntry implements TimeEntryReference {
     private ProjectReferenceDto project;
     private TaskReferenceDto task;
     private TaskAssignment taskAssignment;
+
+    @SerializedName("external_reference")
     private ExternalService externalService;
     private Invoice invoice;
     private Double hours;
