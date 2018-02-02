@@ -28,6 +28,10 @@ public class TimeSheetsApiCreateTest {
 
     private static TimeEntry entry;
 
+    // TODO this test relies on the local timezone to be the same as the harvest one
+    // fix by reading the harvest timezone and adjusting the test
+    private static final ZoneId companyTimeZone = ZoneId.of("Europe/Berlin");
+
     @AfterEach
     public void afterEach() {
         if (entry != null) {
@@ -104,7 +108,7 @@ public class TimeSheetsApiCreateTest {
 
         assertThat(timeEntry.getTimerStartedAt()).isNotNull();
 
-        ZonedDateTime timerStartedAt = timeEntry.getTimerStartedAt().atZone(ZoneId.systemDefault());
+        ZonedDateTime timerStartedAt = timeEntry.getTimerStartedAt().atZone(companyTimeZone);
 
         assertThat(timeEntry.getStartedTime()).isEqualToIgnoringSeconds(timerStartedAt.toLocalTime());
         assertThat(timeEntry.getRunning()).isTrue();
@@ -133,7 +137,7 @@ public class TimeSheetsApiCreateTest {
 
         assertThat(timeEntry.getTimerStartedAt()).isNotNull();
 
-        ZonedDateTime timerStartedAt = timeEntry.getTimerStartedAt().atZone(ZoneId.systemDefault());
+        ZonedDateTime timerStartedAt = timeEntry.getTimerStartedAt().atZone(companyTimeZone);
 
         assertThat(timeEntry.getStartedTime()).isEqualToIgnoringSeconds(timerStartedAt.toLocalTime());
         assertThat(timeEntry.getRunning()).isTrue();
@@ -141,8 +145,6 @@ public class TimeSheetsApiCreateTest {
     }
 
     @Test
-    // TODO this test relies on the local timezone to be the same as the harvest one
-    // fix by reading the harvest timezone and adjusting the test
     public void testCreateTimeEntryWithStartTime(TestInfo testInfo) {
 
         LocalDate date = LocalDate.now();
@@ -164,15 +166,13 @@ public class TimeSheetsApiCreateTest {
         assertThat(timeEntry.getStartedTime()).isEqualTo(startedTime);
 
         // check timer_started_at is in sync at least up to hour and minute
-        ZonedDateTime zonedDateTime = timeEntry.getTimerStartedAt().atZone(ZoneId.systemDefault());
+        ZonedDateTime zonedDateTime = timeEntry.getTimerStartedAt().atZone(companyTimeZone);
         assertThat(timeEntry.getStartedTime()).isEqualToIgnoringSeconds(zonedDateTime.toLocalTime());
 
         assertThat(timeEntry.getRunning()).isTrue();
     }
 
     @Test
-    // TODO this test relies on the local timezone to be the same as the harvest one
-    // fix by reading the harvest timezone and adjusting the test
     @Disabled("Harvest ended_time bug")
     public void testCreateTimeEntryWithStartAndEndTime(TestInfo testInfo) {
 
@@ -196,7 +196,7 @@ public class TimeSheetsApiCreateTest {
         assertThat(timeEntry.getEndedTime()).isEqualTo(startedTime.plusHours(3));
 
         // check timer_started_at is in sync at least up to hour and minute
-        ZonedDateTime zonedDateTime = timeEntry.getTimerStartedAt().atZone(ZoneId.systemDefault());
+        ZonedDateTime zonedDateTime = timeEntry.getTimerStartedAt().atZone(companyTimeZone);
         assertThat(timeEntry.getStartedTime()).isEqualToIgnoringSeconds(zonedDateTime.toLocalTime());
 
         // FIXME HARVEST is set to true
