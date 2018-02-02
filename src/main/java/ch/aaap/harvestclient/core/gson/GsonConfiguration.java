@@ -1,5 +1,7 @@
 package ch.aaap.harvestclient.core.gson;
 
+import java.time.LocalTime;
+
 import com.fatboyindustrial.gsonjavatime.Converters;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -16,7 +18,7 @@ public class GsonConfiguration {
         GsonBuilder gsonBuilder = Converters.registerAll(new GsonBuilder());
         // override parsing for LocalTime (it looks like '4:04pm')
         // TODO this depends on the company account settings (12 vs 24h format)
-        // gsonBuilder.registerTypeAdapter(LocalTime.class, new LocalTimeConverter());
+        gsonBuilder.registerTypeAdapter(LocalTime.class, new LocalTimeConverter());
 
         // a field 'externalService' is serialized to 'external_service'
 

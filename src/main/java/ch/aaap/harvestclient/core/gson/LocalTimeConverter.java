@@ -7,7 +7,9 @@ import java.time.format.DateTimeFormatter;
 import com.google.gson.*;
 
 public class LocalTimeConverter implements JsonSerializer<LocalTime>, JsonDeserializer<LocalTime> {
-    private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("h:mma");
+    // private final DateTimeFormatter FORMATTER =
+    // DateTimeFormatter.ofPattern("h:mma");
+    private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("H:mm");
 
     @Override
     public JsonElement serialize(LocalTime src, Type typeOfSrc, JsonSerializationContext context) {
