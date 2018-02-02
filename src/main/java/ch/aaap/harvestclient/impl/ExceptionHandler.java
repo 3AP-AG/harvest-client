@@ -17,7 +17,7 @@ public class ExceptionHandler {
     public static <T> T callOrThrow(Call<T> call) {
 
         try {
-            log.debug("Executing call {}", call);
+            log.debug("Executing call {}", call.request());
             Response<T> response = call.execute();
             if (response.isSuccessful()) {
                 log.debug("Success");

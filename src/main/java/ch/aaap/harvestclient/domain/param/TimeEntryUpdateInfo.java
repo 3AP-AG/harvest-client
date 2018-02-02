@@ -1,7 +1,7 @@
 package ch.aaap.harvestclient.domain.param;
 
-import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -13,8 +13,8 @@ public class TimeEntryUpdateInfo {
     private Long taskId;
     private LocalDate spentDate;
 
-    private Instant startedTime;
-    private Instant endedTime;
+    private LocalTime startedTime;
+    private LocalTime endedTime;
 
     private Double hours;
 
@@ -61,19 +61,19 @@ public class TimeEntryUpdateInfo {
         this.spentDate = spentDate;
     }
 
-    public Instant getStartedTime() {
+    public LocalTime getStartedTime() {
         return startedTime;
     }
 
-    public void setStartedTime(Instant startedTime) {
+    public void setStartedTime(LocalTime startedTime) {
         this.startedTime = startedTime;
     }
 
-    public Instant getEndedTime() {
+    public LocalTime getEndedTime() {
         return endedTime;
     }
 
-    public void setEndedTime(Instant endedTime) {
+    public void setEndedTime(LocalTime endedTime) {
         this.endedTime = endedTime;
     }
 
@@ -100,5 +100,4 @@ public class TimeEntryUpdateInfo {
     public void setExternalService(ExternalService externalService) {
         this.externalService = externalService;
     }
-
 }

@@ -23,6 +23,13 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Note: Harvest datatype mappings: boolean -> Boolean string -> String integer
+ * -> Long decimal -> Double date -> LocalDate datetime -> Instant time ->
+ * LocalTime, but depends on harvest config for parsing </>array -> List<T>
+ * object -> Object
+ *
+ */
 public class Harvest {
 
     private static final Logger log = LoggerFactory.getLogger(Harvest.class);

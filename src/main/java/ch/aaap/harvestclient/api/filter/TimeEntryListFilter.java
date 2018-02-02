@@ -1,6 +1,7 @@
 package ch.aaap.harvestclient.api.filter;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,12 +51,12 @@ public class TimeEntryListFilter {
     /**
      * Only return time entries with a spent_date on or after the given date.
      */
-    private Instant from;
+    private LocalDate from;
 
     /**
      * Only return time entries with a spent_date on or after the given date.
      */
-    private Instant to;
+    private LocalDate to;
 
     public static TimeEntryListFilter emptyFilter() {
         return new TimeEntryListFilter();
@@ -140,19 +141,19 @@ public class TimeEntryListFilter {
         this.updatedSince = updatedSince;
     }
 
-    public Instant getFrom() {
+    public LocalDate getFrom() {
         return from;
     }
 
-    public void setFrom(Instant from) {
+    public void setFrom(LocalDate from) {
         this.from = from;
     }
 
-    public Instant getTo() {
+    public LocalDate getTo() {
         return to;
     }
 
-    public void setTo(Instant to) {
+    public void setTo(LocalDate to) {
         this.to = to;
     }
 }

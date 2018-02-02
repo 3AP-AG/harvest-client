@@ -11,7 +11,8 @@ import ch.aaap.harvestclient.api.TimesheetsApi;
 import ch.aaap.harvestclient.api.filter.TimeEntryListFilter;
 import ch.aaap.harvestclient.domain.TimeEntry;
 import ch.aaap.harvestclient.domain.pagination.PaginatedTimeEntry;
-import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfo;
+import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoDuration;
+import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoTimestamp;
 import ch.aaap.harvestclient.domain.param.TimeEntryUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.TimeEntryReference;
 import ch.aaap.harvestclient.service.TimeEntryService;
@@ -65,7 +66,17 @@ public class TimesheetsApiImpl implements TimesheetsApi {
     }
 
     @Override
-    public TimeEntry create(TimeEntryCreationInfo creationInfo) {
+    public TimeEntry create(TimeEntryCreationInfoDuration creationInfo) {
+        Call<TimeEntry> call = service.create(creationInfo);
+        TimeEntry timeEntry = ExceptionHandler.callOrThrow(call);
+
+        log.debug("Created {} ", timeEntry);
+
+        return timeEntry;
+    }
+
+    @Override
+    public TimeEntry create(TimeEntryCreationInfoTimestamp creationInfo) {
 
         Call<TimeEntry> call = service.create(creationInfo);
         TimeEntry timeEntry = ExceptionHandler.callOrThrow(call);

@@ -1,13 +1,12 @@
 package ch.aaap.harvestclient.domain.param;
 
-import java.time.Instant;
 import java.time.LocalDate;
 
 import ch.aaap.harvestclient.domain.reference.ProjectReference;
 import ch.aaap.harvestclient.domain.reference.TaskReference;
 import ch.aaap.harvestclient.domain.reference.UserReference;
 
-public class TimeEntryCreationInfo {
+public abstract class TimeEntryCreationInfo {
 
     private Long userId;
 
@@ -16,10 +15,6 @@ public class TimeEntryCreationInfo {
     private Long taskId;
 
     private LocalDate spentDate;
-
-    private Instant timerStartedAt;
-
-    private Double hours;
 
     private String notes;
 
@@ -49,22 +44,6 @@ public class TimeEntryCreationInfo {
 
     public void setSpentDate(LocalDate spentDate) {
         this.spentDate = spentDate;
-    }
-
-    public Instant getTimerStartedAt() {
-        return timerStartedAt;
-    }
-
-    public void setTimerStartedAt(Instant timerStartedAt) {
-        this.timerStartedAt = timerStartedAt;
-    }
-
-    public Double getHours() {
-        return hours;
-    }
-
-    public void setHours(Double hours) {
-        this.hours = hours;
     }
 
     public String getNotes() {

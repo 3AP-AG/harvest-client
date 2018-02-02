@@ -36,7 +36,7 @@ public class TimeEntry implements TimeEntryReference {
     private LocalTime endedTime;
 
     @SerializedName("is_running")
-    private Boolean Running;
+    private Boolean running;
 
     @SerializedName("is_billable")
     private Boolean billable;
@@ -192,11 +192,11 @@ public class TimeEntry implements TimeEntryReference {
     }
 
     public Boolean getRunning() {
-        return Running;
+        return running;
     }
 
     public void setRunning(Boolean running) {
-        Running = running;
+        this.running = running;
     }
 
     public Boolean getBillable() {
@@ -254,7 +254,7 @@ public class TimeEntry implements TimeEntryReference {
                 + ", taskAssignment=" + taskAssignment + ", externalService=" + externalService + ", invoice=" + invoice
                 + ", hours=" + hours + ", notes='" + notes + '\'' + ", locked=" + locked + ", lockedReason='"
                 + lockedReason + '\'' + ", billed=" + billed + ", timerStartedAt=" + timerStartedAt + ", startedTime="
-                + startedTime + ", endedTime=" + endedTime + ", Running=" + Running + ", billable=" + billable
+                + startedTime + ", endedTime=" + endedTime + ", running=" + running + ", billable=" + billable
                 + ", budgeted=" + budgeted + ", billableRate=" + billableRate + ", costRate=" + costRate
                 + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + '}';
     }

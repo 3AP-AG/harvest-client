@@ -4,7 +4,8 @@ import java.util.List;
 
 import ch.aaap.harvestclient.api.filter.TimeEntryListFilter;
 import ch.aaap.harvestclient.domain.TimeEntry;
-import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfo;
+import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoDuration;
+import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoTimestamp;
 import ch.aaap.harvestclient.domain.param.TimeEntryUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.TimeEntryReference;
 
@@ -28,11 +29,25 @@ public interface TimesheetsApi {
     TimeEntry get(TimeEntryReference timeEntryReference);
 
     /**
+     * Create a TimeEntry with a duration. If no duration is given, the TimeEntry
+     * will be running, otherwise it will not be.
+     * 
+     * @param creationInfo
+     *            creation information
+     * @return
+     * @see TimeEntryCreationInfoDuration
+     */
+    TimeEntry create(TimeEntryCreationInfoDuration creationInfo);
+
+    /**
+     * Create a TimeEntry with a started time. The Entry will be running after if a
+     * startTime has been given.
      * 
      * @param creationInfo
      * @return
+     * @see TimeEntryCreationInfoTimestamp
      */
-    TimeEntry create(TimeEntryCreationInfo creationInfo);
+    TimeEntry create(TimeEntryCreationInfoTimestamp creationInfo);
 
     /**
      * Modify an existing TimeEntry.
