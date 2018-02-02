@@ -1,4 +1,4 @@
-package ch.aaap.harvestclient.domain.reference;
+package ch.aaap.harvestclient.domain.reference.dto;
 
 import java.util.Objects;
 
