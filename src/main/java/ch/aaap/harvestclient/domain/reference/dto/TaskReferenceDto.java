@@ -1,4 +1,6 @@
-package ch.aaap.harvestclient.domain.reference;
+package ch.aaap.harvestclient.domain.reference.dto;
+
+import ch.aaap.harvestclient.domain.reference.TaskReference;
 
 public class TaskReferenceDto extends BaseReferenceDto implements TaskReference {
 

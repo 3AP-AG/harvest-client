@@ -1,4 +1,6 @@
-package ch.aaap.harvestclient.domain.reference;
+package ch.aaap.harvestclient.domain.reference.dto;
+
+import ch.aaap.harvestclient.domain.reference.ClientReference;
 
 public class ClientReferenceDto extends BaseReferenceDto implements ClientReference {
     public ClientReferenceDto() {
