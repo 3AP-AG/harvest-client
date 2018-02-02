@@ -9,11 +9,14 @@ import com.google.gson.Gson;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
+import ch.aaap.harvestclient.api.CompanyApi;
 import ch.aaap.harvestclient.api.TimesheetsApi;
 import ch.aaap.harvestclient.api.UsersApi;
 import ch.aaap.harvestclient.core.gson.GsonConfiguration;
+import ch.aaap.harvestclient.impl.CompanyApiImpl;
 import ch.aaap.harvestclient.impl.TimesheetsApiImpl;
 import ch.aaap.harvestclient.impl.UsersApiImpl;
+import ch.aaap.harvestclient.service.CompanyService;
 import ch.aaap.harvestclient.service.TimeEntryService;
 import ch.aaap.harvestclient.service.UserService;
 import okhttp3.Interceptor;
@@ -52,6 +55,8 @@ public class Harvest {
 
     private UsersApi usersApi;
 
+    private CompanyApi companyApi;
+
     public Harvest(Config config) {
 
         // TODO we might need to allow missing account id for oauth2
@@ -81,9 +86,11 @@ public class Harvest {
 
         TimeEntryService timeEntryService = retrofit.create(TimeEntryService.class);
         UserService userService = retrofit.create(UserService.class);
+        CompanyService companyService = retrofit.create(CompanyService.class);
 
         timesheetsApi = new TimesheetsApiImpl(timeEntryService);
         usersApi = new UsersApiImpl(userService);
+        companyApi = new CompanyApiImpl(companyService);
 
         log.debug("Harvest client initialized");
 
@@ -119,5 +126,9 @@ public class Harvest {
 
     public UsersApi users() {
         return usersApi;
+    }
+
+    public CompanyApi company() {
+        return companyApi;
     }
 }
