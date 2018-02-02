@@ -21,7 +21,14 @@ public class ExceptionHandler {
 
     private static final Logger log = LoggerFactory.getLogger(ExceptionHandler.class);
 
+    private static final int MAX_RETRY_COUNT = 3;
+    private static final int MAX_WAIT = 30;
+
     public static <T> T callOrThrow(Call<T> call) {
+        return callOrThrow(call, 1);
+    }
+
+    public static <T> T callOrThrow(Call<T> call, int attemptCount) {
 
         try {
             log.debug("Executing call {}", call.request());
@@ -43,7 +50,7 @@ public class ExceptionHandler {
                     case 422:
                         throw new RequestProcessingException(errorBody);
                     case 429:
-                        return retryLater(call, response);
+                        return retryLater(call, response, attemptCount);
                     case 500:
                         throw new ServerErrorException(errorBody, 500);
                     default:
@@ -56,13 +63,18 @@ public class ExceptionHandler {
         }
     }
 
-    private static <T> T retryLater(Call<T> failedCall, Response<T> failedResponse) {
+    private static <T> T retryLater(Call<T> failedCall, Response<T> failedResponse, int attemptCount) {
 
-        int maxWait = 30;
+        // avoid infinite loop if we get a 429 while retrying
+        if (attemptCount > MAX_RETRY_COUNT) {
+            throw new RateLimitedException(failedResponse.errorBody());
+        }
+        attemptCount++;
+
         int wait = 0;
         if (failedResponse.code() == 429) {
             int secondsToWait = parseRetryAfter(failedResponse);
-            wait = Math.min(secondsToWait, maxWait);
+            wait = Math.min(secondsToWait, MAX_WAIT);
         }
 
         try {
@@ -73,8 +85,7 @@ public class ExceptionHandler {
         }
 
         Call<T> call = failedCall.clone();
-        // TODO a server returning constant 429 will put us in a loop
-        return callOrThrow(call);
+        return callOrThrow(call, attemptCount);
     }
 
     /**
