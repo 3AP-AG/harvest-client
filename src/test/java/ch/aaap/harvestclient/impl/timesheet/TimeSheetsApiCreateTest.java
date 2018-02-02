@@ -150,7 +150,7 @@ public class TimeSheetsApiCreateTest {
         LocalDate date = LocalDate.now();
         String notes = "TimeEntry created by " + testInfo.getDisplayName();
         // harvest does not store seconds in started_time
-        LocalTime startedTime = LocalTime.now().truncatedTo(ChronoUnit.MINUTES);
+        LocalTime startedTime = LocalTime.now(companyTimeZone).truncatedTo(ChronoUnit.MINUTES);
 
         TimeEntryCreationInfoTimestamp creationInfo = new TimeEntryCreationInfoTimestamp(fixEntry.getProject(),
                 fixEntry.getTask(), date);
@@ -179,7 +179,7 @@ public class TimeSheetsApiCreateTest {
         LocalDate date = LocalDate.now();
         String notes = "TimeEntry created by " + testInfo.getDisplayName();
         // harvest does not store seconds in started_time
-        LocalTime startedTime = LocalTime.now().truncatedTo(ChronoUnit.MINUTES);
+        LocalTime startedTime = LocalTime.now(companyTimeZone).truncatedTo(ChronoUnit.MINUTES);
 
         TimeEntryCreationInfoTimestamp creationInfo = new TimeEntryCreationInfoTimestamp(fixEntry.getProject(),
                 fixEntry.getTask(), date);
