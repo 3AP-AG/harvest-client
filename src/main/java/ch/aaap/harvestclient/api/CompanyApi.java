@@ -5,9 +5,7 @@ import ch.aaap.harvestclient.domain.Company;
 public interface CompanyApi {
 
     /**
-     * Retrieve the company for the currently authenticated User.
-     * 
-     * @return
+     * @return Retrieve the company for the currently authenticated User.
      */
     Company get();
 

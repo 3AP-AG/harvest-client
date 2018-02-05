@@ -19,10 +19,10 @@ import ch.aaap.harvestclient.impl.UsersApiImpl;
 import ch.aaap.harvestclient.service.CompanyService;
 import ch.aaap.harvestclient.service.TimeEntryService;
 import ch.aaap.harvestclient.service.UserService;
+import ch.aaap.harvestclient.vendor.okhttp.HttpLoggingInterceptor;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -114,8 +114,11 @@ public class Harvest {
     }
 
     private Interceptor initHttpLogging() {
-        Logger httpLogger = LoggerFactory.getLogger("okhttp");
+        // fictional http package
+        Logger httpLogger = LoggerFactory.getLogger(Harvest.class.getName() + ".http");
+
         HttpLoggingInterceptor debugInterceptor = new HttpLoggingInterceptor(httpLogger::trace);
+        // if someone is setting this to TRACE, they probably want all the information
         debugInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         return debugInterceptor;
     }
