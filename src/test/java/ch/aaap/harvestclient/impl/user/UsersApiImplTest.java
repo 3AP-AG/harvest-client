@@ -1,11 +1,12 @@
 package ch.aaap.harvestclient.impl.user;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,12 +27,8 @@ class UsersApiImplTest {
     private final static String fixUserFirst = "FixFirst";
     private final static String fixUserLast = "FixLast";
     private final static String fixUserEmail = "fix.user@example.com";
-    // user created and deleted in every test
     private static UsersApi api = TestSetupUtil.getAdminAccess().users();
     private static User fixUser;
-
-    private User testUser;
-    private UserCreationInfo randomUserCreationInfo;
 
     @BeforeAll
     public static void beforeAll() {
@@ -49,22 +46,6 @@ class UsersApiImplTest {
         }
     }
 
-    @BeforeEach
-    public void beforeEach() {
-
-        randomUserCreationInfo = TestSetupUtil.getRandomUserCreationInfo();
-
-    }
-
-    @AfterEach
-    public void afterEach() {
-
-        if (testUser != null) {
-            api.delete(testUser);
-            testUser = null;
-        }
-    }
-
     @Test
     void createExistingEmailFails() {
         RequestProcessingException exception = Assertions.assertThrows(RequestProcessingException.class, () -> {
@@ -74,68 +55,6 @@ class UsersApiImplTest {
         });
         assertEquals(422, exception.getHttpCode());
         assertTrue(exception.getMessage().contains(fixUserEmail));
-    }
-
-    @Test
-    void createAndDeleteUser() {
-
-        User user = api.create(randomUserCreationInfo);
-
-        api.delete(user);
-
-    }
-
-    @Test
-    // fixed by Harvest on 29.1.18
-    public void createProjectManager() {
-        UserCreationInfo userInfo = randomUserCreationInfo;
-        userInfo.setProjectManager(true);
-        userInfo.setCanSeeRates(true);
-        userInfo.setCanCreateProjects(true);
-        userInfo.setCanCreateInvoices(true);
-
-        User user = api.create(userInfo);
-        // insure cleanup
-        testUser = user;
-
-        assertEquals(userInfo.getProjectManager(), user.getProjectManager());
-        assertEquals(userInfo.getCanSeeRates(), user.getCanSeeRates());
-        assertEquals(userInfo.getCanCreateProjects(), user.getCanCreateProjects());
-        assertEquals(userInfo.getCanCreateInvoices(), user.getCanCreateInvoices());
-    }
-
-    @Test
-    public void createUserFullDetails() {
-
-        UserCreationInfo userInfo = randomUserCreationInfo;
-        userInfo.setTimezone("Alaska");
-        userInfo.setTelephone("0800 800 288");
-        userInfo.setHasAccessToAllFutureProjects(true);
-        userInfo.setProjectManager(false);
-        userInfo.setCanSeeRates(false);
-        userInfo.setCanCreateProjects(false);
-        userInfo.setCanCreateInvoices(false);
-        userInfo.setWeeklyCapacity(40, TimeUnit.HOURS);
-        userInfo.setDefaultHourlyRate(120.);
-        userInfo.setCostRate(220.);
-        userInfo.setRoles(Arrays.asList("developer", "manager"));
-
-        User user = api.create(userInfo);
-        // insure cleanup
-        testUser = user;
-
-        assertEquals(userInfo.getTimezone(), user.getTimezone());
-        assertEquals(userInfo.getTelephone(), user.getTelephone());
-        assertEquals(userInfo.getHasAccessToAllFutureProjects(), user.getHasAccessToAllFutureProjects());
-        assertEquals(userInfo.getProjectManager(), user.getProjectManager());
-        assertEquals(userInfo.getCanSeeRates(), user.getCanSeeRates());
-        assertEquals(userInfo.getCanCreateInvoices(), user.getCanCreateInvoices());
-        assertEquals(userInfo.getCanCreateProjects(), user.getCanCreateProjects());
-        assertEquals(userInfo.getWeeklyCapacity(), user.getWeeklyCapacity());
-
-        assertEquals(userInfo.getDefaultHourlyRate(), user.getDefaultHourlyRate());
-        assertEquals(userInfo.getCostRate(), user.getCostRate());
-        assertEquals(userInfo.getRoles(), user.getRoles());
     }
 
     @Test
