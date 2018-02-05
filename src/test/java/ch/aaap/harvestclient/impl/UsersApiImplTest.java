@@ -28,15 +28,13 @@ class UsersApiImplTest {
     private final static String fixUserLast = "FixLast";
     private final static String fixUserEmail = "fix.user@example.com";
     // user created and deleted in every test
-    private static String userFirst = "First";
-    private static String userLast = "Last";
-    private static String userEmail = "test@example.com";
     private static UsersApi api = TestSetupUtil.getAdminAccess().users();
     private static User fixUser;
 
     private final Random randomGenerator = new Random();
 
     private User testUser;
+    private UserCreationInfo randomUserCreationInfo;
 
     @BeforeAll
     public static void beforeAll() {
@@ -57,7 +55,7 @@ class UsersApiImplTest {
     @BeforeEach
     public void beforeEach() {
 
-        userEmail = "test" + randomGenerator.nextInt(1_000_000) + "@example.com";
+        randomUserCreationInfo = TestSetupUtil.getRandomUserCreationInfo();
 
     }
 
@@ -93,9 +91,7 @@ class UsersApiImplTest {
     @Test
     void createAndDeleteUser() {
 
-        UserCreationInfo creationInfo = new UserCreationInfo(userFirst, userLast, userEmail);
-
-        User user = api.create(creationInfo);
+        User user = api.create(randomUserCreationInfo);
 
         api.delete(user);
 
@@ -104,7 +100,7 @@ class UsersApiImplTest {
     @Test
     // fixed by Harvest on 29.1.18
     public void createProjectManager() {
-        UserCreationInfo userInfo = new UserCreationInfo(userFirst, userLast, userEmail);
+        UserCreationInfo userInfo = randomUserCreationInfo;
         userInfo.setProjectManager(true);
         userInfo.setCanSeeRates(true);
         userInfo.setCanCreateProjects(true);
@@ -123,7 +119,7 @@ class UsersApiImplTest {
     @Test
     public void createUserFullDetails() {
 
-        UserCreationInfo userInfo = new UserCreationInfo(userFirst, userLast, userEmail);
+        UserCreationInfo userInfo = randomUserCreationInfo;
         userInfo.setTimezone("Alaska");
         userInfo.setTelephone("0800 800 288");
         userInfo.setHasAccessToAllFutureProjects(true);
