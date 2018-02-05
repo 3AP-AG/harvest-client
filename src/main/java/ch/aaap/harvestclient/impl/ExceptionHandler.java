@@ -33,11 +33,12 @@ public class ExceptionHandler {
         try {
             log.debug("Executing call {}", call.request());
             Response<T> response = call.execute();
+            int code = response.code();
             if (response.isSuccessful()) {
-                log.debug("Success");
+                log.debug("Success [{}]", code);
                 return response.body();
             } else {
-                int code = response.code();
+
                 log.warn("Failure -> {}", code);
                 ResponseBody errorBody = response.errorBody();
                 switch (code) {
