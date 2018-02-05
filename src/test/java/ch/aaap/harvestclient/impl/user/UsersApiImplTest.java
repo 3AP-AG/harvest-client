@@ -1,9 +1,8 @@
-package ch.aaap.harvestclient.impl;
+package ch.aaap.harvestclient.impl.user;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.*;
@@ -30,8 +29,6 @@ class UsersApiImplTest {
     // user created and deleted in every test
     private static UsersApi api = TestSetupUtil.getAdminAccess().users();
     private static User fixUser;
-
-    private final Random randomGenerator = new Random();
 
     private User testUser;
     private UserCreationInfo randomUserCreationInfo;
@@ -66,15 +63,6 @@ class UsersApiImplTest {
             api.delete(testUser);
             testUser = null;
         }
-    }
-
-    @Test
-    void list() {
-
-        List<User> users = api.list();
-
-        assertTrue(users.size() > 0);
-
     }
 
     @Test

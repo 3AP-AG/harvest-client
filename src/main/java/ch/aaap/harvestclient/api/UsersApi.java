@@ -1,5 +1,6 @@
 package ch.aaap.harvestclient.api;
 
+import java.time.Instant;
 import java.util.List;
 
 import ch.aaap.harvestclient.domain.User;
@@ -10,11 +11,26 @@ public interface UsersApi {
 
     /**
      * Returns a list of your users. The users are returned sorted by creation date,
-     * with the most recently created users appearing first.
+     * with the most recently created users appearing first. This method does not
+     * filter results. Same as list(null, null).
      *
      * @return a list of all users
      */
     List<User> list();
+
+    /**
+     * Return a list of users, filtered by activity and update date, newest user
+     * first.
+     * 
+     * @param isActive
+     *            if true, return only active users. Set to null to disable
+     *            filtering
+     * @param updatedSince
+     *            return only users that have been updated since updatedSince. Set
+     *            to null to disable filtering
+     * @return a list of all users, filtered accordingly
+     */
+    List<User> list(Boolean isActive, Instant updatedSince);
 
     /**
      * Create a new User. First name, last name and email are required.
