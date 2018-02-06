@@ -31,7 +31,7 @@ public class UsersApiImplListTest {
 
         activeUser = api.create(TestSetupUtil.getRandomUserCreationInfo());
         // Harvest API will round to seconds, calling Instant.now() is not too close
-        userCreationTime = activeUser.getCreatedAt().minusSeconds(5);
+        userCreationTime = activeUser.getCreatedAt().minusSeconds(1);
         UserCreationInfo randomUserCreationInfo = TestSetupUtil.getRandomUserCreationInfo();
 
         randomUserCreationInfo.setActive(false);
@@ -79,7 +79,8 @@ public class UsersApiImplListTest {
         List<User> allUsers = api.list();
         List<User> newUsers = api.list(null, userCreationTime);
 
-        assertThat(newUsers.size()).isEqualTo(2);
+        // we could see some users that were created in other tests
+        assertThat(newUsers.size()).isGreaterThanOrEqualTo(2);
         assertThat(newUsers).extracting("id").contains(activeUser.getId(), inactiveUser.getId());
 
     }
