@@ -12,11 +12,13 @@ public interface UsersApi {
     /**
      * Returns a list of your users. The users are returned sorted by creation date,
      * with the most recently created users appearing first. This method does not
-     * filter results. Same as list(null, null).
+     * filter results. Same as list(null, null);
      *
      * @return a list of all users
      */
-    List<User> list();
+    default List<User> list() {
+        return list(null, null);
+    }
 
     /**
      * Return a list of users, filtered by activity and update date, newest user

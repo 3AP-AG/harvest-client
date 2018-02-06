@@ -31,11 +31,6 @@ public class UsersApiImpl implements UsersApi {
     }
 
     @Override
-    public List<User> list() {
-        return list(null, null);
-    }
-
-    @Override
     public List<User> list(Boolean isActive, Instant updatedSince) {
 
         Integer nextPage = 1;
