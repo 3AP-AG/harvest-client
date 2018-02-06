@@ -8,10 +8,12 @@ import org.slf4j.LoggerFactory;
 
 import com.typesafe.config.ConfigFactory;
 
+import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.core.Harvest;
 import ch.aaap.harvestclient.domain.User;
 import ch.aaap.harvestclient.domain.param.UserCreationInfo;
 
+@HarvestTest
 public class UsersApiExample {
 
     private static final Logger log = LoggerFactory.getLogger(UsersApiExample.class);

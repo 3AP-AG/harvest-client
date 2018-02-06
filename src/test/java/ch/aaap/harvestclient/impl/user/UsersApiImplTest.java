@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.UsersApi;
 import ch.aaap.harvestclient.domain.User;
 import ch.aaap.harvestclient.domain.param.UserCreationInfo;
@@ -20,6 +21,7 @@ import ch.aaap.harvestclient.exception.NotFoundException;
 import ch.aaap.harvestclient.exception.RequestProcessingException;
 import util.TestSetupUtil;
 
+@HarvestTest
 class UsersApiImplTest {
 
     private final static Logger log = LoggerFactory.getLogger(UsersApiImplTest.class);

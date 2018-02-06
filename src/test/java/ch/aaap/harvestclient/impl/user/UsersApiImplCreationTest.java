@@ -9,11 +9,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.UsersApi;
 import ch.aaap.harvestclient.domain.User;
 import ch.aaap.harvestclient.domain.param.UserCreationInfo;
 import util.TestSetupUtil;
 
+@HarvestTest
 public class UsersApiImplCreationTest {
 
     private static UsersApi api = TestSetupUtil.getAdminAccess().users();

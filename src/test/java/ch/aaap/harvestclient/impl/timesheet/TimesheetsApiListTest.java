@@ -6,11 +6,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.TimesheetsApi;
 import ch.aaap.harvestclient.api.filter.TimeEntryListFilter;
 import ch.aaap.harvestclient.domain.TimeEntry;
 import util.TestSetupUtil;
 
+@HarvestTest
 class TimesheetsApiListTest {
 
     private static TimesheetsApi api = TestSetupUtil.getAdminAccess().timesheets();

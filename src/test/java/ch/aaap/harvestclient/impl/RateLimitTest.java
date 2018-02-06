@@ -10,10 +10,12 @@ import org.slf4j.LoggerFactory;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 
+import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.core.Harvest;
 import ch.aaap.harvestclient.domain.User;
 import util.TestSetupUtil;
 
+@HarvestTest
 public class RateLimitTest {
 
     private static class Task implements Runnable {

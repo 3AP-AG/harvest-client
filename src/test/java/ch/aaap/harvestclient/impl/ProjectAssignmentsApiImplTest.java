@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.ProjectAssignmentsAPI;
 import ch.aaap.harvestclient.core.Harvest;
 import ch.aaap.harvestclient.domain.ProjectAssignment;
@@ -14,6 +15,7 @@ import ch.aaap.harvestclient.domain.User;
 import ch.aaap.harvestclient.domain.reference.UserReference;
 import util.TestSetupUtil;
 
+@HarvestTest
 class ProjectAssignmentsApiImplTest {
 
     private Harvest harvest = TestSetupUtil.getAdminAccess();

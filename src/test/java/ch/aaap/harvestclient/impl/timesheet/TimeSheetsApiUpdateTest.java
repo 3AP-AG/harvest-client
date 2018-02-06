@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.TimesheetsApi;
 import ch.aaap.harvestclient.api.filter.TimeEntryListFilter;
 import ch.aaap.harvestclient.domain.TimeEntry;
@@ -19,6 +20,7 @@ import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoDuration;
 import ch.aaap.harvestclient.domain.param.TimeEntryUpdateInfo;
 import util.TestSetupUtil;
 
+@HarvestTest
 public class TimeSheetsApiUpdateTest {
 
     private static final Logger log = LoggerFactory.getLogger(TimeSheetsApiUpdateTest.class);
