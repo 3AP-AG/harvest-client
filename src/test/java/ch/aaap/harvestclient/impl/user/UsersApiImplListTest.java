@@ -72,11 +72,11 @@ public class UsersApiImplListTest {
     }
 
     @Test
-    void listFilterByUpdatedSince() {
+    void listFilterByUpdatedSince() throws InterruptedException {
+        // we need to give Harvest time to update their views
+        Thread.sleep(3_000);
 
         List<User> allUsers = api.list();
-
-        // give some margin to allow for Harvest to update their view
         List<User> newUsers = api.list(null, userCreationTime);
 
         assertThat(newUsers.size()).isEqualTo(2);
