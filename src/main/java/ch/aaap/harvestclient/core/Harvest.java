@@ -9,19 +9,10 @@ import com.google.gson.Gson;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
-import ch.aaap.harvestclient.api.CompanyApi;
-import ch.aaap.harvestclient.api.RolesApi;
-import ch.aaap.harvestclient.api.TimesheetsApi;
-import ch.aaap.harvestclient.api.UsersApi;
+import ch.aaap.harvestclient.api.*;
 import ch.aaap.harvestclient.core.gson.GsonConfiguration;
-import ch.aaap.harvestclient.impl.CompanyApiImpl;
-import ch.aaap.harvestclient.impl.RolesApiImpl;
-import ch.aaap.harvestclient.impl.TimesheetsApiImpl;
-import ch.aaap.harvestclient.impl.UsersApiImpl;
-import ch.aaap.harvestclient.service.CompanyService;
-import ch.aaap.harvestclient.service.RoleService;
-import ch.aaap.harvestclient.service.TimeEntryService;
-import ch.aaap.harvestclient.service.UserService;
+import ch.aaap.harvestclient.impl.*;
+import ch.aaap.harvestclient.service.*;
 import ch.aaap.harvestclient.vendor.okhttp.HttpLoggingInterceptor;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -54,6 +45,7 @@ public class Harvest {
 
     private final String userAgent;
     private final RolesApi rolesApi;
+    private final ProjectAssignmentsApiImpl projectAssignmentsApi;
 
     private TimesheetsApi timesheetsApi;
 
@@ -92,11 +84,14 @@ public class Harvest {
         UserService userService = retrofit.create(UserService.class);
         CompanyService companyService = retrofit.create(CompanyService.class);
         RoleService roleService = retrofit.create(RoleService.class);
+        ProjectAssignmentService projectAssignmentService = retrofit.create(ProjectAssignmentService.class);
 
         timesheetsApi = new TimesheetsApiImpl(timeEntryService);
         usersApi = new UsersApiImpl(userService);
         companyApi = new CompanyApiImpl(companyService);
         rolesApi = new RolesApiImpl(roleService);
+
+        projectAssignmentsApi = new ProjectAssignmentsApiImpl(projectAssignmentService);
 
         log.debug("Harvest client initialized");
 
@@ -143,5 +138,9 @@ public class Harvest {
 
     public RolesApi roles() {
         return rolesApi;
+    }
+
+    public ProjectAssignmentsAPI projectAssignments() {
+        return projectAssignmentsApi;
     }
 }
