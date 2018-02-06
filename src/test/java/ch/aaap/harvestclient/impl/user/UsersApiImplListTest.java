@@ -29,9 +29,9 @@ public class UsersApiImplListTest {
     @BeforeAll
     static void beforeAll() {
 
-        userCreationTime = Instant.now();
         activeUser = api.create(TestSetupUtil.getRandomUserCreationInfo());
-
+        // Harvest API will round to seconds, calling Instant.now() is not too close
+        userCreationTime = activeUser.getCreatedAt().minusSeconds(5);
         UserCreationInfo randomUserCreationInfo = TestSetupUtil.getRandomUserCreationInfo();
 
         randomUserCreationInfo.setActive(false);
@@ -75,8 +75,6 @@ public class UsersApiImplListTest {
 
     @Test
     void listFilterByUpdatedSince() throws InterruptedException {
-        // we need to give Harvest time to update their views
-        Thread.sleep(3_000);
 
         List<User> allUsers = api.list();
         List<User> newUsers = api.list(null, userCreationTime);

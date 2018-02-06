@@ -28,8 +28,8 @@ public interface UsersApi {
      *            if true, return only active users. Set to null to disable
      *            filtering
      * @param updatedSince
-     *            return only users that have been updated since updatedSince. Set
-     *            to null to disable filtering
+     *            return only users that have been updated at least 1 second after
+     *            updatedSince. Set to null to disable filtering.
      * @return a list of all users, filtered accordingly
      */
     List<User> list(Boolean isActive, Instant updatedSince);
