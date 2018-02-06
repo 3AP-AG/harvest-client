@@ -11,12 +11,14 @@ import org.junit.jupiter.api.TestInfo;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.TimesheetsApi;
 import ch.aaap.harvestclient.domain.TimeEntry;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoDuration;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoTimestamp;
 import util.TestSetupUtil;
 
+@HarvestTest
 public class TimeSheetsApiCreateTest {
 
     private static TimesheetsApi api = TestSetupUtil.getAdminAccess().timesheets();

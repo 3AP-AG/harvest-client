@@ -3,10 +3,12 @@ package ch.aaap.harvestclient.impl.timesheet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.TimesheetsApi;
 import ch.aaap.harvestclient.domain.TimeEntry;
 import util.TestSetupUtil;
 
+@HarvestTest
 public class TimeSheetsTestConfig {
 
     private static final Logger log = LoggerFactory.getLogger(TimeSheetsTestConfig.class);

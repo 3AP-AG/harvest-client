@@ -10,6 +10,7 @@ import org.junit.jupiter.api.TestInfo;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.RolesApi;
 import ch.aaap.harvestclient.api.UsersApi;
 import ch.aaap.harvestclient.core.Harvest;
@@ -19,6 +20,7 @@ import ch.aaap.harvestclient.domain.param.RoleInfo;
 import ch.aaap.harvestclient.exception.RequestProcessingException;
 import util.TestSetupUtil;
 
+@HarvestTest
 class RolesApiImplTest {
 
     private static final Harvest harvest = TestSetupUtil.getAdminAccess();

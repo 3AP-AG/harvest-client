@@ -16,6 +16,7 @@ import ch.aaap.harvestclient.domain.pagination.PaginatedUser;
 /**
  * Here we can test deserialization for various Java objects
  */
+@HarvestTest
 public class GsonTest {
 
     private static final Logger log = LoggerFactory.getLogger(GsonTest.class);

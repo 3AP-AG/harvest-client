@@ -1,5 +1,6 @@
 package ch.aaap.harvestclient.impl;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class UsersApiImpl implements UsersApi {
     }
 
     @Override
-    public List<User> list() {
+    public List<User> list(Boolean isActive, Instant updatedSince) {
 
         Integer nextPage = 1;
 
@@ -38,7 +39,7 @@ public class UsersApiImpl implements UsersApi {
 
         while (nextPage != null) {
             log.debug("Getting page {} of user list", nextPage);
-            Call<PaginatedUser> call = service.list(nextPage, PER_PAGE);
+            Call<PaginatedUser> call = service.list(isActive, updatedSince, nextPage, PER_PAGE);
             PaginatedUser paginatedUser = ExceptionHandler.callOrThrow(call);
             users.addAll(paginatedUser.getUsers());
             nextPage = paginatedUser.getNextPage();

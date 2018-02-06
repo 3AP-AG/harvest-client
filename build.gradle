@@ -30,6 +30,8 @@ sourceCompatibility = 1.8
 
 junitPlatform {
     details 'tree'
+    // this is the default directory. Also set in circleCI
+    reportsDir file('build/test-results/junit-platform')
 }
 
 // Unfortunately necessary to set a system property for the junitPlatform task

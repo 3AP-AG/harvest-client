@@ -1,16 +1,19 @@
 package ch.aaap.harvestclient.domain;
 
 import java.time.Instant;
+import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
-import ch.aaap.harvestclient.domain.reference.dto.UserReferenceDto;
+import ch.aaap.harvestclient.domain.reference.ClientReference;
+import ch.aaap.harvestclient.domain.reference.ProjectReference;
 
-public class UserAssignment {
+/**
+ * User Project Assignment
+ */
+public class ProjectAssignment {
 
     private Long id;
-
-    private UserReferenceDto userReference;
 
     @SerializedName("is_active")
     private Boolean active;
@@ -26,20 +29,18 @@ public class UserAssignment {
 
     private Instant updatedAt;
 
+    private ProjectReference projectReference;
+
+    private ClientReference clientReference;
+
+    private List<TaskAssignment> taskAssignments;
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public UserReferenceDto getUserReference() {
-        return userReference;
-    }
-
-    public void setUserReference(UserReferenceDto userReference) {
-        this.userReference = userReference;
     }
 
     public Boolean getActive() {
@@ -90,17 +91,43 @@ public class UserAssignment {
         this.updatedAt = updatedAt;
     }
 
+    public ProjectReference getProjectReference() {
+        return projectReference;
+    }
+
+    public void setProjectReference(ProjectReference projectReference) {
+        this.projectReference = projectReference;
+    }
+
+    public ClientReference getClientReference() {
+        return clientReference;
+    }
+
+    public void setClientReference(ClientReference clientReference) {
+        this.clientReference = clientReference;
+    }
+
+    public List<TaskAssignment> getTaskAssignments() {
+        return taskAssignments;
+    }
+
+    public void setTaskAssignments(List<TaskAssignment> taskAssignments) {
+        this.taskAssignments = taskAssignments;
+    }
+
     @Override
     public String toString() {
-        return "UserAssignment{" +
+        return "ProjectAssignment{" +
                 "id=" + id +
-                ", userReference=" + userReference +
                 ", active=" + active +
                 ", projectManager=" + projectManager +
                 ", hourlyRate=" + hourlyRate +
                 ", budget=" + budget +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
+                ", projectReference=" + projectReference +
+                ", clientReference=" + clientReference +
+                ", taskAssignments=" + taskAssignments +
                 '}';
     }
 }
