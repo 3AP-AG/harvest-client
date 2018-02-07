@@ -12,6 +12,10 @@ public class Junit5Extension implements BeforeAllCallback, BeforeEachCallback {
 
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
+
+        // uncomment this line before copy pasting output for Harvest Bug Report
+        // TestSetupUtil.prepareForHarvestBugReport();
+
         log.debug("beforeAll for class {}", context.getDisplayName());
     }
 
