@@ -6,13 +6,11 @@ import java.util.List;
 
 import ch.aaap.harvestclient.domain.reference.dto.ClientReferenceDto;
 
-public class Invoice {
+public class Estimate {
 
     private Long id;
     private ClientReferenceDto clientReferenceDto;
     private List<InvoiceLineItem> invoiceLineItemList;
-    private Estimate estimate;
-    private Retainer retainer;
     private Creator creator;
     private String clientKey;
 
@@ -33,16 +31,12 @@ public class Invoice {
 
     private String currency;
 
-    private LocalDate periodStart;
-    private LocalDate periodEnd;
     private LocalDate issueDate;
-    private LocalDate dueDate;
     private Instant sentAt;
-    private Instant paidAt;
-    private LocalDate paidDate;
-    private Instant closedAt;
+
+    private Instant acceptedAt;
+    private Instant declinedAt;
 
     private Instant createdAt;
     private Instant updatedAt;
-
 }

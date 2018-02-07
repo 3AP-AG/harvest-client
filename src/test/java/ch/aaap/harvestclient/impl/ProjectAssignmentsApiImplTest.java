@@ -63,7 +63,7 @@ class ProjectAssignmentsApiImplTest {
 
         List<ProjectAssignment> projectAssignments = projectAssignmentsAPI.listSelf();
 
-        // TODO we should find a way to create assignments only for the test case
+        // TODO create from project API
         assertThat(projectAssignments).isNotEmpty();
     }
 }
