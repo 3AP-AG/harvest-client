@@ -56,7 +56,10 @@ public class ProjectsApiImpl implements ProjectsApi {
 
     @Override
     public Project get(ProjectReference projectReference) {
-        return null;
+        Call<Project> call = service.get(projectReference.getId());
+        Project project = ExceptionHandler.callOrThrow(call);
+        log.debug("Got Project {}", project);
+        return project;
     }
 
     @Override

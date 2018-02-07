@@ -129,6 +129,11 @@ public class ProjectsApiCreateTest {
         assertThat(project.getCreatedAt()).isCloseTo(Instant.now(), within(1, ChronoUnit.MINUTES));
         assertThat(project.getUpdatedAt()).isCloseTo(Instant.now(), within(1, ChronoUnit.MINUTES));
 
+        // get test
+        Project gottenProject = projectsApi.get(project);
+
+        assertThat(gottenProject).isEqualToComparingFieldByField(project);
+
     }
 
     @Test

@@ -14,6 +14,9 @@ public interface ProjectService {
     @GET("projects")
     Call<PaginatedProject> list(@QueryMap() Map<String, Object> options);
 
+    @GET("projects/{projectId}")
+    Call<Project> get(@Path("projectId") long projectId);
+
     @POST("projects")
     Call<Project> create(@Body ProjectCreationInfo projectCreationInfo);
 
