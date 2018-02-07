@@ -4,22 +4,12 @@ import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.reference.ClientReference;
 import ch.aaap.harvestclient.domain.reference.dto.ClientReferenceDto;
 
-public class ProjectCreationInfo extends Project {
+public class ProjectUpdateInfo extends Project {
 
     /**
-     * Takes the place of clientReference
+     * We cannot serialize the clientReferenceDto directly
      */
     private Long clientId;
-
-    public ProjectCreationInfo(ClientReference clientReference, String name, boolean isBillable, BillingMethod billBy,
-            BudgetMethod budgetBy) {
-        super();
-        clientId = clientReference.getId();
-        setName(name);
-        setBillable(isBillable);
-        setBillBy(billBy);
-        setBudgetBy(budgetBy);
-    }
 
     public void setClientReference(ClientReference clientReference) {
         clientId = clientReference.getId();

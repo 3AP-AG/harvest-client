@@ -7,22 +7,26 @@ import java.time.temporal.ChronoUnit;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
 
+import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.ProjectsApi;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.param.ProjectCreationInfo;
 import ch.aaap.harvestclient.domain.reference.ClientReference;
 import util.TestSetupUtil;
 
+@HarvestTest
 public class ProjectsApiCreateTest {
 
     private static ProjectsApi projectsApi = TestSetupUtil.getAdminAccess().projects();
 
     /**
-     * Project that get deleted automatically after the test
+     * Project that get deleted automatically after each test
      */
     private Project project;
 
@@ -34,13 +38,14 @@ public class ProjectsApiCreateTest {
         }
     }
 
-    @Test
-    void createDefault(TestInfo testInfo) {
+    @ParameterizedTest
+    @EnumSource(Project.BillingMethod.class)
+    void createDefaultBilling(Project.BillingMethod billingMethod, TestInfo testInfo) {
 
         ClientReference clientReference = TestSetupUtil.getExistingClient();
         String name = "Project for test " + testInfo.getDisplayName();
         boolean billable = true;
-        Project.BillingMethod billBy = Project.BillingMethod.PROJECT;
+        Project.BillingMethod billBy = billingMethod;
         Project.BudgetMethod budgetBy = Project.BudgetMethod.HOURS_PER_PROJECT;
 
         ProjectCreationInfo creationInfo = new ProjectCreationInfo(clientReference, name, billable, billBy, budgetBy);
@@ -51,7 +56,26 @@ public class ProjectsApiCreateTest {
         assertThat(project.getBudgetBy()).isEqualTo(budgetBy);
         assertThat(project.getName()).isEqualTo(name);
         assertThat(project.getClientReference().getId()).isEqualTo(clientReference.getId());
+    }
 
+    @ParameterizedTest
+    @EnumSource(Project.BudgetMethod.class)
+    void createDefaultBudget(Project.BudgetMethod budgetMethod, TestInfo testInfo) {
+
+        ClientReference clientReference = TestSetupUtil.getExistingClient();
+        String name = "Project for test " + testInfo.getDisplayName();
+        boolean billable = true;
+        Project.BillingMethod billBy = Project.BillingMethod.PROJECT;
+        Project.BudgetMethod budgetBy = budgetMethod;
+
+        ProjectCreationInfo creationInfo = new ProjectCreationInfo(clientReference, name, billable, billBy, budgetBy);
+        project = projectsApi.create(creationInfo);
+
+        assertThat(project.getBillable()).isEqualTo(billable);
+        assertThat(project.getBillBy()).isEqualTo(billBy);
+        assertThat(project.getBudgetBy()).isEqualTo(budgetBy);
+        assertThat(project.getName()).isEqualTo(name);
+        assertThat(project.getClientReference().getId()).isEqualTo(clientReference.getId());
     }
 
     @Test

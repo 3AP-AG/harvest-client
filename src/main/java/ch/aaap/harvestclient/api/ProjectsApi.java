@@ -5,6 +5,7 @@ import java.util.List;
 import ch.aaap.harvestclient.api.filter.ProjectListFilter;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.param.ProjectCreationInfo;
+import ch.aaap.harvestclient.domain.param.ProjectUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.ProjectReference;
 
 public interface ProjectsApi {
@@ -36,6 +37,17 @@ public interface ProjectsApi {
     Project create(ProjectCreationInfo projectCreationInfo);
 
     /**
+     * Updates an existing Project with the properties set in ProjectUpdateInfo
+     * 
+     * @param projectReference
+     *            the existing project to be updated
+     * @param toChange
+     *            the properties to be updated
+     * @return the updated Project
+     */
+    Project update(ProjectReference projectReference, ProjectUpdateInfo toChange);
+
+    /**
      * Delete an existing Project. Careful with this API! It also deletes
      * TimeEntries, Expenses and Retainers connected to this project. This will
      * generate an email notification from Harvest.
@@ -44,7 +56,6 @@ public interface ProjectsApi {
      * @param projectReference
      *            a reference to an existing Project to be deleted
      */
-    // TODO undocumented by Harvest, seems to work
     void delete(ProjectReference projectReference);
 
 }

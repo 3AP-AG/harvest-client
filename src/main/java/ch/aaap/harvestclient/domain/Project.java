@@ -30,7 +30,7 @@ public class Project implements ProjectReference {
         @SerializedName("project")
         HOURS_PER_PROJECT,
 
-        @SerializedName("project_code")
+        @SerializedName("project_cost")
         TOTAL_PROJECT_FEES,
 
         @SerializedName("task")
@@ -116,10 +116,6 @@ public class Project implements ProjectReference {
     @Override
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public ClientReferenceDto getClientReference() {
