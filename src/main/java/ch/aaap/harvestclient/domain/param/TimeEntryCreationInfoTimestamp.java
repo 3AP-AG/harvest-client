@@ -19,7 +19,8 @@ public class TimeEntryCreationInfoTimestamp extends TimeEntryCreationInfo {
     private LocalTime startedTime;
 
     /**
-     * The time the entry ended.
+     * The time the entry ended. If set, is_running will be false, and true
+     * otherwise.
      */
     private LocalTime endedTime;
 

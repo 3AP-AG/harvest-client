@@ -1,12 +1,13 @@
 package ch.aaap.harvestclient.impl.timesheet;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,7 +79,6 @@ public class TimeSheetsApiUpdateTest {
     }
 
     @Test
-    @Disabled("Wait to fix on Harvest 2.2 bug to be fixed")
     public void testChangeStartedTime(TestInfo testInfo) {
 
         log.debug("Creating entry for test " + testInfo.getDisplayName());
@@ -92,7 +92,6 @@ public class TimeSheetsApiUpdateTest {
         creationInfo.setNotes(notes);
         creationInfo.setUserReference(fixEntry.getUser());
         creationInfo.setHours(1.);
-        creationInfo.setTimerStartedAt(Instant.now().truncatedTo(ChronoUnit.SECONDS));
 
         entry = api.create(creationInfo);
 

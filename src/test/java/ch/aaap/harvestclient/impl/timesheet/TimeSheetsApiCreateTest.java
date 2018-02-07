@@ -1,6 +1,9 @@
 package ch.aaap.harvestclient.impl.timesheet;
 
-import java.time.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 
 import org.junit.jupiter.api.AfterEach;
@@ -41,6 +44,9 @@ public class TimeSheetsApiCreateTest {
         }
     }
 
+    /**
+     * Needs company.wantsTimestampTimers set to false
+     */
     @Test
     public void testCreateTimeEntryDuration(TestInfo testInfo) {
 
@@ -60,37 +66,39 @@ public class TimeSheetsApiCreateTest {
         assertThat(timeEntry.getRunning()).isFalse();
         assertThat(timeEntry.getHours()).isEqualTo(2.);
 
-        // FIXME HARVEST documented differently -> defaults to null if hours is set
+        // if hours is set there is no timer
         assertThat(timeEntry.getTimerStartedAt()).isNull();
 
     }
 
+    /**
+     * Needs company.wantsTimestampTimers set to true
+     */
     @Test
-    @Disabled("Harvest timerStartedAt and Hours not set")
-    public void testCreateTimeEntryDurationAndTimer(TestInfo testInfo) {
+    @Disabled("needs second test account")
+    public void testCreateTimeEntryWithStartAndEndTime(TestInfo testInfo) {
 
         LocalDate date = LocalDate.now();
         String notes = "TimeEntry created by " + testInfo.getDisplayName();
-        // assume they don't support nanoseconds
-        Instant timerStartedAt = Instant.now().truncatedTo(ChronoUnit.SECONDS);
+        // harvest does not store seconds in started_time
+        LocalTime startedTime = LocalTime.now(companyTimeZone).truncatedTo(ChronoUnit.MINUTES);
 
-        TimeEntryCreationInfoDuration creationInfo = new TimeEntryCreationInfoDuration(fixEntry.getProject(),
+        TimeEntryCreationInfoTimestamp creationInfo = new TimeEntryCreationInfoTimestamp(fixEntry.getProject(),
                 fixEntry.getTask(), date);
         creationInfo.setNotes(notes);
         creationInfo.setUserReference(fixEntry.getUser());
-        creationInfo.setHours(2.);
-        creationInfo.setTimerStartedAt(timerStartedAt);
+        creationInfo.setStartedTime(startedTime);
+        creationInfo.setEndedTime(startedTime.plusHours(3));
 
         TimeEntry timeEntry = api.create(creationInfo);
 
-        assertEquals(fixEntry.getProject(), timeEntry.getProject());
-        assertEquals(notes, timeEntry.getNotes());
+        assertThat(timeEntry.getStartedTime()).isEqualTo(startedTime);
+        assertThat(timeEntry.getEndedTime()).isEqualTo(startedTime.plusHours(3));
+
+        // timer was not started since endtime was given
+        assertThat(timeEntry.getTimerStartedAt()).isNull();
+
         assertThat(timeEntry.getRunning()).isFalse();
-        assertThat(timeEntry.getHours()).isEqualTo(2.);
-
-        // FIXME HARVEST is not being set
-        assertThat(timeEntry.getTimerStartedAt()).isEqualTo(timerStartedAt);
-
     }
 
     @Test
@@ -174,34 +182,4 @@ public class TimeSheetsApiCreateTest {
         assertThat(timeEntry.getRunning()).isTrue();
     }
 
-    @Test
-    @Disabled("Harvest ended_time bug")
-    public void testCreateTimeEntryWithStartAndEndTime(TestInfo testInfo) {
-
-        LocalDate date = LocalDate.now();
-        String notes = "TimeEntry created by " + testInfo.getDisplayName();
-        // harvest does not store seconds in started_time
-        LocalTime startedTime = LocalTime.now(companyTimeZone).truncatedTo(ChronoUnit.MINUTES);
-
-        TimeEntryCreationInfoTimestamp creationInfo = new TimeEntryCreationInfoTimestamp(fixEntry.getProject(),
-                fixEntry.getTask(), date);
-        creationInfo.setNotes(notes);
-        creationInfo.setUserReference(fixEntry.getUser());
-        creationInfo.setStartedTime(startedTime);
-        creationInfo.setEndedTime(startedTime.plusHours(3));
-
-        TimeEntry timeEntry = api.create(creationInfo);
-
-        assertThat(timeEntry.getStartedTime()).isEqualTo(startedTime);
-
-        // FIXME HARVEST is set to null
-        assertThat(timeEntry.getEndedTime()).isEqualTo(startedTime.plusHours(3));
-
-        // check timer_started_at is in sync at least up to hour and minute
-        ZonedDateTime zonedDateTime = timeEntry.getTimerStartedAt().atZone(companyTimeZone);
-        assertThat(timeEntry.getStartedTime()).isEqualToIgnoringSeconds(zonedDateTime.toLocalTime());
-
-        // FIXME HARVEST is set to true
-        assertThat(timeEntry.getRunning()).isFalse();
-    }
 }
