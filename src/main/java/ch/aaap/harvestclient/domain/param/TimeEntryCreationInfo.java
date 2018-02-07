@@ -2,9 +2,10 @@ package ch.aaap.harvestclient.domain.param;
 
 import java.time.LocalDate;
 
-import ch.aaap.harvestclient.domain.reference.ProjectReference;
-import ch.aaap.harvestclient.domain.reference.TaskReference;
-import ch.aaap.harvestclient.domain.reference.UserReference;
+import ch.aaap.harvestclient.domain.Project;
+import ch.aaap.harvestclient.domain.Task;
+import ch.aaap.harvestclient.domain.User;
+import ch.aaap.harvestclient.domain.reference.Reference;
 
 public abstract class TimeEntryCreationInfo {
 
@@ -20,21 +21,22 @@ public abstract class TimeEntryCreationInfo {
 
     private Object externalReference;
 
-    public TimeEntryCreationInfo(ProjectReference projectReference, TaskReference taskReference, LocalDate spentDate) {
+    public TimeEntryCreationInfo(Reference<Project> projectReference, Reference<Task> taskReference,
+            LocalDate spentDate) {
         projectId = projectReference.getId();
         taskId = taskReference.getId();
         this.spentDate = spentDate;
     }
 
-    public void setUserReference(UserReference userReference) {
+    public void setUserReference(Reference<User> userReference) {
         userId = userReference.getId();
     }
 
-    public void setProjectReference(ProjectReference projectReference) {
+    public void setProjectReference(Reference<Project> projectReference) {
         projectId = projectReference.getId();
     }
 
-    public void setTaskReference(TaskReference taskReference) {
+    public void setTaskReference(Reference<Task> taskReference) {
         taskId = taskReference.getId();
     }
 

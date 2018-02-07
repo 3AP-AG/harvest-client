@@ -15,9 +15,10 @@ import static org.assertj.core.api.Assertions.within;
 
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.ProjectsApi;
+import ch.aaap.harvestclient.domain.Client;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.param.ProjectCreationInfo;
-import ch.aaap.harvestclient.domain.reference.ClientReference;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import util.TestSetupUtil;
 
 @HarvestTest
@@ -42,7 +43,7 @@ public class ProjectsApiCreateTest {
     @EnumSource(Project.BillingMethod.class)
     void createDefaultBilling(Project.BillingMethod billingMethod, TestInfo testInfo) {
 
-        ClientReference clientReference = TestSetupUtil.getExistingClient();
+        Reference<Client> clientReference = TestSetupUtil.getExistingClient();
         String name = "Project for test " + testInfo.getDisplayName();
         boolean billable = true;
         Project.BillingMethod billBy = billingMethod;
@@ -62,7 +63,7 @@ public class ProjectsApiCreateTest {
     @EnumSource(Project.BudgetMethod.class)
     void createDefaultBudget(Project.BudgetMethod budgetMethod, TestInfo testInfo) {
 
-        ClientReference clientReference = TestSetupUtil.getExistingClient();
+        Reference<Client> clientReference = TestSetupUtil.getExistingClient();
         String name = "Project for test " + testInfo.getDisplayName();
         boolean billable = true;
         Project.BillingMethod billBy = Project.BillingMethod.PROJECT;
@@ -81,7 +82,7 @@ public class ProjectsApiCreateTest {
     @Test
     void createAllOptions(TestInfo testInfo) {
 
-        ClientReference clientReference = TestSetupUtil.getExistingClient();
+        Reference<Client> clientReference = TestSetupUtil.getExistingClient();
         String name = "Project for test " + testInfo.getDisplayName();
         boolean billable = true;
         Project.BillingMethod billBy = Project.BillingMethod.PROJECT;
@@ -139,7 +140,7 @@ public class ProjectsApiCreateTest {
     @Test
     void createFixedFee(TestInfo testInfo) {
 
-        ClientReference clientReference = TestSetupUtil.getExistingClient();
+        Reference<Client> clientReference = TestSetupUtil.getExistingClient();
         String name = "Project for test " + testInfo.getDisplayName();
         boolean billable = true;
         Project.BillingMethod billBy = Project.BillingMethod.TASKS;

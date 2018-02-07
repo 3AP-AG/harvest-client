@@ -13,7 +13,7 @@ import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.pagination.PaginatedProject;
 import ch.aaap.harvestclient.domain.param.ProjectCreationInfo;
 import ch.aaap.harvestclient.domain.param.ProjectUpdateInfo;
-import ch.aaap.harvestclient.domain.reference.ProjectReference;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.service.ProjectService;
 import retrofit2.Call;
 
@@ -55,7 +55,7 @@ public class ProjectsApiImpl implements ProjectsApi {
     }
 
     @Override
-    public Project get(ProjectReference projectReference) {
+    public Project get(Reference<Project> projectReference) {
         Call<Project> call = service.get(projectReference.getId());
         Project project = ExceptionHandler.callOrThrow(call);
         log.debug("Got Project {}", project);
@@ -71,14 +71,14 @@ public class ProjectsApiImpl implements ProjectsApi {
     }
 
     @Override
-    public Project update(ProjectReference projectReference, ProjectUpdateInfo toChange) {
+    public Project update(Reference<Project> projectReference, ProjectUpdateInfo toChange) {
         log.debug("Updating project {} with {}", projectReference, toChange);
         Call<Project> call = service.update(projectReference.getId(), toChange);
         return ExceptionHandler.callOrThrow(call);
     }
 
     @Override
-    public void delete(ProjectReference projectReference) {
+    public void delete(Reference<Project> projectReference) {
 
         log.debug("Deleting Project {}", projectReference);
         Call<Void> call = service.delete(projectReference.getId());

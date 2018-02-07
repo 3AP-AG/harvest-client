@@ -6,9 +6,9 @@ import java.util.concurrent.TimeUnit;
 
 import com.google.gson.annotations.SerializedName;
 
-import ch.aaap.harvestclient.domain.reference.UserReference;
+import ch.aaap.harvestclient.domain.reference.Reference;
 
-public class User implements UserReference {
+public class User implements Reference<User> {
 
     private Long id;
     private String firstName;

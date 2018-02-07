@@ -142,7 +142,7 @@ public class Harvest {
         return rolesApi;
     }
 
-    public ProjectAssignmentsAPI projectAssignments() {
+    public ProjectAssignmentsApi projectAssignments() {
         return projectAssignmentsApi;
     }
 

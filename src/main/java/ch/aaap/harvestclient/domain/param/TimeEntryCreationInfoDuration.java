@@ -5,8 +5,9 @@ import java.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ch.aaap.harvestclient.domain.reference.ProjectReference;
-import ch.aaap.harvestclient.domain.reference.TaskReference;
+import ch.aaap.harvestclient.domain.Project;
+import ch.aaap.harvestclient.domain.Task;
+import ch.aaap.harvestclient.domain.reference.Reference;
 
 public class TimeEntryCreationInfoDuration extends TimeEntryCreationInfo {
 
@@ -18,8 +19,8 @@ public class TimeEntryCreationInfoDuration extends TimeEntryCreationInfo {
      */
     private Double hours;
 
-    public TimeEntryCreationInfoDuration(ProjectReference projectReference,
-            TaskReference taskReference, LocalDate spentDate) {
+    public TimeEntryCreationInfoDuration(Reference<Project> projectReference,
+            Reference<Task> taskReference, LocalDate spentDate) {
         super(projectReference, taskReference, spentDate);
     }
 

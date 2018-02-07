@@ -7,7 +7,7 @@ import ch.aaap.harvestclient.domain.TimeEntry;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoDuration;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoTimestamp;
 import ch.aaap.harvestclient.domain.param.TimeEntryUpdateInfo;
-import ch.aaap.harvestclient.domain.reference.TimeEntryReference;
+import ch.aaap.harvestclient.domain.reference.Reference;
 
 public interface TimesheetsApi {
 
@@ -26,7 +26,7 @@ public interface TimesheetsApi {
      *            a reference to an the timeentry to retrieve
      * @return a Full TimeEntry object
      */
-    TimeEntry get(TimeEntryReference timeEntryReference);
+    TimeEntry get(Reference<TimeEntry> timeEntryReference);
 
     /**
      * Create a TimeEntry with a duration. If no duration is given, the TimeEntry
@@ -57,10 +57,10 @@ public interface TimesheetsApi {
      * @param updatedInfo
      *            the changes to be done
      * @return the updated TimeEntry
-     * @see #stop(TimeEntryReference)
-     * @see #restart(TimeEntryReference)
+     * @see #stop(Reference)
+     * @see #restart(Reference)
      */
-    TimeEntry update(TimeEntryReference timeEntryReference, TimeEntryUpdateInfo updatedInfo);
+    TimeEntry update(Reference<TimeEntry> timeEntryReference, TimeEntryUpdateInfo updatedInfo);
 
     /**
      * Delete an existing TimeEntry
@@ -68,7 +68,7 @@ public interface TimesheetsApi {
      * @param timeEntryReference
      *            a reference to the TimeEntry to be deleted
      */
-    void delete(TimeEntryReference timeEntryReference);
+    void delete(Reference<TimeEntry> timeEntryReference);
 
     /**
      * Restart a TimeEntry. Only possible if it is not running
@@ -77,7 +77,7 @@ public interface TimesheetsApi {
      *            a reference to the TimeEntry to be restarted
      * @return the modified TimeEntry
      */
-    TimeEntry restart(TimeEntryReference timeEntryReference);
+    TimeEntry restart(Reference<TimeEntry> timeEntryReference);
 
     /**
      * Stop a TimeEntry. Only possible if it is running
@@ -86,5 +86,5 @@ public interface TimesheetsApi {
      *            a reference to the TimeEntry to be stopped
      * @return the modified TimeEntry
      */
-    TimeEntry stop(TimeEntryReference timeEntryReference);
+    TimeEntry stop(Reference<TimeEntry> timeEntryReference);
 }

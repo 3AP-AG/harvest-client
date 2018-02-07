@@ -5,8 +5,7 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
-import ch.aaap.harvestclient.domain.reference.ClientReference;
-import ch.aaap.harvestclient.domain.reference.ProjectReference;
+import ch.aaap.harvestclient.domain.reference.Reference;
 
 /**
  * User Project Assignment
@@ -29,9 +28,9 @@ public class ProjectAssignment {
 
     private Instant updatedAt;
 
-    private ProjectReference projectReference;
+    private Reference<Project> projectReference;
 
-    private ClientReference clientReference;
+    private Reference<Client> clientReference;
 
     private List<TaskAssignment> taskAssignments;
 
@@ -91,19 +90,19 @@ public class ProjectAssignment {
         this.updatedAt = updatedAt;
     }
 
-    public ProjectReference getProjectReference() {
+    public Reference<Project> getProjectReference() {
         return projectReference;
     }
 
-    public void setProjectReference(ProjectReference projectReference) {
+    public void setProjectReference(Reference<Project> projectReference) {
         this.projectReference = projectReference;
     }
 
-    public ClientReference getClientReference() {
+    public Reference<Client> getClientReference() {
         return clientReference;
     }
 
-    public void setClientReference(ClientReference clientReference) {
+    public void setClientReference(Reference<Client> clientReference) {
         this.clientReference = clientReference;
     }
 

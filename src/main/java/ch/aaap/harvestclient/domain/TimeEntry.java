@@ -6,13 +6,13 @@ import java.time.LocalTime;
 
 import com.google.gson.annotations.SerializedName;
 
-import ch.aaap.harvestclient.domain.reference.TimeEntryReference;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.domain.reference.dto.ClientReferenceDto;
 import ch.aaap.harvestclient.domain.reference.dto.ProjectReferenceDto;
 import ch.aaap.harvestclient.domain.reference.dto.TaskReferenceDto;
 import ch.aaap.harvestclient.domain.reference.dto.UserReferenceDto;
 
-public class TimeEntry implements TimeEntryReference {
+public class TimeEntry implements Reference<TimeEntry> {
 
     private Long id;
     private LocalDate spentDate;

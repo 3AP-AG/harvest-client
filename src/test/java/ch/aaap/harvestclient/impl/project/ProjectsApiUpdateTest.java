@@ -10,10 +10,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.ProjectsApi;
+import ch.aaap.harvestclient.domain.Client;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.param.ProjectCreationInfo;
 import ch.aaap.harvestclient.domain.param.ProjectUpdateInfo;
-import ch.aaap.harvestclient.domain.reference.ClientReference;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import util.TestSetupUtil;
 
 @HarvestTest
@@ -31,7 +32,7 @@ public class ProjectsApiUpdateTest {
     @BeforeEach
     void beforeEach(TestInfo testInfo) {
 
-        ClientReference clientReference = TestSetupUtil.getExistingClient();
+        Reference<Client> clientReference = TestSetupUtil.getExistingClient();
         String name = "Project for test " + testInfo.getDisplayName();
         boolean billable = true;
         Project.BillingMethod billBy = Project.BillingMethod.PROJECT;
@@ -110,7 +111,7 @@ public class ProjectsApiUpdateTest {
     @Test
     void changeAllSmallDetails() {
 
-        ClientReference clientReference = TestSetupUtil.getExistingClient();
+        Reference<Client> clientReference = TestSetupUtil.getExistingClient();
         boolean billable = true;
 
         String name = "new Name for Project";

@@ -1,9 +1,10 @@
 package ch.aaap.harvestclient.domain;
 
+import java.time.Instant;
 
-import ch.aaap.harvestclient.domain.reference.ClientReference;
+import ch.aaap.harvestclient.domain.reference.Reference;
 
-public class Client implements ClientReference {
+public class Client implements Reference<Client> {
 
     private Long id;
     private String name;

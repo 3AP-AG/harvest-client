@@ -9,10 +9,10 @@ import org.slf4j.LoggerFactory;
 
 import ch.aaap.harvestclient.api.RolesApi;
 import ch.aaap.harvestclient.domain.Role;
+import ch.aaap.harvestclient.domain.User;
 import ch.aaap.harvestclient.domain.pagination.PaginatedRole;
 import ch.aaap.harvestclient.domain.param.RoleInfo;
-import ch.aaap.harvestclient.domain.reference.RoleReference;
-import ch.aaap.harvestclient.domain.reference.UserReference;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.service.RoleService;
 import retrofit2.Call;
 
@@ -47,7 +47,7 @@ public class RolesApiImpl implements RolesApi {
     }
 
     @Override
-    public Role get(RoleReference roleReference) {
+    public Role get(Reference<Role> roleReference) {
         Call<Role> call = service.get(roleReference.getId());
         Role role = ExceptionHandler.callOrThrow(call);
         log.debug("Got Role {}", role);
@@ -63,20 +63,20 @@ public class RolesApiImpl implements RolesApi {
     }
 
     @Override
-    public Role update(RoleReference roleReference, RoleInfo toChange) {
+    public Role update(Reference<Role> roleReference, RoleInfo toChange) {
         log.debug("Updating Role {} with {}", roleReference, toChange);
         Call<Role> call = service.update(roleReference.getId(), toChange);
         return ExceptionHandler.callOrThrow(call);
     }
 
     @Override
-    public Role addUser(RoleReference roleReference, UserReference userReference) {
+    public Role addUser(Reference<Role> roleReference, Reference<User> userReference) {
 
         // TODO PERF could be optimized if we already receive a Role
         Role role = get(roleReference);
 
         RoleInfo roleInfo = new RoleInfo(role.getName());
-        List<Long> userIds = role.getUserIds().stream().map(UserReference::getId).collect(Collectors.toList());
+        List<Long> userIds = role.getUserIds().stream().map(Reference::getId).collect(Collectors.toList());
         userIds.add(userReference.getId());
         roleInfo.setUserIds(userIds);
 
@@ -85,13 +85,13 @@ public class RolesApiImpl implements RolesApi {
     }
 
     @Override
-    public Role removeUser(RoleReference roleReference, UserReference userReference) {
+    public Role removeUser(Reference<Role> roleReference, Reference<User> userReference) {
 
         // TODO PERF could be optimized if we already receive a Role
         Role role = get(roleReference);
 
         RoleInfo roleInfo = new RoleInfo(role.getName());
-        List<Long> userIds = role.getUserIds().stream().map(UserReference::getId).collect(Collectors.toList());
+        List<Long> userIds = role.getUserIds().stream().map(Reference::getId).collect(Collectors.toList());
         userIds.remove(userReference.getId());
         roleInfo.setUserIds(userIds);
 
@@ -99,7 +99,7 @@ public class RolesApiImpl implements RolesApi {
     }
 
     @Override
-    public void delete(RoleReference roleReference) {
+    public void delete(Reference<Role> roleReference) {
         log.debug("Deleting role {}", roleReference);
         Call<Void> call = service.delete(roleReference.getId());
         ExceptionHandler.callOrThrow(call);
