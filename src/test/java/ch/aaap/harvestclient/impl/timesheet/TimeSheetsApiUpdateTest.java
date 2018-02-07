@@ -26,7 +26,7 @@ public class TimeSheetsApiUpdateTest {
     private static final Logger log = LoggerFactory.getLogger(TimeSheetsApiUpdateTest.class);
 
     private static TimesheetsApi api = TestSetupUtil.getAdminAccess().timesheets();
-    private static TimeEntry fixEntry = TimeSheetsTestConfig.fixedEntry();
+    private static TimeEntry fixEntry = TestSetupUtil.getFixedTimeEntry();
 
     private static TimeEntry entry;
 

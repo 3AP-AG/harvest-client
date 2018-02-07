@@ -26,7 +26,7 @@ public class TimeSheetsApiCreateTest {
     /**
      * Use this to get the Project, Task and User
      */
-    private static TimeEntry fixEntry = TimeSheetsTestConfig.fixedEntry();
+    private static TimeEntry fixEntry = TestSetupUtil.getFixedTimeEntry();
 
     private static TimeEntry entry;
 

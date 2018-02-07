@@ -17,7 +17,7 @@ class TimesheetsApiListTest {
 
     private static TimesheetsApi api = TestSetupUtil.getAdminAccess().timesheets();
 
-    private static TimeEntry fixEntry = TimeSheetsTestConfig.fixedEntry();
+    private static TimeEntry fixEntry = TestSetupUtil.getFixedTimeEntry();
 
     @Test
     public void testList() {
