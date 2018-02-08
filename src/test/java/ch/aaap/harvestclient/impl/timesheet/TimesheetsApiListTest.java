@@ -10,6 +10,7 @@ import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.TimesheetsApi;
 import ch.aaap.harvestclient.api.filter.TimeEntryFilter;
 import ch.aaap.harvestclient.domain.TimeEntry;
+import util.ExistingData;
 import util.TestSetupUtil;
 
 @HarvestTest
@@ -17,7 +18,7 @@ class TimesheetsApiListTest {
 
     private static TimesheetsApi api = TestSetupUtil.getAdminAccess().timesheets();
 
-    private static TimeEntry fixEntry = TestSetupUtil.getFixedTimeEntry();
+    private static TimeEntry fixEntry = ExistingData.getInstance().getTimeEntry();
 
     @Test
     public void testList() {

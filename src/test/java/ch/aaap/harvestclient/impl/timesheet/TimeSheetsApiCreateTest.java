@@ -19,6 +19,7 @@ import ch.aaap.harvestclient.api.TimesheetsApi;
 import ch.aaap.harvestclient.domain.TimeEntry;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoDuration;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoTimestamp;
+import util.ExistingData;
 import util.TestSetupUtil;
 
 @HarvestTest
@@ -29,7 +30,7 @@ public class TimeSheetsApiCreateTest {
     /**
      * Use this to get the Project, Task and User
      */
-    private static TimeEntry fixEntry = TestSetupUtil.getFixedTimeEntry();
+    private static TimeEntry fixEntry = ExistingData.getInstance().getTimeEntry();
 
     private static TimeEntry entry;
 
