@@ -14,7 +14,7 @@ import ch.aaap.harvestclient.domain.pagination.PaginatedTimeEntry;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoDuration;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoTimestamp;
 import ch.aaap.harvestclient.domain.param.TimeEntryUpdateInfo;
-import ch.aaap.harvestclient.domain.reference.TimeEntryReference;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.service.TimeEntryService;
 import retrofit2.Call;
 
@@ -57,7 +57,7 @@ public class TimesheetsApiImpl implements TimesheetsApi {
     }
 
     @Override
-    public TimeEntry get(TimeEntryReference timeEntryReference) {
+    public TimeEntry get(Reference<TimeEntry> timeEntryReference) {
         Call<TimeEntry> call = service.get(timeEntryReference.getId());
         TimeEntry entry = ExceptionHandler.callOrThrow(call);
 
@@ -88,7 +88,7 @@ public class TimesheetsApiImpl implements TimesheetsApi {
     }
 
     @Override
-    public TimeEntry update(TimeEntryReference timeEntryReference, TimeEntryUpdateInfo updatedInfo) {
+    public TimeEntry update(Reference<TimeEntry> timeEntryReference, TimeEntryUpdateInfo updatedInfo) {
 
         log.debug("Updating properties {} for timeentry {}", updatedInfo, timeEntryReference);
         Call<TimeEntry> call = service.update(timeEntryReference.getId(), updatedInfo);
@@ -97,7 +97,7 @@ public class TimesheetsApiImpl implements TimesheetsApi {
     }
 
     @Override
-    public void delete(TimeEntryReference timeEntryReference) {
+    public void delete(Reference<TimeEntry> timeEntryReference) {
         log.debug("Deleting TimeEntry {}", timeEntryReference);
 
         Call<Void> call = service.delete(timeEntryReference.getId());
@@ -105,7 +105,7 @@ public class TimesheetsApiImpl implements TimesheetsApi {
     }
 
     @Override
-    public TimeEntry restart(TimeEntryReference timeEntryReference) {
+    public TimeEntry restart(Reference<TimeEntry> timeEntryReference) {
 
         Call<TimeEntry> call = service.restart(timeEntryReference.getId());
         TimeEntry entry = ExceptionHandler.callOrThrow(call);
@@ -116,7 +116,7 @@ public class TimesheetsApiImpl implements TimesheetsApi {
     }
 
     @Override
-    public TimeEntry stop(TimeEntryReference timeEntryReference) {
+    public TimeEntry stop(Reference<TimeEntry> timeEntryReference) {
         Call<TimeEntry> call = service.stop(timeEntryReference.getId());
         TimeEntry entry = ExceptionHandler.callOrThrow(call);
 

@@ -5,9 +5,10 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
-import ch.aaap.harvestclient.domain.reference.ClientReference;
-import ch.aaap.harvestclient.domain.reference.ProjectReference;
-import ch.aaap.harvestclient.domain.reference.UserReference;
+import ch.aaap.harvestclient.domain.Client;
+import ch.aaap.harvestclient.domain.Project;
+import ch.aaap.harvestclient.domain.User;
+import ch.aaap.harvestclient.domain.reference.Reference;
 
 /**
  * Contains all possible ways to filter a timeentries list. Comments on
@@ -19,17 +20,17 @@ public class TimeEntryListFilter {
     /**
      * Only return time entries belonging to given user.
      */
-    private UserReference userReference;
+    private Reference<User> userReference;
 
     /**
      * Only return time entries belonging to the given client.
      */
-    private ClientReference clientReference;
+    private Reference<Client> clientReference;
 
     /**
      * Only return time entries belonging to the given project.
      */
-    private ProjectReference projectReference;
+    private Reference<Project> projectReference;
 
     /**
      * Pass true to only return time entries that have been invoiced and false to
@@ -93,27 +94,27 @@ public class TimeEntryListFilter {
         return map;
     }
 
-    public UserReference getUserReference() {
+    public Reference<User> getUserReference() {
         return userReference;
     }
 
-    public void setUserReference(UserReference userReference) {
+    public void setUserReference(Reference<User> userReference) {
         this.userReference = userReference;
     }
 
-    public ClientReference getClientReference() {
+    public Reference<Client> getClientReference() {
         return clientReference;
     }
 
-    public void setClientReference(ClientReference clientReference) {
+    public void setClientReference(Reference<Client> clientReference) {
         this.clientReference = clientReference;
     }
 
-    public ProjectReference getProjectReference() {
+    public Reference<Project> getProjectReference() {
         return projectReference;
     }
 
-    public void setProjectReference(ProjectReference projectReference) {
+    public void setProjectReference(Reference<Project> projectReference) {
         this.projectReference = projectReference;
     }
 

@@ -4,11 +4,10 @@ import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import ch.aaap.harvestclient.domain.reference.RoleReference;
-import ch.aaap.harvestclient.domain.reference.UserReference;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.domain.reference.dto.UserReferenceDto;
 
-public class Role implements RoleReference {
+public class Role implements Reference<Role> {
 
     private Long id;
 
@@ -23,7 +22,7 @@ public class Role implements RoleReference {
 
     private Instant updatedAt;
 
-    public List<UserReference> getUserIds() {
+    public List<Reference<User>> getUserIds() {
         return userIds.stream().map(UserReferenceDto::new).collect(Collectors.toList());
     }
 

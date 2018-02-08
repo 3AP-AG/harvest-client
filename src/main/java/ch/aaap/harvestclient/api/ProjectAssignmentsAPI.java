@@ -4,13 +4,14 @@ import java.time.Instant;
 import java.util.List;
 
 import ch.aaap.harvestclient.domain.ProjectAssignment;
-import ch.aaap.harvestclient.domain.reference.UserReference;
+import ch.aaap.harvestclient.domain.User;
+import ch.aaap.harvestclient.domain.reference.Reference;
 
 /**
  * Admin permissions required, except when retrieving the currently
  * authenticated user’s project assignments.
  */
-public interface ProjectAssignmentsAPI {
+public interface ProjectAssignmentsApi {
 
     /**
      * List all Project Assignment for a User, sorted by creation date, newest
@@ -20,7 +21,7 @@ public interface ProjectAssignmentsAPI {
      *            which user to get the ProjectAssignment for
      * @return a List of all ProjectAssignment for the user
      */
-    default List<ProjectAssignment> list(UserReference userReference) {
+    default List<ProjectAssignment> list(Reference<User> userReference) {
         return list(userReference, null);
     }
 
@@ -35,7 +36,7 @@ public interface ProjectAssignmentsAPI {
      *            which user to get the ProjectAssignment for
      * @return a List of ProjectAssignment for the user, filtered accordingly
      */
-    List<ProjectAssignment> list(UserReference userReference, Instant updatedSince);
+    List<ProjectAssignment> list(Reference<User> userReference, Instant updatedSince);
 
     /**
      *

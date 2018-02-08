@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import ch.aaap.harvestclient.HarvestTest;
-import ch.aaap.harvestclient.api.ProjectAssignmentsAPI;
+import ch.aaap.harvestclient.api.ProjectAssignmentsApi;
 import ch.aaap.harvestclient.core.Harvest;
 import ch.aaap.harvestclient.domain.ProjectAssignment;
 import ch.aaap.harvestclient.domain.User;
-import ch.aaap.harvestclient.domain.reference.UserReference;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import util.TestSetupUtil;
 
 @HarvestTest
@@ -20,16 +20,16 @@ class ProjectAssignmentsApiImplTest {
 
     private Harvest harvest = TestSetupUtil.getAdminAccess();
 
-    private ProjectAssignmentsAPI projectAssignmentsAPI = harvest.projectAssignments();
+    private ProjectAssignmentsApi projectAssignmentsApi = harvest.projectAssignments();
 
     private User fixUser = harvest.users().getSelf();
 
     @Test
     void listUpdatedSinceNow() {
 
-        UserReference userReference = fixUser;
+        Reference<User> userReference = fixUser;
         Instant updatedSince = Instant.now();
-        List<ProjectAssignment> projectAssignments = projectAssignmentsAPI.list(userReference, updatedSince);
+        List<ProjectAssignment> projectAssignments = projectAssignmentsApi.list(userReference, updatedSince);
 
         // nothing was created just now
         assertThat(projectAssignments).isEmpty();
@@ -39,9 +39,9 @@ class ProjectAssignmentsApiImplTest {
     @Test
     void listUpdatedSinceLongAgo() {
 
-        UserReference userReference = fixUser;
+        Reference<User> userReference = fixUser;
         Instant updatedSince = Instant.ofEpochSecond(0);
-        List<ProjectAssignment> projectAssignments = projectAssignmentsAPI.list(userReference, updatedSince);
+        List<ProjectAssignment> projectAssignments = projectAssignmentsApi.list(userReference, updatedSince);
 
         assertThat(projectAssignments).isNotEmpty();
 
@@ -50,9 +50,9 @@ class ProjectAssignmentsApiImplTest {
     @Test
     void listNoFilter() {
 
-        UserReference userReference = fixUser;
+        Reference<User> userReference = fixUser;
 
-        List<ProjectAssignment> projectAssignments = projectAssignmentsAPI.list(userReference);
+        List<ProjectAssignment> projectAssignments = projectAssignmentsApi.list(userReference);
 
         assertThat(projectAssignments).isNotEmpty();
 
@@ -61,9 +61,9 @@ class ProjectAssignmentsApiImplTest {
     @Test
     void listSelf() {
 
-        List<ProjectAssignment> projectAssignments = projectAssignmentsAPI.listSelf();
+        List<ProjectAssignment> projectAssignments = projectAssignmentsApi.listSelf();
 
-        // TODO we should find a way to create assignments only for the test case
+        // TODO create from project API
         assertThat(projectAssignments).isNotEmpty();
     }
 }

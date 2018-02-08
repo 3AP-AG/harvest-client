@@ -5,7 +5,7 @@ import java.util.List;
 
 import ch.aaap.harvestclient.domain.User;
 import ch.aaap.harvestclient.domain.param.UserCreationInfo;
-import ch.aaap.harvestclient.domain.reference.UserReference;
+import ch.aaap.harvestclient.domain.reference.Reference;
 
 public interface UsersApi {
 
@@ -58,7 +58,7 @@ public interface UsersApi {
      *            a reference to an existing User
      * @return the full User object
      */
-    User get(UserReference userReference);
+    User get(Reference<User> userReference);
 
     /**
      * Change an existing user.
@@ -70,7 +70,7 @@ public interface UsersApi {
      *            be left as is.
      * @return the updated User
      */
-    User update(UserReference user, User toChange);
+    User update(Reference<User> user, User toChange);
 
     /**
      * Delete a user. Deleting a user is only possible if they have no time entries
@@ -79,5 +79,5 @@ public interface UsersApi {
      * @param userReference
      *            a reference to an existing User to be deleted
      */
-    void delete(UserReference userReference);
+    void delete(Reference<User> userReference);
 }

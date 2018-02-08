@@ -13,8 +13,12 @@ import com.typesafe.config.ConfigFactory;
 
 import ch.aaap.harvestclient.core.Harvest;
 import ch.aaap.harvestclient.domain.Client;
+import ch.aaap.harvestclient.domain.Project;
+import ch.aaap.harvestclient.domain.Task;
 import ch.aaap.harvestclient.domain.TimeEntry;
 import ch.aaap.harvestclient.domain.param.UserCreationInfo;
+import ch.aaap.harvestclient.domain.reference.Reference;
+import ch.aaap.harvestclient.domain.reference.dto.ProjectReferenceDto;
 
 public class TestSetupUtil {
 
@@ -39,6 +43,16 @@ public class TestSetupUtil {
         client.setId(6422922L);
 
         return client;
+    }
+
+    public static Project getExistingProject() {
+        Reference<Project> projectReference = new ProjectReferenceDto(16227254);
+        return getAdminAccess().projects().get(projectReference);
+    }
+
+    public static Task getExistingTask() {
+        // TODO implement TasksApi
+        return null;
     }
 
     public static TimeEntry getFixedTimeEntry() {

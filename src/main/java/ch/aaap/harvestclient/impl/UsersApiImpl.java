@@ -11,7 +11,7 @@ import ch.aaap.harvestclient.api.UsersApi;
 import ch.aaap.harvestclient.domain.User;
 import ch.aaap.harvestclient.domain.pagination.PaginatedUser;
 import ch.aaap.harvestclient.domain.param.UserCreationInfo;
-import ch.aaap.harvestclient.domain.reference.UserReference;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.service.UserService;
 import retrofit2.Call;
 
@@ -67,13 +67,13 @@ public class UsersApiImpl implements UsersApi {
     }
 
     @Override
-    public User get(UserReference userReference) {
+    public User get(Reference<User> userReference) {
         Call<User> call = service.get(userReference.getId());
         return ExceptionHandler.callOrThrow(call);
     }
 
     @Override
-    public User update(UserReference userReference, User toChange) {
+    public User update(Reference<User> userReference, User toChange) {
 
         log.debug("Updating properties {} for user {}", userReference, toChange);
 
@@ -83,7 +83,7 @@ public class UsersApiImpl implements UsersApi {
     }
 
     @Override
-    public void delete(UserReference userReference) {
+    public void delete(Reference<User> userReference) {
         log.debug("Deleting user {}", userReference);
         Call<Void> call = service.delete(userReference.getId());
         ExceptionHandler.callOrThrow(call);

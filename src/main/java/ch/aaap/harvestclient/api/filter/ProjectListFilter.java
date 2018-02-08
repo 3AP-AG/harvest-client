@@ -4,7 +4,8 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
-import ch.aaap.harvestclient.domain.reference.ClientReference;
+import ch.aaap.harvestclient.domain.Client;
+import ch.aaap.harvestclient.domain.reference.Reference;
 
 /**
  * Ways to filter a Project list. Not setting a field means no filtering on the
@@ -21,7 +22,7 @@ public class ProjectListFilter {
     /**
      * Only return projects belonging to the client with the given ID.
      */
-    private ClientReference clientReference;
+    private Reference<Client> clientReference;
 
     /**
      * Only return projects that have been updated since the given date and time.
@@ -53,11 +54,11 @@ public class ProjectListFilter {
         this.active = active;
     }
 
-    public ClientReference getClientReference() {
+    public Reference<Client> getClientReference() {
         return clientReference;
     }
 
-    public void setClientReference(ClientReference clientReference) {
+    public void setClientReference(Reference<Client> clientReference) {
         this.clientReference = clientReference;
     }
 

@@ -1,8 +1,9 @@
 package ch.aaap.harvestclient.domain.reference.dto;
 
-import ch.aaap.harvestclient.domain.reference.UserReference;
+import ch.aaap.harvestclient.domain.User;
+import ch.aaap.harvestclient.domain.reference.Reference;
 
-public class UserReferenceDto extends BaseReferenceDto implements UserReference {
+public class UserReferenceDto extends BaseReferenceDto implements Reference<User> {
 
     public UserReferenceDto() {
     }

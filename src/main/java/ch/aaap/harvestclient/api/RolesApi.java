@@ -3,9 +3,9 @@ package ch.aaap.harvestclient.api;
 import java.util.List;
 
 import ch.aaap.harvestclient.domain.Role;
+import ch.aaap.harvestclient.domain.User;
 import ch.aaap.harvestclient.domain.param.RoleInfo;
-import ch.aaap.harvestclient.domain.reference.RoleReference;
-import ch.aaap.harvestclient.domain.reference.UserReference;
+import ch.aaap.harvestclient.domain.reference.Reference;
 
 public interface RolesApi {
 
@@ -22,7 +22,7 @@ public interface RolesApi {
      *            a reference to an existing Role
      * @return the full Role object
      */
-    Role get(RoleReference roleReference);
+    Role get(Reference<Role> roleReference);
 
     /**
      * Create a new Role
@@ -43,7 +43,7 @@ public interface RolesApi {
      *            the changes to be performed
      * @return the updated Role
      */
-    Role update(RoleReference roleReference, RoleInfo toChange);
+    Role update(Reference<Role> roleReference, RoleInfo toChange);
 
     /**
      * Add a role to a user
@@ -54,7 +54,7 @@ public interface RolesApi {
      *            the user that will be assigned the role
      * @return the updated Role
      */
-    Role addUser(RoleReference roleReference, UserReference userReference);
+    Role addUser(Reference<Role> roleReference, Reference<User> userReference);
 
     /**
      * Removes the given role from the given user
@@ -65,11 +65,11 @@ public interface RolesApi {
      *            the user that will lose the role
      * @return the updated Role
      */
-    Role removeUser(RoleReference roleReference, UserReference userReference);
+    Role removeUser(Reference<Role> roleReference, Reference<User> userReference);
 
     /**
      * Delete an existing Role. Will unlink it from any users assigned to it.
      */
-    void delete(RoleReference roleReference);
+    void delete(Reference<Role> roleReference);
 
 }

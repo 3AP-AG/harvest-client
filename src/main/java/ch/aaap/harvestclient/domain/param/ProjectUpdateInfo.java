@@ -1,7 +1,8 @@
 package ch.aaap.harvestclient.domain.param;
 
+import ch.aaap.harvestclient.domain.Client;
 import ch.aaap.harvestclient.domain.Project;
-import ch.aaap.harvestclient.domain.reference.ClientReference;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.domain.reference.dto.ClientReferenceDto;
 
 public class ProjectUpdateInfo extends Project {
@@ -11,7 +12,7 @@ public class ProjectUpdateInfo extends Project {
      */
     private Long clientId;
 
-    public void setClientReference(ClientReference clientReference) {
+    public void setClientReference(Reference<Client> clientReference) {
         clientId = clientReference.getId();
     }
 

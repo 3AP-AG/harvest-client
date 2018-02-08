@@ -6,7 +6,7 @@ import ch.aaap.harvestclient.api.filter.ProjectListFilter;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.param.ProjectCreationInfo;
 import ch.aaap.harvestclient.domain.param.ProjectUpdateInfo;
-import ch.aaap.harvestclient.domain.reference.ProjectReference;
+import ch.aaap.harvestclient.domain.reference.Reference;
 
 public interface ProjectsApi {
 
@@ -25,7 +25,7 @@ public interface ProjectsApi {
      *            a reference to an existing Project
      * @return Return a full Project object
      */
-    Project get(ProjectReference projectReference);
+    Project get(Reference<Project> projectReference);
 
     /**
      * Create a new Project according to given creation information.
@@ -45,7 +45,7 @@ public interface ProjectsApi {
      *            the properties to be updated
      * @return the updated Project
      */
-    Project update(ProjectReference projectReference, ProjectUpdateInfo toChange);
+    Project update(Reference<Project> projectReference, ProjectUpdateInfo toChange);
 
     /**
      * Delete an existing Project. Careful with this API! It also deletes
@@ -56,6 +56,6 @@ public interface ProjectsApi {
      * @param projectReference
      *            a reference to an existing Project to be deleted
      */
-    void delete(ProjectReference projectReference);
+    void delete(Reference<Project> projectReference);
 
 }

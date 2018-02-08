@@ -5,10 +5,10 @@ import java.time.LocalDate;
 
 import com.google.gson.annotations.SerializedName;
 
-import ch.aaap.harvestclient.domain.reference.ProjectReference;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.domain.reference.dto.ClientReferenceDto;
 
-public class Project implements ProjectReference {
+public class Project implements Reference<Project> {
 
     public enum BillingMethod {
 
