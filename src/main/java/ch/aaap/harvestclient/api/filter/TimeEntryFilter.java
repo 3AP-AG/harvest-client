@@ -15,7 +15,7 @@ import ch.aaap.harvestclient.domain.reference.Reference;
  * individual fields comes from the Harvest v2 API documentiation
  * 
  */
-public class TimeEntryListFilter {
+public class TimeEntryFilter {
 
     /**
      * Only return time entries belonging to given user.
@@ -59,8 +59,8 @@ public class TimeEntryListFilter {
      */
     private LocalDate to;
 
-    public static TimeEntryListFilter emptyFilter() {
-        return new TimeEntryListFilter();
+    public static TimeEntryFilter emptyFilter() {
+        return new TimeEntryFilter();
     }
 
     public Map<String, Object> toMap() {

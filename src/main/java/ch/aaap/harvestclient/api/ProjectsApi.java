@@ -2,7 +2,7 @@ package ch.aaap.harvestclient.api;
 
 import java.util.List;
 
-import ch.aaap.harvestclient.api.filter.ProjectListFilter;
+import ch.aaap.harvestclient.api.filter.ProjectFilter;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.param.ProjectCreationInfo;
 import ch.aaap.harvestclient.domain.param.ProjectUpdateInfo;
@@ -18,7 +18,7 @@ public interface ProjectsApi {
      *            filtering options
      * @return a (filtered) list of Projects
      */
-    List<Project> list(ProjectListFilter filter);
+    List<Project> list(ProjectFilter filter);
 
     /**
      * @param projectReference

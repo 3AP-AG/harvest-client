@@ -2,7 +2,7 @@ package ch.aaap.harvestclient.api;
 
 import java.util.List;
 
-import ch.aaap.harvestclient.api.filter.TaskAssignmentListFilter;
+import ch.aaap.harvestclient.api.filter.TaskAssignmentFilter;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.TaskAssignment;
 import ch.aaap.harvestclient.domain.param.TaskAssignmentCreationInfo;
@@ -11,7 +11,7 @@ import ch.aaap.harvestclient.domain.reference.Reference;
 
 public interface TaskAssignmentsApi {
 
-    List<TaskAssignment> list(Reference<Project> projectReference, TaskAssignmentListFilter filter);
+    List<TaskAssignment> list(Reference<Project> projectReference, TaskAssignmentFilter filter);
 
     TaskAssignment get(Reference<Project> projectReference, Reference<TaskAssignment> taskAssignmentReference);
 

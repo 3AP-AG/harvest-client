@@ -4,21 +4,18 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TaskAssignmentListFilter implements ListFilter {
+public class ActiveAndUpdatedFilter {
 
     /**
-     * Pass true to only return active task assignments and false to return inactive
-     * task assignments.
+     * Pass true to only return active objects and false to return inactive objects.
      */
     private Boolean active;
 
     /**
-     * Only return task assignments that have been updated since the given date and
-     * time.
+     * Only return objects that have been updated since the given date and time.
      */
     private Instant updatedSince;
 
-    @Override
     public Map<String, Object> toMap() {
 
         Map<String, Object> map = new HashMap<>();
@@ -32,4 +29,5 @@ public class TaskAssignmentListFilter implements ListFilter {
 
         return map;
     }
+
 }

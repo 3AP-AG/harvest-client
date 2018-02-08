@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.TimesheetsApi;
-import ch.aaap.harvestclient.api.filter.TimeEntryListFilter;
+import ch.aaap.harvestclient.api.filter.TimeEntryFilter;
 import ch.aaap.harvestclient.domain.TimeEntry;
 import util.TestSetupUtil;
 
@@ -22,7 +22,7 @@ class TimesheetsApiListTest {
     @Test
     public void testList() {
 
-        List<TimeEntry> timeEntries = api.list(TimeEntryListFilter.emptyFilter());
+        List<TimeEntry> timeEntries = api.list(TimeEntryFilter.emptyFilter());
 
         assertTrue(timeEntries.size() > 0);
     }
@@ -30,7 +30,7 @@ class TimesheetsApiListTest {
     @Test
     public void testListFilterByUser() {
 
-        TimeEntryListFilter filter = new TimeEntryListFilter();
+        TimeEntryFilter filter = new TimeEntryFilter();
         filter.setUserReference(fixEntry.getUser());
 
         List<TimeEntry> entries = api.list(filter);

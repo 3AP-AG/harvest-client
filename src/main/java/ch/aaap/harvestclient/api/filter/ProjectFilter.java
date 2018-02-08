@@ -11,7 +11,7 @@ import ch.aaap.harvestclient.domain.reference.Reference;
  * Ways to filter a Project list. Not setting a field means no filtering on the
  * field will be done.
  */
-public class ProjectListFilter {
+public class ProjectFilter {
 
     /**
      * Pass true to only return active projects and false to return inactive
@@ -72,14 +72,14 @@ public class ProjectListFilter {
 
     @Override
     public String toString() {
-        return "ProjectListFilter{" +
+        return "ProjectFilter{" +
                 "active=" + active +
                 ", clientReference=" + clientReference +
                 ", updatedSince=" + updatedSince +
                 '}';
     }
 
-    public static ProjectListFilter emptyFilter() {
-        return new ProjectListFilter();
+    public static ProjectFilter emptyFilter() {
+        return new ProjectFilter();
     }
 }

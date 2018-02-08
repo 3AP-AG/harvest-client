@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.TimesheetsApi;
-import ch.aaap.harvestclient.api.filter.TimeEntryListFilter;
+import ch.aaap.harvestclient.api.filter.TimeEntryFilter;
 import ch.aaap.harvestclient.domain.TimeEntry;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoDuration;
 import ch.aaap.harvestclient.domain.param.TimeEntryUpdateInfo;
@@ -146,7 +146,7 @@ public class TimeSheetsApiUpdateTest {
     // @Test
     public void deleteAllOfToday() {
 
-        TimeEntryListFilter filter = new TimeEntryListFilter();
+        TimeEntryFilter filter = new TimeEntryFilter();
         filter.setFrom(LocalDate.now());
 
         List<TimeEntry> list = api.list(filter);

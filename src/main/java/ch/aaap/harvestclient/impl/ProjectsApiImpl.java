@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ch.aaap.harvestclient.api.ProjectsApi;
-import ch.aaap.harvestclient.api.filter.ProjectListFilter;
+import ch.aaap.harvestclient.api.filter.ProjectFilter;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.pagination.PaginatedProject;
 import ch.aaap.harvestclient.domain.param.ProjectCreationInfo;
@@ -28,7 +28,7 @@ public class ProjectsApiImpl implements ProjectsApi {
     }
 
     @Override
-    public List<Project> list(ProjectListFilter filter) {
+    public List<Project> list(ProjectFilter filter) {
         Integer nextPage = 1;
 
         List<Project> projects = new ArrayList<>();
