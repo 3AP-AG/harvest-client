@@ -45,8 +45,9 @@ public class Harvest {
 
     private final String userAgent;
     private final RolesApi rolesApi;
-    private final ProjectAssignmentsApiImpl projectAssignmentsApi;
-    private final ProjectsApiImpl projectsApi;
+    private final ProjectAssignmentsApi projectAssignmentsApi;
+    private final ProjectsApi projectsApi;
+    private final TaskAssignmentsApi taskAssignmentsApi;
 
     private TimesheetsApi timesheetsApi;
 
@@ -87,6 +88,7 @@ public class Harvest {
         RoleService roleService = retrofit.create(RoleService.class);
         ProjectAssignmentService projectAssignmentService = retrofit.create(ProjectAssignmentService.class);
         ProjectService projectService = retrofit.create(ProjectService.class);
+        TaskAssignmentService taskAssignmentService = retrofit.create(TaskAssignmentService.class);
 
         timesheetsApi = new TimesheetsApiImpl(timeEntryService);
         usersApi = new UsersApiImpl(userService);
@@ -94,6 +96,7 @@ public class Harvest {
         rolesApi = new RolesApiImpl(roleService);
         projectAssignmentsApi = new ProjectAssignmentsApiImpl(projectAssignmentService);
         projectsApi = new ProjectsApiImpl(projectService);
+        taskAssignmentsApi = new TaskAssignmentsApiImpl(taskAssignmentService);
 
         log.debug("Harvest client initialized");
 
@@ -148,5 +151,9 @@ public class Harvest {
 
     public ProjectsApi projects() {
         return projectsApi;
+    }
+
+    public TaskAssignmentsApi taskAssignments() {
+        return taskAssignmentsApi;
     }
 }
