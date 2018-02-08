@@ -30,4 +30,19 @@ public class ActiveAndUpdatedFilter {
         return map;
     }
 
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public Instant getUpdatedSince() {
+        return updatedSince;
+    }
+
+    public void setUpdatedSince(Instant updatedSince) {
+        this.updatedSince = updatedSince;
+    }
 }

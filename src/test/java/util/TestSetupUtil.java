@@ -19,6 +19,7 @@ import ch.aaap.harvestclient.domain.TimeEntry;
 import ch.aaap.harvestclient.domain.param.UserCreationInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.domain.reference.dto.ProjectReferenceDto;
+import ch.aaap.harvestclient.domain.reference.dto.TaskReferenceDto;
 
 public class TestSetupUtil {
 
@@ -51,8 +52,8 @@ public class TestSetupUtil {
     }
 
     public static Task getExistingTask() {
-        // TODO implement TasksApi
-        return null;
+        return getAdminAccess().tasks().get(new TaskReferenceDto(9113406));
+
     }
 
     public static TimeEntry getFixedTimeEntry() {
