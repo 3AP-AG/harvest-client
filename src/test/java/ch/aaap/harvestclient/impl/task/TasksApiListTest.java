@@ -57,11 +57,12 @@ public class TasksApiListTest {
     @Test
     void listByUpdatedSince() {
 
+        Instant creationTime = Instant.now().minusSeconds(1);
         TaskCreationInfo creationInfo = new TaskCreationInfo("newly created test Task");
         task = tasksApi.create(creationInfo);
 
         TaskFilter filter = new TaskFilter();
-        filter.setUpdatedSince(Instant.now().minusSeconds(1));
+        filter.setUpdatedSince(creationTime);
 
         List<Task> tasks = tasksApi.list(filter);
 

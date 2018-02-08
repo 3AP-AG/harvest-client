@@ -19,6 +19,7 @@ import ch.aaap.harvestclient.domain.Client;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.param.ProjectCreationInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
+import util.ExistingData;
 import util.TestSetupUtil;
 
 @HarvestTest
@@ -43,7 +44,7 @@ public class ProjectsApiCreateTest {
     @EnumSource(Project.BillingMethod.class)
     void createDefaultBilling(Project.BillingMethod billingMethod, TestInfo testInfo) {
 
-        Reference<Client> clientReference = TestSetupUtil.getExistingClient();
+        Reference<Client> clientReference = ExistingData.getInstance().getClient();
         String name = "Project for test " + testInfo.getDisplayName();
         boolean billable = true;
         Project.BillingMethod billBy = billingMethod;
@@ -63,7 +64,7 @@ public class ProjectsApiCreateTest {
     @EnumSource(Project.BudgetMethod.class)
     void createDefaultBudget(Project.BudgetMethod budgetMethod, TestInfo testInfo) {
 
-        Reference<Client> clientReference = TestSetupUtil.getExistingClient();
+        Reference<Client> clientReference = ExistingData.getInstance().getClient();
         String name = "Project for test " + testInfo.getDisplayName();
         boolean billable = true;
         Project.BillingMethod billBy = Project.BillingMethod.PROJECT;
@@ -82,7 +83,7 @@ public class ProjectsApiCreateTest {
     @Test
     void createAllOptions(TestInfo testInfo) {
 
-        Reference<Client> clientReference = TestSetupUtil.getExistingClient();
+        Reference<Client> clientReference = ExistingData.getInstance().getClient();
         String name = "Project for test " + testInfo.getDisplayName();
         boolean billable = true;
         Project.BillingMethod billBy = Project.BillingMethod.PROJECT;
@@ -140,7 +141,7 @@ public class ProjectsApiCreateTest {
     @Test
     void createFixedFee(TestInfo testInfo) {
 
-        Reference<Client> clientReference = TestSetupUtil.getExistingClient();
+        Reference<Client> clientReference = ExistingData.getInstance().getClient();
         String name = "Project for test " + testInfo.getDisplayName();
         boolean billable = true;
         Project.BillingMethod billBy = Project.BillingMethod.TASKS;
