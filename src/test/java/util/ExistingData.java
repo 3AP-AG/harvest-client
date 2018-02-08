@@ -18,7 +18,9 @@ public class ExistingData {
     }
 
     private final Task task;
+    private final Task anotherTask;
     private final Client client;
+
     private final Project project;
     private final TimeEntry timeEntry;
 
@@ -28,6 +30,8 @@ public class ExistingData {
 
         project = harvest.projects().get(new ProjectReferenceDto(16227254));
         task = harvest.tasks().get(new TaskReferenceDto(9231203));
+
+        anotherTask = harvest.tasks().get(new TaskReferenceDto(9231203));
 
         TimeEntry entry = new TimeEntry();
         entry.setId(738720479L);
@@ -40,6 +44,10 @@ public class ExistingData {
 
     public Task getTask() {
         return task;
+    }
+
+    public Task getAnotherTask() {
+        return anotherTask;
     }
 
     public Client getClient() {
