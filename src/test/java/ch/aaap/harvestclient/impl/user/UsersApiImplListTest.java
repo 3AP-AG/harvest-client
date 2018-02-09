@@ -16,9 +16,9 @@ import ch.aaap.harvestclient.domain.param.UserCreationInfo;
 import util.TestSetupUtil;
 
 @HarvestTest
-public class UsersApiImplListTest {
+class UsersApiImplListTest {
 
-    private static UsersApi api = TestSetupUtil.getAdminAccess().users();
+    private static final UsersApi api = TestSetupUtil.getAdminAccess().users();
 
     private static User activeUser;
 
@@ -74,7 +74,7 @@ public class UsersApiImplListTest {
     }
 
     @Test
-    void listFilterByUpdatedSince() throws InterruptedException {
+    void listFilterByUpdatedSince() {
 
         List<User> allUsers = api.list();
         List<User> newUsers = api.list(null, userCreationTime);

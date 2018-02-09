@@ -16,12 +16,12 @@ import util.TestSetupUtil;
 @HarvestTest
 class TimesheetsApiListTest {
 
-    private static TimesheetsApi api = TestSetupUtil.getAdminAccess().timesheets();
+    private static final TimesheetsApi api = TestSetupUtil.getAdminAccess().timesheets();
 
-    private static TimeEntry fixEntry = ExistingData.getInstance().getTimeEntry();
+    private static final TimeEntry fixEntry = ExistingData.getInstance().getTimeEntry();
 
     @Test
-    public void testList() {
+    void testList() {
 
         List<TimeEntry> timeEntries = api.list(TimeEntryFilter.emptyFilter());
 
@@ -29,7 +29,7 @@ class TimesheetsApiListTest {
     }
 
     @Test
-    public void testListFilterByUser() {
+    void testListFilterByUser() {
 
         TimeEntryFilter filter = new TimeEntryFilter();
         filter.setUserReference(fixEntry.getUser());

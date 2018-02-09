@@ -10,6 +10,9 @@ import ch.aaap.harvestclient.domain.reference.Reference;
 
 public interface TasksApi {
     /**
+     *
+     * @param filter
+     *            filtering options
      * @return a list of all Tasks in the account, sorted by creation date, newest
      *         first.
      */
@@ -48,6 +51,9 @@ public interface TasksApi {
     /**
      * Delete an existing Task. Only possible if no time entries are associated with
      * it
+     * 
+     * @param taskReference
+     *            a reference to the Task to be deleted
      */
     void delete(Reference<Task> taskReference);
 

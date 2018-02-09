@@ -11,7 +11,7 @@ public class Junit5Extension implements BeforeAllCallback, BeforeEachCallback {
     private static final Logger log = LoggerFactory.getLogger(Junit5Extension.class);
 
     @Override
-    public void beforeAll(ExtensionContext context) throws Exception {
+    public void beforeAll(ExtensionContext context) {
 
         // uncomment this line before copy pasting output for Harvest Bug Report
         // TestSetupUtil.prepareForHarvestBugReport();
@@ -20,7 +20,7 @@ public class Junit5Extension implements BeforeAllCallback, BeforeEachCallback {
     }
 
     @Override
-    public void beforeEach(ExtensionContext context) throws Exception {
+    public void beforeEach(ExtensionContext context) {
 
         String testClassName = context.getRequiredTestClass().getName();
 

@@ -21,12 +21,17 @@ public class ExistingData {
     private final Task anotherTask;
     private final Client client;
 
+    private final Client anotherClient;
+
     private final Project project;
     private final TimeEntry timeEntry;
 
     private ExistingData(Harvest harvest) {
+        // TODO create this objects on first run of the tests
         client = new Client();
         client.setId(6422922L);
+        anotherClient = new Client();
+        anotherClient.setId(6493347L);
 
         project = harvest.projects().get(new ProjectReferenceDto(16227254));
         task = harvest.tasks().get(new TaskReferenceDto(9231203));
@@ -52,6 +57,10 @@ public class ExistingData {
 
     public Client getClient() {
         return client;
+    }
+
+    public Client getAnotherClient() {
+        return anotherClient;
     }
 
     public Project getProject() {

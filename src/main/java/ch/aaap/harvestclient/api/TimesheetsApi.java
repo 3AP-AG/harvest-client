@@ -14,7 +14,9 @@ public interface TimesheetsApi {
     /**
      * Return a list of all TimeEntries, filtered by the TimeEntryFilter, sorted by
      * creation date, newest first.
-     * 
+     *
+     * @param filter
+     *            filtering options
      * @return a list of all matching TimeEntry, newest first.
      */
     List<TimeEntry> list(TimeEntryFilter filter);
@@ -31,10 +33,10 @@ public interface TimesheetsApi {
     /**
      * Create a TimeEntry with a duration. If no duration is given, the TimeEntry
      * will be running, otherwise it will not be.
-     * 
+     *
      * @param creationInfo
-     *            creation information
-     * @return
+     *            creation options
+     * @return the created TimeEntry
      * @see TimeEntryCreationInfoDuration
      */
     TimeEntry create(TimeEntryCreationInfoDuration creationInfo);
@@ -44,7 +46,8 @@ public interface TimesheetsApi {
      * startTime has been given.
      * 
      * @param creationInfo
-     * @return
+     *            creation options
+     * @return the created TimeEntry
      * @see TimeEntryCreationInfoTimestamp
      */
     TimeEntry create(TimeEntryCreationInfoTimestamp creationInfo);

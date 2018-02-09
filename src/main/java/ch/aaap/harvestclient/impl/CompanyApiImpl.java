@@ -11,7 +11,7 @@ import retrofit2.Call;
 public class CompanyApiImpl implements CompanyApi {
 
     private static final Logger log = LoggerFactory.getLogger(CompanyApiImpl.class);
-    private CompanyService service;
+    private final CompanyService service;
 
     public CompanyApiImpl(CompanyService companyService) {
         this.service = companyService;
