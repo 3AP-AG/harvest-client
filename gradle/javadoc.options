@@ -1,1 +1,1 @@
--notimestamp
+-notimestamp  -noqualifier java.*:com.sun.*

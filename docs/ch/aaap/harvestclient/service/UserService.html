@@ -123,7 +123,7 @@ var activeTableTab = "activeTableTab";
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../ch/aaap/harvestclient/service/UserService.html#create-ch.aaap.harvestclient.domain.param.UserCreationInfo-">create</a></span>(<a href="../../../../ch/aaap/harvestclient/domain/param/UserCreationInfo.html" title="class in ch.aaap.harvestclient.domain.param">UserCreationInfo</a>&nbsp;userCreationInfo)</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>retrofit2.Call&lt;java.lang.Void&gt;</code></td>
+<td class="colFirst"><code>retrofit2.Call&lt;Void&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../ch/aaap/harvestclient/service/UserService.html#delete-long-">delete</a></span>(long&nbsp;userId)</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
@@ -136,8 +136,8 @@ var activeTableTab = "activeTableTab";
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>retrofit2.Call&lt;<a href="../../../../ch/aaap/harvestclient/domain/pagination/PaginatedUser.html" title="class in ch.aaap.harvestclient.domain.pagination">PaginatedUser</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../ch/aaap/harvestclient/service/UserService.html#list-java.lang.Boolean-java.time.Instant-int-int-">list</a></span>(java.lang.Boolean&nbsp;isActive,
-    java.time.Instant&nbsp;updatedSince,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../ch/aaap/harvestclient/service/UserService.html#list-java.lang.Boolean-java.time.Instant-int-int-">list</a></span>(Boolean&nbsp;isActive,
+    Instant&nbsp;updatedSince,
     int&nbsp;page,
     int&nbsp;perPage)</code>&nbsp;</td>
 </tr>
@@ -169,9 +169,9 @@ var activeTableTab = "activeTableTab";
 <h4>list</h4>
 <pre>@GET(value="users")
 retrofit2.Call&lt;<a href="../../../../ch/aaap/harvestclient/domain/pagination/PaginatedUser.html" title="class in ch.aaap.harvestclient.domain.pagination">PaginatedUser</a>&gt;&nbsp;list(@Query(value="is_active")
-                                                       java.lang.Boolean&nbsp;isActive,
+                                                       Boolean&nbsp;isActive,
                                                        @Query(value="updated_since")
-                                                       java.time.Instant&nbsp;updatedSince,
+                                                       Instant&nbsp;updatedSince,
                                                        @Query(value="page")
                                                        int&nbsp;page,
                                                        @Query(value="per_page")
@@ -230,8 +230,8 @@ retrofit2.Call&lt;<a href="../../../../ch/aaap/harvestclient/domain/User.html" t
 <li class="blockList">
 <h4>delete</h4>
 <pre>@DELETE(value="users/{userId}")
-retrofit2.Call&lt;java.lang.Void&gt;&nbsp;delete(@Path(value="userId")
-                                                                      long&nbsp;userId)</pre>
+retrofit2.Call&lt;Void&gt;&nbsp;delete(@Path(value="userId")
+                                                            long&nbsp;userId)</pre>
 </li>
 </ul>
 </li>

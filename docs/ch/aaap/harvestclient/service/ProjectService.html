@@ -123,7 +123,7 @@ var activeTableTab = "activeTableTab";
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../ch/aaap/harvestclient/service/ProjectService.html#create-ch.aaap.harvestclient.domain.param.ProjectCreationInfo-">create</a></span>(<a href="../../../../ch/aaap/harvestclient/domain/param/ProjectCreationInfo.html" title="class in ch.aaap.harvestclient.domain.param">ProjectCreationInfo</a>&nbsp;projectCreationInfo)</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>retrofit2.Call&lt;java.lang.Void&gt;</code></td>
+<td class="colFirst"><code>retrofit2.Call&lt;Void&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../ch/aaap/harvestclient/service/ProjectService.html#delete-long-">delete</a></span>(long&nbsp;projectId)</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
@@ -132,7 +132,7 @@ var activeTableTab = "activeTableTab";
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>retrofit2.Call&lt;<a href="../../../../ch/aaap/harvestclient/domain/pagination/PaginatedProject.html" title="class in ch.aaap.harvestclient.domain.pagination">PaginatedProject</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../ch/aaap/harvestclient/service/ProjectService.html#list-java.util.Map-">list</a></span>(java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;options)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../ch/aaap/harvestclient/service/ProjectService.html#list-java.util.Map-">list</a></span>(Map&lt;String,Object&gt;&nbsp;options)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>retrofit2.Call&lt;<a href="../../../../ch/aaap/harvestclient/domain/Project.html" title="class in ch.aaap.harvestclient.domain">Project</a>&gt;</code></td>
@@ -162,7 +162,7 @@ var activeTableTab = "activeTableTab";
 <h4>list</h4>
 <pre>@GET(value="projects")
 retrofit2.Call&lt;<a href="../../../../ch/aaap/harvestclient/domain/pagination/PaginatedProject.html" title="class in ch.aaap.harvestclient.domain.pagination">PaginatedProject</a>&gt;&nbsp;list(@QueryMap
-                                                             java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;options)</pre>
+                                                             Map&lt;String,Object&gt;&nbsp;options)</pre>
 </li>
 </ul>
 <a name="get-long-">
@@ -207,8 +207,8 @@ retrofit2.Call&lt;<a href="../../../../ch/aaap/harvestclient/domain/Project.html
 <li class="blockList">
 <h4>delete</h4>
 <pre>@DELETE(value="projects/{projectId}")
-retrofit2.Call&lt;java.lang.Void&gt;&nbsp;delete(@Path(value="projectId")
-                                                                            long&nbsp;projectId)</pre>
+retrofit2.Call&lt;Void&gt;&nbsp;delete(@Path(value="projectId")
+                                                                  long&nbsp;projectId)</pre>
 </li>
 </ul>
 </li>
