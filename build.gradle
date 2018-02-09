@@ -87,6 +87,7 @@ task javadocJar(type: Jar) {
 javadoc {
     // github is set to publish this folder
     destinationDir file("docs")
+    options.optionFiles << file('gradle/javadoc.options')
 }
 
 // Create the publication with the pom configuration:
