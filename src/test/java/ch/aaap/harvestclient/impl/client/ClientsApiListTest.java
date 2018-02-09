@@ -1,4 +1,4 @@
-package ch.aaap.harvestclient.impl.client.client;
+package ch.aaap.harvestclient.impl.client;
 
 import java.time.Instant;
 import java.util.List;
