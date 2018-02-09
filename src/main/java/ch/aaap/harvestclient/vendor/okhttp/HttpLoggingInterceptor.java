@@ -39,6 +39,8 @@ import okio.BufferedSource;
  * The format of the logs created by this class should not be considered stable
  * and may change slightly between releases. If you need a stable logging
  * format, use your own interceptor.
+ * <p>
+ * This custom version redacts security sensitive headers like "Authorization"
  */
 public final class HttpLoggingInterceptor implements Interceptor {
     private static final Charset UTF8 = Charset.forName("UTF-8");

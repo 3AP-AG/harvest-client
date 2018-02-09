@@ -21,7 +21,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Note: Harvest datatype mappings: {@literal
+ * Main client class. All API access starts from this.
+ * <p>
+ *
+ *
+ *
+ * Note for developers: Harvest datatype mappings: {@literal
  * boolean -> Boolean
  * string -> String
  * integer-> Long
