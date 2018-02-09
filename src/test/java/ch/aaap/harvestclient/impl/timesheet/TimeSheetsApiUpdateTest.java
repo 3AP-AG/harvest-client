@@ -20,17 +20,17 @@ import util.ExistingData;
 import util.TestSetupUtil;
 
 @HarvestTest
-public class TimeSheetsApiUpdateTest {
+class TimeSheetsApiUpdateTest {
 
     private static final Logger log = LoggerFactory.getLogger(TimeSheetsApiUpdateTest.class);
 
-    private static TimesheetsApi api = TestSetupUtil.getAdminAccess().timesheets();
-    private static TimeEntry fixEntry = ExistingData.getInstance().getTimeEntry();
+    private static final TimesheetsApi api = TestSetupUtil.getAdminAccess().timesheets();
+    private static final TimeEntry fixEntry = ExistingData.getInstance().getTimeEntry();
 
     private static TimeEntry entry;
 
     @BeforeEach
-    public void beforeEach(TestInfo testInfo) {
+    void beforeEach(TestInfo testInfo) {
 
         log.debug("Creating entry for test " + testInfo.getDisplayName());
 
@@ -48,7 +48,7 @@ public class TimeSheetsApiUpdateTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
 
         if (entry != null) {
             api.delete(entry);
@@ -56,7 +56,7 @@ public class TimeSheetsApiUpdateTest {
     }
 
     @Test
-    public void testChangeDuration() {
+    void testChangeDuration() {
 
         TimeEntryUpdateInfo updateInfo = new TimeEntryUpdateInfo();
         updateInfo.setHours(3.);
@@ -66,7 +66,7 @@ public class TimeSheetsApiUpdateTest {
     }
 
     @Test
-    public void testChangeNotes() {
+    void testChangeNotes() {
 
         String newNotes = "This is an updated note";
         TimeEntryUpdateInfo updateInfo = new TimeEntryUpdateInfo();
@@ -78,7 +78,7 @@ public class TimeSheetsApiUpdateTest {
 
     @Test
     @Disabled("needs second test account")
-    public void testChangeStartedTime(TestInfo testInfo) {
+    void testChangeStartedTime(TestInfo testInfo) {
 
         log.debug("Creating entry for test " + testInfo.getDisplayName());
 
@@ -106,7 +106,7 @@ public class TimeSheetsApiUpdateTest {
     }
 
     @Test
-    public void testChangeAll() {
+    void testChangeAll() {
 
         String newNotes = "This is an updated note";
         double hours = 5.;
@@ -126,7 +126,7 @@ public class TimeSheetsApiUpdateTest {
     }
 
     @Test
-    public void testStopAndRestart() {
+    void testStopAndRestart() {
 
         assertThat(entry.getRunning()).isFalse();
 
@@ -145,10 +145,10 @@ public class TimeSheetsApiUpdateTest {
      * Uncomment the Test annotation to run
      */
     // @Test
-    public void deleteAllOfToday() {
+    void deleteAllAfter() {
 
         TimeEntryFilter filter = new TimeEntryFilter();
-        filter.setFrom(LocalDate.now());
+        filter.setFrom(LocalDate.of(2018, 2, 1));
 
         List<TimeEntry> list = api.list(filter);
 

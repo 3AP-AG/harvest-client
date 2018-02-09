@@ -25,6 +25,7 @@ public class ExistingData {
     private final TimeEntry timeEntry;
 
     private ExistingData(Harvest harvest) {
+        // TODO create this objects on first run of the tests
         client = new Client();
         client.setId(6422922L);
 

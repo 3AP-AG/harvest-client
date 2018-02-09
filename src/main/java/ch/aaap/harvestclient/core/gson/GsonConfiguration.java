@@ -7,10 +7,15 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+/**
+ * Harvest specific Gson configuration
+ */
 public class GsonConfiguration {
 
     /**
      * Configure the GSON JSON parser for the specific formats used by Harvest
+     * 
+     * @return the global Gson configuration
      */
     public static Gson getConfiguration() {
 

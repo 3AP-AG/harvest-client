@@ -25,8 +25,8 @@ class RolesApiImplTest {
 
     private static final Harvest harvest = TestSetupUtil.getAdminAccess();
 
-    private static RolesApi rolesApi = harvest.roles();
-    private static UsersApi usersApi = harvest.users();
+    private static final RolesApi rolesApi = harvest.roles();
+    private static final UsersApi usersApi = harvest.users();
 
     private final static String TEST_ROLE_NAME = "test Role";
     private static Role testRole;
@@ -71,9 +71,7 @@ class RolesApiImplTest {
 
     @Test
     void testCreateExistingFails() {
-        assertThrows(RequestProcessingException.class, () -> {
-            rolesApi.create(new RoleInfo(testRole.getName()));
-        });
+        assertThrows(RequestProcessingException.class, () -> rolesApi.create(new RoleInfo(testRole.getName())));
     }
 
     @Test

@@ -69,6 +69,9 @@ public interface RolesApi {
 
     /**
      * Delete an existing Role. Will unlink it from any users assigned to it.
+     * 
+     * @param roleReference
+     *            a reference to the Role to be deleted
      */
     void delete(Reference<Role> roleReference);
 

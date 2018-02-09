@@ -93,7 +93,9 @@ public class ExceptionHandler {
      * See https://tools.ietf.org/html/rfc2616#section-14.37 for the format
      * 
      * @param <T>
+     *            the Type of the Response
      * @param failedResponse
+     *            the failed {@code Response<T>} that triggered the retry
      * @return the number of seconds to wait until we can retry
      */
     private static <T> int parseRetryAfter(Response<T> failedResponse) {

@@ -29,11 +29,11 @@ class UsersApiImplTest {
     private final static String fixUserFirst = "FixFirst";
     private final static String fixUserLast = "FixLast";
     private final static String fixUserEmail = "fix.user@example.com";
-    private static UsersApi api = TestSetupUtil.getAdminAccess().users();
+    private static final UsersApi api = TestSetupUtil.getAdminAccess().users();
     private static User fixUser;
 
     @BeforeAll
-    public static void beforeAll() {
+    static void beforeAll() {
 
         List<User> users = api.list();
 

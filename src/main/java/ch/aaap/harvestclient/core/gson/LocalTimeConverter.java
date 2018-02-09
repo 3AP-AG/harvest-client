@@ -6,6 +6,9 @@ import java.time.format.DateTimeFormatter;
 
 import com.google.gson.*;
 
+/**
+ * Non-standard LocalTime conversion
+ */
 public class LocalTimeConverter implements JsonSerializer<LocalTime>, JsonDeserializer<LocalTime> {
     // private final DateTimeFormatter FORMATTER =
     // DateTimeFormatter.ofPattern("h:mma");

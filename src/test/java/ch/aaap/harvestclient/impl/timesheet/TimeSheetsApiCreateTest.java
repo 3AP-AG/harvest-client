@@ -23,33 +23,33 @@ import util.ExistingData;
 import util.TestSetupUtil;
 
 @HarvestTest
-public class TimeSheetsApiCreateTest {
+class TimeSheetsApiCreateTest {
 
-    private static TimesheetsApi api = TestSetupUtil.getAdminAccess().timesheets();
+    private static final TimesheetsApi api = TestSetupUtil.getAdminAccess().timesheets();
 
     /**
      * Use this to get the Project, Task and User
      */
-    private static TimeEntry fixEntry = ExistingData.getInstance().getTimeEntry();
+    private static final TimeEntry fixEntry = ExistingData.getInstance().getTimeEntry();
 
-    private static TimeEntry entry;
+    private static TimeEntry timeEntry;
 
     // TODO this test relies on the local timezone to be the same as the harvest one
     // fix by reading the harvest timezone and adjusting the test
     private static final ZoneId companyTimeZone = ZoneId.of("Europe/Berlin");
 
     @AfterEach
-    public void afterEach() {
-        if (entry != null) {
-            api.delete(entry);
+    void afterEach() {
+        if (timeEntry != null) {
+            api.delete(timeEntry);
         }
     }
 
-    /**
+    /*
      * Needs company.wantsTimestampTimers set to false
      */
     @Test
-    public void testCreateTimeEntryDuration(TestInfo testInfo) {
+    void testCreateTimeEntryDuration(TestInfo testInfo) {
 
         LocalDate date = LocalDate.now();
         String notes = "TimeEntry created by " + testInfo.getDisplayName();
@@ -60,7 +60,7 @@ public class TimeSheetsApiCreateTest {
         creationInfo.setUserReference(fixEntry.getUser());
         creationInfo.setHours(2.);
 
-        TimeEntry timeEntry = api.create(creationInfo);
+        timeEntry = api.create(creationInfo);
 
         assertEquals(fixEntry.getProject(), timeEntry.getProject());
         assertEquals(notes, timeEntry.getNotes());
@@ -72,12 +72,12 @@ public class TimeSheetsApiCreateTest {
 
     }
 
-    /**
+    /*
      * Needs company.wantsTimestampTimers set to true
      */
     @Test
     @Disabled("needs second test account")
-    public void testCreateTimeEntryWithStartAndEndTime(TestInfo testInfo) {
+    void testCreateTimeEntryWithStartAndEndTime(TestInfo testInfo) {
 
         LocalDate date = LocalDate.now();
         String notes = "TimeEntry created by " + testInfo.getDisplayName();
@@ -91,7 +91,7 @@ public class TimeSheetsApiCreateTest {
         creationInfo.setStartedTime(startedTime);
         creationInfo.setEndedTime(startedTime.plusHours(3));
 
-        TimeEntry timeEntry = api.create(creationInfo);
+        timeEntry = api.create(creationInfo);
 
         assertThat(timeEntry.getStartedTime()).isEqualTo(startedTime);
         assertThat(timeEntry.getEndedTime()).isEqualTo(startedTime.plusHours(3));
@@ -103,7 +103,7 @@ public class TimeSheetsApiCreateTest {
     }
 
     @Test
-    public void testCreateTimeEntryDefault(TestInfo testInfo) {
+    void testCreateTimeEntryDefault(TestInfo testInfo) {
 
         LocalDate date = LocalDate.now();
         String notes = "TimeEntry created by " + testInfo.getDisplayName();
@@ -115,7 +115,7 @@ public class TimeSheetsApiCreateTest {
         creationInfo.setUserReference(fixEntry.getUser());
         // not setting anything specific
 
-        TimeEntry timeEntry = api.create(creationInfo);
+        timeEntry = api.create(creationInfo);
 
         assertThat(timeEntry.getTimerStartedAt()).isNotNull();
 
@@ -126,13 +126,11 @@ public class TimeSheetsApiCreateTest {
         assertThat(timeEntry.getHours()).isEqualTo(0.);
     }
 
-    /**
+    /*
      * Should behave exactly like {@link #testCreateTimeEntryDefault(TestInfo)}
-     * 
-     * @param testInfo
      */
     @Test
-    public void testCreateTimeEntryTimestampDefault(TestInfo testInfo) {
+    void testCreateTimeEntryTimestampDefault(TestInfo testInfo) {
 
         LocalDate date = LocalDate.now();
         String notes = "TimeEntry created by " + testInfo.getDisplayName();
@@ -144,7 +142,7 @@ public class TimeSheetsApiCreateTest {
         creationInfo.setUserReference(fixEntry.getUser());
         // not setting anything specific
 
-        TimeEntry timeEntry = api.create(creationInfo);
+        timeEntry = api.create(creationInfo);
 
         assertThat(timeEntry.getTimerStartedAt()).isNotNull();
 
@@ -157,7 +155,7 @@ public class TimeSheetsApiCreateTest {
 
     @Test
     @Disabled("needs second test account")
-    public void testCreateTimeEntryWithStartTime(TestInfo testInfo) {
+    void testCreateTimeEntryWithStartTime(TestInfo testInfo) {
 
         LocalDate date = LocalDate.now();
         String notes = "TimeEntry created by " + testInfo.getDisplayName();
@@ -170,7 +168,7 @@ public class TimeSheetsApiCreateTest {
         creationInfo.setUserReference(fixEntry.getUser());
         creationInfo.setStartedTime(startedTime);
 
-        TimeEntry timeEntry = api.create(creationInfo);
+        timeEntry = api.create(creationInfo);
 
         assertEquals(fixEntry.getProject(), timeEntry.getProject());
         assertEquals(notes, timeEntry.getNotes());

@@ -15,7 +15,7 @@ import util.ExistingData;
 import util.TestSetupUtil;
 
 @HarvestTest
-public class TaskAssignmentsApiCreateTest {
+class TaskAssignmentsApiCreateTest {
 
     private static final TaskAssignmentsApi taskAssignmentApi = TestSetupUtil.getAdminAccess().taskAssignments();
 
