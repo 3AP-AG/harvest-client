@@ -19,7 +19,7 @@ import util.ExistingData;
 import util.TestSetupUtil;
 
 @HarvestTest
-public class ProjectsApiUpdateTest {
+class ProjectsApiUpdateTest {
 
     private static final Logger log = LoggerFactory.getLogger(ProjectsApiUpdateTest.class);
 

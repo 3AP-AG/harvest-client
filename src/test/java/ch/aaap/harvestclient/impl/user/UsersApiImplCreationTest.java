@@ -16,21 +16,21 @@ import ch.aaap.harvestclient.domain.param.UserCreationInfo;
 import util.TestSetupUtil;
 
 @HarvestTest
-public class UsersApiImplCreationTest {
+class UsersApiImplCreationTest {
 
     private static final UsersApi api = TestSetupUtil.getAdminAccess().users();
     private UserCreationInfo randomUserCreationInfo;
     private User temporaryUser;
 
     @BeforeEach
-    public void beforeEach() {
+    void beforeEach() {
 
         randomUserCreationInfo = TestSetupUtil.getRandomUserCreationInfo();
 
     }
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
 
         if (temporaryUser != null) {
             api.delete(temporaryUser);
@@ -49,7 +49,7 @@ public class UsersApiImplCreationTest {
 
     @Test
     // fixed by Harvest on 29.1.18
-    public void createProjectManager() {
+    void createProjectManager() {
         UserCreationInfo userInfo = randomUserCreationInfo;
         userInfo.setProjectManager(true);
         userInfo.setCanSeeRates(true);
@@ -67,7 +67,7 @@ public class UsersApiImplCreationTest {
     }
 
     @Test
-    public void createUserFullDetails() {
+    void createUserFullDetails() {
 
         UserCreationInfo userInfo = randomUserCreationInfo;
         userInfo.setTimezone("Alaska");

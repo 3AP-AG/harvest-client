@@ -33,7 +33,7 @@ class UsersApiImplTest {
     private static User fixUser;
 
     @BeforeAll
-    public static void beforeAll() {
+    static void beforeAll() {
 
         List<User> users = api.list();
 

@@ -17,12 +17,12 @@ import ch.aaap.harvestclient.domain.pagination.PaginatedUser;
  * Here we can test deserialization for various Java objects
  */
 @HarvestTest
-public class GsonTest {
+class GsonTest {
 
     private static final Logger log = LoggerFactory.getLogger(GsonTest.class);
 
     @Test
-    public void testPaginationDeserialization() {
+    void testPaginationDeserialization() {
 
         Gson gson = GsonConfiguration.getConfiguration();
 
@@ -32,7 +32,7 @@ public class GsonTest {
         }.getType();
         PaginatedUser list = gson.fromJson(message, listType);
 
-        System.out.println("list is " + list);
+        log.debug("list is {} ", list);
 
         Assertions.assertEquals("https://api.harvestapp.com/v2/users?page=1&per_page=100",
                 list.getPaginationLinks().getFirst());

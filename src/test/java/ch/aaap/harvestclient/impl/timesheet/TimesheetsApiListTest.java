@@ -21,7 +21,7 @@ class TimesheetsApiListTest {
     private static final TimeEntry fixEntry = ExistingData.getInstance().getTimeEntry();
 
     @Test
-    public void testList() {
+    void testList() {
 
         List<TimeEntry> timeEntries = api.list(TimeEntryFilter.emptyFilter());
 
@@ -29,7 +29,7 @@ class TimesheetsApiListTest {
     }
 
     @Test
-    public void testListFilterByUser() {
+    void testListFilterByUser() {
 
         TimeEntryFilter filter = new TimeEntryFilter();
         filter.setUserReference(fixEntry.getUser());

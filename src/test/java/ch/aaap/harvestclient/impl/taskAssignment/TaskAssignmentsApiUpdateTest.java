@@ -18,7 +18,7 @@ import util.ExistingData;
 import util.TestSetupUtil;
 
 @HarvestTest
-public class TaskAssignmentsApiUpdateTest {
+class TaskAssignmentsApiUpdateTest {
 
     private static final Logger log = LoggerFactory.getLogger(TaskAssignmentsApiUpdateTest.class);
 

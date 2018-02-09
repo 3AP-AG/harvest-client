@@ -23,7 +23,7 @@ import util.ExistingData;
 import util.TestSetupUtil;
 
 @HarvestTest
-public class ProjectsApiCreateTest {
+class ProjectsApiCreateTest {
 
     private static final ProjectsApi projectsApi = TestSetupUtil.getAdminAccess().projects();
 

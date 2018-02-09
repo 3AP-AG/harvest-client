@@ -16,7 +16,7 @@ import ch.aaap.harvestclient.domain.User;
 import util.TestSetupUtil;
 
 @HarvestTest
-public class RateLimitTest {
+class RateLimitTest {
 
     private static class Task implements Runnable {
 
@@ -25,7 +25,7 @@ public class RateLimitTest {
         private final Harvest harvest;
         private final ConcurrentMap<Integer, Throwable> report;
 
-        public Task(int id, Harvest harvest, ConcurrentMap<Integer, Throwable> report) {
+        Task(int id, Harvest harvest, ConcurrentMap<Integer, Throwable> report) {
             this.id = id;
             this.harvest = harvest;
             this.report = report;
@@ -43,7 +43,7 @@ public class RateLimitTest {
     }
 
     @Test
-    public void testGetLimit() {
+    void testGetLimit() {
 
         assertTimeoutPreemptively(Duration.ofMinutes(5), () -> {
 

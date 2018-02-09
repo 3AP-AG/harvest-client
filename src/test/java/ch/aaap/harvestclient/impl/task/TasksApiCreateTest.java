@@ -12,7 +12,7 @@ import ch.aaap.harvestclient.domain.param.TaskCreationInfo;
 import util.TestSetupUtil;
 
 @HarvestTest
-public class TasksApiCreateTest {
+class TasksApiCreateTest {
 
     private static final TasksApi tasksApi = TestSetupUtil.getAdminAccess().tasks();
     private Task task;

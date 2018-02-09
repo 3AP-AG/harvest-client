@@ -23,7 +23,7 @@ import util.ExistingData;
 import util.TestSetupUtil;
 
 @HarvestTest
-public class TimeSheetsApiCreateTest {
+class TimeSheetsApiCreateTest {
 
     private static final TimesheetsApi api = TestSetupUtil.getAdminAccess().timesheets();
 
@@ -39,7 +39,7 @@ public class TimeSheetsApiCreateTest {
     private static final ZoneId companyTimeZone = ZoneId.of("Europe/Berlin");
 
     @AfterEach
-    public void afterEach() {
+    void afterEach() {
         if (timeEntry != null) {
             api.delete(timeEntry);
         }
@@ -49,7 +49,7 @@ public class TimeSheetsApiCreateTest {
      * Needs company.wantsTimestampTimers set to false
      */
     @Test
-    public void testCreateTimeEntryDuration(TestInfo testInfo) {
+    void testCreateTimeEntryDuration(TestInfo testInfo) {
 
         LocalDate date = LocalDate.now();
         String notes = "TimeEntry created by " + testInfo.getDisplayName();
@@ -77,7 +77,7 @@ public class TimeSheetsApiCreateTest {
      */
     @Test
     @Disabled("needs second test account")
-    public void testCreateTimeEntryWithStartAndEndTime(TestInfo testInfo) {
+    void testCreateTimeEntryWithStartAndEndTime(TestInfo testInfo) {
 
         LocalDate date = LocalDate.now();
         String notes = "TimeEntry created by " + testInfo.getDisplayName();
@@ -103,7 +103,7 @@ public class TimeSheetsApiCreateTest {
     }
 
     @Test
-    public void testCreateTimeEntryDefault(TestInfo testInfo) {
+    void testCreateTimeEntryDefault(TestInfo testInfo) {
 
         LocalDate date = LocalDate.now();
         String notes = "TimeEntry created by " + testInfo.getDisplayName();
@@ -130,7 +130,7 @@ public class TimeSheetsApiCreateTest {
      * Should behave exactly like {@link #testCreateTimeEntryDefault(TestInfo)}
      */
     @Test
-    public void testCreateTimeEntryTimestampDefault(TestInfo testInfo) {
+    void testCreateTimeEntryTimestampDefault(TestInfo testInfo) {
 
         LocalDate date = LocalDate.now();
         String notes = "TimeEntry created by " + testInfo.getDisplayName();
@@ -155,7 +155,7 @@ public class TimeSheetsApiCreateTest {
 
     @Test
     @Disabled("needs second test account")
-    public void testCreateTimeEntryWithStartTime(TestInfo testInfo) {
+    void testCreateTimeEntryWithStartTime(TestInfo testInfo) {
 
         LocalDate date = LocalDate.now();
         String notes = "TimeEntry created by " + testInfo.getDisplayName();

@@ -16,7 +16,7 @@ import ch.aaap.harvestclient.domain.param.UserCreationInfo;
 import util.TestSetupUtil;
 
 @HarvestTest
-public class UsersApiImplListTest {
+class UsersApiImplListTest {
 
     private static final UsersApi api = TestSetupUtil.getAdminAccess().users();
 

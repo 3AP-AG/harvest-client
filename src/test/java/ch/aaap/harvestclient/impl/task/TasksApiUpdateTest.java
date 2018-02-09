@@ -15,7 +15,7 @@ import ch.aaap.harvestclient.domain.param.TaskUpdateInfo;
 import util.TestSetupUtil;
 
 @HarvestTest
-public class TasksApiUpdateTest {
+class TasksApiUpdateTest {
 
     private static final TasksApi tasksApi = TestSetupUtil.getAdminAccess().tasks();
     private Task task;
