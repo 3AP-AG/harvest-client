@@ -32,7 +32,7 @@ public class TimeSheetsApiCreateTest {
      */
     private static TimeEntry fixEntry = ExistingData.getInstance().getTimeEntry();
 
-    private static TimeEntry entry;
+    private static TimeEntry timeEntry;
 
     // TODO this test relies on the local timezone to be the same as the harvest one
     // fix by reading the harvest timezone and adjusting the test
@@ -40,8 +40,8 @@ public class TimeSheetsApiCreateTest {
 
     @AfterEach
     public void afterEach() {
-        if (entry != null) {
-            api.delete(entry);
+        if (timeEntry != null) {
+            api.delete(timeEntry);
         }
     }
 
@@ -60,7 +60,7 @@ public class TimeSheetsApiCreateTest {
         creationInfo.setUserReference(fixEntry.getUser());
         creationInfo.setHours(2.);
 
-        TimeEntry timeEntry = api.create(creationInfo);
+        timeEntry = api.create(creationInfo);
 
         assertEquals(fixEntry.getProject(), timeEntry.getProject());
         assertEquals(notes, timeEntry.getNotes());
@@ -91,7 +91,7 @@ public class TimeSheetsApiCreateTest {
         creationInfo.setStartedTime(startedTime);
         creationInfo.setEndedTime(startedTime.plusHours(3));
 
-        TimeEntry timeEntry = api.create(creationInfo);
+        timeEntry = api.create(creationInfo);
 
         assertThat(timeEntry.getStartedTime()).isEqualTo(startedTime);
         assertThat(timeEntry.getEndedTime()).isEqualTo(startedTime.plusHours(3));
@@ -115,7 +115,7 @@ public class TimeSheetsApiCreateTest {
         creationInfo.setUserReference(fixEntry.getUser());
         // not setting anything specific
 
-        TimeEntry timeEntry = api.create(creationInfo);
+        timeEntry = api.create(creationInfo);
 
         assertThat(timeEntry.getTimerStartedAt()).isNotNull();
 
@@ -144,7 +144,7 @@ public class TimeSheetsApiCreateTest {
         creationInfo.setUserReference(fixEntry.getUser());
         // not setting anything specific
 
-        TimeEntry timeEntry = api.create(creationInfo);
+        timeEntry = api.create(creationInfo);
 
         assertThat(timeEntry.getTimerStartedAt()).isNotNull();
 
@@ -170,7 +170,7 @@ public class TimeSheetsApiCreateTest {
         creationInfo.setUserReference(fixEntry.getUser());
         creationInfo.setStartedTime(startedTime);
 
-        TimeEntry timeEntry = api.create(creationInfo);
+        timeEntry = api.create(creationInfo);
 
         assertEquals(fixEntry.getProject(), timeEntry.getProject());
         assertEquals(notes, timeEntry.getNotes());

@@ -145,10 +145,10 @@ public class TimeSheetsApiUpdateTest {
      * Uncomment the Test annotation to run
      */
     // @Test
-    public void deleteAllOfToday() {
+    public void deleteAllAfter() {
 
         TimeEntryFilter filter = new TimeEntryFilter();
-        filter.setFrom(LocalDate.now());
+        filter.setFrom(LocalDate.of(2018, 2, 1));
 
         List<TimeEntry> list = api.list(filter);
 
