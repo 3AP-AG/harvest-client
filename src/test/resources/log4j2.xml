@@ -2,12 +2,12 @@
 <Configuration status="WARN">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{-3} - %msg%n"/>
         </Console>
     </Appenders>
     <Loggers>
-        <!-- Trace level for debugging -->
-        <Logger name="okhttp" level="trace" additivity="false">
+        <!-- set Trace level for debugging HTTP request and response -->
+        <Logger name="ch.aaap.harvestclient.core.Harvest.http" level="trace" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
         <Root level="debug">

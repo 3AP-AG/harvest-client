@@ -40,7 +40,6 @@ compile 'ch.aaap:harvest-client:$version'
   <groupId>ch.aaap</groupId>
   <artifactId>harvest-client</artifactId>
   <version>$version</version>
-  <type>pom</type>
 </dependency>
 ```
 
@@ -62,6 +61,18 @@ compile 'ch.aaap:harvest-client:$version'
         $ export HARVEST_AUTH_TOKEN=YOUR_AUTH_TOKEN
     ```   
 * Run ```gradle build``` in the root directory of the repository
+
+### Debugging
+
+You can see the actual HTTP request and response by setting the log level for _ch.aaap.harvestclient.core.Harvest.http_ to TRACE
+
+#### Log4j2
+```xml
+<Logger name="ch.aaap.harvestclient.core.Harvest.http" level="trace" additivity="false">
+    <AppenderRef ref="Console"/>
+</Logger>
+```
+
 
 ### Contributing
 

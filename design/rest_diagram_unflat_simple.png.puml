@@ -1,0 +1,54 @@
+@startuml
+Title Harvest Data without Assignments nor Flattening
+class Company
+
+Invoice "1" ..> "1" Client
+Invoice o-- InvoiceLineItem
+Invoice ..> Estimate
+Invoice ..> Retainer
+Invoice --> Creator
+
+InvoiceLineItem ..> Invoice
+InvoiceLineItem ..> InvoiceItemCategory
+
+' by endpoint
+Invoice o.. InvoiceMessage
+Invoice o.. InvoicePayment
+
+
+Expense ..> Project
+Expense ..> ExpenseCategory
+Expense ..> User
+Expense --> Receipt
+Expense ..> Invoice
+
+Estimate ..> Client
+Estimate o-- EstimateLineItem
+Estimate --> Creator
+
+' by endpoint
+Estimate o.. EstimateMessage
+
+EstimateLineItem ..> EstimateLineCategory
+
+EstimateMessage o-- EstimateMessageRecipient
+
+
+ClientContact .> Client
+
+' by endpoint
+Project o.. User
+Project o.. Task
+
+User o.. Role
+
+TimeEntry ..> User
+TimeEntry ..> Project
+TimeEntry ..> Task
+TimeEntry -> ExternalService
+TimeEntry ..> Invoice
+legend
+dashed arrows mean that we only have a lightweight reference object
+and we need a GET request to get the full object
+end legend
+@enduml

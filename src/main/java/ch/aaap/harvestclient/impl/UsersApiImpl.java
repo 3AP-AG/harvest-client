@@ -1,5 +1,7 @@
 package ch.aaap.harvestclient.impl;
 
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -7,15 +9,21 @@ import org.slf4j.LoggerFactory;
 
 import ch.aaap.harvestclient.api.UsersApi;
 import ch.aaap.harvestclient.domain.User;
-import ch.aaap.harvestclient.domain.Users;
+import ch.aaap.harvestclient.domain.pagination.PaginatedUser;
 import ch.aaap.harvestclient.domain.param.UserCreationInfo;
-import ch.aaap.harvestclient.domain.param.UserInfo;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.service.UserService;
 import retrofit2.Call;
 
 public class UsersApiImpl implements UsersApi {
 
     private static final Logger log = LoggerFactory.getLogger(UsersApiImpl.class);
+
+    /**
+     * Default page size to request. Maximum for the API is 100.
+     */
+    private static final int PER_PAGE = 100;
+
     private final UserService service;
 
     public UsersApiImpl(UserService userService) {
@@ -23,18 +31,30 @@ public class UsersApiImpl implements UsersApi {
     }
 
     @Override
-    public List<User> list() {
-        Call<Users> call = service.listAll();
-        Users userContainer = ExceptionHandler.callOrThrow(call);
+    public List<User> list(Boolean isActive, Instant updatedSince) {
 
-        List<User> users = userContainer.getUsers();
+        Integer nextPage = 1;
+
+        List<User> users = new ArrayList<>();
+
+        while (nextPage != null) {
+            log.debug("Getting page {} of user list", nextPage);
+            Call<PaginatedUser> call = service.list(isActive, updatedSince, nextPage, PER_PAGE);
+            PaginatedUser paginatedUser = ExceptionHandler.callOrThrow(call);
+            users.addAll(paginatedUser.getUsers());
+            nextPage = paginatedUser.getNextPage();
+        }
+
         log.debug("Listed {} Users: {}", users.size(), users);
         return users;
     }
 
     @Override
     public User create(UserCreationInfo creationInfo) {
-        Call<User> call = service.create(creationInfo.getOptions());
+
+        log.debug("Creating User {}", creationInfo);
+
+        Call<User> call = service.create(creationInfo);
 
         return ExceptionHandler.callOrThrow(call);
     }
@@ -47,27 +67,25 @@ public class UsersApiImpl implements UsersApi {
     }
 
     @Override
-    public User get(long userId) {
-        Call<User> call = service.get(userId);
+    public User get(Reference<User> userReference) {
+        Call<User> call = service.get(userReference.getId());
         return ExceptionHandler.callOrThrow(call);
     }
 
     @Override
-    public User update(long userId, UserInfo userInfo) {
+    public User update(Reference<User> userReference, User toChange) {
 
-        Call<User> call = service.update(userId, userInfo.getOptions());
+        log.debug("Updating properties {} for user {}", userReference, toChange);
+
+        Call<User> call = service.update(userReference.getId(), toChange);
         return ExceptionHandler.callOrThrow(call);
 
     }
 
     @Override
-    public void delete(long userId) {
-        Call<Void> call = service.delete(userId);
+    public void delete(Reference<User> userReference) {
+        log.debug("Deleting user {}", userReference);
+        Call<Void> call = service.delete(userReference.getId());
         ExceptionHandler.callOrThrow(call);
-    }
-
-    @Override
-    public void delete(User user) {
-        delete(user.getId());
     }
 }
