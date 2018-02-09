@@ -72,6 +72,8 @@ public class Harvest {
     private final TimesheetsApi timesheetsApi;
     private final UsersApi usersApi;
     private final CompanyApi companyApi;
+    private final ClientsApi clientsApi;
+    private final ClientContactsApiImpl clientContactsApi;
 
     public Harvest(Config config) {
 
@@ -108,6 +110,8 @@ public class Harvest {
         ProjectService projectService = retrofit.create(ProjectService.class);
         TaskAssignmentService taskAssignmentService = retrofit.create(TaskAssignmentService.class);
         TaskService taskService = retrofit.create(TaskService.class);
+        ClientService clientService = retrofit.create(ClientService.class);
+        ClientContactService clientContactService = retrofit.create(ClientContactService.class);
 
         timesheetsApi = new TimesheetsApiImpl(timeEntryService);
         usersApi = new UsersApiImpl(userService);
@@ -117,6 +121,8 @@ public class Harvest {
         projectsApi = new ProjectsApiImpl(projectService);
         taskAssignmentsApi = new TaskAssignmentsApiImpl(taskAssignmentService);
         tasksApi = new TasksApiImpl(taskService);
+        clientsApi = new ClientsApiImpl(clientService);
+        clientContactsApi = new ClientContactsApiImpl(clientContactService);
 
         log.debug("Harvest client initialized");
 
@@ -179,6 +185,14 @@ public class Harvest {
 
     public TasksApi tasks() {
         return tasksApi;
+    }
+
+    public ClientsApi clients() {
+        return clientsApi;
+    }
+
+    public ClientContactsApi clientContacts() {
+        return clientContactsApi;
     }
 
     public String getBaseUrl() {

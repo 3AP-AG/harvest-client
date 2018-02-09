@@ -1,0 +1,22 @@
+@startuml
+
+package exception {
+
+java.lang.RuntimeException <|-- HarvestRuntimeException
+HarvestRuntimeException <|-- HarvestHttpException
+HarvestHttpException <|-- ForbiddenException
+
+HarvestHttpException <|-- InvalidAuthorizationException
+HarvestHttpException <|-- NotFoundException
+
+HarvestHttpException <|-- RateLimitedException
+HarvestHttpException <|-- RequestProcessingErrorMessage
+HarvestHttpException <|-- RequestProcessingException
+HarvestHttpException <|-- ServerErrorException
+}
+
+class HarvestHttpException {
+int httpCode
+}
+
+@enduml

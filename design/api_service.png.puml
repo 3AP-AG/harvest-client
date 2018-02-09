@@ -1,0 +1,41 @@
+@startuml
+title API and service classes (partial)
+
+package api {
+interface TasksApi
+interface UsersApi
+}
+package impl {
+TasksApi <|-- TasksApiImpl
+UsersApi <|-- UsersApiImpl
+TasksApiImpl --> service.TaskService
+UsersApiImpl --> service.UserService
+}
+
+package core {
+Harvest --> UsersApi
+Harvest --> TasksApi
+Harvest --> GsonConfiguration
+GsonConfiguration --> LocalTimeConverter
+}
+
+package domain {
+class User
+class Task
+}
+
+package service {
+interface TaskService
+interface UserService
+}
+
+service.UserService <|-- ok.http.Retrofit.Service
+service.TaskService <|-- ok.http.Retrofit.Service
+
+
+legend
+Only show User and Task services implementation.
+Same structure for the other domain objects.
+end legend
+
+@enduml
