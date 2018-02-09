@@ -5,6 +5,8 @@
 
 harvest-client is a Java client for the Harvest REST API (https://help.getharvest.com/api-v2/)
 
+[Javadoc](https://3ap-ag.github.io/harvest-client/)
+
 ## Introduction
 
 With harvest-client you can use the Harvest v2 API with a nice Java interface:
