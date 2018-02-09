@@ -19,7 +19,7 @@ public class ProjectAssignmentsApiImpl implements ProjectAssignmentsApi {
 
     private static final Logger log = LoggerFactory.getLogger(ProjectAssignmentsApiImpl.class);
     private static final int PER_PAGE = 100;
-    private ProjectAssignmentService service;
+    private final ProjectAssignmentService service;
 
     public ProjectAssignmentsApiImpl(ProjectAssignmentService service) {
         this.service = service;

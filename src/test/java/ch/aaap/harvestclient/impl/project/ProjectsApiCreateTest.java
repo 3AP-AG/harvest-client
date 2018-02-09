@@ -25,7 +25,7 @@ import util.TestSetupUtil;
 @HarvestTest
 public class ProjectsApiCreateTest {
 
-    private static ProjectsApi projectsApi = TestSetupUtil.getAdminAccess().projects();
+    private static final ProjectsApi projectsApi = TestSetupUtil.getAdminAccess().projects();
 
     /**
      * Project that get deleted automatically after each test
@@ -47,14 +47,14 @@ public class ProjectsApiCreateTest {
         Reference<Client> clientReference = ExistingData.getInstance().getClient();
         String name = "Project for test " + testInfo.getDisplayName();
         boolean billable = true;
-        Project.BillingMethod billBy = billingMethod;
         Project.BudgetMethod budgetBy = Project.BudgetMethod.HOURS_PER_PROJECT;
 
-        ProjectCreationInfo creationInfo = new ProjectCreationInfo(clientReference, name, billable, billBy, budgetBy);
+        ProjectCreationInfo creationInfo = new ProjectCreationInfo(clientReference, name, billable, billingMethod,
+                budgetBy);
         project = projectsApi.create(creationInfo);
 
         assertThat(project.getBillable()).isEqualTo(billable);
-        assertThat(project.getBillBy()).isEqualTo(billBy);
+        assertThat(project.getBillBy()).isEqualTo(billingMethod);
         assertThat(project.getBudgetBy()).isEqualTo(budgetBy);
         assertThat(project.getName()).isEqualTo(name);
         assertThat(project.getClientReference().getId()).isEqualTo(clientReference.getId());
@@ -68,14 +68,14 @@ public class ProjectsApiCreateTest {
         String name = "Project for test " + testInfo.getDisplayName();
         boolean billable = true;
         Project.BillingMethod billBy = Project.BillingMethod.PROJECT;
-        Project.BudgetMethod budgetBy = budgetMethod;
 
-        ProjectCreationInfo creationInfo = new ProjectCreationInfo(clientReference, name, billable, billBy, budgetBy);
+        ProjectCreationInfo creationInfo = new ProjectCreationInfo(clientReference, name, billable, billBy,
+                budgetMethod);
         project = projectsApi.create(creationInfo);
 
         assertThat(project.getBillable()).isEqualTo(billable);
         assertThat(project.getBillBy()).isEqualTo(billBy);
-        assertThat(project.getBudgetBy()).isEqualTo(budgetBy);
+        assertThat(project.getBudgetBy()).isEqualTo(budgetMethod);
         assertThat(project.getName()).isEqualTo(name);
         assertThat(project.getClientReference().getId()).isEqualTo(clientReference.getId());
     }

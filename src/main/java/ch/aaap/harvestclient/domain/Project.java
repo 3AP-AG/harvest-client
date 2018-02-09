@@ -22,7 +22,7 @@ public class Project implements Reference<Project> {
         PEOPLE,
 
         @SerializedName("none")
-        NONE;
+        NONE
     }
 
     public enum BudgetMethod {
@@ -40,7 +40,7 @@ public class Project implements Reference<Project> {
         HOURS_PER_PERSON,
 
         @SerializedName("none")
-        NO_BUDGET;
+        NO_BUDGET
 
     }
 

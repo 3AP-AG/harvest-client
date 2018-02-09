@@ -15,7 +15,7 @@ import util.TestSetupUtil;
 @HarvestTest
 class ProjectsApiListTest {
 
-    private static ProjectsApi projectsApi = TestSetupUtil.getAdminAccess().projects();
+    private static final ProjectsApi projectsApi = TestSetupUtil.getAdminAccess().projects();
 
     @Test
     void list() {

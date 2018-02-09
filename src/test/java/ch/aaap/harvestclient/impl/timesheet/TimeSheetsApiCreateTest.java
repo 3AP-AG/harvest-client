@@ -25,12 +25,12 @@ import util.TestSetupUtil;
 @HarvestTest
 public class TimeSheetsApiCreateTest {
 
-    private static TimesheetsApi api = TestSetupUtil.getAdminAccess().timesheets();
+    private static final TimesheetsApi api = TestSetupUtil.getAdminAccess().timesheets();
 
     /**
      * Use this to get the Project, Task and User
      */
-    private static TimeEntry fixEntry = ExistingData.getInstance().getTimeEntry();
+    private static final TimeEntry fixEntry = ExistingData.getInstance().getTimeEntry();
 
     private static TimeEntry timeEntry;
 
@@ -45,7 +45,7 @@ public class TimeSheetsApiCreateTest {
         }
     }
 
-    /**
+    /*
      * Needs company.wantsTimestampTimers set to false
      */
     @Test
@@ -72,7 +72,7 @@ public class TimeSheetsApiCreateTest {
 
     }
 
-    /**
+    /*
      * Needs company.wantsTimestampTimers set to true
      */
     @Test
@@ -126,10 +126,8 @@ public class TimeSheetsApiCreateTest {
         assertThat(timeEntry.getHours()).isEqualTo(0.);
     }
 
-    /**
+    /*
      * Should behave exactly like {@link #testCreateTimeEntryDefault(TestInfo)}
-     * 
-     * @param testInfo
      */
     @Test
     public void testCreateTimeEntryTimestampDefault(TestInfo testInfo) {

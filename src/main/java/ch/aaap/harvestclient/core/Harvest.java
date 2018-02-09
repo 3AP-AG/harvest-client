@@ -43,6 +43,9 @@ public class Harvest {
 
     private static final Logger log = LoggerFactory.getLogger(Harvest.class);
 
+    /**
+     * URL to the Harvest v2 instance (e.g. "https://api.harvestapp.com/v2/" )
+     */
     private final String baseUrl;
 
     /**
@@ -55,18 +58,20 @@ public class Harvest {
     /** Account id. Only needed for personal tokens */
     private final String accountId;
 
+    /**
+     * What User-Agent to send. Harvest policy is to include either an email or the
+     * URL for the client code.
+     */
     private final String userAgent;
+
     private final RolesApi rolesApi;
     private final ProjectAssignmentsApi projectAssignmentsApi;
     private final ProjectsApi projectsApi;
     private final TaskAssignmentsApi taskAssignmentsApi;
     private final TasksApi tasksApi;
-
-    private TimesheetsApi timesheetsApi;
-
-    private UsersApi usersApi;
-
-    private CompanyApi companyApi;
+    private final TimesheetsApi timesheetsApi;
+    private final UsersApi usersApi;
+    private final CompanyApi companyApi;
 
     public Harvest(Config config) {
 
@@ -175,4 +180,21 @@ public class Harvest {
     public TasksApi tasks() {
         return tasksApi;
     }
+
+    public String getBaseUrl() {
+        return baseUrl;
+    }
+
+    public String getAuthToken() {
+        return authToken;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public String getUserAgent() {
+        return userAgent;
+    }
+
 }

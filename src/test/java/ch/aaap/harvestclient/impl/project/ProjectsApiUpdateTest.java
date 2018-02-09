@@ -23,7 +23,7 @@ public class ProjectsApiUpdateTest {
 
     private static final Logger log = LoggerFactory.getLogger(ProjectsApiUpdateTest.class);
 
-    private ProjectsApi projectsApi = TestSetupUtil.getAdminAccess().projects();
+    private final ProjectsApi projectsApi = TestSetupUtil.getAdminAccess().projects();
 
     /**
      * A project newly created for each test

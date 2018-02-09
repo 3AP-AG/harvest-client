@@ -18,7 +18,7 @@ import util.TestSetupUtil;
 @HarvestTest
 public class UsersApiImplCreationTest {
 
-    private static UsersApi api = TestSetupUtil.getAdminAccess().users();
+    private static final UsersApi api = TestSetupUtil.getAdminAccess().users();
     private UserCreationInfo randomUserCreationInfo;
     private User temporaryUser;
 

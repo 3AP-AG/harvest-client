@@ -22,7 +22,7 @@ public class TaskAssignmentsApiImpl implements TaskAssignmentsApi {
 
     private static final Logger log = LoggerFactory.getLogger(TaskAssignmentsApiImpl.class);
     private static final int PER_PAGE = 100;
-    private TaskAssignmentService service;
+    private final TaskAssignmentService service;
 
     public TaskAssignmentsApiImpl(TaskAssignmentService service) {
         this.service = service;

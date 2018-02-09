@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -167,30 +167,46 @@ extends Object</pre>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../ch/aaap/harvestclient/core/Harvest.html#company--">company</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../ch/aaap/harvestclient/core/Harvest.html#getAccountId--">getAccountId</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../ch/aaap/harvestclient/core/Harvest.html#getAuthToken--">getAuthToken</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../ch/aaap/harvestclient/core/Harvest.html#getBaseUrl--">getBaseUrl</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../ch/aaap/harvestclient/core/Harvest.html#getUserAgent--">getUserAgent</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../ch/aaap/harvestclient/api/ProjectAssignmentsApi.html" title="interface in ch.aaap.harvestclient.api">ProjectAssignmentsApi</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../ch/aaap/harvestclient/core/Harvest.html#projectAssignments--">projectAssignments</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../../ch/aaap/harvestclient/api/ProjectsApi.html" title="interface in ch.aaap.harvestclient.api">ProjectsApi</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../ch/aaap/harvestclient/core/Harvest.html#projects--">projects</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../../ch/aaap/harvestclient/api/RolesApi.html" title="interface in ch.aaap.harvestclient.api">RolesApi</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../ch/aaap/harvestclient/core/Harvest.html#roles--">roles</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="../../../../ch/aaap/harvestclient/api/TaskAssignmentsApi.html" title="interface in ch.aaap.harvestclient.api">TaskAssignmentsApi</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../ch/aaap/harvestclient/core/Harvest.html#taskAssignments--">taskAssignments</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="../../../../ch/aaap/harvestclient/api/TasksApi.html" title="interface in ch.aaap.harvestclient.api">TasksApi</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../ch/aaap/harvestclient/core/Harvest.html#tasks--">tasks</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="../../../../ch/aaap/harvestclient/api/TimesheetsApi.html" title="interface in ch.aaap.harvestclient.api">TimesheetsApi</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../ch/aaap/harvestclient/core/Harvest.html#timesheets--">timesheets</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="../../../../ch/aaap/harvestclient/api/UsersApi.html" title="interface in ch.aaap.harvestclient.api">UsersApi</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../ch/aaap/harvestclient/core/Harvest.html#users--">users</a></span>()</code>&nbsp;</td>
 </tr>
@@ -308,10 +324,46 @@ extends Object</pre>
 <a name="tasks--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>tasks</h4>
 <pre>public&nbsp;<a href="../../../../ch/aaap/harvestclient/api/TasksApi.html" title="interface in ch.aaap.harvestclient.api">TasksApi</a>&nbsp;tasks()</pre>
+</li>
+</ul>
+<a name="getBaseUrl--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getBaseUrl</h4>
+<pre>public&nbsp;String&nbsp;getBaseUrl()</pre>
+</li>
+</ul>
+<a name="getAuthToken--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAuthToken</h4>
+<pre>public&nbsp;String&nbsp;getAuthToken()</pre>
+</li>
+</ul>
+<a name="getAccountId--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAccountId</h4>
+<pre>public&nbsp;String&nbsp;getAccountId()</pre>
+</li>
+</ul>
+<a name="getUserAgent--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getUserAgent</h4>
+<pre>public&nbsp;String&nbsp;getUserAgent()</pre>
 </li>
 </ul>
 </li>

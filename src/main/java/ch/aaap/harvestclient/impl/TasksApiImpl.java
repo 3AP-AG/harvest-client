@@ -21,7 +21,7 @@ public class TasksApiImpl implements TasksApi {
 
     private static final Logger log = LoggerFactory.getLogger(TasksApiImpl.class);
     private static final int PER_PAGE = 100;
-    private TaskService service;
+    private final TaskService service;
 
     public TasksApiImpl(TaskService service) {
         this.service = service;

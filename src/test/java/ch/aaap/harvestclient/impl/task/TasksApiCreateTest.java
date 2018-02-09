@@ -14,7 +14,7 @@ import util.TestSetupUtil;
 @HarvestTest
 public class TasksApiCreateTest {
 
-    private static TasksApi tasksApi = TestSetupUtil.getAdminAccess().tasks();
+    private static final TasksApi tasksApi = TestSetupUtil.getAdminAccess().tasks();
     private Task task;
 
     @AfterEach
