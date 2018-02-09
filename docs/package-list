@@ -1,0 +1,13 @@
+ch.aaap.harvestclient.api
+ch.aaap.harvestclient.api.filter
+ch.aaap.harvestclient.core
+ch.aaap.harvestclient.core.gson
+ch.aaap.harvestclient.domain
+ch.aaap.harvestclient.domain.pagination
+ch.aaap.harvestclient.domain.param
+ch.aaap.harvestclient.domain.reference
+ch.aaap.harvestclient.domain.reference.dto
+ch.aaap.harvestclient.exception
+ch.aaap.harvestclient.impl
+ch.aaap.harvestclient.service
+ch.aaap.harvestclient.vendor.okhttp

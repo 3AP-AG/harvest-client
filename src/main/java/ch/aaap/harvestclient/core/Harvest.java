@@ -21,10 +21,17 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Note: Harvest datatype mappings: boolean -> Boolean string -> String integer
- * -> Long decimal -> Double date -> LocalDate datetime -> Instant time ->
- * LocalTime, but depends on harvest config for parsing </>array -> List<T>
+ * Note: Harvest datatype mappings: {@literal
+ * boolean -> Boolean
+ * string -> String
+ * integer-> Long
+ * decimal -> Double
+ * date -> LocalDate
+ * datetime -> Instant
+ * time -> LocalTime, but depends on harvest config for parsing
+ * array -> List<T>
  * object -> Object
+ * }
  *
  */
 public class Harvest {

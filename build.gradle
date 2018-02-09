@@ -84,6 +84,11 @@ task javadocJar(type: Jar) {
     classifier "javadoc"
 }
 
+javadoc {
+    // github is set to publish this folder
+    destinationDir file("docs")
+}
+
 // Create the publication with the pom configuration:
 publishing {
     publications {
