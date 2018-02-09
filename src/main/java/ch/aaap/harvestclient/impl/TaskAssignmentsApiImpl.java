@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ch.aaap.harvestclient.api.TaskAssignmentsApi;
-import ch.aaap.harvestclient.api.filter.TaskAssignmentListFilter;
+import ch.aaap.harvestclient.api.filter.TaskAssignmentFilter;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.TaskAssignment;
 import ch.aaap.harvestclient.domain.pagination.PaginatedTaskAssignment;
@@ -29,7 +29,7 @@ public class TaskAssignmentsApiImpl implements TaskAssignmentsApi {
     }
 
     @Override
-    public List<TaskAssignment> list(Reference<Project> projectReference, TaskAssignmentListFilter filter) {
+    public List<TaskAssignment> list(Reference<Project> projectReference, TaskAssignmentFilter filter) {
 
         Integer nextPage = 1;
 

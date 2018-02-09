@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.ProjectsApi;
-import ch.aaap.harvestclient.api.filter.ProjectListFilter;
+import ch.aaap.harvestclient.api.filter.ProjectFilter;
 import ch.aaap.harvestclient.domain.Project;
 import util.TestSetupUtil;
 
@@ -20,7 +20,7 @@ class ProjectsApiListTest {
     @Test
     void list() {
 
-        List<Project> projects = projectsApi.list(ProjectListFilter.emptyFilter());
+        List<Project> projects = projectsApi.list(ProjectFilter.emptyFilter());
 
         assertThat(projects).isNotEmpty();
     }

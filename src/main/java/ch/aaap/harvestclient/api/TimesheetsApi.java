@@ -2,7 +2,7 @@ package ch.aaap.harvestclient.api;
 
 import java.util.List;
 
-import ch.aaap.harvestclient.api.filter.TimeEntryListFilter;
+import ch.aaap.harvestclient.api.filter.TimeEntryFilter;
 import ch.aaap.harvestclient.domain.TimeEntry;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoDuration;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoTimestamp;
@@ -12,12 +12,12 @@ import ch.aaap.harvestclient.domain.reference.Reference;
 public interface TimesheetsApi {
 
     /**
-     * Return a list of all TimeEntries, filtered by the TimeEntryListFilter, sorted
-     * by creation date, newest first.
+     * Return a list of all TimeEntries, filtered by the TimeEntryFilter, sorted by
+     * creation date, newest first.
      * 
      * @return a list of all matching TimeEntry, newest first.
      */
-    List<TimeEntry> list(TimeEntryListFilter filter);
+    List<TimeEntry> list(TimeEntryFilter filter);
 
     /**
      * Retrieve an existing TimeEntry

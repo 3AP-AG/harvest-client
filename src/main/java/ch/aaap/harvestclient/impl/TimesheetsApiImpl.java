@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ch.aaap.harvestclient.api.TimesheetsApi;
-import ch.aaap.harvestclient.api.filter.TimeEntryListFilter;
+import ch.aaap.harvestclient.api.filter.TimeEntryFilter;
 import ch.aaap.harvestclient.domain.TimeEntry;
 import ch.aaap.harvestclient.domain.pagination.PaginatedTimeEntry;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoDuration;
@@ -28,7 +28,7 @@ public class TimesheetsApiImpl implements TimesheetsApi {
     }
 
     @Override
-    public List<TimeEntry> list(TimeEntryListFilter filter) {
+    public List<TimeEntry> list(TimeEntryFilter filter) {
 
         Integer nextPage = 1;
 

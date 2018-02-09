@@ -15,6 +15,7 @@ import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.param.ProjectCreationInfo;
 import ch.aaap.harvestclient.domain.param.ProjectUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
+import util.ExistingData;
 import util.TestSetupUtil;
 
 @HarvestTest
@@ -32,7 +33,7 @@ public class ProjectsApiUpdateTest {
     @BeforeEach
     void beforeEach(TestInfo testInfo) {
 
-        Reference<Client> clientReference = TestSetupUtil.getExistingClient();
+        Reference<Client> clientReference = ExistingData.getInstance().getClient();
         String name = "Project for test " + testInfo.getDisplayName();
         boolean billable = true;
         Project.BillingMethod billBy = Project.BillingMethod.PROJECT;
@@ -111,7 +112,7 @@ public class ProjectsApiUpdateTest {
     @Test
     void changeAllSmallDetails() {
 
-        Reference<Client> clientReference = TestSetupUtil.getExistingClient();
+        Reference<Client> clientReference = ExistingData.getInstance().getClient();
         boolean billable = true;
 
         String name = "new Name for Project";

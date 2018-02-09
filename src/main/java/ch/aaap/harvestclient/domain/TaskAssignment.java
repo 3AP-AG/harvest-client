@@ -2,20 +2,30 @@ package ch.aaap.harvestclient.domain;
 
 import java.time.Instant;
 
+import com.google.gson.annotations.SerializedName;
+
+import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.domain.reference.dto.TaskReferenceDto;
 
-public class TaskAssignment {
+public class TaskAssignment implements Reference<TaskAssignment> {
 
     private Long id;
+
+    @SerializedName("task")
     private TaskReferenceDto taskReferenceDto;
+
+    @SerializedName("is_active")
     private Boolean active;
+
     private Boolean billable;
-    private Boolean hourlyRate;
-    private Boolean budget;
+
+    private Double hourlyRate;
+    private Double budget;
 
     private Instant createdAt;
     private Instant updatedAt;
 
+    @Override
     public Long getId() {
         return id;
     }
@@ -48,19 +58,19 @@ public class TaskAssignment {
         this.billable = billable;
     }
 
-    public Boolean getHourlyRate() {
+    public Double getHourlyRate() {
         return hourlyRate;
     }
 
-    public void setHourlyRate(Boolean hourlyRate) {
+    public void setHourlyRate(Double hourlyRate) {
         this.hourlyRate = hourlyRate;
     }
 
-    public Boolean getBudget() {
+    public Double getBudget() {
         return budget;
     }
 
-    public void setBudget(Boolean budget) {
+    public void setBudget(Double budget) {
         this.budget = budget;
     }
 
