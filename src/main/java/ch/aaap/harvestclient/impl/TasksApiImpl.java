@@ -11,7 +11,6 @@ import ch.aaap.harvestclient.api.TasksApi;
 import ch.aaap.harvestclient.api.filter.TaskFilter;
 import ch.aaap.harvestclient.domain.Task;
 import ch.aaap.harvestclient.domain.pagination.PaginatedTask;
-import ch.aaap.harvestclient.domain.param.TaskCreationInfo;
 import ch.aaap.harvestclient.domain.param.TaskUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.service.TaskService;
@@ -66,7 +65,7 @@ public class TasksApiImpl implements TasksApi {
     }
 
     @Override
-    public Task create(TaskCreationInfo creationInfo) {
+    public Task create(Task creationInfo) {
         Call<Task> call = service.create(creationInfo);
         Task task = ExceptionHandler.callOrThrow(call);
         log.debug("Created {}", task);

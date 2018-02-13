@@ -9,8 +9,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.TasksApi;
+import ch.aaap.harvestclient.domain.ImmutableNullableTask;
+import ch.aaap.harvestclient.domain.ImmutableTask;
 import ch.aaap.harvestclient.domain.Task;
-import ch.aaap.harvestclient.domain.param.TaskCreationInfo;
 import ch.aaap.harvestclient.domain.param.TaskUpdateInfo;
 import util.TestSetupUtil;
 
@@ -22,7 +23,10 @@ class TasksApiUpdateTest {
 
     @BeforeEach
     void beforeEach(TestInfo testInfo) {
-        task = tasksApi.create(new TaskCreationInfo("test Task for " + testInfo.getDisplayName()));
+        task = ImmutableTask.builder()
+                .name("test Task for " + testInfo.getDisplayName())
+                .build();
+        task = tasksApi.create(task);
     }
 
     @AfterEach
@@ -35,13 +39,12 @@ class TasksApiUpdateTest {
 
     @Test
     void changeName() {
-
-        TaskUpdateInfo changes = new TaskUpdateInfo();
-        changes.setName("new task name");
+        TaskUpdateInfo changes = ImmutableNullableTask.builder()
+                .name("new task name")
+                .build();
         Task updatedTask = tasksApi.update(task, changes);
 
-        assertThat(updatedTask).isEqualToIgnoringNullFields(changes);
-
+        assertThat(updatedTask.getName()).isEqualTo(changes.getName());
     }
 
     @Test
@@ -53,15 +56,17 @@ class TasksApiUpdateTest {
         boolean defaultAddToFutureProject = true;
         boolean active = false;
 
-        TaskUpdateInfo changes = new TaskUpdateInfo();
-        changes.setName(name);
-        changes.setActive(active);
-        changes.setBillableByDefault(billableByDefault);
-        changes.setDefaultAddToFutureProjects(defaultAddToFutureProject);
-        changes.setDefaultHourlyRate(defaultHourlyRate);
+        TaskUpdateInfo changes = ImmutableNullableTask.builder()
+                .name(name)
+                .active(active)
+                .billableByDefault(billableByDefault)
+                .defaultAddToFutureProjects(defaultAddToFutureProject)
+                .defaultHourlyRate(defaultHourlyRate)
+                .build();
         Task updatedTask = tasksApi.update(task, changes);
 
-        assertThat(updatedTask).isEqualToIgnoringNullFields(changes);
+        assertThat(updatedTask).isEqualToComparingOnlyGivenFields(changes, "name", "active", "billableByDefault",
+                "defaultAddToFutureProjects", "defaultHourlyRate");
 
     }
 

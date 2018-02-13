@@ -7,8 +7,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.TasksApi;
+import ch.aaap.harvestclient.domain.ImmutableTask;
 import ch.aaap.harvestclient.domain.Task;
-import ch.aaap.harvestclient.domain.param.TaskCreationInfo;
 import util.TestSetupUtil;
 
 @HarvestTest
@@ -29,7 +29,7 @@ class TasksApiCreateTest {
     void create() {
 
         String name = "test Task";
-        TaskCreationInfo creationInfo = new TaskCreationInfo(name);
+        Task creationInfo = ImmutableTask.builder().name(name).build();
         task = tasksApi.create(creationInfo);
 
         assertThat(task.getName()).isEqualTo(name);
@@ -45,11 +45,13 @@ class TasksApiCreateTest {
         boolean defaultAddToFutureProject = true;
         boolean active = false;
 
-        TaskCreationInfo creationInfo = new TaskCreationInfo(name);
-        creationInfo.setBillableByDefault(billableByDefault);
-        creationInfo.setDefaultHourlyRate(defaultHourlyRate);
-        creationInfo.setDefaultAddToFutureProjects(defaultAddToFutureProject);
-        creationInfo.setActive(active);
+        Task creationInfo = ImmutableTask.builder()
+                .name(name)
+                .billableByDefault(billableByDefault)
+                .defaultHourlyRate(defaultHourlyRate)
+                .defaultAddToFutureProjects(defaultAddToFutureProject)
+                .active(active)
+                .build();
 
         task = tasksApi.create(creationInfo);
 

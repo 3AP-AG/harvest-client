@@ -4,7 +4,6 @@ import java.util.Map;
 
 import ch.aaap.harvestclient.domain.Task;
 import ch.aaap.harvestclient.domain.pagination.PaginatedTask;
-import ch.aaap.harvestclient.domain.param.TaskCreationInfo;
 import ch.aaap.harvestclient.domain.param.TaskUpdateInfo;
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -22,7 +21,7 @@ public interface TaskService {
     Call<Task> get(@Path(id) long taskId);
 
     @POST(basePath)
-    Call<Task> create(@Body TaskCreationInfo creationInfo);
+    Call<Task> create(@Body Task creationInfo);
 
     @PATCH(path)
     Call<Task> update(@Path(id) long taskId, @Body TaskUpdateInfo updateInfo);

@@ -11,8 +11,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.TasksApi;
 import ch.aaap.harvestclient.api.filter.TaskFilter;
+import ch.aaap.harvestclient.domain.ImmutableTask;
 import ch.aaap.harvestclient.domain.Task;
-import ch.aaap.harvestclient.domain.param.TaskCreationInfo;
 import util.TestSetupUtil;
 
 @HarvestTest
@@ -41,8 +41,10 @@ class TasksApiListTest {
     @Test
     void listByActive() {
 
-        TaskCreationInfo creationInfo = new TaskCreationInfo("inactive test Task");
-        creationInfo.setActive(false);
+        Task creationInfo = ImmutableTask.builder()
+                .name("inactive test Task")
+                .active(false)
+                .build();
         task = tasksApi.create(creationInfo);
 
         TaskFilter filter = new TaskFilter();
@@ -58,7 +60,9 @@ class TasksApiListTest {
     void listByUpdatedSince() {
 
         Instant creationTime = Instant.now().minusSeconds(1);
-        TaskCreationInfo creationInfo = new TaskCreationInfo("newly created test Task");
+        Task creationInfo = ImmutableTask.builder()
+                .name("newly created test Task")
+                .build();
         task = tasksApi.create(creationInfo);
 
         TaskFilter filter = new TaskFilter();

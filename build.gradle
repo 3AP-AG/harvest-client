@@ -121,6 +121,13 @@ dependencies {
     runtime group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.10.0'
     compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.10.0'
 
+    // immutable classes for domain objects
+    compileOnly 'org.immutables:value:2.5.5'
+    compileOnly 'org.immutables:gson:2.5.5'
+
+    // @Nullable annotations
+    compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.0'
+
     // configuration
     compile 'com.typesafe:config:1.3.2'
 
