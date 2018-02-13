@@ -11,7 +11,7 @@ import ch.aaap.harvestclient.api.TaskAssignmentsApi;
 import ch.aaap.harvestclient.api.filter.TaskAssignmentFilter;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.TaskAssignment;
-import ch.aaap.harvestclient.domain.pagination.PaginatedTaskAssignment;
+import ch.aaap.harvestclient.domain.pagination.PaginatedList;
 import ch.aaap.harvestclient.domain.param.TaskAssignmentCreationInfo;
 import ch.aaap.harvestclient.domain.param.TaskAssignmentUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
@@ -43,9 +43,9 @@ public class TaskAssignmentsApiImpl implements TaskAssignmentsApi {
             filterMap.put("page", nextPage);
             filterMap.put("per_page", PER_PAGE);
 
-            Call<PaginatedTaskAssignment> call = service.list(projectReference.getId(), filterMap);
+            Call<PaginatedList> call = service.list(projectReference.getId(), filterMap);
 
-            PaginatedTaskAssignment pagination = ExceptionHandler.callOrThrow(call);
+            PaginatedList pagination = ExceptionHandler.callOrThrow(call);
 
             result.addAll(pagination.getTaskAssignments());
             nextPage = pagination.getNextPage();

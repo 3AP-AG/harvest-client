@@ -3,7 +3,7 @@ package ch.aaap.harvestclient.service;
 import java.util.Map;
 
 import ch.aaap.harvestclient.domain.Task;
-import ch.aaap.harvestclient.domain.pagination.PaginatedTask;
+import ch.aaap.harvestclient.domain.pagination.PaginatedList;
 import ch.aaap.harvestclient.domain.param.TaskUpdateInfo;
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -15,7 +15,7 @@ public interface TaskService {
     String path = basePath + "/{" + id + "}";
 
     @GET(basePath)
-    Call<PaginatedTask> list(@QueryMap Map<String, Object> options);
+    Call<PaginatedList> list(@QueryMap Map<String, Object> options);
 
     @GET(path)
     Call<Task> get(@Path(id) long taskId);

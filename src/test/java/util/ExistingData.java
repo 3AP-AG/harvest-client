@@ -25,8 +25,8 @@ public class ExistingData {
 
     private ExistingData(Harvest harvest) {
         // TODO create this objects on first run of the tests
-        client = ImmutableClient.builder().id(6422922L).build();
-        anotherClient = ImmutableClient.builder().id(6493347L).build();
+        client = ImmutableClient.builder().id(6422922L).name("does not matter").build();
+        anotherClient = ImmutableClient.builder().id(6493347L).name("does not matter").build();
 
         project = harvest.projects().get(new ProjectReferenceDto(16227254));
         task = harvest.tasks().get(new TaskReferenceDto(9231203));

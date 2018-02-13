@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import ch.aaap.harvestclient.api.ProjectsApi;
 import ch.aaap.harvestclient.api.filter.ProjectFilter;
 import ch.aaap.harvestclient.domain.Project;
-import ch.aaap.harvestclient.domain.pagination.PaginatedProject;
+import ch.aaap.harvestclient.domain.pagination.PaginatedList;
 import ch.aaap.harvestclient.domain.param.ProjectCreationInfo;
 import ch.aaap.harvestclient.domain.param.ProjectUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
@@ -41,9 +41,9 @@ public class ProjectsApiImpl implements ProjectsApi {
             filterMap.put("page", nextPage);
             filterMap.put("per_page", PER_PAGE);
 
-            Call<PaginatedProject> call = service.list(filterMap);
+            Call<PaginatedList> call = service.list(filterMap);
 
-            PaginatedProject paginatedProject = ExceptionHandler.callOrThrow(call);
+            PaginatedList paginatedProject = ExceptionHandler.callOrThrow(call);
 
             projects.addAll(paginatedProject.getProjects());
             nextPage = paginatedProject.getNextPage();

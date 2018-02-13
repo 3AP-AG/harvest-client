@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import ch.aaap.harvestclient.api.ClientContactsApi;
 import ch.aaap.harvestclient.api.filter.ClientContactFilter;
 import ch.aaap.harvestclient.domain.ClientContact;
-import ch.aaap.harvestclient.domain.pagination.PaginatedClientContact;
+import ch.aaap.harvestclient.domain.pagination.PaginatedList;
 import ch.aaap.harvestclient.domain.param.ClientContactCreationInfo;
 import ch.aaap.harvestclient.domain.param.ClientContactUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
@@ -42,9 +42,9 @@ public class ClientContactsApiImpl implements ClientContactsApi {
             filterMap.put("page", nextPage);
             filterMap.put("per_page", PER_PAGE);
 
-            Call<PaginatedClientContact> call = service.list(filterMap);
+            Call<PaginatedList> call = service.list(filterMap);
 
-            PaginatedClientContact paginatedClientContact = ExceptionHandler.callOrThrow(call);
+            PaginatedList paginatedClientContact = ExceptionHandler.callOrThrow(call);
 
             clientContacts.addAll(paginatedClientContact.getContacts());
             nextPage = paginatedClientContact.getNextPage();

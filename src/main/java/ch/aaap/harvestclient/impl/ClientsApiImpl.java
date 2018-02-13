@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import ch.aaap.harvestclient.api.ClientsApi;
 import ch.aaap.harvestclient.api.filter.ClientFilter;
 import ch.aaap.harvestclient.domain.Client;
-import ch.aaap.harvestclient.domain.pagination.PaginatedClient;
+import ch.aaap.harvestclient.domain.pagination.PaginatedList;
 import ch.aaap.harvestclient.domain.param.ClientUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.service.ClientService;
@@ -43,9 +43,9 @@ public class ClientsApiImpl implements ClientsApi {
             filterMap.put("page", nextPage);
             filterMap.put("per_page", PER_PAGE);
 
-            Call<PaginatedClient> call = service.list(filterMap);
+            Call<PaginatedList> call = service.list(filterMap);
 
-            PaginatedClient pagination = ExceptionHandler.callOrThrow(call);
+            PaginatedList pagination = ExceptionHandler.callOrThrow(call);
 
             result.addAll(pagination.getClients());
             nextPage = pagination.getNextPage();
