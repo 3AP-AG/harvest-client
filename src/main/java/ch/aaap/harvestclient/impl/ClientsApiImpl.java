@@ -11,7 +11,6 @@ import ch.aaap.harvestclient.api.ClientsApi;
 import ch.aaap.harvestclient.api.filter.ClientFilter;
 import ch.aaap.harvestclient.domain.Client;
 import ch.aaap.harvestclient.domain.pagination.PaginatedClient;
-import ch.aaap.harvestclient.domain.param.ClientCreationInfo;
 import ch.aaap.harvestclient.domain.param.ClientUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.service.ClientService;
@@ -66,7 +65,7 @@ public class ClientsApiImpl implements ClientsApi {
     }
 
     @Override
-    public Client create(ClientCreationInfo creationInfo) {
+    public Client create(Client creationInfo) {
         Call<Client> call = service.create(creationInfo);
         Client client = ExceptionHandler.callOrThrow(call);
         log.debug("Created {}", client);

@@ -1,10 +1,7 @@
 package util;
 
 import ch.aaap.harvestclient.core.Harvest;
-import ch.aaap.harvestclient.domain.Client;
-import ch.aaap.harvestclient.domain.Project;
-import ch.aaap.harvestclient.domain.Task;
-import ch.aaap.harvestclient.domain.TimeEntry;
+import ch.aaap.harvestclient.domain.*;
 import ch.aaap.harvestclient.domain.reference.dto.ProjectReferenceDto;
 import ch.aaap.harvestclient.domain.reference.dto.TaskReferenceDto;
 
@@ -28,10 +25,8 @@ public class ExistingData {
 
     private ExistingData(Harvest harvest) {
         // TODO create this objects on first run of the tests
-        client = new Client();
-        client.setId(6422922L);
-        anotherClient = new Client();
-        anotherClient.setId(6493347L);
+        client = ImmutableClient.builder().id(6422922L).build();
+        anotherClient = ImmutableClient.builder().id(6493347L).build();
 
         project = harvest.projects().get(new ProjectReferenceDto(16227254));
         task = harvest.tasks().get(new TaskReferenceDto(9231203));

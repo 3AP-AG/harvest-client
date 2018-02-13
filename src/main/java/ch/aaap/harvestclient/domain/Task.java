@@ -4,7 +4,6 @@ import java.time.Instant;
 
 import javax.annotation.Nullable;
 
-import org.immutables.gson.Gson;
 import org.immutables.value.Value;
 
 import com.google.gson.annotations.SerializedName;
@@ -12,8 +11,6 @@ import com.google.gson.annotations.SerializedName;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
 @Value.Immutable
-@Gson.TypeAdapters(fieldNamingStrategy = true)
-@Value.Style
 public interface Task extends Reference<Task> {
 
     @Override

@@ -1,7 +1,28 @@
 package ch.aaap.harvestclient.domain.param;
 
-import ch.aaap.harvestclient.domain.Client;
+import javax.annotation.Nullable;
 
-public class ClientUpdateInfo extends Client {
+import org.immutables.value.Value;
+
+import com.google.gson.annotations.SerializedName;
+
+@Value.Immutable
+public interface ClientUpdateInfo {
+
+    @Nullable
+    Long getId();
+
+    @Nullable
+    String getName();
+
+    @SerializedName("is_active")
+    @Nullable
+    Boolean getActive();
+
+    @Nullable
+    String getAddress();
+
+    @Nullable
+    String getCurrency();
 
 }

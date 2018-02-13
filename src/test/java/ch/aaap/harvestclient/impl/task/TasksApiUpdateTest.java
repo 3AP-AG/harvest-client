@@ -9,9 +9,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.TasksApi;
-import ch.aaap.harvestclient.domain.ImmutableNullableTask;
 import ch.aaap.harvestclient.domain.ImmutableTask;
 import ch.aaap.harvestclient.domain.Task;
+import ch.aaap.harvestclient.domain.param.ImmutableTaskUpdateInfo;
 import ch.aaap.harvestclient.domain.param.TaskUpdateInfo;
 import util.TestSetupUtil;
 
@@ -39,7 +39,7 @@ class TasksApiUpdateTest {
 
     @Test
     void changeName() {
-        TaskUpdateInfo changes = ImmutableNullableTask.builder()
+        TaskUpdateInfo changes = ImmutableTaskUpdateInfo.builder()
                 .name("new task name")
                 .build();
         Task updatedTask = tasksApi.update(task, changes);
@@ -56,7 +56,7 @@ class TasksApiUpdateTest {
         boolean defaultAddToFutureProject = true;
         boolean active = false;
 
-        TaskUpdateInfo changes = ImmutableNullableTask.builder()
+        TaskUpdateInfo changes = ImmutableTaskUpdateInfo.builder()
                 .name(name)
                 .active(active)
                 .billableByDefault(billableByDefault)
