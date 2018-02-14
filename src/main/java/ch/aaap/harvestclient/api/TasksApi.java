@@ -4,7 +4,6 @@ import java.util.List;
 
 import ch.aaap.harvestclient.api.filter.TaskFilter;
 import ch.aaap.harvestclient.domain.Task;
-import ch.aaap.harvestclient.domain.param.TaskCreationInfo;
 import ch.aaap.harvestclient.domain.param.TaskUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
@@ -34,7 +33,7 @@ public interface TasksApi {
      *            creation information
      * @return the created Task
      */
-    Task create(TaskCreationInfo creationInfo);
+    Task create(Task creationInfo);
 
     /**
      * Updates the specific task by setting the values of the parameters passed. Any

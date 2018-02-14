@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import ch.aaap.harvestclient.api.UsersApi;
 import ch.aaap.harvestclient.domain.User;
-import ch.aaap.harvestclient.domain.pagination.PaginatedUser;
+import ch.aaap.harvestclient.domain.pagination.PaginatedList;
 import ch.aaap.harvestclient.domain.param.UserCreationInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.service.UserService;
@@ -39,8 +39,8 @@ public class UsersApiImpl implements UsersApi {
 
         while (nextPage != null) {
             log.debug("Getting page {} of user list", nextPage);
-            Call<PaginatedUser> call = service.list(isActive, updatedSince, nextPage, PER_PAGE);
-            PaginatedUser paginatedUser = ExceptionHandler.callOrThrow(call);
+            Call<PaginatedList> call = service.list(isActive, updatedSince, nextPage, PER_PAGE);
+            PaginatedList paginatedUser = ExceptionHandler.callOrThrow(call);
             users.addAll(paginatedUser.getUsers());
             nextPage = paginatedUser.getNextPage();
         }

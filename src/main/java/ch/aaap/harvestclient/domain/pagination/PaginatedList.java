@@ -1,83 +1,54 @@
 package ch.aaap.harvestclient.domain.pagination;
 
-import com.google.gson.annotations.SerializedName;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
+import org.immutables.value.Value;
+
+import ch.aaap.harvestclient.domain.*;
 
 /**
- * Common functionality for paginated response. Cannot easily be made generic
- * because the Json key name for the list of objects depends on the type
+ * Holds any type of list from Harvest. We use the fact that missing JSON fields
+ * will be set to null
  */
-public class PaginatedList {
+@Value.Immutable
+public interface PaginatedList {
 
-    Integer perPage;
+    List<Client> getClients();
 
-    Integer totalPages;
+    List<Task> getTasks();
 
-    Integer nextPage;
+    List<ClientContact> getContacts();
 
-    Integer previousPage;
+    List<Project> getProjects();
 
-    Integer page;
+    List<ProjectAssignment> getProjectAssignments();
 
-    @SerializedName("links")
-    PaginationLinks paginationLinks;
+    List<Role> getRoles();
 
-    public Integer getPerPage() {
-        return perPage;
-    }
+    List<TaskAssignment> getTaskAssignments();
 
-    public void setPerPage(Integer perPage) {
-        this.perPage = perPage;
-    }
+    List<TimeEntry> getTimeEntries();
 
-    public Integer getTotalPages() {
-        return totalPages;
-    }
+    List<User> getUsers();
 
-    public void setTotalPages(Integer totalPages) {
-        this.totalPages = totalPages;
-    }
+    @Nullable
+    Integer getPerPage();
 
-    public Integer getNextPage() {
-        return nextPage;
-    }
+    @Nullable
+    Integer getTotalPages();
 
-    public void setNextPage(Integer nextPage) {
-        this.nextPage = nextPage;
-    }
+    @Nullable
+    Integer getNextPage();
 
-    public Integer getPreviousPage() {
-        return previousPage;
-    }
+    @Nullable
+    Integer getPreviousPage();
 
-    public void setPreviousPage(Integer previousPage) {
-        this.previousPage = previousPage;
-    }
+    @Nullable
+    Integer getPage();
 
-    public Integer getPage() {
-        return page;
-    }
+    @Nullable
+    PaginationLinks getLinks();
 
-    public void setPage(Integer page) {
-        this.page = page;
-    }
-
-    public PaginationLinks getPaginationLinks() {
-        return paginationLinks;
-    }
-
-    public void setPaginationLinks(PaginationLinks paginationLinks) {
-        this.paginationLinks = paginationLinks;
-    }
-
-    @Override
-    public String toString() {
-        return "Paginated{" +
-                ", perPage=" + perPage +
-                ", totalPages=" + totalPages +
-                ", nextPage=" + nextPage +
-                ", previousPage=" + previousPage +
-                ", page=" + page +
-                ", paginationLinks=" + paginationLinks +
-                '}';
-    }
 }

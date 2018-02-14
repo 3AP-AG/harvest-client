@@ -10,8 +10,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.ClientsApi;
 import ch.aaap.harvestclient.domain.Client;
-import ch.aaap.harvestclient.domain.param.ClientCreationInfo;
+import ch.aaap.harvestclient.domain.ImmutableClient;
 import ch.aaap.harvestclient.domain.param.ClientUpdateInfo;
+import ch.aaap.harvestclient.domain.param.ImmutableClientUpdateInfo;
 import util.TestSetupUtil;
 
 @HarvestTest
@@ -22,7 +23,8 @@ class ClientsApiUpdateTest {
 
     @BeforeEach
     void beforeEach(TestInfo testInfo) {
-        client = clientsApi.create(new ClientCreationInfo("test Client for " + testInfo.getDisplayName()));
+        client = clientsApi
+                .create(ImmutableClient.builder().name("test Client for " + testInfo.getDisplayName()).build());
     }
 
     @AfterEach
@@ -36,11 +38,10 @@ class ClientsApiUpdateTest {
     @Test
     void changeName() {
 
-        ClientUpdateInfo changes = new ClientUpdateInfo();
-        changes.setName("new client name");
+        ClientUpdateInfo changes = ImmutableClientUpdateInfo.builder().name("new client name").build();
         Client updatedClient = clientsApi.update(client, changes);
 
-        assertThat(updatedClient).isEqualToIgnoringNullFields(changes);
+        assertThat(updatedClient).isEqualToComparingOnlyGivenFields(changes, "name");
 
     }
 
@@ -53,14 +54,15 @@ class ClientsApiUpdateTest {
         String address = "Road 1,\n 8888 New Amsterdam";
         String currency = "EUR";
 
-        ClientUpdateInfo changes = new ClientUpdateInfo();
-        changes.setName(name);
-        changes.setActive(active);
-        changes.setAddress(address);
-        changes.setCurrency(currency);
+        ClientUpdateInfo changes = ImmutableClientUpdateInfo.builder()
+                .name("new client name")
+                .active(active)
+                .address(address)
+                .currency(currency)
+                .build();
         Client updatedClient = clientsApi.update(client, changes);
 
-        assertThat(updatedClient).isEqualToIgnoringNullFields(changes);
+        assertThat(updatedClient).isEqualToComparingOnlyGivenFields(changes, "name", "active", "address", "currency");
 
     }
 

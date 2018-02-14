@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import ch.aaap.harvestclient.api.RolesApi;
 import ch.aaap.harvestclient.domain.Role;
 import ch.aaap.harvestclient.domain.User;
-import ch.aaap.harvestclient.domain.pagination.PaginatedRole;
+import ch.aaap.harvestclient.domain.pagination.PaginatedList;
 import ch.aaap.harvestclient.domain.param.RoleInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.service.RoleService;
@@ -36,8 +36,8 @@ public class RolesApiImpl implements RolesApi {
 
         while (nextPage != null) {
             log.debug("Getting page {} of roles list", nextPage);
-            Call<PaginatedRole> call = service.list(nextPage, PER_PAGE);
-            PaginatedRole paginatedRole = ExceptionHandler.callOrThrow(call);
+            Call<PaginatedList> call = service.list(nextPage, PER_PAGE);
+            PaginatedList paginatedRole = ExceptionHandler.callOrThrow(call);
             roles.addAll(paginatedRole.getRoles());
             nextPage = paginatedRole.getNextPage();
         }

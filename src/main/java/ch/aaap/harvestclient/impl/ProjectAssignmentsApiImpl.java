@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import ch.aaap.harvestclient.api.ProjectAssignmentsApi;
 import ch.aaap.harvestclient.domain.ProjectAssignment;
 import ch.aaap.harvestclient.domain.User;
-import ch.aaap.harvestclient.domain.pagination.PaginatedProjectAssignment;
+import ch.aaap.harvestclient.domain.pagination.PaginatedList;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.service.ProjectAssignmentService;
 import retrofit2.Call;
@@ -34,9 +34,9 @@ public class ProjectAssignmentsApiImpl implements ProjectAssignmentsApi {
 
         while (nextPage != null) {
             log.debug("Getting page {} of project assigment list for user {}", nextPage, userReference);
-            Call<PaginatedProjectAssignment> call = service.list(userReference.getId(), updatedSince, nextPage,
+            Call<PaginatedList> call = service.list(userReference.getId(), updatedSince, nextPage,
                     PER_PAGE);
-            PaginatedProjectAssignment paginatedProjectAssignment = ExceptionHandler.callOrThrow(call);
+            PaginatedList paginatedProjectAssignment = ExceptionHandler.callOrThrow(call);
             projectAssignments.addAll(paginatedProjectAssignment.getProjectAssignments());
             nextPage = paginatedProjectAssignment.getNextPage();
         }
@@ -53,8 +53,8 @@ public class ProjectAssignmentsApiImpl implements ProjectAssignmentsApi {
 
         while (nextPage != null) {
             log.debug("Getting page {} of project assigment list for self", nextPage);
-            Call<PaginatedProjectAssignment> call = service.list(nextPage, PER_PAGE);
-            PaginatedProjectAssignment paginatedProjectAssignment = ExceptionHandler.callOrThrow(call);
+            Call<PaginatedList> call = service.list(nextPage, PER_PAGE);
+            PaginatedList paginatedProjectAssignment = ExceptionHandler.callOrThrow(call);
             projectAssignments.addAll(paginatedProjectAssignment.getProjectAssignments());
             nextPage = paginatedProjectAssignment.getNextPage();
         }

@@ -4,7 +4,6 @@ import java.util.List;
 
 import ch.aaap.harvestclient.api.filter.ClientFilter;
 import ch.aaap.harvestclient.domain.Client;
-import ch.aaap.harvestclient.domain.param.ClientCreationInfo;
 import ch.aaap.harvestclient.domain.param.ClientUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
@@ -35,7 +34,7 @@ public interface ClientsApi {
      *            creation information
      * @return the created Client
      */
-    Client create(ClientCreationInfo creationInfo);
+    Client create(Client creationInfo);
 
     /**
      * Updates the specific client by setting the values of the parameters passed.

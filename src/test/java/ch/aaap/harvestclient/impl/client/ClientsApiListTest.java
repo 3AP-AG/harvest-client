@@ -12,7 +12,7 @@ import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.ClientsApi;
 import ch.aaap.harvestclient.api.filter.ClientFilter;
 import ch.aaap.harvestclient.domain.Client;
-import ch.aaap.harvestclient.domain.param.ClientCreationInfo;
+import ch.aaap.harvestclient.domain.ImmutableClient;
 import util.TestSetupUtil;
 
 @HarvestTest
@@ -41,8 +41,9 @@ class ClientsApiListTest {
     @Test
     void listByActive() {
 
-        ClientCreationInfo creationInfo = new ClientCreationInfo("inactive test Client");
-        creationInfo.setActive(false);
+        Client creationInfo = ImmutableClient.builder().name("inactive test Client")
+                .active(false)
+                .build();
         client = clientsApi.create(creationInfo);
 
         ClientFilter filter = new ClientFilter();
@@ -58,7 +59,7 @@ class ClientsApiListTest {
     void listByUpdatedSince() {
 
         Instant creationTime = Instant.now().minusSeconds(1);
-        ClientCreationInfo creationInfo = new ClientCreationInfo("newly created test Client");
+        Client creationInfo = ImmutableClient.builder().name("newly created test Client").build();
         client = clientsApi.create(creationInfo);
 
         ClientFilter filter = new ClientFilter();
