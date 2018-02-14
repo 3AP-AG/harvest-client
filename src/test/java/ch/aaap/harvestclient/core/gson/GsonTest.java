@@ -1,4 +1,4 @@
-package ch.aaap.harvestclient;
+package ch.aaap.harvestclient.core.gson;
 
 import java.lang.reflect.Type;
 
@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import ch.aaap.harvestclient.core.gson.GsonConfiguration;
+import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.domain.pagination.PaginatedList;
 
 /**
