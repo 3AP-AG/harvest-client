@@ -1,6 +1,7 @@
 package ch.aaap.harvestclient.core;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,11 +59,16 @@ public class Harvest {
     /** Account id. Only needed for personal tokens */
     private final String accountId;
 
+    private final Config config;
+
     /**
      * What User-Agent to send. Harvest policy is to include either an email or the
      * URL for the client code.
      */
     private final String userAgent;
+
+    private final TimezoneConfiguration timezoneConfiguration;
+    private final CurrencyConfiguration currencyConfiguration;
 
     private final RolesApi rolesApi;
     private final ProjectAssignmentsApi projectAssignmentsApi;
@@ -77,6 +83,8 @@ public class Harvest {
 
     public Harvest(Config config) {
 
+        this.config = config;
+
         // TODO we might need to allow missing account id for oauth2
         config.checkValid(ConfigFactory.defaultReference(), "harvest");
 
@@ -88,19 +96,10 @@ public class Harvest {
         Interceptor debugInterceptor = initHttpLogging();
         Interceptor authenticationInterceptor = initAuthentication();
 
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(authenticationInterceptor)
-                // debug interceptor goes last
-                .addInterceptor(debugInterceptor)
-                .build();
+        Retrofit retrofit = initRetrofit(debugInterceptor, authenticationInterceptor);
 
-        Gson gson = GsonConfiguration.getConfiguration();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
+        timezoneConfiguration = new TimezoneConfiguration(openConfiguredStream("harvest.timezones_path"));
+        currencyConfiguration = new CurrencyConfiguration(openConfiguredStream("harvest.currencies_path"));
 
         TimeEntryService timeEntryService = retrofit.create(TimeEntryService.class);
         UserService userService = retrofit.create(UserService.class);
@@ -126,6 +125,27 @@ public class Harvest {
 
         log.debug("Harvest client initialized");
 
+    }
+
+    private InputStream openConfiguredStream(String configName) {
+        String resourcePath = config.getString(configName);
+        return Harvest.class.getResourceAsStream(resourcePath);
+    }
+
+    private Retrofit initRetrofit(Interceptor debugInterceptor, Interceptor authenticationInterceptor) {
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(authenticationInterceptor)
+                // debug interceptor goes last
+                .addInterceptor(debugInterceptor)
+                .build();
+
+        Gson gson = GsonConfiguration.getConfiguration();
+
+        return new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
     }
 
     public Harvest() {
@@ -211,4 +231,11 @@ public class Harvest {
         return userAgent;
     }
 
+    public TimezoneConfiguration getTimezoneConfiguration() {
+        return timezoneConfiguration;
+    }
+
+    public CurrencyConfiguration getCurrencyConfiguration() {
+        return currencyConfiguration;
+    }
 }
