@@ -11,6 +11,7 @@ import ch.aaap.harvestclient.domain.ImmutableTaskAssignment;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.Task;
 import ch.aaap.harvestclient.domain.TaskAssignment;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import util.ExistingData;
 import util.TestSetupUtil;
 
@@ -60,6 +61,7 @@ class TaskAssignmentsApiCreateTest {
 
         assertThat(taskAssignment).isNotNull();
         assertThat(taskAssignment.getTaskReference()).isEqualToComparingOnlyGivenFields(task, "id", "name");
-        assertThat(taskAssignment).isEqualToIgnoringNullFields(creationInfo);
+        assertThat(taskAssignment).usingComparatorForType((x, y) -> (int) (y.getId() - x.getId()), Reference.class)
+                .isEqualToIgnoringNullFields(creationInfo);
     }
 }

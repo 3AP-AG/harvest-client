@@ -61,7 +61,7 @@ class ProjectsApiCreateTest {
         assertThat(project.getBillBy()).isEqualTo(billingMethod);
         assertThat(project.getBudgetBy()).isEqualTo(budgetBy);
         assertThat(project.getName()).isEqualTo(name);
-        assertThat(project.getClientReference().getId()).isEqualTo(clientReference.getId());
+        assertThat(project.getClient().getId()).isEqualTo(clientReference.getId());
     }
 
     @ParameterizedTest
@@ -85,7 +85,7 @@ class ProjectsApiCreateTest {
         assertThat(project.getBillBy()).isEqualTo(billBy);
         assertThat(project.getBudgetBy()).isEqualTo(budgetMethod);
         assertThat(project.getName()).isEqualTo(name);
-        assertThat(project.getClientReference().getId()).isEqualTo(clientReference.getId());
+        assertThat(project.getClient().getId()).isEqualTo(clientReference.getId());
     }
 
     @Test
@@ -140,7 +140,7 @@ class ProjectsApiCreateTest {
                 "clientReference", "fee");
         // fee can only be set by having fixed_fee = true
         assertThat(project.getFee()).isNull();
-        assertThat(project.getClientReference().getId()).isEqualTo(clientReference.getId());
+        assertThat(project.getClient().getId()).isEqualTo(clientReference.getId());
         assertThat(project.getCreatedAt()).isCloseTo(Instant.now(), within(1, ChronoUnit.MINUTES));
         assertThat(project.getUpdatedAt()).isCloseTo(Instant.now(), within(1, ChronoUnit.MINUTES));
 
@@ -203,6 +203,6 @@ class ProjectsApiCreateTest {
 
         // setting fixed_fee to true changes the billing method to None
         assertThat(project.getBillBy()).isEqualTo(Project.BillingMethod.NONE);
-        assertThat(project.getClientReference().getId()).isEqualTo(clientReference.getId());
+        assertThat(project.getClient().getId()).isEqualTo(clientReference.getId());
     }
 }

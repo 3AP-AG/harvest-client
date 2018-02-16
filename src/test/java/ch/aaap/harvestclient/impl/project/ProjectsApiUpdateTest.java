@@ -140,7 +140,7 @@ class ProjectsApiUpdateTest {
                 "notifyWhenOverBudget", "overBudgetNotificationPercentage", "showBudgetToAll", "costBudget",
                 "costBudgetIncludeExpenses", "notes", "startsOn", "endsOn");
 
-        assertThat(project.getClientReference().getId()).isEqualTo(info.getClientReference().getId());
+        assertThat(project.getClient().getId()).isEqualTo(info.getClient().getId());
 
     }
 }

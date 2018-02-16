@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import org.immutables.gson.Gson;
 import org.immutables.value.Value;
 
 import com.google.gson.annotations.SerializedName;
@@ -13,6 +14,7 @@ import ch.aaap.harvestclient.domain.reference.Reference;
 /**
  * User Project Assignment
  */
+@Gson.TypeAdapters(fieldNamingStrategy = true)
 @Value.Immutable
 public interface ProjectAssignment extends BaseObject<ProjectAssignment> {
 

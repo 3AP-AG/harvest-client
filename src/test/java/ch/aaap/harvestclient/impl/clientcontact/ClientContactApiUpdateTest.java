@@ -48,7 +48,7 @@ class ClientContactContactApiUpdateTest {
                 .build();
         ClientContact updatedClientContact = clientContactsApi.update(clientContact, changes);
 
-        assertThat(updatedClientContact).isEqualToIgnoringNullFields(changes);
+        assertThat(updatedClientContact.getFirstName()).isEqualTo(changes.getFirstName());
 
     }
 
@@ -75,7 +75,8 @@ class ClientContactContactApiUpdateTest {
 
         ClientContact updatedClientContact = clientContactsApi.update(clientContact, changes);
 
-        assertThat(updatedClientContact).isEqualToIgnoringNullFields(changes);
+        assertThat(updatedClientContact).isEqualToComparingOnlyGivenFields(changes, "title", "firstName", "lastName",
+                "email", "phoneOffice", "phoneMobile", "fax");
 
     }
 

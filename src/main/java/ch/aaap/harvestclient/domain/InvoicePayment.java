@@ -5,8 +5,10 @@ import java.time.LocalDate;
 
 import javax.annotation.Nullable;
 
+import org.immutables.gson.Gson;
 import org.immutables.value.Value;
 
+@Gson.TypeAdapters(fieldNamingStrategy = true)
 @Value.Immutable
 public interface InvoicePayment extends BaseObject<InvoicePayment> {
 

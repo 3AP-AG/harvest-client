@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import org.immutables.gson.Gson;
 import org.immutables.value.Value;
 
 import com.google.gson.annotations.SerializedName;
 
+@Gson.TypeAdapters(fieldNamingStrategy = true)
 @Value.Immutable
 public abstract class UserUpdateInfo {
 

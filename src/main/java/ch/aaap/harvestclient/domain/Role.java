@@ -3,11 +3,13 @@ package ch.aaap.harvestclient.domain;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.immutables.gson.Gson;
 import org.immutables.value.Value;
 
 import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.domain.reference.dto.UserReferenceDto;
 
+@Gson.TypeAdapters(fieldNamingStrategy = true)
 @Value.Immutable
 public abstract class Role implements BaseObject<Role> {
 

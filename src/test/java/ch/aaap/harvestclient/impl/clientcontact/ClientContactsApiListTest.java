@@ -47,7 +47,7 @@ class ClientContactContactsApiListTest {
         Client anotherClient = ExistingData.getInstance().getAnotherClient();
 
         ClientContact creationInfo = ImmutableClientContact.builder()
-                .client(client)
+                .client(anotherClient)
                 .firstName("inactive test ClientContact")
                 .build();
         clientContact = clientContactsApi.create(creationInfo);

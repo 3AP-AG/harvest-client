@@ -5,8 +5,10 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import org.immutables.gson.Gson;
 import org.immutables.value.Value;
 
+@Gson.TypeAdapters(fieldNamingStrategy = true)
 @Value.Immutable
 public interface InvoiceMessage extends BaseObject<InvoiceMessage> {
     @Nullable
