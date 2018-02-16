@@ -11,7 +11,6 @@ import ch.aaap.harvestclient.api.ClientContactsApi;
 import ch.aaap.harvestclient.api.filter.ClientContactFilter;
 import ch.aaap.harvestclient.domain.ClientContact;
 import ch.aaap.harvestclient.domain.pagination.PaginatedList;
-import ch.aaap.harvestclient.domain.param.ClientContactCreationInfo;
 import ch.aaap.harvestclient.domain.param.ClientContactUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.service.ClientContactService;
@@ -64,7 +63,7 @@ public class ClientContactsApiImpl implements ClientContactsApi {
     }
 
     @Override
-    public ClientContact create(ClientContactCreationInfo clientContactCreationInfo) {
+    public ClientContact create(ClientContact clientContactCreationInfo) {
         Call<ClientContact> call = service.create(clientContactCreationInfo);
         ClientContact clientContact = ExceptionHandler.callOrThrow(call);
         log.debug("Created ClientContact {}", clientContact);

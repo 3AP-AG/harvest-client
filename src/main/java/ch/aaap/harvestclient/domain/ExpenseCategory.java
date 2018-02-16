@@ -1,15 +1,25 @@
 package ch.aaap.harvestclient.domain;
 
-import java.time.Instant;
+import javax.annotation.Nullable;
 
-public class ExpenseCategory {
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
 
-    private Long id;
-    private String name;
-    private String unitName;
-    private Double unitPrice;
-    private Boolean active;
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+public interface ExpenseCategory extends BaseObject<ExpenseCategory> {
 
-    private Instant createdAt;
-    private Instant updatedAt;
+    String getName();
+
+    @Nullable
+    String getUnitName();
+
+    @Nullable
+    Double getUnitPrice();
+
+    @Value.Default
+    default Boolean getActive() {
+        return true;
+    }
+
 }

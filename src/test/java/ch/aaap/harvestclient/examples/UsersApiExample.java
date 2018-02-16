@@ -10,8 +10,8 @@ import com.typesafe.config.ConfigFactory;
 
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.core.Harvest;
+import ch.aaap.harvestclient.domain.ImmutableUser;
 import ch.aaap.harvestclient.domain.User;
-import ch.aaap.harvestclient.domain.param.UserCreationInfo;
 
 @HarvestTest
 public class UsersApiExample {
@@ -33,7 +33,11 @@ public class UsersApiExample {
     @Test
     public void createUser() {
 
-        UserCreationInfo userInfo = new UserCreationInfo("testFirst", "testLast", "test@test.ch");
+        User userInfo = ImmutableUser.builder()
+                .firstName("testFirst")
+                .lastName("testLast")
+                .email("test@test.ch")
+                .build();
 
         User newUser = harvest.users().create(userInfo);
 

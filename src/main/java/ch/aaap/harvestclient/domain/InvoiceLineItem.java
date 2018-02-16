@@ -1,19 +1,41 @@
 package ch.aaap.harvestclient.domain;
 
-import ch.aaap.harvestclient.domain.reference.dto.ProjectReferenceDto;
+import javax.annotation.Nullable;
 
-public class InvoiceLineItem {
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
 
-    private Long id;
-    private ProjectReferenceDto projectReferenceDto;
+import com.google.gson.annotations.SerializedName;
 
-    private String kind; // Invoice Item Category
+import ch.aaap.harvestclient.domain.reference.Reference;
 
-    private String description;
-    private Long quantity;
-    private Double unitPrice;
-    private Double amount;
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+public interface InvoiceLineItem {
+    @Nullable
+    Long getId();
 
-    private Boolean taxed;
-    private Boolean taxed2;
+    @Nullable
+    @SerializedName(value = "project_id", alternate = "project")
+    Reference<Project> getProject();
+
+    String getKind(); // Invoice Item Category
+
+    @Nullable
+    String getDescription();
+
+    @Nullable
+    Long getQuantity();
+
+    @Nullable
+    Double getUnitPrice();
+
+    @Nullable
+    Double getAmount();
+
+    @Nullable
+    Boolean getTaxed();
+
+    @Nullable
+    Boolean getTaxed2();
 }

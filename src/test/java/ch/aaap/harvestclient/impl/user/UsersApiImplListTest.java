@@ -11,8 +11,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.UsersApi;
+import ch.aaap.harvestclient.domain.ImmutableUser;
 import ch.aaap.harvestclient.domain.User;
-import ch.aaap.harvestclient.domain.param.UserCreationInfo;
 import util.TestSetupUtil;
 
 @HarvestTest
@@ -32,9 +32,10 @@ class UsersApiImplListTest {
         activeUser = api.create(TestSetupUtil.getRandomUserCreationInfo());
         // Harvest API will round to seconds, calling Instant.now() is not too close
         userCreationTime = activeUser.getCreatedAt().minusSeconds(1);
-        UserCreationInfo randomUserCreationInfo = TestSetupUtil.getRandomUserCreationInfo();
+        User randomUserCreationInfo = ImmutableUser.builder()
+                .from(TestSetupUtil.getRandomUserCreationInfo())
+                .active(false).build();
 
-        randomUserCreationInfo.setActive(false);
         inactiveUser = api.create(randomUserCreationInfo);
 
     }

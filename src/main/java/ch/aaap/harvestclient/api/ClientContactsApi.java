@@ -4,7 +4,6 @@ import java.util.List;
 
 import ch.aaap.harvestclient.api.filter.ClientContactFilter;
 import ch.aaap.harvestclient.domain.ClientContact;
-import ch.aaap.harvestclient.domain.param.ClientContactCreationInfo;
 import ch.aaap.harvestclient.domain.param.ClientContactUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
@@ -34,7 +33,7 @@ public interface ClientContactsApi {
      *            the creation options
      * @return the newly created ClientContact
      */
-    ClientContact create(ClientContactCreationInfo clientContactCreationInfo);
+    ClientContact create(ClientContact clientContactCreationInfo);
 
     /**
      * Updates an existing ClientContact with the properties set in

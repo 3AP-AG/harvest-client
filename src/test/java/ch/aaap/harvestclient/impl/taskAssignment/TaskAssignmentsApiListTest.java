@@ -13,10 +13,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.TaskAssignmentsApi;
 import ch.aaap.harvestclient.api.filter.TaskAssignmentFilter;
+import ch.aaap.harvestclient.domain.ImmutableTaskAssignment;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.Task;
 import ch.aaap.harvestclient.domain.TaskAssignment;
-import ch.aaap.harvestclient.domain.param.TaskAssignmentCreationInfo;
 import util.ExistingData;
 import util.TestSetupUtil;
 
@@ -51,8 +51,10 @@ class TaskAssignmentsApiListTest {
     @Test
     void listByActive() {
 
-        TaskAssignmentCreationInfo creationInfo = new TaskAssignmentCreationInfo(task);
-        creationInfo.setActive(true);
+        TaskAssignment creationInfo = ImmutableTaskAssignment.builder()
+                .taskReference(task)
+                .active(true)
+                .build();
         taskAssignment = taskAssignmentApi.create(project, creationInfo);
 
         TaskAssignmentFilter filter = new TaskAssignmentFilter();
@@ -68,7 +70,9 @@ class TaskAssignmentsApiListTest {
     void listByUpdatedSince() {
 
         Instant creationTime = Instant.now().minusSeconds(1);
-        TaskAssignmentCreationInfo creationInfo = new TaskAssignmentCreationInfo(task);
+        TaskAssignment creationInfo = ImmutableTaskAssignment.builder()
+                .taskReference(task)
+                .build();
         taskAssignment = taskAssignmentApi.create(project, creationInfo);
         log.debug("time now: {}", Instant.now());
         log.debug("Creation time for taskAssignment: {}", taskAssignment.getCreatedAt());

@@ -4,7 +4,6 @@ import java.util.List;
 
 import ch.aaap.harvestclient.api.filter.ProjectFilter;
 import ch.aaap.harvestclient.domain.Project;
-import ch.aaap.harvestclient.domain.param.ProjectCreationInfo;
 import ch.aaap.harvestclient.domain.param.ProjectUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
@@ -34,7 +33,7 @@ public interface ProjectsApi {
      *            the creation options
      * @return the newly created Project
      */
-    Project create(ProjectCreationInfo projectCreationInfo);
+    Project create(Project projectCreationInfo);
 
     /**
      * Updates an existing Project with the properties set in ProjectUpdateInfo

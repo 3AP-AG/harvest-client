@@ -1,7 +1,15 @@
 package ch.aaap.harvestclient.domain;
 
-public class InvoiceMessageRecipient {
+import javax.annotation.Nullable;
 
-    private String name;
-    private String email;
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
+
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+public interface InvoiceMessageRecipient {
+    @Nullable
+    String getName();
+
+    String getEmail();
 }

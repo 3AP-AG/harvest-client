@@ -1,7 +1,42 @@
 package ch.aaap.harvestclient.domain.param;
 
-import ch.aaap.harvestclient.domain.ClientContact;
+import javax.annotation.Nullable;
 
-public class ClientContactUpdateInfo extends ClientContact {
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
+
+import com.google.gson.annotations.SerializedName;
+
+import ch.aaap.harvestclient.domain.Client;
+import ch.aaap.harvestclient.domain.reference.Reference;
+
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+public interface ClientContactUpdateInfo {
+
+    @SerializedName(value = "client_id", alternate = "client")
+    @Nullable
+    Reference<Client> getClient();
+
+    @Nullable
+    String getTitle();
+
+    @Nullable
+    String getFirstName();
+
+    @Nullable
+    String getLastName();
+
+    @Nullable
+    String getEmail();
+
+    @Nullable
+    String getPhoneOffice();
+
+    @Nullable
+    String getPhoneMobile();
+
+    @Nullable
+    String getFax();
 
 }

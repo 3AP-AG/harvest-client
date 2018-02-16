@@ -7,10 +7,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.TaskAssignmentsApi;
+import ch.aaap.harvestclient.domain.ImmutableTaskAssignment;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.Task;
 import ch.aaap.harvestclient.domain.TaskAssignment;
-import ch.aaap.harvestclient.domain.param.TaskAssignmentCreationInfo;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import util.ExistingData;
 import util.TestSetupUtil;
 
@@ -34,30 +35,33 @@ class TaskAssignmentsApiCreateTest {
     @Test
     void createDefault() {
 
-        TaskAssignmentCreationInfo creationInfo = new TaskAssignmentCreationInfo(task);
+        TaskAssignment creationInfo = ImmutableTaskAssignment.builder().taskReference(task).build();
         taskAssignment = taskAssignmentApi.create(project, creationInfo);
 
         assertThat(taskAssignment).isNotNull();
-        assertThat(taskAssignment.getTaskReferenceDto()).isEqualToComparingOnlyGivenFields(task, "id", "name");
+        assertThat(taskAssignment.getTaskReference()).isEqualToComparingOnlyGivenFields(task, "id", "name");
 
     }
 
     @Test
     void createAllOptions() {
 
-        TaskAssignmentCreationInfo creationInfo = new TaskAssignmentCreationInfo(task);
+        TaskAssignment creationInfo = ImmutableTaskAssignment.builder()
+                .taskReference(task)
+                // cannot create an archived task directly, it needs to have time tracked
+                // against it, see
+                // https://help.getharvest.com/harvest/manage/more-on-manage/managing-tasks/#archiving
+                .active(true)
+                .billable(false)
+                .budget(2000.)
+                .hourlyRate(220.)
+                .build();
 
-        // cannot create an archived task directly, it needs to have time tracked
-        // against it, see
-        // https://help.getharvest.com/harvest/manage/more-on-manage/managing-tasks/#archiving
-        creationInfo.setActive(true);
-        creationInfo.setBillable(false);
-        creationInfo.setBudget(2000.);
-        creationInfo.setHourlyRate(220.);
         taskAssignment = taskAssignmentApi.create(project, creationInfo);
 
         assertThat(taskAssignment).isNotNull();
-        assertThat(taskAssignment.getTaskReferenceDto()).isEqualToComparingOnlyGivenFields(task, "id", "name");
-        assertThat(taskAssignment).isEqualToIgnoringNullFields(creationInfo);
+        assertThat(taskAssignment.getTaskReference()).isEqualToComparingOnlyGivenFields(task, "id", "name");
+        assertThat(taskAssignment).usingComparatorForType((x, y) -> (int) (y.getId() - x.getId()), Reference.class)
+                .isEqualToIgnoringNullFields(creationInfo);
     }
 }

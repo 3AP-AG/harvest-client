@@ -1,4 +1,4 @@
-package ch.aaap.harvestclient.domain;
+package ch.aaap.harvestclient.domain.param;
 
 import java.util.List;
 
@@ -11,12 +11,15 @@ import com.google.gson.annotations.SerializedName;
 
 @Gson.TypeAdapters(fieldNamingStrategy = true)
 @Value.Immutable
-public abstract class User implements BaseObject<User> {
+public abstract class UserUpdateInfo {
 
+    @Nullable
     public abstract String getFirstName();
 
+    @Nullable
     public abstract String getLastName();
 
+    @Nullable
     public abstract String getEmail();
 
     @Nullable
@@ -68,11 +71,4 @@ public abstract class User implements BaseObject<User> {
     @Nullable
     public abstract String getAvatarUrl();
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + getId() +
-                ", email='" + getEmail() + '\'' +
-                '}';
-    }
 }

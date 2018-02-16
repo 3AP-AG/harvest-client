@@ -1,22 +1,40 @@
 package ch.aaap.harvestclient.domain;
 
-import java.time.Instant;
 import java.util.List;
 
-public class EstimateMessage {
-    private Long id;
-    private String sentBy;
-    private String sentByEmail;
-    private String sentFrom;
-    private String sentFromEmail;
-    private List<EstimateMessageRecipient> invoiceMessageRecipients;
+import javax.annotation.Nullable;
 
-    private String subject;
-    private String body;
-    private Boolean sendMeACopy;
-    private Boolean eventType;
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
 
-    private Instant createdAt;
-    private Instant updatedAt;
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+public interface EstimateMessage extends BaseObject<EstimateMessage> {
+
+    @Nullable
+    String getSentBy();
+
+    @Nullable
+    String getSentByEmail();
+
+    @Nullable
+    String getSentFrom();
+
+    @Nullable
+    String getSentFromEmail();
+
+    List<EstimateMessageRecipient> getInvoiceMessageRecipients();
+
+    @Nullable
+    String getSubject();
+
+    @Nullable
+    String getBody();
+
+    @Nullable
+    Boolean getSendMeACopy();
+
+    @Nullable
+    Boolean getEventType();
 
 }

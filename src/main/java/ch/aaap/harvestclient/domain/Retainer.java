@@ -1,9 +1,10 @@
 package ch.aaap.harvestclient.domain;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
 
-public class Retainer {
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+public interface Retainer {
 
-    private static final Logger log = LoggerFactory.getLogger(Retainer.class);
 }

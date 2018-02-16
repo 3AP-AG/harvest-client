@@ -10,7 +10,8 @@ import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.ClientContactsApi;
 import ch.aaap.harvestclient.domain.Client;
 import ch.aaap.harvestclient.domain.ClientContact;
-import ch.aaap.harvestclient.domain.param.ClientContactCreationInfo;
+import ch.aaap.harvestclient.domain.ImmutableClientContact;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.exception.RequestProcessingException;
 import util.ExistingData;
 import util.TestSetupUtil;
@@ -34,7 +35,10 @@ class ClientContactContactApiCreateTest {
     void create() {
 
         String firstName = "test First";
-        ClientContactCreationInfo creationInfo = new ClientContactCreationInfo(client, firstName);
+        ClientContact creationInfo = ImmutableClientContact.builder()
+                .client(client)
+                .firstName(firstName)
+                .build();
         clientContact = clientContactsApi.create(creationInfo);
 
         assertThat(clientContact.getFirstName()).isEqualTo(firstName);
@@ -52,16 +56,20 @@ class ClientContactContactApiCreateTest {
         String phoneMobile = "1232 32323 32 ";
         String fax = "this is a fax ?";
 
-        ClientContactCreationInfo creationInfo = new ClientContactCreationInfo(client, firstName);
-        creationInfo.setLastName(lastName);
-        creationInfo.setEmail(email);
-        creationInfo.setPhoneOffice(phoneOffice);
-        creationInfo.setPhoneMobile(phoneMobile);
-        creationInfo.setFax(fax);
+        ClientContact creationInfo = ImmutableClientContact.builder()
+                .client(client)
+                .firstName(firstName)
+                .lastName(lastName)
+                .email(email)
+                .phoneMobile(phoneMobile)
+                .phoneOffice(phoneOffice)
+                .fax(fax)
+                .build();
 
         clientContact = clientContactsApi.create(creationInfo);
 
-        assertThat(clientContact).isEqualToIgnoringNullFields(creationInfo);
+        assertThat(clientContact).usingComparatorForType((x, y) -> (int) (y.getId() - x.getId()), Reference.class)
+                .isEqualToIgnoringNullFields(creationInfo);
     }
 
     @Test
@@ -70,8 +78,11 @@ class ClientContactContactApiCreateTest {
         String firstName = "test first";
         String email = "this is not an email";
 
-        ClientContactCreationInfo creationInfo = new ClientContactCreationInfo(client, firstName);
-        creationInfo.setEmail(email);
+        ClientContact creationInfo = ImmutableClientContact.builder()
+                .client(client)
+                .firstName(firstName)
+                .email(email)
+                .build();
 
         assertThatExceptionOfType(RequestProcessingException.class)
                 .isThrownBy(() -> clientContact = clientContactsApi.create(creationInfo))

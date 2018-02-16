@@ -11,8 +11,9 @@ import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.ClientContactsApi;
 import ch.aaap.harvestclient.domain.Client;
 import ch.aaap.harvestclient.domain.ClientContact;
-import ch.aaap.harvestclient.domain.param.ClientContactCreationInfo;
+import ch.aaap.harvestclient.domain.ImmutableClientContact;
 import ch.aaap.harvestclient.domain.param.ClientContactUpdateInfo;
+import ch.aaap.harvestclient.domain.param.ImmutableClientContactUpdateInfo;
 import util.ExistingData;
 import util.TestSetupUtil;
 
@@ -25,8 +26,10 @@ class ClientContactContactApiUpdateTest {
 
     @BeforeEach
     void beforeEach(TestInfo testInfo) {
-        clientContact = clientContactsApi
-                .create(new ClientContactCreationInfo(client, "test ClientContact for " + testInfo.getDisplayName()));
+        clientContact = clientContactsApi.create(ImmutableClientContact.builder()
+                .client(client)
+                .firstName("test ClientContact for " + testInfo.getDisplayName())
+                .build());
     }
 
     @AfterEach
@@ -40,11 +43,12 @@ class ClientContactContactApiUpdateTest {
     @Test
     void changeFirstName() {
 
-        ClientContactUpdateInfo changes = new ClientContactUpdateInfo();
-        changes.setFirstName("new clientContact name");
+        ClientContactUpdateInfo changes = ImmutableClientContactUpdateInfo.builder()
+                .firstName("new clientContact name")
+                .build();
         ClientContact updatedClientContact = clientContactsApi.update(clientContact, changes);
 
-        assertThat(updatedClientContact).isEqualToIgnoringNullFields(changes);
+        assertThat(updatedClientContact.getFirstName()).isEqualTo(changes.getFirstName());
 
     }
 
@@ -60,17 +64,19 @@ class ClientContactContactApiUpdateTest {
         String phoneMobile = "1232 32323 32 ";
         String fax = "this is a fax ?";
 
-        ClientContactUpdateInfo changes = new ClientContactUpdateInfo();
-        changes.setFirstName(firstName);
-        changes.setLastName(lastName);
-        changes.setEmail(email);
-        changes.setPhoneOffice(phoneOffice);
-        changes.setPhoneMobile(phoneMobile);
-        changes.setFax(fax);
+        ClientContactUpdateInfo changes = ImmutableClientContactUpdateInfo.builder()
+                .firstName(firstName)
+                .lastName(lastName)
+                .email(email)
+                .phoneMobile(phoneMobile)
+                .phoneOffice(phoneOffice)
+                .fax(fax)
+                .build();
 
         ClientContact updatedClientContact = clientContactsApi.update(clientContact, changes);
 
-        assertThat(updatedClientContact).isEqualToIgnoringNullFields(changes);
+        assertThat(updatedClientContact).isEqualToComparingOnlyGivenFields(changes, "title", "firstName", "lastName",
+                "email", "phoneOffice", "phoneMobile", "fax");
 
     }
 

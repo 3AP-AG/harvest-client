@@ -12,7 +12,6 @@ import ch.aaap.harvestclient.api.filter.TaskAssignmentFilter;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.TaskAssignment;
 import ch.aaap.harvestclient.domain.pagination.PaginatedList;
-import ch.aaap.harvestclient.domain.param.TaskAssignmentCreationInfo;
 import ch.aaap.harvestclient.domain.param.TaskAssignmentUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.service.TaskAssignmentService;
@@ -66,7 +65,7 @@ public class TaskAssignmentsApiImpl implements TaskAssignmentsApi {
     }
 
     @Override
-    public TaskAssignment create(Reference<Project> projectReference, TaskAssignmentCreationInfo creationInfo) {
+    public TaskAssignment create(Reference<Project> projectReference, TaskAssignment creationInfo) {
 
         Call<TaskAssignment> call = service.create(projectReference.getId(), creationInfo);
         TaskAssignment taskAssignment = ExceptionHandler.callOrThrow(call);

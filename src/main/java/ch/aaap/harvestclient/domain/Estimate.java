@@ -4,39 +4,80 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
-import ch.aaap.harvestclient.domain.reference.dto.ClientReferenceDto;
+import javax.annotation.Nullable;
 
-public class Estimate {
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
 
-    private Long id;
-    private ClientReferenceDto clientReferenceDto;
-    private List<InvoiceLineItem> invoiceLineItemList;
-    private Creator creator;
-    private String clientKey;
+import com.google.gson.annotations.SerializedName;
 
-    private String number;
-    private String purchaseOrder;
+import ch.aaap.harvestclient.domain.reference.Reference;
 
-    private Double amount;
-    private Double dueAmount;
-    private Double tax;
-    private Double taxAmount;
-    private Double tax2;
-    private Double taxAmount2;
-    private Double discount;
-    private Double discountAmount;
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+public interface Estimate extends BaseObject<Estimate> {
 
-    private String subject;
-    private String notes;
+    @SerializedName(value = "client_id", alternate = "client")
+    Reference<Client> getClient();
 
-    private String currency;
+    @Nullable
+    List<InvoiceLineItem> getInvoiceLineItemList();
 
-    private LocalDate issueDate;
-    private Instant sentAt;
+    @Nullable
+    Creator getCreator();
 
-    private Instant acceptedAt;
-    private Instant declinedAt;
+    @Nullable
+    String getClientKey();
 
-    private Instant createdAt;
-    private Instant updatedAt;
+    @Nullable
+    String getNumber();
+
+    @Nullable
+    String getPurchaseOrder();
+
+    @Nullable
+    Double getAmount();
+
+    @Nullable
+    Double getDueAmount();
+
+    @Nullable
+    Double getTax();
+
+    @Nullable
+    Double getTaxAmount();
+
+    @Nullable
+    Double getTax2();
+
+    @Nullable
+    Double getTaxAmount2();
+
+    @Nullable
+    Double getDiscount();
+
+    @Nullable
+    Double getDiscountAmount();
+
+    @Nullable
+    String getSubject();
+
+    @Nullable
+    String getNotes();
+
+    @Nullable
+    String getCurrency();
+
+    @Nullable
+    LocalDate getIssueDate();
+
+    @Nullable
+    Instant getSentAt();
+
+    @Nullable
+    Instant getAcceptedAt();
+
+    @Nullable
+    Instant getDeclinedAt();
+
 }

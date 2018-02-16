@@ -12,7 +12,8 @@ import org.slf4j.LoggerFactory;
 import com.typesafe.config.ConfigFactory;
 
 import ch.aaap.harvestclient.core.Harvest;
-import ch.aaap.harvestclient.domain.param.UserCreationInfo;
+import ch.aaap.harvestclient.domain.ImmutableUser;
+import ch.aaap.harvestclient.domain.User;
 
 public class TestSetupUtil {
 
@@ -24,9 +25,13 @@ public class TestSetupUtil {
         return new Harvest(ConfigFactory.load("admin"));
     }
 
-    public static UserCreationInfo getRandomUserCreationInfo() {
+    public static User getRandomUserCreationInfo() {
         int i = random.nextInt(1000_000);
-        return new UserCreationInfo("first" + i, "last" + i, "test" + i + "@example.com");
+        return ImmutableUser.builder()
+                .firstName("first" + i)
+                .lastName("last" + i)
+                .email("test" + i + "@example.com")
+                .build();
     }
 
     public static void prepareForHarvestBugReport() {

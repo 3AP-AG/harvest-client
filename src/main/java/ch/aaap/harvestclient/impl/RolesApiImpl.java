@@ -76,7 +76,7 @@ public class RolesApiImpl implements RolesApi {
         Role role = get(roleReference);
 
         RoleInfo roleInfo = new RoleInfo(role.getName());
-        List<Long> userIds = role.getUserIds().stream().map(Reference::getId).collect(Collectors.toList());
+        List<Long> userIds = role.getUserReferences().stream().map(Reference::getId).collect(Collectors.toList());
         userIds.add(userReference.getId());
         roleInfo.setUserIds(userIds);
 
@@ -91,7 +91,7 @@ public class RolesApiImpl implements RolesApi {
         Role role = get(roleReference);
 
         RoleInfo roleInfo = new RoleInfo(role.getName());
-        List<Long> userIds = role.getUserIds().stream().map(Reference::getId).collect(Collectors.toList());
+        List<Long> userIds = role.getUserReferences().stream().map(Reference::getId).collect(Collectors.toList());
         userIds.remove(userReference.getId());
         roleInfo.setUserIds(userIds);
 

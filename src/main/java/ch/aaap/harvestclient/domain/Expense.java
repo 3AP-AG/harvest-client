@@ -1,34 +1,60 @@
 package ch.aaap.harvestclient.domain;
 
-import java.time.Instant;
 import java.time.LocalDate;
 
-import ch.aaap.harvestclient.domain.reference.dto.ClientReferenceDto;
+import javax.annotation.Nullable;
+
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
+
+import com.google.gson.annotations.SerializedName;
+
+import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.domain.reference.dto.ProjectReferenceDto;
 import ch.aaap.harvestclient.domain.reference.dto.UserReferenceDto;
 
-public class Expense {
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+public interface Expense extends BaseObject<Expense> {
 
-    private Long id;
-    private ClientReferenceDto clientReferenceDto;
-    private ProjectReferenceDto projectReferenceDto;
-    private ExpenseCategory expenseCategory;
-    private UserReferenceDto userReferenceDto;
+    @SerializedName(value = "client_id", alternate = "client")
+    @Nullable
+    Reference<Client> getClient();
 
-    private UserAssignment userAssignment;
+    ProjectReferenceDto getProjectReferenceDto();
 
-    private Receipt receipt;
-    private Invoice invoice;
-    private String notes;
-    private Boolean billable;
-    private Boolean closed;
-    private Boolean locked;
-    private Boolean billed;
+    ExpenseCategory getExpenseCategory();
 
-    private String lockedReason;
-    private LocalDate spentDate;
+    @Nullable
+    UserReferenceDto getUserReferenceDto();
 
-    private Instant createdAt;
-    private Instant updatedAt;
+    @Nullable
+    UserAssignment getUserAssignment();
+
+    @Nullable
+    Receipt getReceipt();
+
+    @Nullable
+    Invoice getInvoice();
+
+    @Nullable
+    String getNotes();
+
+    @Nullable
+    Boolean getBillable();
+
+    @Nullable
+    Boolean getClosed();
+
+    @Nullable
+    Boolean getLocked();
+
+    @Nullable
+    Boolean getBilled();
+
+    @Nullable
+    String getLockedReason();
+
+    LocalDate getSpentDate();
 
 }

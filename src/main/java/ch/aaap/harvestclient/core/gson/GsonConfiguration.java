@@ -32,11 +32,15 @@ public class GsonConfiguration {
         // TODO this depends on the company account settings (12 vs 24h format)
         gsonBuilder.registerTypeAdapter(LocalTime.class, new LocalTimeConverter());
 
+        gsonBuilder.registerTypeAdapterFactory(new ReferenceDtoAdapter());
+
         // register generated TypeAdapters
+        int count = 0;
         for (TypeAdapterFactory factory : ServiceLoader.load(TypeAdapterFactory.class)) {
             gsonBuilder.registerTypeAdapterFactory(factory);
-            log.debug("registered {}", factory);
+            count++;
         }
+        log.debug("registered {} Generated Gson Adapters", count);
 
         return gsonBuilder
                 // a field 'externalService' is serialized to 'external_service'

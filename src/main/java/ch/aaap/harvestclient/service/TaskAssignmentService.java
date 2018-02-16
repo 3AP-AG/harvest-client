@@ -4,7 +4,6 @@ import java.util.Map;
 
 import ch.aaap.harvestclient.domain.TaskAssignment;
 import ch.aaap.harvestclient.domain.pagination.PaginatedList;
-import ch.aaap.harvestclient.domain.param.TaskAssignmentCreationInfo;
 import ch.aaap.harvestclient.domain.param.TaskAssignmentUpdateInfo;
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -21,7 +20,7 @@ public interface TaskAssignmentService {
     Call<TaskAssignment> get(@Path("projectId") long projectId, @Path("taskAssignmentId") long taskAssignmentId);
 
     @POST(basePath)
-    Call<TaskAssignment> create(@Path("projectId") long projectId, @Body TaskAssignmentCreationInfo creationInfo);
+    Call<TaskAssignment> create(@Path("projectId") long projectId, @Body TaskAssignment creationInfo);
 
     @PATCH(path)
     Call<TaskAssignment> update(@Path("projectId") long projectId, @Path("taskAssignmentId") long taskAssignmentId,

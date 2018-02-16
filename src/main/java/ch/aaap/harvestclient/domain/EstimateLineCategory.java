@@ -1,12 +1,12 @@
 package ch.aaap.harvestclient.domain;
 
-import java.time.Instant;
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
 
-public class EstimateLineCategory {
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+public interface EstimateLineCategory extends BaseObject<EstimateLineCategory> {
 
-    private Long id;
-    private String name;
+    String getName();
 
-    private Instant createdAt;
-    private Instant updatedAt;
 }

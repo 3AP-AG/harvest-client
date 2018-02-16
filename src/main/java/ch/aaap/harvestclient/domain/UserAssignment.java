@@ -1,106 +1,35 @@
 package ch.aaap.harvestclient.domain;
 
-import java.time.Instant;
+import javax.annotation.Nullable;
+
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
 
 import com.google.gson.annotations.SerializedName;
 
-import ch.aaap.harvestclient.domain.reference.dto.UserReferenceDto;
+import ch.aaap.harvestclient.domain.reference.Reference;
 
-public class UserAssignment {
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+public interface UserAssignment extends BaseObject<UserAssignment> {
 
-    private Long id;
-
-    private UserReferenceDto userReference;
+    // only nullable inside of a TimeEntry
+    @SerializedName(value = "user_id", alternate = "user")
+    @Nullable
+    Reference<User> getUser();
 
     @SerializedName("is_active")
-    private Boolean active;
+    @Nullable
+    Boolean getActive();
 
     @SerializedName("is_project_manager")
-    private Boolean projectManager;
+    @Nullable
+    Boolean getProjectManager();
 
-    private Double hourlyRate;
+    @Nullable
+    Double getHourlyRate();
 
-    private Double budget;
+    @Nullable
+    Double getBudget();
 
-    private Instant createdAt;
-
-    private Instant updatedAt;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public UserReferenceDto getUserReference() {
-        return userReference;
-    }
-
-    public void setUserReference(UserReferenceDto userReference) {
-        this.userReference = userReference;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public Boolean getProjectManager() {
-        return projectManager;
-    }
-
-    public void setProjectManager(Boolean projectManager) {
-        this.projectManager = projectManager;
-    }
-
-    public Double getHourlyRate() {
-        return hourlyRate;
-    }
-
-    public void setHourlyRate(Double hourlyRate) {
-        this.hourlyRate = hourlyRate;
-    }
-
-    public Double getBudget() {
-        return budget;
-    }
-
-    public void setBudget(Double budget) {
-        this.budget = budget;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Instant updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    @Override
-    public String toString() {
-        return "UserAssignment{" +
-                "id=" + id +
-                ", userReference=" + userReference +
-                ", active=" + active +
-                ", projectManager=" + projectManager +
-                ", hourlyRate=" + hourlyRate +
-                ", budget=" + budget +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
-    }
 }

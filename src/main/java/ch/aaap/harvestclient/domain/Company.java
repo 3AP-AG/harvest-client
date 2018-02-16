@@ -1,189 +1,45 @@
 package ch.aaap.harvestclient.domain;
 
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Company {
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+public interface Company {
 
-    private String baseUri;
+    String getBaseUri();
 
-    private String fullDomain;
+    String getFullDomain();
 
-    private String name;
+    String getName();
 
     @SerializedName("is_active")
-    private Boolean active;
+    Boolean getActive();
 
-    private String weekStartDay;
+    String getWeekStartDay();
 
-    private Boolean wantsTimestampTimers;
+    Boolean getWantsTimestampTimers();
 
-    private String timeFormat;
+    String getTimeFormat();
 
-    private String planType;
+    String getPlanType();
 
-    private String clock;
+    String getClock();
 
-    private String decimalSymbol;
+    String getDecimalSymbol();
 
-    private String thousandsSeparator;
+    String getThousandsSeparator();
 
-    private String colorScheme;
+    String getColorScheme();
 
-    private Boolean expenseFeature;
+    Boolean getExpenseFeature();
 
-    private Boolean invoiceFeature;
+    Boolean getInvoiceFeature();
 
-    private Boolean estimateFeature;
+    Boolean getEstimateFeature();
 
-    private Boolean approvalFeature;
+    Boolean getApprovalFeature();
 
-    public String getBaseUri() {
-        return baseUri;
-    }
-
-    public void setBaseUri(String baseUri) {
-        this.baseUri = baseUri;
-    }
-
-    public String getFullDomain() {
-        return fullDomain;
-    }
-
-    public void setFullDomain(String fullDomain) {
-        this.fullDomain = fullDomain;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public String getWeekStartDay() {
-        return weekStartDay;
-    }
-
-    public void setWeekStartDay(String weekStartDay) {
-        this.weekStartDay = weekStartDay;
-    }
-
-    public Boolean getWantsTimestampTimers() {
-        return wantsTimestampTimers;
-    }
-
-    public void setWantsTimestampTimers(Boolean wantsTimestampTimers) {
-        this.wantsTimestampTimers = wantsTimestampTimers;
-    }
-
-    public String getTimeFormat() {
-        return timeFormat;
-    }
-
-    public void setTimeFormat(String timeFormat) {
-        this.timeFormat = timeFormat;
-    }
-
-    public String getPlanType() {
-        return planType;
-    }
-
-    public void setPlanType(String planType) {
-        this.planType = planType;
-    }
-
-    public String getClock() {
-        return clock;
-    }
-
-    public void setClock(String clock) {
-        this.clock = clock;
-    }
-
-    public String getDecimalSymbol() {
-        return decimalSymbol;
-    }
-
-    public void setDecimalSymbol(String decimalSymbol) {
-        this.decimalSymbol = decimalSymbol;
-    }
-
-    public String getThousandsSeparator() {
-        return thousandsSeparator;
-    }
-
-    public void setThousandsSeparator(String thousandsSeparator) {
-        this.thousandsSeparator = thousandsSeparator;
-    }
-
-    public String getColorScheme() {
-        return colorScheme;
-    }
-
-    public void setColorScheme(String colorScheme) {
-        this.colorScheme = colorScheme;
-    }
-
-    public Boolean getExpenseFeature() {
-        return expenseFeature;
-    }
-
-    public void setExpenseFeature(Boolean expenseFeature) {
-        this.expenseFeature = expenseFeature;
-    }
-
-    public Boolean getInvoiceFeature() {
-        return invoiceFeature;
-    }
-
-    public void setInvoiceFeature(Boolean invoiceFeature) {
-        this.invoiceFeature = invoiceFeature;
-    }
-
-    public Boolean getEstimateFeature() {
-        return estimateFeature;
-    }
-
-    public void setEstimateFeature(Boolean estimateFeature) {
-        this.estimateFeature = estimateFeature;
-    }
-
-    public Boolean getApprovalFeature() {
-        return approvalFeature;
-    }
-
-    public void setApprovalFeature(Boolean approvalFeature) {
-        this.approvalFeature = approvalFeature;
-    }
-
-    @Override
-    public String toString() {
-        return "Company{" +
-                "baseUri='" + baseUri + '\'' +
-                ", fullDomain='" + fullDomain + '\'' +
-                ", name='" + name + '\'' +
-                ", active=" + active +
-                ", weekStartDay='" + weekStartDay + '\'' +
-                ", wantsTimestampTimers=" + wantsTimestampTimers +
-                ", timeFormat='" + timeFormat + '\'' +
-                ", planType='" + planType + '\'' +
-                ", clock='" + clock + '\'' +
-                ", decimalSymbol='" + decimalSymbol + '\'' +
-                ", thousandsSeparator='" + thousandsSeparator + '\'' +
-                ", colorScheme='" + colorScheme + '\'' +
-                ", expenseFeature=" + expenseFeature +
-                ", invoiceFeature=" + invoiceFeature +
-                ", estimateFeature=" + estimateFeature +
-                ", approvalFeature=" + approvalFeature +
-                '}';
-    }
 }
