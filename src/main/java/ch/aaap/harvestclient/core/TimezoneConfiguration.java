@@ -3,7 +3,7 @@ package ch.aaap.harvestclient.core;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.time.ZoneOffset;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -22,23 +22,22 @@ public class TimezoneConfiguration {
 
     private static final Logger log = LoggerFactory.getLogger(TimezoneConfiguration.class);
 
-    private final Map<String, ZoneOffset> timezones;
+    private Map<String, ZoneId> harvestToZoneId = new HashMap<>();
+    private Map<ZoneId, String> zoneIdToHarvest = new HashMap<>();
 
     public TimezoneConfiguration(InputStream in) {
         if (in == null) {
             throw new HarvestRuntimeException("Inputstream for timezone config is null");
         }
         try {
-            timezones = parseTimezones(in);
-            log.debug("Loaded {} timezones", timezones.size());
+            parseTimezones(in);
+            log.debug("Loaded {} timezones", harvestToZoneId.size());
         } catch (IOException e) {
             throw new HarvestRuntimeException(e);
         }
     }
 
-    private Map<String, ZoneOffset> parseTimezones(InputStream in) throws IOException {
-
-        Map<String, ZoneOffset> parsed = new HashMap<>();
+    private void parseTimezones(InputStream in) throws IOException {
 
         try (InputStreamReader reader = new InputStreamReader(in)) {
             Scanner scanner = new Scanner(reader);
@@ -47,23 +46,16 @@ public class TimezoneConfiguration {
                 String line = scanner.nextLine();
 
                 String[] split = line.split("\\t");
-                String name = split[0];
-                String offset = split[1];
+                String harvestName = split[0];
+                String zoneIdName = split[1];
 
-                log.trace("Found {} at offset {}", name, offset);
+                log.trace("Parsed {} and {}", harvestName, zoneIdName);
 
-                parsed.put(name, parseOffset(offset));
+                ZoneId zone = ZoneId.of(zoneIdName);
+                harvestToZoneId.put(harvestName, zone);
+                zoneIdToHarvest.put(zone, harvestName);
             }
         }
-        return parsed;
-    }
-
-    private ZoneOffset parseOffset(String offset) {
-        if (!offset.startsWith("-")) {
-            // add a plus
-            offset = "+" + offset;
-        }
-        return ZoneOffset.of(offset);
     }
 
     /**
@@ -72,17 +64,28 @@ public class TimezoneConfiguration {
      * @return true if the timezone will be recognized by Harvest
      */
     public boolean isValidName(String timezone) {
-        return timezones.containsKey(timezone);
+        return harvestToZoneId.containsKey(timezone);
     }
 
     /**
-     *
      * @param timezone
      *            the name of a timezone as recognized by Harvest
      * @return a Zoneoffset if the timezone is valid, Optional.empty() otherwise
      */
-    public Optional<ZoneOffset> getOffset(String timezone) {
-        return Optional.ofNullable(timezones.get(timezone));
+    public Optional<ZoneId> getZoneId(String timezone) {
+        return Optional.ofNullable(harvestToZoneId.get(timezone));
     }
 
+    /**
+     *
+     * Note: there is no one-to-one correspondence between Harvest timezones and
+     * ZoneIds: this function returns the last one seen in timezones.txt
+     * 
+     * @param zoneId
+     *            the ZoneId
+     * @return the name of an Harvest timezone that maps back to this zoneId
+     */
+    public Optional<String> getHarvestName(ZoneId zoneId) {
+        return Optional.ofNullable(zoneIdToHarvest.get(zoneId));
+    }
 }
