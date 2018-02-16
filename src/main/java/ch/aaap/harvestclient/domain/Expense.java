@@ -6,14 +6,18 @@ import javax.annotation.Nullable;
 
 import org.immutables.value.Value;
 
-import ch.aaap.harvestclient.domain.reference.dto.ClientReferenceDto;
+import com.google.gson.annotations.SerializedName;
+
+import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.domain.reference.dto.ProjectReferenceDto;
 import ch.aaap.harvestclient.domain.reference.dto.UserReferenceDto;
 
 @Value.Immutable
 public interface Expense extends BaseObject<Expense> {
+
+    @SerializedName(value = "client_id", alternate = "client")
     @Nullable
-    ClientReferenceDto getClientReferenceDto();
+    Reference<Client> getClient();
 
     ProjectReferenceDto getProjectReferenceDto();
 

@@ -11,7 +11,7 @@ import ch.aaap.harvestclient.domain.reference.Reference;
 @Value.Immutable
 public interface TaskAssignment extends BaseObject<TaskAssignment> {
 
-    @SerializedName("task")
+    @SerializedName(value = "task_id", alternate = "task")
     // nullable in the Project list
     @Nullable
     Reference<Task> getTaskReference();

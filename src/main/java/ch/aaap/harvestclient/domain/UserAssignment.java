@@ -6,14 +6,15 @@ import org.immutables.value.Value;
 
 import com.google.gson.annotations.SerializedName;
 
-import ch.aaap.harvestclient.domain.reference.dto.UserReferenceDto;
+import ch.aaap.harvestclient.domain.reference.Reference;
 
 @Value.Immutable
 public interface UserAssignment extends BaseObject<UserAssignment> {
 
     // only nullable inside of a TimeEntry
+    @SerializedName(value = "user_id", alternate = "user")
     @Nullable
-    UserReferenceDto getUserReference();
+    Reference<User> getUser();
 
     @SerializedName("is_active")
     @Nullable

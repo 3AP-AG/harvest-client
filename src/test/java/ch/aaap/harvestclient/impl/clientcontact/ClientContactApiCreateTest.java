@@ -11,6 +11,7 @@ import ch.aaap.harvestclient.api.ClientContactsApi;
 import ch.aaap.harvestclient.domain.Client;
 import ch.aaap.harvestclient.domain.ClientContact;
 import ch.aaap.harvestclient.domain.ImmutableClientContact;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.exception.RequestProcessingException;
 import util.ExistingData;
 import util.TestSetupUtil;
@@ -35,7 +36,7 @@ class ClientContactContactApiCreateTest {
 
         String firstName = "test First";
         ClientContact creationInfo = ImmutableClientContact.builder()
-                .clientReference(client)
+                .client(client)
                 .firstName(firstName)
                 .build();
         clientContact = clientContactsApi.create(creationInfo);
@@ -56,7 +57,7 @@ class ClientContactContactApiCreateTest {
         String fax = "this is a fax ?";
 
         ClientContact creationInfo = ImmutableClientContact.builder()
-                .clientReference(client)
+                .client(client)
                 .firstName(firstName)
                 .lastName(lastName)
                 .email(email)
@@ -67,7 +68,8 @@ class ClientContactContactApiCreateTest {
 
         clientContact = clientContactsApi.create(creationInfo);
 
-        assertThat(clientContact).isEqualToIgnoringNullFields(creationInfo);
+        assertThat(clientContact).usingComparatorForType((x, y) -> (int) (y.getId() - x.getId()), Reference.class)
+                .isEqualToIgnoringNullFields(creationInfo);
     }
 
     @Test
@@ -77,8 +79,9 @@ class ClientContactContactApiCreateTest {
         String email = "this is not an email";
 
         ClientContact creationInfo = ImmutableClientContact.builder()
-                .clientReference(client)
+                .client(client)
                 .firstName(firstName)
+                .email(email)
                 .build();
 
         assertThatExceptionOfType(RequestProcessingException.class)

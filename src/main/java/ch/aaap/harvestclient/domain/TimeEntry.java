@@ -10,26 +10,27 @@ import org.immutables.value.Value;
 
 import com.google.gson.annotations.SerializedName;
 
-import ch.aaap.harvestclient.domain.reference.dto.ClientReferenceDto;
-import ch.aaap.harvestclient.domain.reference.dto.ProjectReferenceDto;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.domain.reference.dto.TaskReferenceDto;
-import ch.aaap.harvestclient.domain.reference.dto.UserReferenceDto;
 
 @Value.Immutable
 public interface TimeEntry extends BaseObject<TimeEntry> {
 
     LocalDate getSpentDate();
 
+    @SerializedName(value = "user_id", alternate = "user")
     @Nullable
-    UserReferenceDto getUser();
+    Reference<User> getUser();
 
     @Nullable
     UserAssignment getUserAssignment();
 
+    @SerializedName(value = "client_id", alternate = "client")
     @Nullable
-    ClientReferenceDto getClient();
+    Reference<Client> getClient();
 
-    ProjectReferenceDto getProject();
+    @SerializedName(value = "project_id", alternate = "project")
+    Reference<Project> getProject();
 
     TaskReferenceDto getTask();
 

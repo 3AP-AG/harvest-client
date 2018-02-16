@@ -8,11 +8,14 @@ import javax.annotation.Nullable;
 
 import org.immutables.value.Value;
 
-import ch.aaap.harvestclient.domain.reference.dto.ClientReferenceDto;
+import com.google.gson.annotations.SerializedName;
+
+import ch.aaap.harvestclient.domain.reference.Reference;
 
 @Value.Immutable
 public interface Invoice extends BaseObject<Invoice> {
-    ClientReferenceDto getClientReferenceDto();
+    @SerializedName(value = "client_id", alternate = "client")
+    Reference<Client> getClient();
 
     @Nullable
     List<InvoiceLineItem> getInvoiceLineItemList();

@@ -4,7 +4,9 @@ import javax.annotation.Nullable;
 
 import org.immutables.value.Value;
 
-import ch.aaap.harvestclient.domain.reference.dto.ProjectReferenceDto;
+import com.google.gson.annotations.SerializedName;
+
+import ch.aaap.harvestclient.domain.reference.Reference;
 
 @Value.Immutable
 public interface InvoiceLineItem {
@@ -12,7 +14,8 @@ public interface InvoiceLineItem {
     Long getId();
 
     @Nullable
-    ProjectReferenceDto getProjectReferenceDto();
+    @SerializedName(value = "project_id", alternate = "project")
+    Reference<Project> getProject();
 
     String getKind(); // Invoice Item Category
 

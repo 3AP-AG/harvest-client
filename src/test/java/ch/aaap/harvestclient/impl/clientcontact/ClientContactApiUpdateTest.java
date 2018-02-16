@@ -27,7 +27,7 @@ class ClientContactContactApiUpdateTest {
     @BeforeEach
     void beforeEach(TestInfo testInfo) {
         clientContact = clientContactsApi.create(ImmutableClientContact.builder()
-                .clientReference(client)
+                .client(client)
                 .firstName("test ClientContact for " + testInfo.getDisplayName())
                 .build());
     }

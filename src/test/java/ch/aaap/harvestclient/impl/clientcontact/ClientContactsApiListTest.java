@@ -14,7 +14,6 @@ import ch.aaap.harvestclient.api.filter.ClientContactFilter;
 import ch.aaap.harvestclient.domain.Client;
 import ch.aaap.harvestclient.domain.ClientContact;
 import ch.aaap.harvestclient.domain.ImmutableClientContact;
-import ch.aaap.harvestclient.domain.reference.dto.ClientReferenceDto;
 import util.ExistingData;
 import util.TestSetupUtil;
 
@@ -48,7 +47,7 @@ class ClientContactContactsApiListTest {
         Client anotherClient = ExistingData.getInstance().getAnotherClient();
 
         ClientContact creationInfo = ImmutableClientContact.builder()
-                .clientReference(new ClientReferenceDto(client))
+                .client(client)
                 .firstName("inactive test ClientContact")
                 .build();
         clientContact = clientContactsApi.create(creationInfo);
@@ -67,7 +66,7 @@ class ClientContactContactsApiListTest {
 
         Instant creationTime = Instant.now().minusSeconds(1);
         ClientContact creationInfo = ImmutableClientContact.builder()
-                .clientReference(new ClientReferenceDto(client))
+                .client(client)
                 .firstName("newly created test ClientContact")
                 .build();
         clientContact = clientContactsApi.create(creationInfo);
