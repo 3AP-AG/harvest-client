@@ -1,23 +1,31 @@
 package ch.aaap.harvestclient.domain.param;
 
+import javax.annotation.Nullable;
+
+import org.immutables.value.Value;
+
+import com.google.gson.annotations.SerializedName;
+
 import ch.aaap.harvestclient.domain.Task;
-import ch.aaap.harvestclient.domain.TaskAssignment;
 import ch.aaap.harvestclient.domain.reference.Reference;
-import ch.aaap.harvestclient.domain.reference.dto.TaskReferenceDto;
 
-public class TaskAssignmentUpdateInfo extends TaskAssignment {
+@Value.Immutable
+public interface TaskAssignmentUpdateInfo {
 
-    /**
-     * We cannot serialize the reference directly
-     */
-    private Long taskId;
+    @SerializedName("task")
+    @Nullable
+    Reference<Task> getTaskReference();
 
-    @Override
-    public void setTaskReferenceDto(TaskReferenceDto taskReferenceDto) {
-        taskId = taskReferenceDto.getId();
-    }
+    @SerializedName("is_active")
+    @Nullable
+    Boolean getActive();
 
-    public void setTaskReference(Reference<Task> taskReference) {
-        taskId = taskReference.getId();
-    }
+    @Nullable
+    Boolean getBillable();
+
+    @Nullable
+    Double getHourlyRate();
+
+    @Nullable
+    Double getBudget();
 }

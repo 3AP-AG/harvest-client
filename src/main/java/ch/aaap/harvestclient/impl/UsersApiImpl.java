@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import ch.aaap.harvestclient.api.UsersApi;
 import ch.aaap.harvestclient.domain.User;
 import ch.aaap.harvestclient.domain.pagination.PaginatedList;
-import ch.aaap.harvestclient.domain.param.UserCreationInfo;
+import ch.aaap.harvestclient.domain.param.UserUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.service.UserService;
 import retrofit2.Call;
@@ -50,7 +50,7 @@ public class UsersApiImpl implements UsersApi {
     }
 
     @Override
-    public User create(UserCreationInfo creationInfo) {
+    public User create(User creationInfo) {
 
         log.debug("Creating User {}", creationInfo);
 
@@ -73,7 +73,7 @@ public class UsersApiImpl implements UsersApi {
     }
 
     @Override
-    public User update(Reference<User> userReference, User toChange) {
+    public User update(Reference<User> userReference, UserUpdateInfo toChange) {
 
         log.debug("Updating properties {} for user {}", userReference, toChange);
 

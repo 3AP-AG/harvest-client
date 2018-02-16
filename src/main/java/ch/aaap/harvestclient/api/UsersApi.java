@@ -4,7 +4,7 @@ import java.time.Instant;
 import java.util.List;
 
 import ch.aaap.harvestclient.domain.User;
-import ch.aaap.harvestclient.domain.param.UserCreationInfo;
+import ch.aaap.harvestclient.domain.param.UserUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
 public interface UsersApi {
@@ -25,7 +25,7 @@ public interface UsersApi {
      * first.
      * 
      * @param isActive
-     *            if true, return only active users. Set to null to disable
+     *            if true, return only getActive users. Set to null to disable
      *            filtering
      * @param updatedSince
      *            return only users that have been updated at least 1 second after
@@ -42,7 +42,7 @@ public interface UsersApi {
      *            will get a default value according to the Harvest docs
      * @return the User that was just created
      */
-    User create(UserCreationInfo userCreationInfo);
+    User create(User userCreationInfo);
 
     /**
      * Retrieve the currently authenticated user
@@ -66,11 +66,10 @@ public interface UsersApi {
      * @param user
      *            a reference to an existing User
      * @param toChange
-     *            A user object with the properties to be changed. Null fields will
-     *            be left as is.
+     *            The properties to be changed. Null fields will be left as is.
      * @return the updated User
      */
-    User update(Reference<User> user, User toChange);
+    User update(Reference<User> user, UserUpdateInfo toChange);
 
     /**
      * Delete a user. Deleting a user is only possible if they have no time entries

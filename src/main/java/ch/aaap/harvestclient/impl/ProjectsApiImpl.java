@@ -11,7 +11,6 @@ import ch.aaap.harvestclient.api.ProjectsApi;
 import ch.aaap.harvestclient.api.filter.ProjectFilter;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.pagination.PaginatedList;
-import ch.aaap.harvestclient.domain.param.ProjectCreationInfo;
 import ch.aaap.harvestclient.domain.param.ProjectUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.service.ProjectService;
@@ -63,7 +62,7 @@ public class ProjectsApiImpl implements ProjectsApi {
     }
 
     @Override
-    public Project create(ProjectCreationInfo projectCreationInfo) {
+    public Project create(Project projectCreationInfo) {
         Call<Project> call = service.create(projectCreationInfo);
         Project project = ExceptionHandler.callOrThrow(call);
         log.debug("Created Project {}", project);

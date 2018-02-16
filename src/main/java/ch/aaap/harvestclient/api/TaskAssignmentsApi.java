@@ -5,7 +5,6 @@ import java.util.List;
 import ch.aaap.harvestclient.api.filter.TaskAssignmentFilter;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.TaskAssignment;
-import ch.aaap.harvestclient.domain.param.TaskAssignmentCreationInfo;
 import ch.aaap.harvestclient.domain.param.TaskAssignmentUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
@@ -45,7 +44,7 @@ public interface TaskAssignmentsApi {
      *            creation information
      * @return the created Task
      */
-    TaskAssignment create(Reference<Project> projectReference, TaskAssignmentCreationInfo creationInfo);
+    TaskAssignment create(Reference<Project> projectReference, TaskAssignment creationInfo);
 
     /**
      * Updates the specific TaskAssignment by setting the values of the parameters
