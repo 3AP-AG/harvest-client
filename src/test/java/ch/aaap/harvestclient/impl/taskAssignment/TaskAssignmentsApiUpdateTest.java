@@ -44,7 +44,7 @@ class TaskAssignmentsApiUpdateTest {
                 ImmutableTaskAssignment.builder().taskReference(task).build());
 
         TaskAssignmentUpdateInfo updateInfo = ImmutableTaskAssignmentUpdateInfo.builder()
-                .taskReference(anotherTask)
+                .task(anotherTask)
                 .build();
         TaskAssignment updatedTaskAssignment = taskAssignmentApi.update(project, taskAssignment, updateInfo);
 
@@ -59,7 +59,7 @@ class TaskAssignmentsApiUpdateTest {
                 ImmutableTaskAssignment.builder().taskReference(task).build());
 
         TaskAssignmentUpdateInfo updateInfo = ImmutableTaskAssignmentUpdateInfo.builder()
-                .taskReference(anotherTask)
+                .task(anotherTask)
                 .hourlyRate(110.)
                 .budget(11111111.)
                 .build();

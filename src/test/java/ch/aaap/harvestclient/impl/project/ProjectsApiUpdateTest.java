@@ -41,7 +41,7 @@ class ProjectsApiUpdateTest {
         Project.BudgetMethod budgetBy = Project.BudgetMethod.HOURS_PER_PROJECT;
 
         Project creationInfo = ImmutableProject.builder()
-                .clientReference(clientReference)
+                .client(clientReference)
                 .name(name)
                 .billable(billable)
                 .billBy(billBy)
@@ -113,7 +113,7 @@ class ProjectsApiUpdateTest {
         LocalDate end = start.plusMonths(3).plusDays(2);
 
         ProjectUpdateInfo info = ImmutableProjectUpdateInfo.builder()
-                .clientReference(clientReference)
+                .client(clientReference)
                 .billable(true)
                 .name("new Name for Project")
                 .code("code")

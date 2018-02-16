@@ -49,7 +49,7 @@ class ProjectsApiCreateTest {
         boolean billable = true;
         Project.BudgetMethod budgetBy = Project.BudgetMethod.HOURS_PER_PROJECT;
 
-        Project creationInfo = ImmutableProject.builder().clientReference(clientReference)
+        Project creationInfo = ImmutableProject.builder().client(clientReference)
                 .name(name)
                 .billable(billable)
                 .billBy(billingMethod)
@@ -73,7 +73,7 @@ class ProjectsApiCreateTest {
         boolean billable = true;
         Project.BillingMethod billBy = Project.BillingMethod.PROJECT;
 
-        Project creationInfo = ImmutableProject.builder().clientReference(clientReference)
+        Project creationInfo = ImmutableProject.builder().client(clientReference)
                 .name(name)
                 .billable(billable)
                 .billBy(billBy)
@@ -113,7 +113,7 @@ class ProjectsApiCreateTest {
         LocalDate start = LocalDate.now();
         LocalDate end = start.plusMonths(3).plusDays(2);
 
-        Project creationInfo = ImmutableProject.builder().clientReference(clientReference)
+        Project creationInfo = ImmutableProject.builder().client(clientReference)
                 .name(name)
                 .billable(billable)
                 .billBy(billBy)
@@ -137,7 +137,7 @@ class ProjectsApiCreateTest {
         project = projectsApi.create(creationInfo);
 
         assertThat(project).isEqualToIgnoringGivenFields(creationInfo, "clientId", "id", "createdAt", "updatedAt",
-                "clientReference", "fee");
+                "client", "fee");
         // fee can only be set by having fixed_fee = true
         assertThat(project.getFee()).isNull();
         assertThat(project.getClient().getId()).isEqualTo(clientReference.getId());
@@ -175,7 +175,7 @@ class ProjectsApiCreateTest {
         LocalDate start = LocalDate.now();
         LocalDate end = start.plusMonths(3).plusDays(2);
 
-        Project creationInfo = ImmutableProject.builder().clientReference(clientReference)
+        Project creationInfo = ImmutableProject.builder().client(clientReference)
                 .name(name)
                 .billable(billable)
                 .billBy(billBy)
@@ -198,8 +198,8 @@ class ProjectsApiCreateTest {
 
         project = projectsApi.create(creationInfo);
 
-        assertThat(project).isEqualToIgnoringGivenFields(creationInfo, "clientId", "id", "createdAt", "updatedAt",
-                "clientReference", "billBy");
+        assertThat(project).isEqualToIgnoringGivenFields(creationInfo, "clientId", "client", "id", "createdAt",
+                "updatedAt", "billBy");
 
         // setting fixed_fee to true changes the billing method to None
         assertThat(project.getBillBy()).isEqualTo(Project.BillingMethod.NONE);
