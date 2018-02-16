@@ -1,4 +1,7 @@
 package ch.aaap.harvestclient.domain;
 
-public class ExternalService {
+import org.immutables.value.Value;
+
+@Value.Immutable
+public interface ExternalService {
 }

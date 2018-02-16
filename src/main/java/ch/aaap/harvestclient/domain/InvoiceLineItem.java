@@ -1,19 +1,36 @@
 package ch.aaap.harvestclient.domain;
 
+import javax.annotation.Nullable;
+
+import org.immutables.value.Value;
+
 import ch.aaap.harvestclient.domain.reference.dto.ProjectReferenceDto;
 
-public class InvoiceLineItem {
+@Value.Immutable
+public interface InvoiceLineItem {
+    @Nullable
+    Long getId();
 
-    private Long id;
-    private ProjectReferenceDto projectReferenceDto;
+    @Nullable
+    ProjectReferenceDto getProjectReferenceDto();
 
-    private String kind; // Invoice Item Category
+    String getKind(); // Invoice Item Category
 
-    private String description;
-    private Long quantity;
-    private Double unitPrice;
-    private Double amount;
+    @Nullable
+    String getDescription();
 
-    private Boolean taxed;
-    private Boolean taxed2;
+    @Nullable
+    Long getQuantity();
+
+    @Nullable
+    Double getUnitPrice();
+
+    @Nullable
+    Double getAmount();
+
+    @Nullable
+    Boolean getTaxed();
+
+    @Nullable
+    Boolean getTaxed2();
 }

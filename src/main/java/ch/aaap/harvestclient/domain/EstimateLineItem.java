@@ -1,16 +1,36 @@
 package ch.aaap.harvestclient.domain;
 
-public class EstimateLineItem {
+import javax.annotation.Nullable;
 
-    private Long id;
-    private String kind; // estimate Item category
-    private String description;
-    private Long quantity;
+import org.immutables.value.Value;
 
-    private Double unitPrice;
-    private Double amount;
+@Value.Immutable
+public interface EstimateLineItem {
+    @Nullable
+    Long getId();
 
-    private Boolean taxed;
-    private Boolean taxed2;
+    /**
+     * @return the estimate Item category
+     */
+    @Nullable
+    String getKind();
+
+    @Nullable
+    String getDescription();
+
+    @Nullable
+    Long getQuantity();
+
+    @Nullable
+    Double getUnitPrice();
+
+    @Nullable
+    Double getAmount();
+
+    @Nullable
+    Boolean getTaxed();
+
+    @Nullable
+    Boolean getTaxed2();
 
 }

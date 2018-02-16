@@ -14,8 +14,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.UsersApi;
+import ch.aaap.harvestclient.domain.ImmutableUser;
 import ch.aaap.harvestclient.domain.User;
-import ch.aaap.harvestclient.domain.param.UserCreationInfo;
+import ch.aaap.harvestclient.domain.param.ImmutableUserUpdateInfo;
+import ch.aaap.harvestclient.domain.param.UserUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.dto.UserReferenceDto;
 import ch.aaap.harvestclient.exception.NotFoundException;
 import ch.aaap.harvestclient.exception.RequestProcessingException;
@@ -42,7 +44,11 @@ class UsersApiImplTest {
             log.debug("Fix user exists already, nothing to do");
             fixUser = user.get();
         } else {
-            UserCreationInfo creationInfo = new UserCreationInfo(fixUserFirst, fixUserLast, fixUserEmail);
+            User creationInfo = ImmutableUser.builder()
+                    .firstName(fixUserFirst)
+                    .lastName(fixUserLast)
+                    .email(fixUserEmail)
+                    .build();
             fixUser = api.create(creationInfo);
             log.debug("Created Fix user");
         }
@@ -51,7 +57,11 @@ class UsersApiImplTest {
     @Test
     void createExistingEmailFails() {
         RequestProcessingException exception = Assertions.assertThrows(RequestProcessingException.class, () -> {
-            UserCreationInfo creationInfo = new UserCreationInfo(fixUserFirst, fixUserLast, fixUserEmail);
+            User creationInfo = ImmutableUser.builder()
+                    .firstName(fixUserFirst)
+                    .lastName(fixUserLast)
+                    .email(fixUserEmail)
+                    .build();
 
             api.create(creationInfo);
         });
@@ -84,15 +94,14 @@ class UsersApiImplTest {
     @Test
     void testChangeEmail() {
 
-        User toChange = new User();
-        toChange.setEmail("new@example.org");
+        UserUpdateInfo toChange = ImmutableUserUpdateInfo.builder().email("new@example.org").build();
 
         User user = api.update(fixUser, toChange);
 
         assertEquals(toChange.getEmail(), user.getEmail());
 
         // restore email
-        toChange.setEmail(fixUserEmail);
+        toChange = ImmutableUserUpdateInfo.builder().email(fixUserEmail).build();
 
         api.update(fixUser, toChange);
     }
@@ -100,12 +109,13 @@ class UsersApiImplTest {
     @Test
     void testChangeDetails() {
 
-        User toChange = new User();
-        toChange.setTimezone("Alaska");
-        toChange.setTelephone("0800 800 288");
-        toChange.setWeeklyCapacity(40, TimeUnit.HOURS);
-        toChange.setDefaultHourlyRate(120.);
-        toChange.setCostRate(220.);
+        UserUpdateInfo toChange = ImmutableUserUpdateInfo.builder()
+                .timezone("Alaska")
+                .telephone("0800 800 288")
+                .weeklyCapacity(TimeUnit.HOURS.toSeconds(40))
+                .defaultHourlyRate(120.)
+                .costRate(220.)
+                .build();
 
         User user = api.update(fixUser, toChange);
 

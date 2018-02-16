@@ -16,8 +16,8 @@ import static org.assertj.core.api.Assertions.within;
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.ProjectsApi;
 import ch.aaap.harvestclient.domain.Client;
+import ch.aaap.harvestclient.domain.ImmutableProject;
 import ch.aaap.harvestclient.domain.Project;
-import ch.aaap.harvestclient.domain.param.ProjectCreationInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import util.ExistingData;
 import util.TestSetupUtil;
@@ -49,8 +49,12 @@ class ProjectsApiCreateTest {
         boolean billable = true;
         Project.BudgetMethod budgetBy = Project.BudgetMethod.HOURS_PER_PROJECT;
 
-        ProjectCreationInfo creationInfo = new ProjectCreationInfo(clientReference, name, billable, billingMethod,
-                budgetBy);
+        Project creationInfo = ImmutableProject.builder().clientReference(clientReference)
+                .name(name)
+                .billable(billable)
+                .billBy(billingMethod)
+                .budgetBy(budgetBy)
+                .build();
         project = projectsApi.create(creationInfo);
 
         assertThat(project.getBillable()).isEqualTo(billable);
@@ -69,8 +73,12 @@ class ProjectsApiCreateTest {
         boolean billable = true;
         Project.BillingMethod billBy = Project.BillingMethod.PROJECT;
 
-        ProjectCreationInfo creationInfo = new ProjectCreationInfo(clientReference, name, billable, billBy,
-                budgetMethod);
+        Project creationInfo = ImmutableProject.builder().clientReference(clientReference)
+                .name(name)
+                .billable(billable)
+                .billBy(billBy)
+                .budgetBy(budgetMethod)
+                .build();
         project = projectsApi.create(creationInfo);
 
         assertThat(project.getBillable()).isEqualTo(billable);
@@ -105,21 +113,26 @@ class ProjectsApiCreateTest {
         LocalDate start = LocalDate.now();
         LocalDate end = start.plusMonths(3).plusDays(2);
 
-        ProjectCreationInfo creationInfo = new ProjectCreationInfo(clientReference, name, billable, billBy, budgetBy);
-        creationInfo.setCode(code);
-        creationInfo.setActive(active);
-        creationInfo.setFixedFee(fixedFee);
-        creationInfo.setHourlyRate(hourlyRate);
-        creationInfo.setBudget(budget);
-        creationInfo.setNotifyWhenOverBudget(notifyWhenOverBudget);
-        creationInfo.setOverBudgetNotificationPercentage(overBudgetNotificationPercentage);
-        creationInfo.setShowBudgetToAll(showBudgetToAll);
-        creationInfo.setCostBudget(costBudget);
-        creationInfo.setCostBudgetIncludeExpenses(costBudgetIncludeExpenses);
-        creationInfo.setFee(fee);
-        creationInfo.setNotes(notes);
-        creationInfo.setStartsOn(start);
-        creationInfo.setEndsOn(end);
+        Project creationInfo = ImmutableProject.builder().clientReference(clientReference)
+                .name(name)
+                .billable(billable)
+                .billBy(billBy)
+                .budgetBy(budgetBy)
+                .code(code)
+                .active(active)
+                .fixedFee(fixedFee)
+                .hourlyRate(hourlyRate)
+                .budget(budget)
+                .notifyWhenOverBudget(notifyWhenOverBudget)
+                .overBudgetNotificationPercentage(overBudgetNotificationPercentage)
+                .showBudgetToAll(showBudgetToAll)
+                .costBudget(costBudget)
+                .costBudgetIncludeExpenses(costBudgetIncludeExpenses)
+                .fee(fee)
+                .notes(notes)
+                .startsOn(start)
+                .endsOn(end)
+                .build();
 
         project = projectsApi.create(creationInfo);
 
@@ -162,21 +175,26 @@ class ProjectsApiCreateTest {
         LocalDate start = LocalDate.now();
         LocalDate end = start.plusMonths(3).plusDays(2);
 
-        ProjectCreationInfo creationInfo = new ProjectCreationInfo(clientReference, name, billable, billBy, budgetBy);
-        creationInfo.setCode(code);
-        creationInfo.setActive(active);
-        creationInfo.setFixedFee(fixedFee);
-        creationInfo.setHourlyRate(hourlyRate);
-        creationInfo.setBudget(budget);
-        creationInfo.setNotifyWhenOverBudget(notifyWhenOverBudget);
-        creationInfo.setOverBudgetNotificationPercentage(overBudgetNotificationPercentage);
-        creationInfo.setShowBudgetToAll(showBudgetToAll);
-        creationInfo.setCostBudget(costBudget);
-        creationInfo.setCostBudgetIncludeExpenses(costBudgetIncludeExpenses);
-        creationInfo.setFee(fee);
-        creationInfo.setNotes(notes);
-        creationInfo.setStartsOn(start);
-        creationInfo.setEndsOn(end);
+        Project creationInfo = ImmutableProject.builder().clientReference(clientReference)
+                .name(name)
+                .billable(billable)
+                .billBy(billBy)
+                .budgetBy(budgetBy)
+                .code(code)
+                .active(active)
+                .fixedFee(fixedFee)
+                .hourlyRate(hourlyRate)
+                .budget(budget)
+                .notifyWhenOverBudget(notifyWhenOverBudget)
+                .overBudgetNotificationPercentage(overBudgetNotificationPercentage)
+                .showBudgetToAll(showBudgetToAll)
+                .costBudget(costBudget)
+                .costBudgetIncludeExpenses(costBudgetIncludeExpenses)
+                .fee(fee)
+                .notes(notes)
+                .startsOn(start)
+                .endsOn(end)
+                .build();
 
         project = projectsApi.create(creationInfo);
 

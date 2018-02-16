@@ -1,29 +1,53 @@
 package ch.aaap.harvestclient.domain;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
-public class InvoiceMessage {
+import javax.annotation.Nullable;
 
-    private Long id;
-    private String sentBy;
-    private String sentByEmail;
-    private String sentFrom;
-    private String sentFromEmail;
-    private List<InvoiceMessageRecipient> invoiceMessageRecipients;
+import org.immutables.value.Value;
 
-    private String subject;
-    private String body;
-    private Boolean includeLinkToClientInvoice;
-    private Boolean attachPdf;
-    private Boolean sendMeACopy;
-    private Boolean thankYou;
-    private Boolean eventType;
+@Value.Immutable
+public interface InvoiceMessage extends BaseObject<InvoiceMessage> {
+    @Nullable
+    String getSentBy();
 
-    private Boolean reminder;
-    private LocalDate sendReminderOn;
+    @Nullable
+    String getSentByEmail();
 
-    private Instant createdAt;
-    private Instant updatedAt;
+    @Nullable
+    String getSentFrom();
+
+    @Nullable
+    String getSentFromEmail();
+
+    List<InvoiceMessageRecipient> getInvoiceMessageRecipients();
+
+    @Nullable
+    String getSubject();
+
+    @Nullable
+    String getBody();
+
+    @Nullable
+    Boolean getIncludeLinkToClientInvoice();
+
+    @Nullable
+    Boolean getAttachPdf();
+
+    @Nullable
+    Boolean getSendMeACopy();
+
+    @Nullable
+    Boolean getThankYou();
+
+    @Nullable
+    Boolean getEventType();
+
+    @Nullable
+    Boolean getReminder();
+
+    @Nullable
+    LocalDate getSendReminderOn();
+
 }

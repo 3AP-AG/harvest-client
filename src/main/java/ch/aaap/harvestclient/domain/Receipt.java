@@ -1,10 +1,14 @@
 package ch.aaap.harvestclient.domain;
 
+import org.immutables.value.Value;
+
 /**
  * Only documented in comment
  */
-public class Receipt {
+@Value.Immutable
+public interface Receipt {
 
-    private String url;
-    private String filename;
+    String getUrl();
+
+    String getFilename();
 }

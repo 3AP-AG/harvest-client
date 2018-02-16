@@ -81,20 +81,20 @@ class RolesApiImplTest {
         User user = usersApi.create(TestSetupUtil.getRandomUserCreationInfo());
 
         assertThat(user.getRoles()).isEmpty();
-        assertThat(testRole.getUserIds()).extracting("id").doesNotContain(user.getId());
+        assertThat(testRole.getUserIds()).doesNotContain(user.getId());
 
         // assign role
         testRole = rolesApi.addUser(testRole, user);
         user = usersApi.get(user);
 
-        assertThat(testRole.getUserIds()).extracting("id").contains(user.getId());
+        assertThat(testRole.getUserIds()).contains(user.getId());
         assertThat(user.getRoles()).contains(testRole.getName());
 
         // remove role
         testRole = rolesApi.removeUser(testRole, user);
         user = usersApi.get(user);
 
-        assertThat(testRole.getUserIds()).extracting("id").doesNotContain(user.getId());
+        assertThat(testRole.getUserIds()).doesNotContain(user.getId());
         assertThat(user.getRoles()).doesNotContain(testRole.getName());
 
         // cleanup

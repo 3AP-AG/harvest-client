@@ -4,45 +4,92 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
+import org.immutables.value.Value;
+
 import ch.aaap.harvestclient.domain.reference.dto.ClientReferenceDto;
 
-public class Invoice {
+@Value.Immutable
+public interface Invoice extends BaseObject<Invoice> {
+    ClientReferenceDto getClientReferenceDto();
 
-    private Long id;
-    private ClientReferenceDto clientReferenceDto;
-    private List<InvoiceLineItem> invoiceLineItemList;
-    private Estimate estimate;
-    private Retainer retainer;
-    private Creator creator;
-    private String clientKey;
+    @Nullable
+    List<InvoiceLineItem> getInvoiceLineItemList();
 
-    private String number;
-    private String purchaseOrder;
+    @Nullable
+    Estimate getEstimate();
 
-    private Double amount;
-    private Double dueAmount;
-    private Double tax;
-    private Double taxAmount;
-    private Double tax2;
-    private Double taxAmount2;
-    private Double discount;
-    private Double discountAmount;
+    @Nullable
+    Retainer getRetainer();
 
-    private String subject;
-    private String notes;
+    @Nullable
+    Creator getCreator();
 
-    private String currency;
+    @Nullable
+    String getClientKey();
 
-    private LocalDate periodStart;
-    private LocalDate periodEnd;
-    private LocalDate issueDate;
-    private LocalDate dueDate;
-    private Instant sentAt;
-    private Instant paidAt;
-    private LocalDate paidDate;
-    private Instant closedAt;
+    @Nullable
+    String getNumber();
 
-    private Instant createdAt;
-    private Instant updatedAt;
+    @Nullable
+    String getPurchaseOrder();
+
+    @Nullable
+    Double getAmount();
+
+    @Nullable
+    Double getDueAmount();
+
+    @Nullable
+    Double getTax();
+
+    @Nullable
+    Double getTaxAmount();
+
+    @Nullable
+    Double getTax2();
+
+    @Nullable
+    Double getTaxAmount2();
+
+    @Nullable
+    Double getDiscount();
+
+    @Nullable
+    Double getDiscountAmount();
+
+    @Nullable
+    String getSubject();
+
+    @Nullable
+    String getNotes();
+
+    @Nullable
+    String getCurrency();
+
+    @Nullable
+    LocalDate getPeriodStart();
+
+    @Nullable
+    LocalDate getPeriodEnd();
+
+    @Nullable
+    LocalDate getIssueDate();
+
+    @Nullable
+    LocalDate getDueDate();
+
+    @Nullable
+    Instant getSentAt();
+
+    @Nullable
+    Instant getPaidAt();
+
+    @Nullable
+    LocalDate getPaidDate();
+
+    @Nullable
+    Instant getClosedAt();
 
 }

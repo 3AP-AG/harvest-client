@@ -1,34 +1,54 @@
 package ch.aaap.harvestclient.domain;
 
-import java.time.Instant;
 import java.time.LocalDate;
+
+import javax.annotation.Nullable;
+
+import org.immutables.value.Value;
 
 import ch.aaap.harvestclient.domain.reference.dto.ClientReferenceDto;
 import ch.aaap.harvestclient.domain.reference.dto.ProjectReferenceDto;
 import ch.aaap.harvestclient.domain.reference.dto.UserReferenceDto;
 
-public class Expense {
+@Value.Immutable
+public interface Expense extends BaseObject<Expense> {
+    @Nullable
+    ClientReferenceDto getClientReferenceDto();
 
-    private Long id;
-    private ClientReferenceDto clientReferenceDto;
-    private ProjectReferenceDto projectReferenceDto;
-    private ExpenseCategory expenseCategory;
-    private UserReferenceDto userReferenceDto;
+    ProjectReferenceDto getProjectReferenceDto();
 
-    private UserAssignment userAssignment;
+    ExpenseCategory getExpenseCategory();
 
-    private Receipt receipt;
-    private Invoice invoice;
-    private String notes;
-    private Boolean billable;
-    private Boolean closed;
-    private Boolean locked;
-    private Boolean billed;
+    @Nullable
+    UserReferenceDto getUserReferenceDto();
 
-    private String lockedReason;
-    private LocalDate spentDate;
+    @Nullable
+    UserAssignment getUserAssignment();
 
-    private Instant createdAt;
-    private Instant updatedAt;
+    @Nullable
+    Receipt getReceipt();
+
+    @Nullable
+    Invoice getInvoice();
+
+    @Nullable
+    String getNotes();
+
+    @Nullable
+    Boolean getBillable();
+
+    @Nullable
+    Boolean getClosed();
+
+    @Nullable
+    Boolean getLocked();
+
+    @Nullable
+    Boolean getBilled();
+
+    @Nullable
+    String getLockedReason();
+
+    LocalDate getSpentDate();
 
 }

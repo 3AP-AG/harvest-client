@@ -4,39 +4,75 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
+import org.immutables.value.Value;
+
 import ch.aaap.harvestclient.domain.reference.dto.ClientReferenceDto;
 
-public class Estimate {
+@Value.Immutable
+public interface Estimate extends BaseObject<Estimate> {
 
-    private Long id;
-    private ClientReferenceDto clientReferenceDto;
-    private List<InvoiceLineItem> invoiceLineItemList;
-    private Creator creator;
-    private String clientKey;
+    ClientReferenceDto getClientReferenceDto();
 
-    private String number;
-    private String purchaseOrder;
+    @Nullable
+    List<InvoiceLineItem> getInvoiceLineItemList();
 
-    private Double amount;
-    private Double dueAmount;
-    private Double tax;
-    private Double taxAmount;
-    private Double tax2;
-    private Double taxAmount2;
-    private Double discount;
-    private Double discountAmount;
+    @Nullable
+    Creator getCreator();
 
-    private String subject;
-    private String notes;
+    @Nullable
+    String getClientKey();
 
-    private String currency;
+    @Nullable
+    String getNumber();
 
-    private LocalDate issueDate;
-    private Instant sentAt;
+    @Nullable
+    String getPurchaseOrder();
 
-    private Instant acceptedAt;
-    private Instant declinedAt;
+    @Nullable
+    Double getAmount();
 
-    private Instant createdAt;
-    private Instant updatedAt;
+    @Nullable
+    Double getDueAmount();
+
+    @Nullable
+    Double getTax();
+
+    @Nullable
+    Double getTaxAmount();
+
+    @Nullable
+    Double getTax2();
+
+    @Nullable
+    Double getTaxAmount2();
+
+    @Nullable
+    Double getDiscount();
+
+    @Nullable
+    Double getDiscountAmount();
+
+    @Nullable
+    String getSubject();
+
+    @Nullable
+    String getNotes();
+
+    @Nullable
+    String getCurrency();
+
+    @Nullable
+    LocalDate getIssueDate();
+
+    @Nullable
+    Instant getSentAt();
+
+    @Nullable
+    Instant getAcceptedAt();
+
+    @Nullable
+    Instant getDeclinedAt();
+
 }

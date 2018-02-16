@@ -1,9 +1,8 @@
 package ch.aaap.harvestclient.domain;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.immutables.value.Value;
 
-public class Creator {
+@Value.Immutable
+public interface Creator {
 
-    private static final Logger log = LoggerFactory.getLogger(Creator.class);
 }

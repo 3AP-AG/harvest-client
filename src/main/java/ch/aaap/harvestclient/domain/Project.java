@@ -1,16 +1,19 @@
 package ch.aaap.harvestclient.domain;
 
-import java.time.Instant;
 import java.time.LocalDate;
+
+import javax.annotation.Nullable;
+
+import org.immutables.value.Value;
 
 import com.google.gson.annotations.SerializedName;
 
 import ch.aaap.harvestclient.domain.reference.Reference;
-import ch.aaap.harvestclient.domain.reference.dto.ClientReferenceDto;
 
-public class Project implements Reference<Project> {
+@Value.Immutable
+public interface Project extends BaseObject<Project> {
 
-    public enum BillingMethod {
+    enum BillingMethod {
 
         @SerializedName("Project")
         PROJECT,
@@ -25,7 +28,7 @@ public class Project implements Reference<Project> {
         NONE
     }
 
-    public enum BudgetMethod {
+    enum BudgetMethod {
 
         @SerializedName("project")
         HOURS_PER_PROJECT,
@@ -44,282 +47,90 @@ public class Project implements Reference<Project> {
 
     }
 
-    private Long id;
+    @SerializedName(value = "client_id", alternate = "client")
+    Reference<Client> getClientReference();
 
-    @SerializedName("client")
-    private ClientReferenceDto clientReference;
+    String getName();
 
-    private String name;
-
-    private String code;
+    @Nullable
+    String getCode();
 
     @SerializedName("is_active")
-    private Boolean active;
+    @Nullable
+    Boolean getActive();
 
     @SerializedName("is_billable")
-    private Boolean billable;
+    Boolean getBillable();
 
     /**
      * Whether the project is a fixed-fee project or not. Setting this to true at
      * creation will set billBy to NONE, regardless of input
      */
     @SerializedName("is_fixed_fee")
-    private Boolean fixedFee;
+    @Nullable
+    Boolean getFixedFee();
 
-    private BillingMethod billBy;
+    BillingMethod getBillBy();
 
     /**
      * Rate for projects when billedBy is {@link BillingMethod#PROJECT}
      */
-    private Double hourlyRate;
+    @Nullable
+    Double getHourlyRate();
+
     /**
      * Budget in hours for project when budgetBy is
      * {@link BudgetMethod#HOURS_PER_PROJECT}
      */
-    private Double budget;
+    @Nullable
+    Double getBudget();
 
-    private BudgetMethod budgetBy;
-    private Boolean notifyWhenOverBudget;
-    private Double overBudgetNotificationPercentage;
-    private LocalDate overBudgetNotificationDate;
+    BudgetMethod getBudgetBy();
+
+    @Nullable
+    Boolean getNotifyWhenOverBudget();
+
+    @Nullable
+    Double getOverBudgetNotificationPercentage();
+
+    @Nullable
+    LocalDate getOverBudgetNotificationDate();
 
     /**
      * Option to show project budget to all employees. Does not apply to Total
      * Project Fee projects. Defaults to false.
      */
-    private Boolean showBudgetToAll;
+    @Nullable
+    Boolean getShowBudgetToAll();
+
     /**
      * The monetary budget for the project when budgetBy is
      * {@link BudgetMethod#TOTAL_PROJECT_FEES}
      */
-    private Double costBudget;
+    @Nullable
+    Double getCostBudget();
 
     /**
      * Option for budget of Total Project Fees projects to include tracked expenses.
      * Defaults to false.
      */
-    private Boolean costBudgetIncludeExpenses;
+    @Nullable
+    Boolean getCostBudgetIncludeExpenses();
 
     /**
      * The amount you plan to invoice for the project. Only used by fixed-fee
      * projects.
      */
-    private Double fee;
-    private String notes;
+    @Nullable
+    Double getFee();
 
-    private LocalDate startsOn;
-    private LocalDate endsOn;
+    @Nullable
+    String getNotes();
 
-    private Instant createdAt;
-    private Instant updatedAt;
+    @Nullable
+    LocalDate getStartsOn();
 
-    @Override
-    public Long getId() {
-        return id;
-    }
+    @Nullable
+    LocalDate getEndsOn();
 
-    public ClientReferenceDto getClientReference() {
-        return clientReference;
-    }
-
-    public void setClientReference(ClientReferenceDto clientReference) {
-        this.clientReference = clientReference;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public Boolean getBillable() {
-        return billable;
-    }
-
-    public void setBillable(Boolean billable) {
-        this.billable = billable;
-    }
-
-    public Boolean getFixedFee() {
-        return fixedFee;
-    }
-
-    public void setFixedFee(Boolean fixedFee) {
-        this.fixedFee = fixedFee;
-    }
-
-    public BillingMethod getBillBy() {
-        return billBy;
-    }
-
-    public void setBillBy(BillingMethod billBy) {
-        this.billBy = billBy;
-    }
-
-    public Double getHourlyRate() {
-        return hourlyRate;
-    }
-
-    public void setHourlyRate(Double hourlyRate) {
-        this.hourlyRate = hourlyRate;
-    }
-
-    public Double getBudget() {
-        return budget;
-    }
-
-    public void setBudget(Double budget) {
-        this.budget = budget;
-    }
-
-    public BudgetMethod getBudgetBy() {
-        return budgetBy;
-    }
-
-    public void setBudgetBy(BudgetMethod budgetBy) {
-        this.budgetBy = budgetBy;
-    }
-
-    public Boolean getNotifyWhenOverBudget() {
-        return notifyWhenOverBudget;
-    }
-
-    public void setNotifyWhenOverBudget(Boolean notifyWhenOverBudget) {
-        this.notifyWhenOverBudget = notifyWhenOverBudget;
-    }
-
-    public Double getOverBudgetNotificationPercentage() {
-        return overBudgetNotificationPercentage;
-    }
-
-    public void setOverBudgetNotificationPercentage(Double overBudgetNotificationPercentage) {
-        this.overBudgetNotificationPercentage = overBudgetNotificationPercentage;
-    }
-
-    public LocalDate getOverBudgetNotificationDate() {
-        return overBudgetNotificationDate;
-    }
-
-    public void setOverBudgetNotificationDate(LocalDate overBudgetNotificationDate) {
-        this.overBudgetNotificationDate = overBudgetNotificationDate;
-    }
-
-    public Boolean getShowBudgetToAll() {
-        return showBudgetToAll;
-    }
-
-    public void setShowBudgetToAll(Boolean showBudgetToAll) {
-        this.showBudgetToAll = showBudgetToAll;
-    }
-
-    public Double getCostBudget() {
-        return costBudget;
-    }
-
-    public void setCostBudget(Double costBudget) {
-        this.costBudget = costBudget;
-    }
-
-    public Boolean getCostBudgetIncludeExpenses() {
-        return costBudgetIncludeExpenses;
-    }
-
-    public void setCostBudgetIncludeExpenses(Boolean costBudgetIncludeExpenses) {
-        this.costBudgetIncludeExpenses = costBudgetIncludeExpenses;
-    }
-
-    public Double getFee() {
-        return fee;
-    }
-
-    public void setFee(Double fee) {
-        this.fee = fee;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public LocalDate getStartsOn() {
-        return startsOn;
-    }
-
-    public void setStartsOn(LocalDate startsOn) {
-        this.startsOn = startsOn;
-    }
-
-    public LocalDate getEndsOn() {
-        return endsOn;
-    }
-
-    public void setEndsOn(LocalDate endsOn) {
-        this.endsOn = endsOn;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Instant updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    @Override
-    public String toString() {
-        return "Project{" +
-                "id=" + id +
-                ", clientReference=" + clientReference +
-                ", name='" + name + '\'' +
-                ", code='" + code + '\'' +
-                ", active=" + active +
-                ", billable=" + billable +
-                ", fixedFee=" + fixedFee +
-                ", billBy='" + billBy + '\'' +
-                ", hourlyRate=" + hourlyRate +
-                ", budget=" + budget +
-                ", budgetBy='" + budgetBy + '\'' +
-                ", notifyWhenOverBudget=" + notifyWhenOverBudget +
-                ", overBudgetNotificationPercentage=" + overBudgetNotificationPercentage +
-                ", overBudgetNotificationDate=" + overBudgetNotificationDate +
-                ", showBudgetToAll=" + showBudgetToAll +
-                ", costBudget=" + costBudget +
-                ", costBudgetIncludeExpenses=" + costBudgetIncludeExpenses +
-                ", fee=" + fee +
-                ", notes='" + notes + '\'' +
-                ", startsOn=" + startsOn +
-                ", endsOn=" + endsOn +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
-    }
 }

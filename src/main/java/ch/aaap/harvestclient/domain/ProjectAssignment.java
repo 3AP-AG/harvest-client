@@ -1,7 +1,10 @@
 package ch.aaap.harvestclient.domain;
 
-import java.time.Instant;
 import java.util.List;
+
+import javax.annotation.Nullable;
+
+import org.immutables.value.Value;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -10,123 +13,26 @@ import ch.aaap.harvestclient.domain.reference.Reference;
 /**
  * User Project Assignment
  */
-public class ProjectAssignment {
-
-    private Long id;
+@Value.Immutable
+public interface ProjectAssignment extends BaseObject<ProjectAssignment> {
 
     @SerializedName("is_active")
-    private Boolean active;
+    Boolean getActive();
 
     @SerializedName("is_project_manager")
-    private Boolean projectManager;
+    Boolean getProjectManager();
 
-    private Double hourlyRate;
+    @Nullable
+    Double getHourlyRate();
 
-    private Double budget;
+    @Nullable
+    Double getBudget();
 
-    private Instant createdAt;
+    @SerializedName(value = "project", alternate = "project_id")
+    Reference<Project> getProject();
 
-    private Instant updatedAt;
+    @SerializedName(value = "client", alternate = "client_id")
+    Reference<Client> getClient();
 
-    private Reference<Project> projectReference;
-
-    private Reference<Client> clientReference;
-
-    private List<TaskAssignment> taskAssignments;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public Boolean getProjectManager() {
-        return projectManager;
-    }
-
-    public void setProjectManager(Boolean projectManager) {
-        this.projectManager = projectManager;
-    }
-
-    public Double getHourlyRate() {
-        return hourlyRate;
-    }
-
-    public void setHourlyRate(Double hourlyRate) {
-        this.hourlyRate = hourlyRate;
-    }
-
-    public Double getBudget() {
-        return budget;
-    }
-
-    public void setBudget(Double budget) {
-        this.budget = budget;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Instant updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Reference<Project> getProjectReference() {
-        return projectReference;
-    }
-
-    public void setProjectReference(Reference<Project> projectReference) {
-        this.projectReference = projectReference;
-    }
-
-    public Reference<Client> getClientReference() {
-        return clientReference;
-    }
-
-    public void setClientReference(Reference<Client> clientReference) {
-        this.clientReference = clientReference;
-    }
-
-    public List<TaskAssignment> getTaskAssignments() {
-        return taskAssignments;
-    }
-
-    public void setTaskAssignments(List<TaskAssignment> taskAssignments) {
-        this.taskAssignments = taskAssignments;
-    }
-
-    @Override
-    public String toString() {
-        return "ProjectAssignment{" +
-                "id=" + id +
-                ", active=" + active +
-                ", projectManager=" + projectManager +
-                ", hourlyRate=" + hourlyRate +
-                ", budget=" + budget +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", projectReference=" + projectReference +
-                ", clientReference=" + clientReference +
-                ", taskAssignments=" + taskAssignments +
-                '}';
-    }
+    List<TaskAssignment> getTaskAssignments();
 }

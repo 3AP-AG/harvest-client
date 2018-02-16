@@ -1,12 +1,10 @@
 package ch.aaap.harvestclient.domain;
 
-import java.time.Instant;
+import org.immutables.value.Value;
 
-public class EstimateLineCategory {
+@Value.Immutable
+public interface EstimateLineCategory extends BaseObject<EstimateLineCategory> {
 
-    private Long id;
-    private String name;
+    String getName();
 
-    private Instant createdAt;
-    private Instant updatedAt;
 }

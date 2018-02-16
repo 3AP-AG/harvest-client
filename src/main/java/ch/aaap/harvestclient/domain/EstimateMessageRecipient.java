@@ -1,7 +1,13 @@
 package ch.aaap.harvestclient.domain;
 
-public class EstimateMessageRecipient {
+import javax.annotation.Nullable;
 
-    private String name;
-    private String email;
+import org.immutables.value.Value;
+
+@Value.Immutable
+public interface EstimateMessageRecipient {
+    @Nullable
+    String getName();
+
+    String getEmail();
 }
