@@ -13,6 +13,7 @@ import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.UsersApi;
 import ch.aaap.harvestclient.domain.ImmutableUser;
 import ch.aaap.harvestclient.domain.User;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
 import util.TestSetupUtil;
 
 @HarvestTest
@@ -56,6 +57,22 @@ class UsersApiImplListTest {
         List<User> users = api.list();
 
         assertThat(users).extracting("id").contains(activeUser.getId(), inactiveUser.getId());
+    }
+
+    @Test
+    void listPaginated() {
+
+        Pagination<User> pagination = api.list(null, null, 1, 1);
+
+        List<User> result = pagination.getList();
+
+        assertThat(result).hasSize(1);
+        assertThat(pagination.getTotalPages()).isGreaterThanOrEqualTo(2);
+        assertThat(pagination.getNextPage()).isEqualTo(2);
+        assertThat(pagination.getPreviousPage()).isNull();
+        assertThat(pagination.getPerPage()).isEqualTo(1);
+        assertThat(pagination.getTotalPages()).isGreaterThanOrEqualTo(2);
+
     }
 
     @Test

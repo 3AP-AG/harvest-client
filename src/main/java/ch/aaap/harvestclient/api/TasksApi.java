@@ -4,6 +4,7 @@ import java.util.List;
 
 import ch.aaap.harvestclient.api.filter.TaskFilter;
 import ch.aaap.harvestclient.domain.Task;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.TaskUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
@@ -16,6 +17,18 @@ public interface TasksApi {
      *         first.
      */
     List<Task> list(TaskFilter filter);
+
+    /**
+     * @param filter
+     *            filtering options
+     * @param page
+     *            the page number
+     * @param perPage
+     *            how many results to return for one page. Max 100
+     * @return a list of all Tasks in the account, sorted by creation date, newest
+     *         first.
+     */
+    Pagination<Task> list(TaskFilter filter, int page, int perPage);
 
     /**
      * Return an existing Task.

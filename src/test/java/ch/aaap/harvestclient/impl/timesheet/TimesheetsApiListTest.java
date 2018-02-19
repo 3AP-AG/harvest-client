@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.TimesheetsApi;
 import ch.aaap.harvestclient.api.filter.TimeEntryFilter;
 import ch.aaap.harvestclient.domain.TimeEntry;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
 import util.ExistingData;
 import util.TestSetupUtil;
 
@@ -39,5 +41,21 @@ class TimesheetsApiListTest {
         assertTrue(entries.size() > 0);
 
         assertTrue(entries.stream().map(TimeEntry::getId).anyMatch(id -> id.equals(fixEntry.getId())));
+    }
+
+    @Test
+    void listPaginated() {
+
+        Pagination<TimeEntry> pagination = api.list(new TimeEntryFilter(), 1, 1);
+
+        List<TimeEntry> result = pagination.getList();
+
+        assertThat(result).hasSize(1);
+        assertThat(pagination.getTotalPages()).isGreaterThanOrEqualTo(2);
+        assertThat(pagination.getNextPage()).isEqualTo(2);
+        assertThat(pagination.getPreviousPage()).isNull();
+        assertThat(pagination.getPerPage()).isEqualTo(1);
+        assertThat(pagination.getTotalPages()).isGreaterThanOrEqualTo(2);
+
     }
 }

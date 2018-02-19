@@ -4,6 +4,7 @@ import java.util.List;
 
 import ch.aaap.harvestclient.domain.Role;
 import ch.aaap.harvestclient.domain.User;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.RoleInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
@@ -14,6 +15,16 @@ public interface RolesApi {
      *         first.
      */
     List<Role> list();
+
+    /**
+     * @param page
+     *            the page number
+     * @param perPage
+     *            how many results to return for one page. Max 100
+     * @return a list of all Roles in the account, sorted by creation date, newest
+     *         first.
+     */
+    Pagination<Role> list(int page, int perPage);
 
     /**
      * Return an existing Role.

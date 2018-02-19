@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import org.immutables.gson.Gson;
 import org.immutables.value.Value;
 
 import ch.aaap.harvestclient.domain.*;
@@ -12,6 +13,7 @@ import ch.aaap.harvestclient.domain.*;
  * Holds any type of list from Harvest. We use the fact that missing JSON fields
  * will be set to null
  */
+@Gson.TypeAdapters(fieldNamingStrategy = true)
 @Value.Immutable
 public interface PaginatedList {
 

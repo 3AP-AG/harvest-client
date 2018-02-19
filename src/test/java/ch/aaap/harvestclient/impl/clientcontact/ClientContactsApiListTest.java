@@ -14,6 +14,7 @@ import ch.aaap.harvestclient.api.filter.ClientContactFilter;
 import ch.aaap.harvestclient.domain.Client;
 import ch.aaap.harvestclient.domain.ClientContact;
 import ch.aaap.harvestclient.domain.ImmutableClientContact;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
 import util.ExistingData;
 import util.TestSetupUtil;
 
@@ -38,6 +39,21 @@ class ClientContactContactsApiListTest {
         List<ClientContact> clientContacts = clientContactsApi.list(new ClientContactFilter());
 
         assertThat(clientContacts).isNotEmpty();
+
+    }
+
+    @Test
+    void listPaginated() {
+
+        Pagination<ClientContact> clientContacts = clientContactsApi.list(new ClientContactFilter(), 1, 1);
+
+        List<ClientContact> contacts = clientContacts.getList();
+
+        assertThat(contacts).hasSize(1);
+        assertThat(clientContacts.getNextPage()).isEqualTo(2);
+        assertThat(clientContacts.getPreviousPage()).isNull();
+        assertThat(clientContacts.getPerPage()).isEqualTo(1);
+        assertThat(clientContacts.getTotalPages()).isGreaterThanOrEqualTo(2);
 
     }
 

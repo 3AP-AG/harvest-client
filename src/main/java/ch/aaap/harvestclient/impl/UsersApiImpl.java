@@ -1,7 +1,6 @@
 package ch.aaap.harvestclient.impl;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -10,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import ch.aaap.harvestclient.api.UsersApi;
 import ch.aaap.harvestclient.domain.User;
 import ch.aaap.harvestclient.domain.pagination.PaginatedList;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.UserUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.service.UserService;
@@ -19,11 +19,6 @@ public class UsersApiImpl implements UsersApi {
 
     private static final Logger log = LoggerFactory.getLogger(UsersApiImpl.class);
 
-    /**
-     * Default page size to request. Maximum for the API is 100.
-     */
-    private static final int PER_PAGE = 100;
-
     private final UserService service;
 
     public UsersApiImpl(UserService userService) {
@@ -32,21 +27,15 @@ public class UsersApiImpl implements UsersApi {
 
     @Override
     public List<User> list(Boolean isActive, Instant updatedSince) {
+        return Common.collect((page, perPage) -> list(isActive, updatedSince, page, perPage));
+    }
 
-        Integer nextPage = 1;
-
-        List<User> users = new ArrayList<>();
-
-        while (nextPage != null) {
-            log.debug("Getting page {} of user list", nextPage);
-            Call<PaginatedList> call = service.list(isActive, updatedSince, nextPage, PER_PAGE);
-            PaginatedList paginatedUser = ExceptionHandler.callOrThrow(call);
-            users.addAll(paginatedUser.getUsers());
-            nextPage = paginatedUser.getNextPage();
-        }
-
-        log.debug("Listed {} Users: {}", users.size(), users);
-        return users;
+    @Override
+    public Pagination<User> list(Boolean isActive, Instant updatedSince, int page, int perPage) {
+        log.debug("Getting page {} of user list", page);
+        Call<PaginatedList> call = service.list(isActive, updatedSince, page, perPage);
+        PaginatedList pagination = ExceptionHandler.callOrThrow(call);
+        return Pagination.of(pagination, pagination.getUsers());
     }
 
     @Override

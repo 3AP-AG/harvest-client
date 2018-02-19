@@ -5,6 +5,7 @@ import java.util.List;
 import ch.aaap.harvestclient.api.filter.TaskAssignmentFilter;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.TaskAssignment;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.TaskAssignmentUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
@@ -23,6 +24,22 @@ public interface TaskAssignmentsApi {
      *         date, newest first.
      */
     List<TaskAssignment> list(Reference<Project> projectReference, TaskAssignmentFilter filter);
+
+    /**
+     *
+     * @param filter
+     *            filtering options
+     * @param projectReference
+     *            the project containing the assignments
+     * @param page
+     *            the page number
+     * @param perPage
+     *            how many results to return for one page. Max 100
+     * @return a list of all TaskAssignments in the project, sorted by creation
+     *         date, newest first.
+     */
+    Pagination<TaskAssignment> list(Reference<Project> projectReference, TaskAssignmentFilter filter, int page,
+            int perPage);
 
     /**
      * Return an existing TaskAssignment.

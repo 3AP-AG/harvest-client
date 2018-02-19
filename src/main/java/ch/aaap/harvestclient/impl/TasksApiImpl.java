@@ -1,8 +1,6 @@
 package ch.aaap.harvestclient.impl;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +9,7 @@ import ch.aaap.harvestclient.api.TasksApi;
 import ch.aaap.harvestclient.api.filter.TaskFilter;
 import ch.aaap.harvestclient.domain.Task;
 import ch.aaap.harvestclient.domain.pagination.PaginatedList;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.TaskUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.service.TaskService;
@@ -19,7 +18,6 @@ import retrofit2.Call;
 public class TasksApiImpl implements TasksApi {
 
     private static final Logger log = LoggerFactory.getLogger(TasksApiImpl.class);
-    private static final int PER_PAGE = 100;
     private final TaskService service;
 
     public TasksApiImpl(TaskService service) {
@@ -28,32 +26,18 @@ public class TasksApiImpl implements TasksApi {
 
     @Override
     public List<Task> list(TaskFilter filter) {
+        return Common.collect((page, perPage) -> list(filter, page, perPage));
+    }
 
-        Integer nextPage = 1;
+    @Override
+    public Pagination<Task> list(TaskFilter filter, int page, int perPage) {
+        log.debug("Getting page {} of Task list", page);
 
-        List<Task> result = new ArrayList<>();
+        Call<PaginatedList> call = service.list(filter.toMap(page, perPage));
 
-        while (nextPage != null)
+        PaginatedList pagination = ExceptionHandler.callOrThrow(call);
 
-        {
-            log.debug("Getting page {} of Task list", nextPage);
-
-            Map<String, Object> filterMap = filter.toMap();
-            // add pagination settings
-            filterMap.put("page", nextPage);
-            filterMap.put("per_page", PER_PAGE);
-
-            Call<PaginatedList> call = service.list(filterMap);
-
-            PaginatedList pagination = ExceptionHandler.callOrThrow(call);
-
-            result.addAll(pagination.getTasks());
-            nextPage = pagination.getNextPage();
-        }
-
-        log.debug("Listed {} Task: {}", result.size(), result);
-
-        return result;
+        return Pagination.of(pagination, pagination.getTasks());
     }
 
     @Override

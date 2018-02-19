@@ -17,6 +17,7 @@ import ch.aaap.harvestclient.domain.ImmutableTaskAssignment;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.Task;
 import ch.aaap.harvestclient.domain.TaskAssignment;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
 import util.ExistingData;
 import util.TestSetupUtil;
 
@@ -46,6 +47,22 @@ class TaskAssignmentsApiListTest {
         List<TaskAssignment> taskAssignments = taskAssignmentApi.list(project, filter);
 
         assertThat(taskAssignments).isNotEmpty();
+    }
+
+    @Test
+    void listPaginated() {
+
+        Pagination<TaskAssignment> pagination = taskAssignmentApi.list(project, new TaskAssignmentFilter(), 1, 1);
+
+        List<TaskAssignment> result = pagination.getList();
+
+        assertThat(result).hasSize(1);
+        assertThat(pagination.getTotalPages()).isGreaterThanOrEqualTo(2);
+        assertThat(pagination.getNextPage()).isEqualTo(2);
+        assertThat(pagination.getPreviousPage()).isNull();
+        assertThat(pagination.getPerPage()).isEqualTo(1);
+        assertThat(pagination.getTotalPages()).isGreaterThanOrEqualTo(2);
+
     }
 
     @Test

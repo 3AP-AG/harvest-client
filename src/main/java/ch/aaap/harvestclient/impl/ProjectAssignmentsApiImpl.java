@@ -1,7 +1,6 @@
 package ch.aaap.harvestclient.impl;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,6 +10,7 @@ import ch.aaap.harvestclient.api.ProjectAssignmentsApi;
 import ch.aaap.harvestclient.domain.ProjectAssignment;
 import ch.aaap.harvestclient.domain.User;
 import ch.aaap.harvestclient.domain.pagination.PaginatedList;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.service.ProjectAssignmentService;
 import retrofit2.Call;
@@ -18,7 +18,6 @@ import retrofit2.Call;
 public class ProjectAssignmentsApiImpl implements ProjectAssignmentsApi {
 
     private static final Logger log = LoggerFactory.getLogger(ProjectAssignmentsApiImpl.class);
-    private static final int PER_PAGE = 100;
     private final ProjectAssignmentService service;
 
     public ProjectAssignmentsApiImpl(ProjectAssignmentService service) {
@@ -27,39 +26,29 @@ public class ProjectAssignmentsApiImpl implements ProjectAssignmentsApi {
 
     @Override
     public List<ProjectAssignment> list(Reference<User> userReference, Instant updatedSince) {
+        return Common.collect((page, perPage) -> list(userReference, updatedSince, page, perPage));
+    }
 
-        Integer nextPage = 1;
+    @Override
+    public Pagination<ProjectAssignment> list(Reference<User> userReference, Instant updatedSince, int page,
+            int perPage) {
 
-        List<ProjectAssignment> projectAssignments = new ArrayList<>();
-
-        while (nextPage != null) {
-            log.debug("Getting page {} of project assigment list for user {}", nextPage, userReference);
-            Call<PaginatedList> call = service.list(userReference.getId(), updatedSince, nextPage,
-                    PER_PAGE);
-            PaginatedList paginatedProjectAssignment = ExceptionHandler.callOrThrow(call);
-            projectAssignments.addAll(paginatedProjectAssignment.getProjectAssignments());
-            nextPage = paginatedProjectAssignment.getNextPage();
-        }
-
-        log.debug("Listed {} ProjectAssignment: {}", projectAssignments.size(), projectAssignments);
-        return projectAssignments;
+        log.debug("Getting page {} of project assigment list for user {}", page, userReference);
+        Call<PaginatedList> call = service.list(userReference.getId(), updatedSince, page, perPage);
+        PaginatedList pagination = ExceptionHandler.callOrThrow(call);
+        return Pagination.of(pagination, pagination.getProjectAssignments());
     }
 
     @Override
     public List<ProjectAssignment> listSelf() {
-        Integer nextPage = 1;
+        return Common.collect(this::listSelf);
+    }
 
-        List<ProjectAssignment> projectAssignments = new ArrayList<>();
-
-        while (nextPage != null) {
-            log.debug("Getting page {} of project assigment list for self", nextPage);
-            Call<PaginatedList> call = service.list(nextPage, PER_PAGE);
-            PaginatedList paginatedProjectAssignment = ExceptionHandler.callOrThrow(call);
-            projectAssignments.addAll(paginatedProjectAssignment.getProjectAssignments());
-            nextPage = paginatedProjectAssignment.getNextPage();
-        }
-
-        log.debug("Listed {} ProjectAssignment: {}", projectAssignments.size(), projectAssignments);
-        return projectAssignments;
+    @Override
+    public Pagination<ProjectAssignment> listSelf(int page, int perPage) {
+        log.debug("Getting page {} of project assigment list for self", page);
+        Call<PaginatedList> call = service.list(page, perPage);
+        PaginatedList paginatedProjectAssignment = ExceptionHandler.callOrThrow(call);
+        return Pagination.of(paginatedProjectAssignment, paginatedProjectAssignment.getProjectAssignments());
     }
 }
