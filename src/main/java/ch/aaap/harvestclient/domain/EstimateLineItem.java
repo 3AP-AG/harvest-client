@@ -12,9 +12,8 @@ public interface EstimateLineItem {
     Long getId();
 
     /**
-     * @return the estimate Item category
+     * @return the estimate Item category name
      */
-    @Nullable
     String getKind();
 
     @Nullable

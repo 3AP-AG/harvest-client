@@ -35,6 +35,8 @@ public interface PaginatedList {
 
     List<User> getUsers();
 
+    List<Estimate> getEstimates();
+
     @Nullable
     Integer getPerPage();
 
