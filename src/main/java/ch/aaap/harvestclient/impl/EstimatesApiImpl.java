@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import ch.aaap.harvestclient.api.EstimatesApi;
 import ch.aaap.harvestclient.api.filter.EstimateFilter;
 import ch.aaap.harvestclient.domain.Estimate;
-import ch.aaap.harvestclient.domain.EstimateLineItem;
+import ch.aaap.harvestclient.domain.EstimateItem;
 import ch.aaap.harvestclient.domain.pagination.PaginatedList;
 import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.EstimateUpdateInfo;
@@ -59,17 +59,17 @@ public class EstimatesApiImpl implements EstimatesApi {
     }
 
     @Override
-    public Estimate addLineItem(Reference<Estimate> estimateReference, EstimateLineItem estimateLineItem) {
+    public Estimate addLineItem(Reference<Estimate> estimateReference, EstimateItem estimateItem) {
         return null;
     }
 
     @Override
-    public Estimate updateLineItem(Reference<Estimate> estimateReference, EstimateLineItem estimateLineItem) {
+    public Estimate updateLineItem(Reference<Estimate> estimateReference, EstimateItem estimateItem) {
         return null;
     }
 
     @Override
-    public Estimate deleteLineItem(Reference<Estimate> estimateReference, EstimateLineItem estimateLineItem) {
+    public Estimate deleteLineItem(Reference<Estimate> estimateReference, EstimateItem estimateItem) {
         return null;
     }
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import ch.aaap.harvestclient.api.filter.EstimateFilter;
 import ch.aaap.harvestclient.domain.Estimate;
-import ch.aaap.harvestclient.domain.EstimateLineItem;
+import ch.aaap.harvestclient.domain.EstimateItem;
 import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.EstimateUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
@@ -57,33 +57,33 @@ public interface EstimatesApi {
      * 
      * @param estimateReference
      *            the estimate to add the item to
-     * @param estimateLineItem
+     * @param estimateItem
      *            the line item to be created
      * @return the updated Estimate
      */
-    Estimate addLineItem(Reference<Estimate> estimateReference, EstimateLineItem estimateLineItem);
+    Estimate addLineItem(Reference<Estimate> estimateReference, EstimateItem estimateItem);
 
     /**
      * Update an existing line item
      *
      * @param estimateReference
      *            the estimate that contains the item
-     * @param estimateLineItem
+     * @param estimateItem
      *            the line item to be updated
      * @return the updated Estimate
      */
-    Estimate updateLineItem(Reference<Estimate> estimateReference, EstimateLineItem estimateLineItem);
+    Estimate updateLineItem(Reference<Estimate> estimateReference, EstimateItem estimateItem);
 
     /**
      * Delete an existing line item
      *
      * @param estimateReference
      *            the estimate that contains the item
-     * @param estimateLineItem
+     * @param estimateItem
      *            the line item to be deleted
      * @return the updated Estimate
      */
-    Estimate deleteLineItem(Reference<Estimate> estimateReference, EstimateLineItem estimateLineItem);
+    Estimate deleteLineItem(Reference<Estimate> estimateReference, EstimateItem estimateItem);
 
     /**
      * Updates an existing Estimate with the properties set in EstimateUpdateInfo

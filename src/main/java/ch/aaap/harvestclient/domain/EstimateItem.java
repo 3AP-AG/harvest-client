@@ -7,7 +7,20 @@ import org.immutables.value.Value;
 
 @Gson.TypeAdapters(fieldNamingStrategy = true)
 @Value.Immutable
-public interface EstimateLineItem {
+@Value.Enclosing
+public interface EstimateItem {
+
+    /**
+     * The category that is stored in getKind() as a String
+     */
+    @Gson.TypeAdapters(fieldNamingStrategy = true)
+    @Value.Immutable
+    interface Category extends BaseObject<Category> {
+
+        String getName();
+
+    }
+
     @Nullable
     Long getId();
 
