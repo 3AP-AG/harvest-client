@@ -13,6 +13,7 @@ import ch.aaap.harvestclient.api.TasksApi;
 import ch.aaap.harvestclient.api.filter.TaskFilter;
 import ch.aaap.harvestclient.domain.ImmutableTask;
 import ch.aaap.harvestclient.domain.Task;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
 import util.TestSetupUtil;
 
 @HarvestTest
@@ -35,6 +36,22 @@ class TasksApiListTest {
         List<Task> tasks = tasksApi.list(new TaskFilter());
 
         assertThat(tasks).isNotEmpty();
+
+    }
+
+    @Test
+    void listPaginated() {
+
+        Pagination<Task> pagination = tasksApi.list(new TaskFilter(), 1, 1);
+
+        List<Task> result = pagination.getList();
+
+        assertThat(result).hasSize(1);
+        assertThat(pagination.getTotalPages()).isGreaterThanOrEqualTo(2);
+        assertThat(pagination.getNextPage()).isEqualTo(2);
+        assertThat(pagination.getPreviousPage()).isNull();
+        assertThat(pagination.getPerPage()).isEqualTo(1);
+        assertThat(pagination.getTotalPages()).isGreaterThanOrEqualTo(2);
 
     }
 

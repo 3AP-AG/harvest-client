@@ -4,6 +4,7 @@ import java.util.List;
 
 import ch.aaap.harvestclient.api.filter.TimeEntryFilter;
 import ch.aaap.harvestclient.domain.TimeEntry;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoDuration;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoTimestamp;
 import ch.aaap.harvestclient.domain.param.TimeEntryUpdateInfo;
@@ -20,6 +21,21 @@ public interface TimesheetsApi {
      * @return a list of all matching TimeEntry, newest first.
      */
     List<TimeEntry> list(TimeEntryFilter filter);
+
+    /**
+     * Return a list of all TimeEntries, filtered by the TimeEntryFilter, sorted by
+     * creation date, newest first. Page and perPage allow controlling how many
+     * results to return.
+     * 
+     * @param filter
+     *            filtering options
+     * @param page
+     *            the page number
+     * @param perPage
+     *            how many results to return for one page. Max 100
+     * @return a list of all matching TimeEntry, newest first.
+     */
+    Pagination<TimeEntry> list(TimeEntryFilter filter, int page, int perPage);
 
     /**
      * Retrieve an existing TimeEntry

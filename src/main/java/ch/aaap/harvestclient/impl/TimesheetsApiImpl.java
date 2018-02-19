@@ -1,8 +1,6 @@
 package ch.aaap.harvestclient.impl;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +9,7 @@ import ch.aaap.harvestclient.api.TimesheetsApi;
 import ch.aaap.harvestclient.api.filter.TimeEntryFilter;
 import ch.aaap.harvestclient.domain.TimeEntry;
 import ch.aaap.harvestclient.domain.pagination.PaginatedList;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoDuration;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoTimestamp;
 import ch.aaap.harvestclient.domain.param.TimeEntryUpdateInfo;
@@ -20,7 +19,6 @@ import retrofit2.Call;
 
 public class TimesheetsApiImpl implements TimesheetsApi {
     private final static Logger log = LoggerFactory.getLogger(TimesheetsApiImpl.class);
-    private static final int PER_PAGE = 100;
     private final TimeEntryService service;
 
     public TimesheetsApiImpl(TimeEntryService timeEntryService) {
@@ -29,31 +27,17 @@ public class TimesheetsApiImpl implements TimesheetsApi {
 
     @Override
     public List<TimeEntry> list(TimeEntryFilter filter) {
+        return Common.collect((page, perPage) -> list(filter, page, perPage));
+    }
 
-        Integer nextPage = 1;
+    @Override
+    public Pagination<TimeEntry> list(TimeEntryFilter filter, int page, int perPage) {
+        log.debug("Getting page {} of timeentries list", page);
 
-        List<TimeEntry> timeEntries = new ArrayList<>();
+        Call<PaginatedList> call = service.list(filter.toMap(page, perPage));
 
-        while (nextPage != null) {
-            log.debug("Getting page {} of timeentries list", nextPage);
-
-            Map<String, Object> filterMap = filter.toMap();
-            // add pagination settings
-            filterMap.put("page", nextPage);
-            filterMap.put("per_page", PER_PAGE);
-
-            Call<PaginatedList> call = service.list(filterMap);
-
-            PaginatedList paginatedTimeEntry = ExceptionHandler.callOrThrow(call);
-
-            timeEntries.addAll(paginatedTimeEntry.getTimeEntries());
-            nextPage = paginatedTimeEntry.getNextPage();
-        }
-
-        log.debug("Listed {} timeentries: {}", timeEntries.size(), timeEntries);
-
-        return timeEntries;
-
+        PaginatedList pagination = ExceptionHandler.callOrThrow(call);
+        return Pagination.of(pagination, pagination.getTimeEntries());
     }
 
     @Override

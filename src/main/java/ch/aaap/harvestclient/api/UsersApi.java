@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.List;
 
 import ch.aaap.harvestclient.domain.User;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.UserUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
@@ -33,6 +34,24 @@ public interface UsersApi {
      * @return a list of all users, filtered accordingly
      */
     List<User> list(Boolean isActive, Instant updatedSince);
+
+    /**
+     * Return a list of users, filtered by activity and update date, newest user
+     * first. Page and perPage allow controlling how many results to return.
+     *
+     * @param isActive
+     *            if true, return only getActive users. Set to null to disable
+     *            filtering
+     * @param updatedSince
+     *            return only users that have been updated at least 1 second after
+     *            updatedSince. Set to null to disable filtering.
+     * @param page
+     *            the page number
+     * @param perPage
+     *            how many results to return for one page. Max 100
+     * @return a list of users, filtered accordingly
+     */
+    Pagination<User> list(Boolean isActive, Instant updatedSince, int page, int perPage);
 
     /**
      * Create a new User. First name, last name and email are required.

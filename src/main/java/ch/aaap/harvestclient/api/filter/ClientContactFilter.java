@@ -7,12 +7,13 @@ import java.util.Map;
 import ch.aaap.harvestclient.domain.Client;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
-public class ClientContactFilter {
+public class ClientContactFilter implements ListFilter {
 
     private Reference<Client> clientReference;
 
     private Instant updatedSince;
 
+    @Override
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
         if (clientReference != null) {

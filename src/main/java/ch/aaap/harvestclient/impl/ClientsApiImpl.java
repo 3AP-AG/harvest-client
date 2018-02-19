@@ -1,8 +1,6 @@
 package ch.aaap.harvestclient.impl;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +9,7 @@ import ch.aaap.harvestclient.api.ClientsApi;
 import ch.aaap.harvestclient.api.filter.ClientFilter;
 import ch.aaap.harvestclient.domain.Client;
 import ch.aaap.harvestclient.domain.pagination.PaginatedList;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.ClientUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.service.ClientService;
@@ -19,7 +18,6 @@ import retrofit2.Call;
 public class ClientsApiImpl implements ClientsApi {
 
     private static final Logger log = LoggerFactory.getLogger(ClientsApiImpl.class);
-    private static final int PER_PAGE = 100;
     private final ClientService service;
 
     public ClientsApiImpl(ClientService service) {
@@ -28,32 +26,18 @@ public class ClientsApiImpl implements ClientsApi {
 
     @Override
     public List<Client> list(ClientFilter filter) {
+        return Common.collect((page, perPage) -> this.list(filter, page, perPage));
+    }
 
-        Integer nextPage = 1;
+    @Override
+    public Pagination<Client> list(ClientFilter filter, int page, int perPage) {
+        log.debug("Getting page {} of Client list", page);
 
-        List<Client> result = new ArrayList<>();
+        Call<PaginatedList> call = service.list(filter.toMap(page, perPage));
 
-        while (nextPage != null)
+        PaginatedList pagination = ExceptionHandler.callOrThrow(call);
 
-        {
-            log.debug("Getting page {} of Client list", nextPage);
-
-            Map<String, Object> filterMap = filter.toMap();
-            // add pagination settings
-            filterMap.put("page", nextPage);
-            filterMap.put("per_page", PER_PAGE);
-
-            Call<PaginatedList> call = service.list(filterMap);
-
-            PaginatedList pagination = ExceptionHandler.callOrThrow(call);
-
-            result.addAll(pagination.getClients());
-            nextPage = pagination.getNextPage();
-        }
-
-        log.debug("Listed {} Client: {}", result.size(), result);
-
-        return result;
+        return Pagination.of(pagination, pagination.getClients());
     }
 
     @Override

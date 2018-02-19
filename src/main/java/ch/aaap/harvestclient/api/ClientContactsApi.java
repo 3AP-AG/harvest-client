@@ -4,6 +4,7 @@ import java.util.List;
 
 import ch.aaap.harvestclient.api.filter.ClientContactFilter;
 import ch.aaap.harvestclient.domain.ClientContact;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.ClientContactUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
@@ -18,6 +19,21 @@ public interface ClientContactsApi {
      * @return a (filtered) list of ClientContacts
      */
     List<ClientContact> list(ClientContactFilter filter);
+
+    /**
+     * Return a list of clientContacts, sorted by creation date, newest first. Use
+     * the filter object to filter the list. Page and perPage allow controlling how
+     * many results to return.
+     *
+     * @param filter
+     *            filtering options
+     * @param page
+     *            the page number
+     * @param perPage
+     *            how many results to return for one page. Max 100
+     * @return a (filtered) list of ClientContacts
+     */
+    Pagination<ClientContact> list(ClientContactFilter filter, int page, int perPage);
 
     /**
      * @param clientContactReference

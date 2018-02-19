@@ -4,6 +4,7 @@ import java.util.List;
 
 import ch.aaap.harvestclient.api.filter.ProjectFilter;
 import ch.aaap.harvestclient.domain.Project;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.ProjectUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
@@ -18,6 +19,21 @@ public interface ProjectsApi {
      * @return a (filtered) list of Projects
      */
     List<Project> list(ProjectFilter filter);
+
+    /**
+     * Return a list of projects, sorted by creation date, newest first. Use the
+     * filter object to filter the list. Page and perPage allow controlling how many
+     * results to return.
+     *
+     * @param filter
+     *            filtering options
+     * @param page
+     *            the page number
+     * @param perPage
+     *            how many results to return for one page. Max 100
+     * @return a (filtered) list of Projects
+     */
+    Pagination<Project> list(ProjectFilter filter, int page, int perPage);
 
     /**
      * @param projectReference

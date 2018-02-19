@@ -4,7 +4,7 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ActiveAndUpdatedFilter {
+public class ActiveAndUpdatedFilter implements ListFilter {
 
     /**
      * Pass true to only return active objects and false to return inactive objects.
@@ -16,6 +16,7 @@ public class ActiveAndUpdatedFilter {
      */
     private Instant updatedSince;
 
+    @Override
     public Map<String, Object> toMap() {
 
         Map<String, Object> map = new HashMap<>();

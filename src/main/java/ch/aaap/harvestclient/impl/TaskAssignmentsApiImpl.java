@@ -1,8 +1,6 @@
 package ch.aaap.harvestclient.impl;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +10,7 @@ import ch.aaap.harvestclient.api.filter.TaskAssignmentFilter;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.TaskAssignment;
 import ch.aaap.harvestclient.domain.pagination.PaginatedList;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.TaskAssignmentUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.service.TaskAssignmentService;
@@ -20,7 +19,6 @@ import retrofit2.Call;
 public class TaskAssignmentsApiImpl implements TaskAssignmentsApi {
 
     private static final Logger log = LoggerFactory.getLogger(TaskAssignmentsApiImpl.class);
-    private static final int PER_PAGE = 100;
     private final TaskAssignmentService service;
 
     public TaskAssignmentsApiImpl(TaskAssignmentService service) {
@@ -30,29 +28,18 @@ public class TaskAssignmentsApiImpl implements TaskAssignmentsApi {
     @Override
     public List<TaskAssignment> list(Reference<Project> projectReference, TaskAssignmentFilter filter) {
 
-        Integer nextPage = 1;
+        return Common.collect((page, perPage) -> list(projectReference, filter, page, perPage));
+    }
 
-        List<TaskAssignment> result = new ArrayList<>();
+    @Override
+    public Pagination<TaskAssignment> list(Reference<Project> projectReference, TaskAssignmentFilter filter,
+            int page, int perPage) {
+        log.debug("Getting page {} of TaskAssignment list", page);
 
-        while (nextPage != null) {
-            log.debug("Getting page {} of TaskAssignment list", nextPage);
+        Call<PaginatedList> call = service.list(projectReference.getId(), filter.toMap(page, perPage));
 
-            Map<String, Object> filterMap = filter.toMap();
-            // add pagination settings
-            filterMap.put("page", nextPage);
-            filterMap.put("per_page", PER_PAGE);
-
-            Call<PaginatedList> call = service.list(projectReference.getId(), filterMap);
-
-            PaginatedList pagination = ExceptionHandler.callOrThrow(call);
-
-            result.addAll(pagination.getTaskAssignments());
-            nextPage = pagination.getNextPage();
-        }
-
-        log.debug("Listed {} TaskAssignment: {}", result.size(), result);
-
-        return result;
+        PaginatedList pagination = ExceptionHandler.callOrThrow(call);
+        return Pagination.of(pagination, pagination.getTaskAssignments());
     }
 
     @Override
