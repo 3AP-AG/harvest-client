@@ -95,7 +95,7 @@ class EstimatesApiListTest {
     @Test
     void listByUpdatedSince() {
 
-        Instant creationTime = Instant.now().minusSeconds(5);
+        Instant creationTime = Instant.now().minusSeconds(1);
         Estimate creationInfo = ImmutableEstimate.builder()
                 .client(client)
                 .build();
