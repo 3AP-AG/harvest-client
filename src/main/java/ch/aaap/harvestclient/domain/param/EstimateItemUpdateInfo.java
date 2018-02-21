@@ -1,35 +1,21 @@
-package ch.aaap.harvestclient.domain;
+package ch.aaap.harvestclient.domain.param;
 
 import javax.annotation.Nullable;
 
 import org.immutables.gson.Gson;
 import org.immutables.value.Value;
 
-import ch.aaap.harvestclient.domain.reference.Reference;
-
 @Gson.TypeAdapters(fieldNamingStrategy = true)
 @Value.Immutable
-@Value.Enclosing
-public interface EstimateItem extends Reference<EstimateItem> {
+public interface EstimateItemUpdateInfo {
 
-    /**
-     * The category that is stored in getKind() as a String
-     */
-    @Gson.TypeAdapters(fieldNamingStrategy = true)
-    @Value.Immutable
-    interface Category extends BaseObject<Category> {
-
-        String getName();
-
-    }
-
-    @Override
     @Nullable
     Long getId();
 
     /**
      * @return the estimate Item category name
      */
+    @Nullable
     String getKind();
 
     @Nullable
@@ -38,6 +24,7 @@ public interface EstimateItem extends Reference<EstimateItem> {
     @Nullable
     Long getQuantity();
 
+    @Nullable
     Double getUnitPrice();
 
     @Nullable

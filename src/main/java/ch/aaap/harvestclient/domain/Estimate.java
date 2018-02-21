@@ -15,13 +15,15 @@ import ch.aaap.harvestclient.domain.reference.Reference;
 
 @Gson.TypeAdapters(fieldNamingStrategy = true)
 @Value.Immutable
+@Value.Style.Depluralize
 public interface Estimate extends BaseObject<Estimate> {
 
     @SerializedName(value = "client_id", alternate = "client")
     Reference<Client> getClient();
 
+    @SerializedName("line_items")
     @Nullable
-    List<InvoiceLineItem> getInvoiceLineItemList();
+    List<EstimateItem> getEstimateItems();
 
     @Nullable
     Creator getCreator();

@@ -11,19 +11,21 @@ import org.immutables.value.Value;
 import com.google.gson.annotations.SerializedName;
 
 import ch.aaap.harvestclient.domain.Client;
-import ch.aaap.harvestclient.domain.InvoiceLineItem;
+import ch.aaap.harvestclient.domain.EstimateItem;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
 @Gson.TypeAdapters(fieldNamingStrategy = true)
 @Value.Immutable
+@Value.Style.Depluralize
 public interface EstimateUpdateInfo {
 
     @Nullable
     @SerializedName(value = "client_id", alternate = "client")
     Reference<Client> getClient();
 
+    @SerializedName("line_items")
     @Nullable
-    List<InvoiceLineItem> getInvoiceLineItemList();
+    List<EstimateItem> getEstimateItems();
 
     @Nullable
     String getNumber();

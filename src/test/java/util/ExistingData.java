@@ -11,6 +11,10 @@ import ch.aaap.harvestclient.domain.reference.dto.TaskReferenceDto;
 
 public class ExistingData {
 
+    public EstimateItem.Category getAnotherEstimateItemCategory() {
+        return anotherEstimateItemCategory;
+    }
+
     /**
      * https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom
      */
@@ -29,6 +33,9 @@ public class ExistingData {
     private final Project project;
     private final TimeEntry timeEntry;
 
+    private final EstimateItem.Category estimateItemCategory;
+    private final EstimateItem.Category anotherEstimateItemCategory;
+
     private ExistingData(Harvest harvest) {
         try {
             log.debug("Initializing Existing Data for tests");
@@ -43,6 +50,10 @@ public class ExistingData {
 
             Reference<TimeEntry> entry = new GenericReference<>(738720479L);
             timeEntry = harvest.timesheets().get(entry);
+
+            estimateItemCategory = ImmutableEstimateItem.Category.builder().name("Product").build();
+            anotherEstimateItemCategory = ImmutableEstimateItem.Category.builder().name("Service").build();
+
         } catch (Throwable t) {
             log.error("", t);
             throw t;
@@ -76,4 +87,9 @@ public class ExistingData {
     public TimeEntry getTimeEntry() {
         return timeEntry;
     }
+
+    public EstimateItem.Category getEstimateItemCategory() {
+        return estimateItemCategory;
+    }
+
 }

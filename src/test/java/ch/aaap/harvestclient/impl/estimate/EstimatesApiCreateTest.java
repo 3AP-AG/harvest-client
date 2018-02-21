@@ -1,6 +1,7 @@
 package ch.aaap.harvestclient.impl.estimate;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -9,9 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.EstimatesApi;
-import ch.aaap.harvestclient.domain.Client;
-import ch.aaap.harvestclient.domain.Estimate;
-import ch.aaap.harvestclient.domain.ImmutableEstimate;
+import ch.aaap.harvestclient.domain.*;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import util.ExistingData;
 import util.TestSetupUtil;
@@ -22,6 +21,8 @@ class EstimatesApiCreateTest {
     private static final EstimatesApi estimatesApi = TestSetupUtil.getAdminAccess().estimates();
     private Estimate estimate;
     private Client client = ExistingData.getInstance().getClient();
+    private EstimateItem.Category category = ExistingData.getInstance().getEstimateItemCategory();
+    private String kind = category.getName();
 
     @AfterEach
     void afterEach() {
@@ -59,7 +60,7 @@ class EstimatesApiCreateTest {
                 .notes("test notes")
                 .currency("EUR")
                 .issueDate(LocalDate.now().minusWeeks(2))
-                // not allowed by Harvest
+                // not allowed by Harvest, see Estimate Message API
                 // .sentAt(Instant.now())
                 // .declinedAt(Instant.now().plusSeconds(100))
                 .build();
@@ -68,6 +69,37 @@ class EstimatesApiCreateTest {
 
         assertThat(estimate).usingComparatorForType((x, y) -> (int) (y.getId() - x.getId()), Reference.class)
                 .isEqualToIgnoringNullFields(creationInfo);
+    }
+
+    @Test
+    void createWithLineItems() {
+
+        long quantity = 20;
+        double unitPrice = 30;
+        String firstName = "test First";
+        Estimate creationInfo = ImmutableEstimate.builder()
+                .client(client)
+                .addEstimateItem(ImmutableEstimateItem.builder()
+                        .quantity(10L)
+                        .unitPrice(1.)
+                        .kind(kind)
+                        .build())
+                .addEstimateItem(ImmutableEstimateItem.builder()
+                        .quantity(quantity)
+                        .unitPrice(unitPrice)
+                        .kind(kind)
+                        .build())
+                .subject("test subject")
+                .build();
+        estimate = estimatesApi.create(creationInfo);
+
+        assertThat(estimate.getClient().getId()).isEqualTo(client.getId());
+        List<EstimateItem> items = estimate.getEstimateItems();
+        assertThat(items).isNotEmpty();
+        assertThat(items.get(0).getKind()).isEqualTo(kind);
+        assertThat(items.get(1).getQuantity()).isEqualTo(quantity);
+        assertThat(items.get(1).getAmount()).isEqualTo(quantity * unitPrice);
+
     }
 
 }
