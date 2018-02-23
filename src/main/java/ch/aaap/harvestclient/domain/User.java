@@ -1,5 +1,6 @@
 package ch.aaap.harvestclient.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -63,7 +64,10 @@ public abstract class User implements BaseObject<User> {
     public abstract Double getCostRate();
 
     @Nullable
-    public abstract List<String> getRoles();
+    @Value.Default
+    public List<String> getRoles() {
+        return new ArrayList<>();
+    }
 
     @Nullable
     public abstract String getAvatarUrl();

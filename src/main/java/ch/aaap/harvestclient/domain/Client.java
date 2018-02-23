@@ -11,6 +11,7 @@ import com.google.gson.annotations.SerializedName;
 @Value.Immutable
 public interface Client extends BaseObject<Client> {
 
+    @Value.Parameter
     String getName();
 
     @SerializedName("is_active")
