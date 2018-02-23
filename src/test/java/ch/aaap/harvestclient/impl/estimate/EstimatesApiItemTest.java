@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -96,14 +99,11 @@ public class EstimatesApiItemTest {
             item = estimate.getEstimateItems().get(0);
         }
 
-        @Disabled("Harvest bug of 21.2")
         @Test
         void updateKind() {
 
             EstimateItemUpdateInfo updateInfo = ImmutableEstimateItemUpdateInfo.builder()
                     .kind(anotherKind)
-                    // this test only works if unitPrice is set
-                    // .unitPrice(2.)
                     .build();
             estimate = api.updateLineItem(estimate, item, updateInfo);
 
