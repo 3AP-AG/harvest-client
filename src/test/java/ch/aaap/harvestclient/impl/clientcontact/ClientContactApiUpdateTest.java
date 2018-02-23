@@ -14,6 +14,7 @@ import ch.aaap.harvestclient.domain.ClientContact;
 import ch.aaap.harvestclient.domain.ImmutableClientContact;
 import ch.aaap.harvestclient.domain.param.ClientContactUpdateInfo;
 import ch.aaap.harvestclient.domain.param.ImmutableClientContactUpdateInfo;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import util.ExistingData;
 import util.TestSetupUtil;
 
@@ -22,12 +23,12 @@ class ClientContactContactApiUpdateTest {
 
     private static final ClientContactsApi clientContactsApi = TestSetupUtil.getAdminAccess().clientContacts();
     private ClientContact clientContact;
-    private Client client = ExistingData.getInstance().getClient();
+    private Reference<Client> clientReference = ExistingData.getInstance().getClientReference();
 
     @BeforeEach
     void beforeEach(TestInfo testInfo) {
         clientContact = clientContactsApi.create(ImmutableClientContact.builder()
-                .client(client)
+                .client(clientReference)
                 .firstName("test ClientContact for " + testInfo.getDisplayName())
                 .build());
     }

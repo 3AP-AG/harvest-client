@@ -20,7 +20,7 @@ class EstimatesApiCreateTest {
 
     private static final EstimatesApi estimatesApi = TestSetupUtil.getAdminAccess().estimates();
     private Estimate estimate;
-    private Client client = ExistingData.getInstance().getClient();
+    private Reference<Client> clientReference = ExistingData.getInstance().getClientReference();
     private EstimateItem.Category category = ExistingData.getInstance().getEstimateItemCategory();
     private String kind = category.getName();
 
@@ -37,11 +37,11 @@ class EstimatesApiCreateTest {
 
         String firstName = "test First";
         Estimate creationInfo = ImmutableEstimate.builder()
-                .client(client)
+                .client(clientReference)
                 .build();
         estimate = estimatesApi.create(creationInfo);
 
-        assertThat(estimate.getClient().getId()).isEqualTo(client.getId());
+        assertThat(estimate.getClient().getId()).isEqualTo(clientReference.getId());
 
     }
 
@@ -50,7 +50,7 @@ class EstimatesApiCreateTest {
 
         // amounts are computed automatically from lineItems
         Estimate creationInfo = ImmutableEstimate.builder()
-                .client(client)
+                .client(clientReference)
                 .number("999")
                 .purchaseOrder("12332")
                 .tax(11.)
@@ -78,7 +78,7 @@ class EstimatesApiCreateTest {
         double unitPrice = 30;
         String firstName = "test First";
         Estimate creationInfo = ImmutableEstimate.builder()
-                .client(client)
+                .client(clientReference)
                 .addEstimateItem(ImmutableEstimateItem.builder()
                         .quantity(10L)
                         .unitPrice(1.)
@@ -93,7 +93,7 @@ class EstimatesApiCreateTest {
                 .build();
         estimate = estimatesApi.create(creationInfo);
 
-        assertThat(estimate.getClient().getId()).isEqualTo(client.getId());
+        assertThat(estimate.getClient().getId()).isEqualTo(clientReference.getId());
         List<EstimateItem> items = estimate.getEstimateItems();
         assertThat(items).isNotEmpty();
         assertThat(items.get(0).getKind()).isEqualTo(kind);

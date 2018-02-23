@@ -14,6 +14,7 @@ import ch.aaap.harvestclient.api.EstimatesApi;
 import ch.aaap.harvestclient.domain.*;
 import ch.aaap.harvestclient.domain.param.EstimateItemUpdateInfo;
 import ch.aaap.harvestclient.domain.param.ImmutableEstimateItemUpdateInfo;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import util.ExistingData;
 import util.TestSetupUtil;
 
@@ -27,14 +28,14 @@ public class EstimatesApiItemTest {
 
     private static final String anotherKind = ExistingData.getInstance().getAnotherEstimateItemCategory().getName();
 
-    private final Client client = ExistingData.getInstance().getClient();
+    private final Reference<Client> clientReference = ExistingData.getInstance().getClientReference();
 
     private Estimate estimate;
 
     @BeforeEach
     void beforeEach() {
         estimate = api.create(ImmutableEstimate.builder()
-                .client(client)
+                .client(clientReference)
                 .build());
     }
 

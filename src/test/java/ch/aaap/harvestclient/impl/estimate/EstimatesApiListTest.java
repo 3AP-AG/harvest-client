@@ -15,6 +15,7 @@ import ch.aaap.harvestclient.domain.Client;
 import ch.aaap.harvestclient.domain.Estimate;
 import ch.aaap.harvestclient.domain.ImmutableEstimate;
 import ch.aaap.harvestclient.domain.pagination.Pagination;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import util.ExistingData;
 import util.TestSetupUtil;
 
@@ -24,7 +25,7 @@ class EstimatesApiListTest {
     private static final EstimatesApi estimatesApi = TestSetupUtil.getAdminAccess().estimates();
     private Estimate anotherEstimate;
     private Estimate estimate;
-    private Client client = ExistingData.getInstance().getClient();
+    private Reference<Client> clientReference = ExistingData.getInstance().getClientReference();
 
     @AfterEach
     void afterEach() {
@@ -42,7 +43,7 @@ class EstimatesApiListTest {
     void list() {
 
         Estimate creationInfo = ImmutableEstimate.builder()
-                .client(client)
+                .client(clientReference)
                 .build();
         estimate = estimatesApi.create(creationInfo);
 
@@ -56,7 +57,7 @@ class EstimatesApiListTest {
     void listPaginated() {
 
         Estimate creationInfo = ImmutableEstimate.builder()
-                .client(client)
+                .client(clientReference)
                 .build();
         anotherEstimate = estimatesApi.create(creationInfo);
         estimate = estimatesApi.create(creationInfo);
@@ -76,15 +77,15 @@ class EstimatesApiListTest {
     @Test
     void listByClient() {
 
-        Client anotherClient = ExistingData.getInstance().getAnotherClient();
+        Reference<Client> anotherClientReference = ExistingData.getInstance().getAnotherClientReference();
 
         Estimate creationInfo = ImmutableEstimate.builder()
-                .client(anotherClient)
+                .client(anotherClientReference)
                 .build();
         estimate = estimatesApi.create(creationInfo);
 
         EstimateFilter filter = new EstimateFilter();
-        filter.setClientReference(anotherClient);
+        filter.setClientReference(anotherClientReference);
 
         List<Estimate> estimates = estimatesApi.list(filter);
 
@@ -97,7 +98,7 @@ class EstimatesApiListTest {
 
         Instant creationTime = Instant.now().minusSeconds(1);
         Estimate creationInfo = ImmutableEstimate.builder()
-                .client(client)
+                .client(clientReference)
                 .build();
         estimate = estimatesApi.create(creationInfo);
 

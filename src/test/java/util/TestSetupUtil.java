@@ -21,7 +21,6 @@ public class TestSetupUtil {
     private static final Random random = new Random();
 
     public static Harvest getAdminAccess() {
-
         return new Harvest(ConfigFactory.load("admin"));
     }
 

@@ -15,6 +15,7 @@ import ch.aaap.harvestclient.api.EstimatesApi;
 import ch.aaap.harvestclient.domain.*;
 import ch.aaap.harvestclient.domain.param.EstimateUpdateInfo;
 import ch.aaap.harvestclient.domain.param.ImmutableEstimateUpdateInfo;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import util.ExistingData;
 import util.TestSetupUtil;
 
@@ -23,13 +24,13 @@ class EstimatesApiUpdateTest {
 
     private static final EstimatesApi estimatesApi = TestSetupUtil.getAdminAccess().estimates();
     private Estimate estimate;
-    private Client client = ExistingData.getInstance().getClient();
+    private Reference<Client> clientReference = ExistingData.getInstance().getClientReference();
     private String kind = ExistingData.getInstance().getEstimateItemCategory().getName();
 
     @BeforeEach
     void beforeEach(TestInfo testInfo) {
         estimate = estimatesApi.create(ImmutableEstimate.builder()
-                .client(client)
+                .client(clientReference)
                 .notes("test Estimate for " + testInfo.getDisplayName())
                 .build());
     }
@@ -45,14 +46,14 @@ class EstimatesApiUpdateTest {
     @Test
     void changeClient() {
 
-        Client anotherClient = ExistingData.getInstance().getAnotherClient();
+        Reference<Client> anotherClientReference = ExistingData.getInstance().getAnotherClientReference();
 
         EstimateUpdateInfo changes = ImmutableEstimateUpdateInfo.builder()
-                .client(anotherClient)
+                .client(anotherClientReference)
                 .build();
         Estimate updatedEstimate = estimatesApi.update(estimate, changes);
 
-        assertThat(updatedEstimate.getClient().getId()).isEqualTo(anotherClient.getId());
+        assertThat(updatedEstimate.getClient().getId()).isEqualTo(anotherClientReference.getId());
 
     }
 
@@ -86,7 +87,7 @@ class EstimatesApiUpdateTest {
         double unitPrice = 30;
         String firstName = "test First";
         Estimate creationInfo = ImmutableEstimate.builder()
-                .client(client)
+                .client(clientReference)
                 .addEstimateItem(ImmutableEstimateItem.builder()
                         .quantity(10L)
                         .unitPrice(1.)

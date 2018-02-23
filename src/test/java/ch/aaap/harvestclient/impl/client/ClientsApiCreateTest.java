@@ -70,9 +70,10 @@ class ClientsApiCreateTest {
 
         client = clientsApi.create(creationInfo);
 
-        // Company object does not expose currency
+        // Company object does not expose currency, this needs to be set to the test
+        // account default currency
         // setting an invalid one will set it to the company default
-        assertThat(client.getCurrency()).isEqualTo("CHF");
+        assertThat(client.getCurrency()).isEqualTo("USD");
     }
 
 }

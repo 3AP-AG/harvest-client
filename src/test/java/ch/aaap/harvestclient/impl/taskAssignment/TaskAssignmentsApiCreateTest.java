@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.TaskAssignmentsApi;
+import ch.aaap.harvestclient.core.Harvest;
 import ch.aaap.harvestclient.domain.ImmutableTaskAssignment;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.Task;
@@ -18,28 +19,30 @@ import util.TestSetupUtil;
 @HarvestTest
 class TaskAssignmentsApiCreateTest {
 
-    private static final TaskAssignmentsApi taskAssignmentApi = TestSetupUtil.getAdminAccess().taskAssignments();
+    private static final Harvest harvest = TestSetupUtil.getAdminAccess();
 
-    private static final Project project = ExistingData.getInstance().getProject();
-    private static final Task task = ExistingData.getInstance().getTask();
+    private static final TaskAssignmentsApi taskAssignmentApi = harvest.taskAssignments();
+
+    private static final Reference<Project> projectReference = ExistingData.getInstance().getProjectReference();
+    private static final Reference<Task> taskReference = ExistingData.getInstance().getUnassignedTask();
 
     private TaskAssignment taskAssignment;
 
     @AfterEach
     void afterEach() {
         if (taskAssignment != null) {
-            taskAssignmentApi.delete(project, taskAssignment);
+            taskAssignmentApi.delete(projectReference, taskAssignment);
         }
     }
 
     @Test
     void createDefault() {
 
-        TaskAssignment creationInfo = ImmutableTaskAssignment.builder().taskReference(task).build();
-        taskAssignment = taskAssignmentApi.create(project, creationInfo);
+        TaskAssignment creationInfo = ImmutableTaskAssignment.builder().taskReference(taskReference).build();
+        taskAssignment = taskAssignmentApi.create(projectReference, creationInfo);
 
         assertThat(taskAssignment).isNotNull();
-        assertThat(taskAssignment.getTaskReference()).isEqualToComparingOnlyGivenFields(task, "id", "name");
+        assertThat(taskAssignment.getTaskReference().getId()).isEqualTo(taskReference.getId());
 
     }
 
@@ -47,7 +50,7 @@ class TaskAssignmentsApiCreateTest {
     void createAllOptions() {
 
         TaskAssignment creationInfo = ImmutableTaskAssignment.builder()
-                .taskReference(task)
+                .taskReference(taskReference)
                 // cannot create an archived task directly, it needs to have time tracked
                 // against it, see
                 // https://help.getharvest.com/harvest/manage/more-on-manage/managing-tasks/#archiving
@@ -57,10 +60,9 @@ class TaskAssignmentsApiCreateTest {
                 .hourlyRate(220.)
                 .build();
 
-        taskAssignment = taskAssignmentApi.create(project, creationInfo);
+        taskAssignment = taskAssignmentApi.create(projectReference, creationInfo);
 
         assertThat(taskAssignment).isNotNull();
-        assertThat(taskAssignment.getTaskReference()).isEqualToComparingOnlyGivenFields(task, "id", "name");
         assertThat(taskAssignment).usingComparatorForType((x, y) -> (int) (y.getId() - x.getId()), Reference.class)
                 .isEqualToIgnoringNullFields(creationInfo);
     }
