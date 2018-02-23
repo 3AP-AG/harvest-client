@@ -8,7 +8,7 @@ import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.ProjectUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
-public interface ProjectsApi {
+public interface ProjectsApi extends Api.Simple<Project> {
 
     /**
      * Return a list of projects, sorted by creation date, newest first. Use the
@@ -40,15 +40,28 @@ public interface ProjectsApi {
      *            a reference to an existing Project
      * @return Return a full Project object
      */
+    @Override
     Project get(Reference<Project> projectReference);
 
     /**
-     * Create a new Project according to given creation information.
+     * Create a new Project according to given creation information. Example:
+     *
+     * <pre>
+     * Project creationInfo = ImmutableProject.builder()
+     *         .client(clientReference)
+     *         .name(name)
+     *         .billable(billable)
+     *         .billBy(billingMethod)
+     *         .budgetBy(budgetBy)
+     *         .build();
+     * project = projectsApi.create(creationInfo);
+     * </pre>
      * 
      * @param projectCreationInfo
      *            the creation options
      * @return the newly created Project
      */
+    @Override
     Project create(Project projectCreationInfo);
 
     /**
@@ -71,6 +84,7 @@ public interface ProjectsApi {
      * @param projectReference
      *            a reference to an existing Project to be deleted
      */
+    @Override
     void delete(Reference<Project> projectReference);
 
 }

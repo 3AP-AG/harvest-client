@@ -8,12 +8,12 @@ import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.ClientContactUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
-public interface ClientContactsApi {
+public interface ClientContactsApi extends Api.Simple<ClientContact> {
 
     /**
      * Return a list of clientContacts, sorted by creation date, newest first. Use
      * the filter object to filter the list.
-     *
+     * 
      * @param filter
      *            filtering options
      * @return a (filtered) list of ClientContacts
@@ -40,6 +40,7 @@ public interface ClientContactsApi {
      *            a reference to an existing ClientContact
      * @return Return a full ClientContact object
      */
+    @Override
     ClientContact get(Reference<ClientContact> clientContactReference);
 
     /**
@@ -49,6 +50,7 @@ public interface ClientContactsApi {
      *            the creation options
      * @return the newly created ClientContact
      */
+    @Override
     ClientContact create(ClientContact clientContactCreationInfo);
 
     /**
@@ -69,5 +71,6 @@ public interface ClientContactsApi {
      * @param clientContactReference
      *            a reference to an existing ClientContact to be deleted
      */
+    @Override
     void delete(Reference<ClientContact> clientContactReference);
 }

@@ -12,7 +12,7 @@ import ch.aaap.harvestclient.domain.reference.Reference;
 /**
  * API for TaskAssignments. All methods are specific to a given project
  */
-public interface TaskAssignmentsApi {
+public interface TaskAssignmentsApi extends Api.GetNested<Project, TaskAssignment> {
 
     /**
      *
@@ -50,6 +50,7 @@ public interface TaskAssignmentsApi {
      *            a reference to an existing TaskAssignment
      * @return the full TaskAssignment object
      */
+    @Override
     TaskAssignment get(Reference<Project> projectReference, Reference<TaskAssignment> taskAssignmentReference);
 
     /**

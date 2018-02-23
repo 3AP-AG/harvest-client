@@ -10,7 +10,7 @@ import ch.aaap.harvestclient.domain.param.EstimateItemUpdateInfo;
 import ch.aaap.harvestclient.domain.param.EstimateUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
-public interface EstimatesApi {
+public interface EstimatesApi extends Api.Simple<Estimate> {
 
     /**
      * Return a list of estimates, sorted by issue date, newest first. Use the
@@ -26,7 +26,7 @@ public interface EstimatesApi {
      * Return a list of estimates, sorted by issue date, newest first. Use the
      * filter object to filter the list. Page and perPage allow controlling how many
      * results to return.
-     *
+     * 
      * @param filter
      *            filtering options
      * @param page
@@ -42,6 +42,7 @@ public interface EstimatesApi {
      *            a reference to an existing Estimate
      * @return Return a full Estimate object
      */
+    @Override
     Estimate get(Reference<Estimate> estimateReference);
 
     /**
@@ -51,6 +52,7 @@ public interface EstimatesApi {
      *            the creation options
      * @return the newly created Estimate
      */
+    @Override
     Estimate create(Estimate estimateCreationInfo);
 
     /**
@@ -146,5 +148,6 @@ public interface EstimatesApi {
      * @param estimateReference
      *            a reference to an existing Estimate to be deleted
      */
+    @Override
     void delete(Reference<Estimate> estimateReference);
 }

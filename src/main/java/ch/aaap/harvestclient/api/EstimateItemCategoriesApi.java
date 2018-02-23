@@ -9,7 +9,7 @@ import ch.aaap.harvestclient.domain.EstimateItem;
 import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
-public interface EstimateItemCategoriesApi {
+public interface EstimateItemCategoriesApi extends Api.Simple<EstimateItem.Category> {
 
     /**
      *
@@ -42,6 +42,7 @@ public interface EstimateItemCategoriesApi {
      *            a reference to an existing EstimateItemCategory
      * @return the full EstimateItemCategory object
      */
+    @Override
     EstimateItem.Category get(Reference<EstimateItem.Category> estimateItemCategoryReference);
 
     /**
@@ -51,6 +52,7 @@ public interface EstimateItemCategoriesApi {
      *            creation information
      * @return the created EstimateItemCategory
      */
+    @Override
     EstimateItem.Category create(EstimateItem.Category creationInfo);
 
     /**
@@ -72,5 +74,6 @@ public interface EstimateItemCategoriesApi {
      * @param estimateItemCategoryReference
      *            a reference to the EstimateItemCategory to be deleted
      */
+    @Override
     void delete(Reference<EstimateItem.Category> estimateItemCategoryReference);
 }

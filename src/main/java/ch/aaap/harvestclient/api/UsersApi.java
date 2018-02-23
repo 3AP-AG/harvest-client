@@ -8,7 +8,7 @@ import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.UserUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
-public interface UsersApi {
+public interface UsersApi extends Api.Simple<User> {
 
     /**
      * Returns a list of your users. The users are returned sorted by creation date,
@@ -61,6 +61,7 @@ public interface UsersApi {
      *            will get a default value according to the Harvest docs
      * @return the User that was just created
      */
+    @Override
     User create(User userCreationInfo);
 
     /**
@@ -77,6 +78,7 @@ public interface UsersApi {
      *            a reference to an existing User
      * @return the full User object
      */
+    @Override
     User get(Reference<User> userReference);
 
     /**
@@ -97,5 +99,6 @@ public interface UsersApi {
      * @param userReference
      *            a reference to an existing User to be deleted
      */
+    @Override
     void delete(Reference<User> userReference);
 }
