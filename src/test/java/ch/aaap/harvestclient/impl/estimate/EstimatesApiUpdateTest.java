@@ -25,6 +25,7 @@ class EstimatesApiUpdateTest {
     private static final EstimatesApi estimatesApi = TestSetupUtil.getAdminAccess().estimates();
     private Estimate estimate;
     private Reference<Client> clientReference = ExistingData.getInstance().getClientReference();
+    private Estimate anotherEstimate;
     private String kind = ExistingData.getInstance().getEstimateItemCategory().getName();
 
     @BeforeEach
@@ -40,6 +41,10 @@ class EstimatesApiUpdateTest {
         if (estimate != null) {
             estimatesApi.delete(estimate);
             estimate = null;
+        }
+        if (anotherEstimate != null) {
+            estimatesApi.delete(anotherEstimate);
+            anotherEstimate = null;
         }
     }
 
@@ -100,7 +105,7 @@ class EstimatesApiUpdateTest {
                         .build())
                 .subject("test subject")
                 .build();
-        estimate = estimatesApi.create(creationInfo);
+        anotherEstimate = estimatesApi.create(creationInfo);
 
         EstimateUpdateInfo changes = ImmutableEstimateUpdateInfo.builder()
                 .addEstimateItem(ImmutableEstimateItem.builder()
@@ -110,7 +115,7 @@ class EstimatesApiUpdateTest {
                         .build())
                 .build();
 
-        Estimate updatedEstimate = estimatesApi.update(estimate, changes);
+        Estimate updatedEstimate = estimatesApi.update(anotherEstimate, changes);
 
         List<EstimateItem> items = updatedEstimate.getEstimateItems();
 

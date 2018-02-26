@@ -80,9 +80,8 @@ public interface TaskAssignmentsApi extends Api.GetNested<Project, TaskAssignmen
             TaskAssignmentUpdateInfo updateInfo);
 
     /**
-     * Delete an existing Task. Only possible if no time entries are associated with
-     * it
-     * 
+     * Delete an existing TaskAssignment.
+     *
      * @param projectReference
      *            the project that contains the assignment
      * @param taskAssignmentReference
