@@ -41,6 +41,8 @@ public interface PaginatedList {
 
     List<EstimateMessage> getEstimateMessages();
 
+    List<InvoiceItem.Category> getInvoiceItemCategories();
+
     @Nullable
     Integer getPerPage();
 

@@ -11,7 +11,31 @@ import ch.aaap.harvestclient.domain.reference.Reference;
 
 @Gson.TypeAdapters(fieldNamingStrategy = true)
 @Value.Immutable
-public interface InvoiceLineItem {
+@Value.Enclosing
+public interface InvoiceItem {
+
+    /**
+     * The category that is stored in getKind() as a String
+     */
+    @Gson.TypeAdapters(fieldNamingStrategy = true)
+    @Value.Immutable
+    interface Category extends BaseObject<Category> {
+
+        // Immutables bug: cannot use @Value.Parameter here, so the javadoc below is not
+        // applicable. See https://github.com/immutables/immutables/issues/754
+        /*
+         * We only provide means to set Name since the booleans cannot be set at all.
+         * Only the Default Item already created by Harvest have them set to true
+         */
+        String getName();
+
+        @Nullable
+        Boolean getUseAsService();
+
+        @Nullable
+        Boolean getUseAsExpense();
+    }
+
     @Nullable
     Long getId();
 
@@ -38,4 +62,5 @@ public interface InvoiceLineItem {
 
     @Nullable
     Boolean getTaxed2();
+
 }

@@ -20,7 +20,7 @@ public interface Invoice extends BaseObject<Invoice> {
     Reference<Client> getClient();
 
     @Nullable
-    List<InvoiceLineItem> getInvoiceLineItemList();
+    List<InvoiceItem> getInvoiceItemList();
 
     @Nullable
     Estimate getEstimate();
