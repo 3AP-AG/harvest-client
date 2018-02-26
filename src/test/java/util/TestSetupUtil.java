@@ -48,4 +48,12 @@ public class TestSetupUtil {
         }
 
     }
+
+    /**
+     * Return an email address where received emails are immediately deleted -> can
+     * be used as email for harvest notifications generated from tests
+     */
+    public static String getDevNullEmail() {
+        return "marco.nembrini.co+devnull@gmail.com";
+    }
 }

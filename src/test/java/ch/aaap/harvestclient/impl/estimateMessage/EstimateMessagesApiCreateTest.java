@@ -19,7 +19,7 @@ import util.TestSetupUtil;
 public class EstimateMessagesApiCreateTest {
 
     private static final EstimateMessageRecipient testRecipient = ImmutableEstimateMessageRecipient.of("Marco",
-            "marco.nembrini.co@gmail.com");
+            TestSetupUtil.getDevNullEmail());
 
     private static final Harvest harvest = TestSetupUtil.getAdminAccess();
 
