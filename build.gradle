@@ -18,6 +18,8 @@ plugins {
     id 'maven-publish'
     // can be run to check for new versions of dependencies
     id 'com.github.ben-manes.versions' version '0.17.0'
+    // test coverage
+    id 'jacoco'
 
     // for annotation processing
     id "net.ltgt.apt" version "0.14"
@@ -48,7 +50,26 @@ afterEvaluate {
     if (System.getenv("HARVEST_ACCOUNT_ID")) {
         junitPlatformTestTask.systemProperty "harvest.auth.accountId", System.getenv("HARVEST_ACCOUNT_ID")
     }
+    // configure jacoco to analyze the junitPlatformTest task
+    jacoco {
+        // this tool version is compatible with
+        toolVersion = "0.8.0"
+        applyTo junitPlatformTestTask
+    }
+
+    // create junit platform jacoco task
+    project.task(type: JacocoReport, "junitPlatformJacocoReport",
+            {
+                sourceDirectories = files("./src/main")
+                classDirectories = files("$buildDir/classes/main")
+                executionData junitPlatformTestTask
+                reports {
+                    xml.enabled true
+                    html.enabled true
+                }
+            })
 }
+
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.5'
@@ -130,6 +151,7 @@ ext {
 }
 
 dependencies {
+
     compile "com.squareup.retrofit2:retrofit:$ver.retrofit"
     compile "com.squareup.retrofit2:converter-gson:$ver.retrofit"
     compile "com.squareup.okhttp3:logging-interceptor:3.10.0"
