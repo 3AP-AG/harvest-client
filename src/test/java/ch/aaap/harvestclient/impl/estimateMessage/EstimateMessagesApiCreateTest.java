@@ -148,9 +148,19 @@ public class EstimateMessagesApiCreateTest {
         refreshEstimate();
         assertThat(estimate.getAcceptedAt()).isNotNull();
 
-        // sending will reset the accept status on the website
-        // from the API it does not work
+        // sending directly will not work, we need to reopen the estimate
         assertThrows(RequestProcessingException.class, () -> api.markAs(estimate, EstimateMessage.EventType.SEND));
+
+        api.markAs(estimate, EstimateMessage.EventType.RE_OPEN);
+        api.markAs(estimate, EstimateMessage.EventType.SEND);
+        refreshEstimate();
+        assertThat(estimate.getSentAt()).isNotNull();
+        assertThat(estimate.getAcceptedAt()).isNull();
+
+        api.markAs(estimate, EstimateMessage.EventType.ACCEPT);
+
+        refreshEstimate();
+        assertThat(estimate.getAcceptedAt()).isNotNull();
 
     }
 

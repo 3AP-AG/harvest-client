@@ -82,7 +82,7 @@ public class ReferenceDtoAdapter implements TypeAdapterFactory {
     private <T> Class<?> parseReferenceType(TypeToken<T> type) throws ClassNotFoundException {
         // TODO ugly hack
         Pattern pattern = Pattern.compile("([^<>]+)<([^<>]+)>");
-        log.debug("Matching on {}", type.toString());
+        log.trace("Matching on {}", type.toString());
         Matcher matcher = pattern.matcher(type.toString());
         if (!matcher.matches()) {
             throw new HarvestRuntimeException("Something wrong here");
