@@ -12,7 +12,7 @@ import org.immutables.value.Value;
 @Gson.TypeAdapters(fieldNamingStrategy = true)
 @Value.Immutable
 @Value.Style.Depluralize
-public interface EstimateItemInfoContainer {
+public interface LineItemContainer {
 
     List<Object> getLineItems();
 

@@ -38,6 +38,10 @@ public class ExistingData {
     private final Reference<TimeEntry> timeEntryReference;
     private final EstimateItem.Category estimateItemCategory;
     private final EstimateItem.Category anotherEstimateItemCategory;
+
+    private final InvoiceItem.Category invoiceItemCategory;
+    private final InvoiceItem.Category anotherInvoiceItemCategory;
+
     private final ProjectAssignment projectAssignment;
 
     private ExistingData(Harvest harvest) {
@@ -64,6 +68,10 @@ public class ExistingData {
             // default categories
             estimateItemCategory = ImmutableEstimateItem.Category.builder().name("Product").build();
             anotherEstimateItemCategory = ImmutableEstimateItem.Category.builder().name("Service").build();
+
+            // default categories
+            invoiceItemCategory = ImmutableInvoiceItem.Category.builder().name("Product").build();
+            anotherInvoiceItemCategory = ImmutableInvoiceItem.Category.builder().name("Service").build();
 
             // TODO this is manual, need UserProjectAssignmentsapi
             projectAssignment = harvest.projectAssignments().list(userReference).get(0);
@@ -137,4 +145,11 @@ public class ExistingData {
         return projectAssignment;
     }
 
+    public InvoiceItem.Category getInvoiceItemCategory() {
+        return invoiceItemCategory;
+    }
+
+    public InvoiceItem.Category getAnotherInvoiceItemCategory() {
+        return anotherInvoiceItemCategory;
+    }
 }

@@ -12,7 +12,7 @@ import ch.aaap.harvestclient.domain.reference.Reference;
 @Gson.TypeAdapters(fieldNamingStrategy = true)
 @Value.Immutable
 @Value.Enclosing
-public interface InvoiceItem {
+public interface InvoiceItem extends Reference<InvoiceItem> {
 
     /**
      * The category that is stored in getKind() as a String
@@ -36,6 +36,7 @@ public interface InvoiceItem {
         Boolean getUseAsExpense();
     }
 
+    @Override
     @Nullable
     Long getId();
 

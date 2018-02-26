@@ -43,6 +43,8 @@ public interface PaginatedList {
 
     List<InvoiceItem.Category> getInvoiceItemCategories();
 
+    List<Invoice> getInvoices();
+
     @Nullable
     Integer getPerPage();
 
