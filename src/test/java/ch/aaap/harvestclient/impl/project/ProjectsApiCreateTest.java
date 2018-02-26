@@ -107,6 +107,69 @@ class ProjectsApiCreateTest {
         double overBudgetNotificationPercentage = 90.;
         boolean showBudgetToAll = true;
         double costBudget = 2000;
+        double fee = 5000;
+        String notes = "test notes";
+        LocalDate start = LocalDate.now();
+        LocalDate end = start.plusMonths(3).plusDays(2);
+
+        Project creationInfo = ImmutableProject.builder().client(clientReference)
+                .name(name)
+                .billable(billable)
+                .billBy(billBy)
+                .budgetBy(budgetBy)
+                .code(code)
+                .active(active)
+                .fixedFee(fixedFee)
+                .hourlyRate(hourlyRate)
+                .budget(budget)
+                .notifyWhenOverBudget(notifyWhenOverBudget)
+                .overBudgetNotificationPercentage(overBudgetNotificationPercentage)
+                .showBudgetToAll(showBudgetToAll)
+                .costBudget(costBudget)
+                // setting to true will not work
+                .costBudgetIncludeExpenses(false)
+                .fee(fee)
+                .notes(notes)
+                .startsOn(start)
+                .endsOn(end)
+                .build();
+
+        project = projectsApi.create(creationInfo);
+
+        assertThat(project).isEqualToIgnoringGivenFields(creationInfo, "clientId", "id", "createdAt", "updatedAt",
+                "client", "fee");
+        // fee can only be set by having fixed_fee = true
+        assertThat(project.getFee()).isNull();
+        assertThat(project.getClient().getId()).isEqualTo(clientReference.getId());
+        assertThat(project.getCreatedAt()).isCloseTo(Instant.now(), within(1, ChronoUnit.MINUTES));
+        assertThat(project.getUpdatedAt()).isCloseTo(Instant.now(), within(1, ChronoUnit.MINUTES));
+
+        // get test
+        Project gottenProject = projectsApi.get(project);
+
+        assertThat(gottenProject).isEqualToComparingFieldByField(project);
+
+    }
+
+    @Test
+    void createTotalProjectFees(TestInfo testInfo) {
+
+        Reference<Client> clientReference = ExistingData.getInstance().getClientReference();
+        String name = "Project for test " + testInfo.getDisplayName();
+        boolean billable = true;
+        Project.BillingMethod billBy = Project.BillingMethod.PROJECT;
+        Project.BudgetMethod budgetBy = Project.BudgetMethod.TOTAL_PROJECT_FEES;
+
+        String code = "testCode";
+        boolean active = false;
+        // see other test for fixedFee = true
+        boolean fixedFee = false;
+        double hourlyRate = 240;
+        double budget = 120;
+        boolean notifyWhenOverBudget = true;
+        double overBudgetNotificationPercentage = 90.;
+        boolean showBudgetToAll = true;
+        double costBudget = 2000;
         boolean costBudgetIncludeExpenses = true;
         double fee = 5000;
         String notes = "test notes";
@@ -158,7 +221,7 @@ class ProjectsApiCreateTest {
         String name = "Project for test " + testInfo.getDisplayName();
         boolean billable = true;
         Project.BillingMethod billBy = Project.BillingMethod.TASKS;
-        Project.BudgetMethod budgetBy = Project.BudgetMethod.HOURS_PER_PROJECT;
+        Project.BudgetMethod budgetBy = Project.BudgetMethod.TOTAL_PROJECT_FEES;
 
         String code = "testCode";
         boolean active = false;
@@ -199,10 +262,11 @@ class ProjectsApiCreateTest {
         project = projectsApi.create(creationInfo);
 
         assertThat(project).isEqualToIgnoringGivenFields(creationInfo, "clientId", "client", "id", "createdAt",
-                "updatedAt", "billBy");
+                "updatedAt", "costBudget");
 
-        // setting fixed_fee to true changes the billing method to None
-        assertThat(project.getBillBy()).isEqualTo(Project.BillingMethod.NONE);
+        // setting cost budget is ignored, fee takes its place
+        assertThat(project.getCostBudget()).isEqualTo(fee);
+
         assertThat(project.getClient().getId()).isEqualTo(clientReference.getId());
     }
 }
