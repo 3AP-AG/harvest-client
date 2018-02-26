@@ -10,7 +10,7 @@ import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoTimestamp;
 import ch.aaap.harvestclient.domain.param.TimeEntryUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
-public interface TimesheetsApi {
+public interface TimesheetsApi extends Api.Get<TimeEntry> {
 
     /**
      * Return a list of all TimeEntries, filtered by the TimeEntryFilter, sorted by
@@ -44,6 +44,7 @@ public interface TimesheetsApi {
      *            a reference to an the timeentry to retrieve
      * @return a Full TimeEntry object
      */
+    @Override
     TimeEntry get(Reference<TimeEntry> timeEntryReference);
 
     /**

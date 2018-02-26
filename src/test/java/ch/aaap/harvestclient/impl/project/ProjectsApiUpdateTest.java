@@ -34,7 +34,7 @@ class ProjectsApiUpdateTest {
     @BeforeEach
     void beforeEach(TestInfo testInfo) {
 
-        Reference<Client> clientReference = ExistingData.getInstance().getClient();
+        Reference<Client> clientReference = ExistingData.getInstance().getClientReference();
         String name = "Project for test " + testInfo.getDisplayName();
         boolean billable = true;
         Project.BillingMethod billBy = Project.BillingMethod.PROJECT;
@@ -108,7 +108,7 @@ class ProjectsApiUpdateTest {
     @Test
     void changeAllSmallDetails() {
 
-        Reference<Client> clientReference = ExistingData.getInstance().getAnotherClient();
+        Reference<Client> clientReference = ExistingData.getInstance().getAnotherClientReference();
         LocalDate start = LocalDate.now();
         LocalDate end = start.plusMonths(3).plusDays(2);
 

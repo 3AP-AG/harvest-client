@@ -12,7 +12,7 @@ import ch.aaap.harvestclient.domain.reference.Reference;
 /**
  * API for TaskAssignments. All methods are specific to a given project
  */
-public interface TaskAssignmentsApi {
+public interface TaskAssignmentsApi extends Api.GetNested<Project, TaskAssignment> {
 
     /**
      *
@@ -50,6 +50,7 @@ public interface TaskAssignmentsApi {
      *            a reference to an existing TaskAssignment
      * @return the full TaskAssignment object
      */
+    @Override
     TaskAssignment get(Reference<Project> projectReference, Reference<TaskAssignment> taskAssignmentReference);
 
     /**
@@ -79,9 +80,8 @@ public interface TaskAssignmentsApi {
             TaskAssignmentUpdateInfo updateInfo);
 
     /**
-     * Delete an existing Task. Only possible if no time entries are associated with
-     * it
-     * 
+     * Delete an existing TaskAssignment.
+     *
      * @param projectReference
      *            the project that contains the assignment
      * @param taskAssignmentReference

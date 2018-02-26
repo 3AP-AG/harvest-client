@@ -15,6 +15,7 @@ import ch.aaap.harvestclient.domain.Task;
 import ch.aaap.harvestclient.domain.TaskAssignment;
 import ch.aaap.harvestclient.domain.param.ImmutableTaskAssignmentUpdateInfo;
 import ch.aaap.harvestclient.domain.param.TaskAssignmentUpdateInfo;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import util.ExistingData;
 import util.TestSetupUtil;
 
@@ -24,48 +25,47 @@ class TaskAssignmentsApiUpdateTest {
     private static final Logger log = LoggerFactory.getLogger(TaskAssignmentsApiUpdateTest.class);
 
     private static final TaskAssignmentsApi taskAssignmentApi = TestSetupUtil.getAdminAccess().taskAssignments();
-    private final Project project = ExistingData.getInstance().getProject();
-    private final Task task = ExistingData.getInstance().getTask();
+    private final Reference<Project> projectReference = ExistingData.getInstance().getProjectReference();
+    private final Reference<Task> taskReference = ExistingData.getInstance().getUnassignedTask();
 
     private TaskAssignment taskAssignment;
 
     @AfterEach
     void afterEach() {
         if (taskAssignment != null) {
-            taskAssignmentApi.delete(project, taskAssignment);
+            taskAssignmentApi.delete(projectReference, taskAssignment);
         }
     }
 
     @Test
     void changeTask() {
 
-        Task anotherTask = ExistingData.getInstance().getAnotherTask();
-        taskAssignment = taskAssignmentApi.create(project,
-                ImmutableTaskAssignment.builder().taskReference(task).build());
+        Reference<Task> anotherTaskReference = ExistingData.getInstance().getAnotherTaskReference();
+        taskAssignment = taskAssignmentApi.create(projectReference, ImmutableTaskAssignment.builder()
+                .taskReference(taskReference)
+                .build());
 
         TaskAssignmentUpdateInfo updateInfo = ImmutableTaskAssignmentUpdateInfo.builder()
-                .task(anotherTask)
+                .task(anotherTaskReference)
                 .build();
-        TaskAssignment updatedTaskAssignment = taskAssignmentApi.update(project, taskAssignment, updateInfo);
+        TaskAssignment updatedTaskAssignment = taskAssignmentApi.update(projectReference, taskAssignment, updateInfo);
 
-        assertThat(updatedTaskAssignment.getTaskReference().getId()).isEqualTo(anotherTask.getId());
+        // Changing task id has been disabled by Harvest
+        assertThat(updatedTaskAssignment.getTaskReference().getId()).isEqualTo(taskReference.getId());
     }
 
     @Test
     void changeAll() {
 
-        Task anotherTask = ExistingData.getInstance().getAnotherTask();
-        taskAssignment = taskAssignmentApi.create(project,
-                ImmutableTaskAssignment.builder().taskReference(task).build());
+        taskAssignment = taskAssignmentApi.create(projectReference,
+                ImmutableTaskAssignment.builder().taskReference(taskReference).build());
 
         TaskAssignmentUpdateInfo updateInfo = ImmutableTaskAssignmentUpdateInfo.builder()
-                .task(anotherTask)
                 .hourlyRate(110.)
                 .budget(11111111.)
                 .build();
-        TaskAssignment updatedTaskAssignment = taskAssignmentApi.update(project, taskAssignment, updateInfo);
+        TaskAssignment updatedTaskAssignment = taskAssignmentApi.update(projectReference, taskAssignment, updateInfo);
 
-        assertThat(updatedTaskAssignment.getTaskReference().getId()).isEqualTo(anotherTask.getId());
         assertThat(updatedTaskAssignment).isEqualToComparingOnlyGivenFields(updateInfo, "hourlyRate",
                 "budget");
     }
@@ -73,13 +73,13 @@ class TaskAssignmentsApiUpdateTest {
     @Test
     void changeActive() {
 
-        taskAssignment = taskAssignmentApi.create(project,
-                ImmutableTaskAssignment.builder().taskReference(task).build());
+        taskAssignment = taskAssignmentApi.create(projectReference,
+                ImmutableTaskAssignment.builder().taskReference(taskReference).build());
 
         TaskAssignmentUpdateInfo updateInfo = ImmutableTaskAssignmentUpdateInfo.builder()
                 .active(false)
                 .build();
-        TaskAssignment updatedTaskAssignment = taskAssignmentApi.update(project, taskAssignment, updateInfo);
+        TaskAssignment updatedTaskAssignment = taskAssignmentApi.update(projectReference, taskAssignment, updateInfo);
 
         assertThat(updatedTaskAssignment.getActive()).isEqualTo(updateInfo.getActive());
     }

@@ -13,9 +13,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.TimesheetsApi;
 import ch.aaap.harvestclient.api.filter.TimeEntryFilter;
+import ch.aaap.harvestclient.domain.Project;
+import ch.aaap.harvestclient.domain.Task;
 import ch.aaap.harvestclient.domain.TimeEntry;
+import ch.aaap.harvestclient.domain.User;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoDuration;
 import ch.aaap.harvestclient.domain.param.TimeEntryUpdateInfo;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import util.ExistingData;
 import util.TestSetupUtil;
 
@@ -25,7 +29,9 @@ class TimeSheetsApiUpdateTest {
     private static final Logger log = LoggerFactory.getLogger(TimeSheetsApiUpdateTest.class);
 
     private static final TimesheetsApi api = TestSetupUtil.getAdminAccess().timesheets();
-    private static final TimeEntry fixEntry = ExistingData.getInstance().getTimeEntry();
+    private static final Reference<Project> project = ExistingData.getInstance().getProjectReference();
+    private static final Reference<User> user = ExistingData.getInstance().getUserReference();
+    private static final Reference<Task> task = ExistingData.getInstance().getTaskReference();
 
     private static TimeEntry entry;
 
@@ -37,11 +43,9 @@ class TimeSheetsApiUpdateTest {
         LocalDate date = LocalDate.now();
         String notes = "Timeentry created for " + testInfo.getDisplayName();
 
-        TimeEntryCreationInfoDuration creationInfo = new TimeEntryCreationInfoDuration(fixEntry.getProject(),
-                fixEntry.getTask(),
-                date);
+        TimeEntryCreationInfoDuration creationInfo = new TimeEntryCreationInfoDuration(project, task, date);
         creationInfo.setNotes(notes);
-        creationInfo.setUserReference(fixEntry.getUser());
+        creationInfo.setUserReference(user);
         creationInfo.setHours(1.);
 
         entry = api.create(creationInfo);
@@ -85,11 +89,9 @@ class TimeSheetsApiUpdateTest {
         LocalDate date = LocalDate.now();
         String notes = "Timeentry created for " + testInfo.getDisplayName();
 
-        TimeEntryCreationInfoDuration creationInfo = new TimeEntryCreationInfoDuration(fixEntry.getProject(),
-                fixEntry.getTask(),
-                date);
+        TimeEntryCreationInfoDuration creationInfo = new TimeEntryCreationInfoDuration(project, task, date);
         creationInfo.setNotes(notes);
-        creationInfo.setUserReference(fixEntry.getUser());
+        creationInfo.setUserReference(user);
         creationInfo.setHours(1.);
 
         entry = api.create(creationInfo);

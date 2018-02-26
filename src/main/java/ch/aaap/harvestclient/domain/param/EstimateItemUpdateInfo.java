@@ -1,4 +1,4 @@
-package ch.aaap.harvestclient.domain;
+package ch.aaap.harvestclient.domain.param;
 
 import javax.annotation.Nullable;
 
@@ -7,12 +7,13 @@ import org.immutables.value.Value;
 
 @Gson.TypeAdapters(fieldNamingStrategy = true)
 @Value.Immutable
-public interface EstimateLineItem {
+public interface EstimateItemUpdateInfo {
+
     @Nullable
     Long getId();
 
     /**
-     * @return the estimate Item category
+     * @return the estimate Item category name
      */
     @Nullable
     String getKind();

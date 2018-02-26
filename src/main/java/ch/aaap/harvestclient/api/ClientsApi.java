@@ -8,7 +8,7 @@ import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.ClientUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
-public interface ClientsApi {
+public interface ClientsApi extends Api.Simple<Client> {
 
     /**
      *
@@ -41,6 +41,7 @@ public interface ClientsApi {
      *            a reference to an existing Client
      * @return the full Client object
      */
+    @Override
     Client get(Reference<Client> clientReference);
 
     /**
@@ -50,6 +51,7 @@ public interface ClientsApi {
      *            creation information
      * @return the created Client
      */
+    @Override
     Client create(Client creationInfo);
 
     /**
@@ -70,6 +72,7 @@ public interface ClientsApi {
      * @param clientReference
      *            a reference to the Client to be deleted
      */
+    @Override
     void delete(Reference<Client> clientReference);
 
 }

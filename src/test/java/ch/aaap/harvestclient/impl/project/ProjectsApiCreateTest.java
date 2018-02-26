@@ -44,7 +44,7 @@ class ProjectsApiCreateTest {
     @EnumSource(Project.BillingMethod.class)
     void createDefaultBilling(Project.BillingMethod billingMethod, TestInfo testInfo) {
 
-        Reference<Client> clientReference = ExistingData.getInstance().getClient();
+        Reference<Client> clientReference = ExistingData.getInstance().getClientReference();
         String name = "Project for test " + testInfo.getDisplayName();
         boolean billable = true;
         Project.BudgetMethod budgetBy = Project.BudgetMethod.HOURS_PER_PROJECT;
@@ -68,7 +68,7 @@ class ProjectsApiCreateTest {
     @EnumSource(Project.BudgetMethod.class)
     void createDefaultBudget(Project.BudgetMethod budgetMethod, TestInfo testInfo) {
 
-        Reference<Client> clientReference = ExistingData.getInstance().getClient();
+        Reference<Client> clientReference = ExistingData.getInstance().getClientReference();
         String name = "Project for test " + testInfo.getDisplayName();
         boolean billable = true;
         Project.BillingMethod billBy = Project.BillingMethod.PROJECT;
@@ -91,7 +91,7 @@ class ProjectsApiCreateTest {
     @Test
     void createAllOptions(TestInfo testInfo) {
 
-        Reference<Client> clientReference = ExistingData.getInstance().getClient();
+        Reference<Client> clientReference = ExistingData.getInstance().getClientReference();
         String name = "Project for test " + testInfo.getDisplayName();
         boolean billable = true;
         Project.BillingMethod billBy = Project.BillingMethod.PROJECT;
@@ -154,7 +154,7 @@ class ProjectsApiCreateTest {
     @Test
     void createFixedFee(TestInfo testInfo) {
 
-        Reference<Client> clientReference = ExistingData.getInstance().getClient();
+        Reference<Client> clientReference = ExistingData.getInstance().getClientReference();
         String name = "Project for test " + testInfo.getDisplayName();
         boolean billable = true;
         Project.BillingMethod billBy = Project.BillingMethod.TASKS;

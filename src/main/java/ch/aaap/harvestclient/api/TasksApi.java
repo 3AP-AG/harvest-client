@@ -8,7 +8,7 @@ import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.TaskUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
-public interface TasksApi {
+public interface TasksApi extends Api.Simple<Task> {
     /**
      *
      * @param filter
@@ -37,15 +37,23 @@ public interface TasksApi {
      *            a reference to an existing Task
      * @return the full Task object
      */
+    @Override
     Task get(Reference<Task> taskReference);
 
     /**
-     * Create a new Task
+     * Create a new Task. Example:
+     * 
+     * <pre>
+     * Task task = harvest.tasks().create(ImmutableTask.builder()
+     *         .name("task name")
+     *         .build());
+     * </pre>
      *
      * @param creationInfo
      *            creation information
      * @return the created Task
      */
+    @Override
     Task create(Task creationInfo);
 
     /**
@@ -67,6 +75,7 @@ public interface TasksApi {
      * @param taskReference
      *            a reference to the Task to be deleted
      */
+    @Override
     void delete(Reference<Task> taskReference);
 
 }

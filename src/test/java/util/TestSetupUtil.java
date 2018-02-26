@@ -21,7 +21,6 @@ public class TestSetupUtil {
     private static final Random random = new Random();
 
     public static Harvest getAdminAccess() {
-
         return new Harvest(ConfigFactory.load("admin"));
     }
 
@@ -48,5 +47,13 @@ public class TestSetupUtil {
             log.error("", e);
         }
 
+    }
+
+    /**
+     * Return an email address where received emails are immediately deleted -> can
+     * be used as email for harvest notifications generated from tests
+     */
+    public static String getDevNullEmail() {
+        return "marco.nembrini.co+devnull@gmail.com";
     }
 }

@@ -11,6 +11,9 @@ import com.google.gson.annotations.SerializedName;
 @Value.Immutable
 public interface Task extends BaseObject<Task> {
 
+    /**
+     * Max 255 characters
+     */
     String getName();
 
     @Nullable

@@ -15,6 +15,7 @@ import ch.aaap.harvestclient.domain.Client;
 import ch.aaap.harvestclient.domain.ClientContact;
 import ch.aaap.harvestclient.domain.ImmutableClientContact;
 import ch.aaap.harvestclient.domain.pagination.Pagination;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import util.ExistingData;
 import util.TestSetupUtil;
 
@@ -23,7 +24,7 @@ class ClientContactContactsApiListTest {
 
     private static final ClientContactsApi clientContactsApi = TestSetupUtil.getAdminAccess().clientContacts();
     private ClientContact clientContact;
-    private Client client = ExistingData.getInstance().getClient();
+    private Reference<Client> clientReference = ExistingData.getInstance().getClientReference();
 
     @AfterEach
     void afterEach() {
@@ -60,16 +61,16 @@ class ClientContactContactsApiListTest {
     @Test
     void listByClient() {
 
-        Client anotherClient = ExistingData.getInstance().getAnotherClient();
+        Reference<Client> anotherClientReference = ExistingData.getInstance().getAnotherClientReference();
 
         ClientContact creationInfo = ImmutableClientContact.builder()
-                .client(anotherClient)
+                .client(anotherClientReference)
                 .firstName("inactive test ClientContact")
                 .build();
         clientContact = clientContactsApi.create(creationInfo);
 
         ClientContactFilter filter = new ClientContactFilter();
-        filter.setClientReference(anotherClient);
+        filter.setClientReference(anotherClientReference);
 
         List<ClientContact> clientContacts = clientContactsApi.list(filter);
 
@@ -82,7 +83,7 @@ class ClientContactContactsApiListTest {
 
         Instant creationTime = Instant.now().minusSeconds(1);
         ClientContact creationInfo = ImmutableClientContact.builder()
-                .client(client)
+                .client(clientReference)
                 .firstName("newly created test ClientContact")
                 .build();
         clientContact = clientContactsApi.create(creationInfo);

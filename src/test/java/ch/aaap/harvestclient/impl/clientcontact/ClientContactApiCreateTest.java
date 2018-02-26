@@ -21,7 +21,7 @@ class ClientContactContactApiCreateTest {
 
     private static final ClientContactsApi clientContactsApi = TestSetupUtil.getAdminAccess().clientContacts();
     private ClientContact clientContact;
-    private Client client = ExistingData.getInstance().getClient();
+    private Reference<Client> clientReference = ExistingData.getInstance().getClientReference();
 
     @AfterEach
     void afterEach() {
@@ -36,7 +36,7 @@ class ClientContactContactApiCreateTest {
 
         String firstName = "test First";
         ClientContact creationInfo = ImmutableClientContact.builder()
-                .client(client)
+                .client(clientReference)
                 .firstName(firstName)
                 .build();
         clientContact = clientContactsApi.create(creationInfo);
@@ -57,7 +57,7 @@ class ClientContactContactApiCreateTest {
         String fax = "this is a fax ?";
 
         ClientContact creationInfo = ImmutableClientContact.builder()
-                .client(client)
+                .client(clientReference)
                 .firstName(firstName)
                 .lastName(lastName)
                 .email(email)
@@ -79,7 +79,7 @@ class ClientContactContactApiCreateTest {
         String email = "this is not an email";
 
         ClientContact creationInfo = ImmutableClientContact.builder()
-                .client(client)
+                .client(clientReference)
                 .firstName(firstName)
                 .email(email)
                 .build();

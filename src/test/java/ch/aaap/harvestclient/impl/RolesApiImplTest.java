@@ -79,26 +79,30 @@ class RolesApiImplTest {
 
         // create a random user
         User user = usersApi.create(TestSetupUtil.getRandomUserCreationInfo());
+        try {
 
-        assertThat(user.getRoles()).isEmpty();
-        assertThat(testRole.getUserIds()).doesNotContain(user.getId());
+            assertThat(user.getRoles()).isEmpty();
+            assertThat(testRole.getUserIds()).doesNotContain(user.getId());
 
-        // assign role
-        testRole = rolesApi.addUser(testRole, user);
-        user = usersApi.get(user);
+            // assign role
+            testRole = rolesApi.addUser(testRole, user);
+            user = usersApi.get(user);
 
-        assertThat(testRole.getUserIds()).contains(user.getId());
-        assertThat(user.getRoles()).contains(testRole.getName());
+            assertThat(testRole.getUserIds()).contains(user.getId());
+            assertThat(user.getRoles()).contains(testRole.getName());
 
-        // remove role
-        testRole = rolesApi.removeUser(testRole, user);
-        user = usersApi.get(user);
+            // remove role
+            testRole = rolesApi.removeUser(testRole, user);
+            user = usersApi.get(user);
 
-        assertThat(testRole.getUserIds()).doesNotContain(user.getId());
-        assertThat(user.getRoles()).doesNotContain(testRole.getName());
+            assertThat(testRole.getUserIds()).doesNotContain(user.getId());
+            assertThat(user.getRoles()).doesNotContain(testRole.getName());
+        }
 
-        // cleanup
-        usersApi.delete(user);
+        finally {
+            usersApi.delete(user);
+        }
+
     }
 
     @Test

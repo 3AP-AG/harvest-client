@@ -7,9 +7,32 @@ import javax.annotation.Nullable;
 import org.immutables.gson.Gson;
 import org.immutables.value.Value;
 
+import com.google.gson.annotations.SerializedName;
+
 @Gson.TypeAdapters(fieldNamingStrategy = true)
 @Value.Immutable
+@Value.Style.Depluralize
 public interface EstimateMessage extends BaseObject<EstimateMessage> {
+    enum EventType {
+
+        @SerializedName("send")
+        SEND,
+
+        @SerializedName("accept")
+        ACCEPT,
+
+        @SerializedName("decline")
+        DECLINE,
+
+        @SerializedName("re-open")
+        RE_OPEN,
+
+        @SerializedName("view")
+        VIEW,
+
+        @SerializedName("invoice")
+        INVOICE
+    }
 
     @Nullable
     String getSentBy();
@@ -23,7 +46,8 @@ public interface EstimateMessage extends BaseObject<EstimateMessage> {
     @Nullable
     String getSentFromEmail();
 
-    List<EstimateMessageRecipient> getInvoiceMessageRecipients();
+    @SerializedName("recipients")
+    List<EstimateMessageRecipient> getEstimateMessageRecipients();
 
     @Nullable
     String getSubject();
@@ -35,6 +59,6 @@ public interface EstimateMessage extends BaseObject<EstimateMessage> {
     Boolean getSendMeACopy();
 
     @Nullable
-    Boolean getEventType();
+    EventType getEventType();
 
 }

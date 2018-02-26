@@ -1,4 +1,4 @@
-package ch.aaap.harvestclient.api.filter;
+package ch.aaap.harvestclient.api.filter.base;
 
 import java.util.Map;
 

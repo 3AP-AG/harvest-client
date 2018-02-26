@@ -79,7 +79,10 @@ public class Harvest {
     private final UsersApi usersApi;
     private final CompanyApi companyApi;
     private final ClientsApi clientsApi;
-    private final ClientContactsApiImpl clientContactsApi;
+    private final ClientContactsApi clientContactsApi;
+    private final EstimatesApi estimatesApi;
+    private final EstimateItemCategoriesApi estimateItemCategoriesApi;
+    private final EstimateMessagesApi estimateMessagesApi;
 
     public Harvest(Config config) {
 
@@ -111,6 +114,9 @@ public class Harvest {
         TaskService taskService = retrofit.create(TaskService.class);
         ClientService clientService = retrofit.create(ClientService.class);
         ClientContactService clientContactService = retrofit.create(ClientContactService.class);
+        EstimateService estimateService = retrofit.create(EstimateService.class);
+        EstimateItemCategoryService estimateItemCategoryService = retrofit.create(EstimateItemCategoryService.class);
+        EstimateMessagesService estimateMessagesService = retrofit.create(EstimateMessagesService.class);
 
         timesheetsApi = new TimesheetsApiImpl(timeEntryService);
         usersApi = new UsersApiImpl(userService);
@@ -122,6 +128,9 @@ public class Harvest {
         tasksApi = new TasksApiImpl(taskService);
         clientsApi = new ClientsApiImpl(clientService);
         clientContactsApi = new ClientContactsApiImpl(clientContactService);
+        estimatesApi = new EstimatesApiImpl(estimateService);
+        estimateItemCategoriesApi = new EstimateItemCategoriesApiImpl(estimateItemCategoryService);
+        estimateMessagesApi = new EstimateMessagesApiImpl(estimateMessagesService);
 
         log.debug("Harvest client initialized");
 
@@ -213,6 +222,18 @@ public class Harvest {
 
     public ClientContactsApi clientContacts() {
         return clientContactsApi;
+    }
+
+    public EstimatesApi estimates() {
+        return estimatesApi;
+    }
+
+    public EstimateItemCategoriesApi estimateItemCategories() {
+        return estimateItemCategoriesApi;
+    }
+
+    public EstimateMessagesApi estimateMessages() {
+        return estimateMessagesApi;
     }
 
     public String getBaseUrl() {
