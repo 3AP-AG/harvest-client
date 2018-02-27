@@ -18,6 +18,7 @@ public class TestData {
     private long taskId;
     private long anotherTaskId;
     private long taskAssignmentId;
+    private long anotherUserId;
 
     public long getTimeEntryId() {
         return timeEntryId;
@@ -107,6 +108,14 @@ public class TestData {
         this.anotherClientContactId = anotherClientContactId;
     }
 
+    public long getAnotherUserId() {
+        return anotherUserId;
+    }
+
+    public void setAnotherUserId(long anotherUserId) {
+        this.anotherUserId = anotherUserId;
+    }
+
     @Override
     public String toString() {
         return "TestData{" +
@@ -121,6 +130,7 @@ public class TestData {
                 ", taskId=" + taskId +
                 ", anotherTaskId=" + anotherTaskId +
                 ", taskAssignmentId=" + taskAssignmentId +
+                ", anotherUserId=" + anotherUserId +
                 '}';
     }
 }

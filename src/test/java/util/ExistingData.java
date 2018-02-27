@@ -17,6 +17,7 @@ public class ExistingData {
      * https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom
      */
     private static class LazyHolder {
+
         static final ExistingData INSTANCE = new ExistingData(TestSetupUtil.getAdminAccess());
     }
 
@@ -34,6 +35,8 @@ public class ExistingData {
 
     private final Reference<Project> projectReference;
     private final Reference<User> userReference;
+
+    private final Reference<User> anotherUserReference;
 
     private final Reference<TimeEntry> timeEntryReference;
     private final EstimateItem.Category estimateItemCategory;
@@ -62,6 +65,7 @@ public class ExistingData {
 
             projectReference = new GenericReference<>(data.getProjectId());
             userReference = new GenericReference<>(data.getUserId());
+            anotherUserReference = new GenericReference<>(data.getAnotherUserId());
 
             timeEntryReference = new GenericReference<>(data.getTimeEntryId());
 
@@ -73,7 +77,9 @@ public class ExistingData {
             invoiceItemCategory = ImmutableInvoiceItem.Category.builder().name("Product").build();
             anotherInvoiceItemCategory = ImmutableInvoiceItem.Category.builder().name("Service").build();
 
-            // TODO this is manual, need UserProjectAssignmentsapi
+            // create assignment
+            harvest.userAssignments().create(projectReference, ImmutableUserAssignment.builder()
+                    .user(userReference).build());
             projectAssignment = harvest.projectAssignments().list(userReference).get(0);
 
         } catch (Throwable t) {
@@ -87,6 +93,7 @@ public class ExistingData {
         TestData data = new TestData();
         data.setTimeEntryId(750333887);
         data.setUserId(2040413);
+        data.setAnotherUserId(2044275);
 
         data.setClientId(6537932);
         data.setAnotherClientId(6537933);
@@ -103,6 +110,10 @@ public class ExistingData {
 
     public static ExistingData getInstance() {
         return LazyHolder.INSTANCE;
+    }
+
+    public Reference<User> getUnassignedUser() {
+        return anotherUserReference;
     }
 
     public Reference<Task> getUnassignedTask() {
@@ -139,6 +150,10 @@ public class ExistingData {
 
     public Reference<User> getUserReference() {
         return userReference;
+    }
+
+    public Reference<User> getAnotherUserReference() {
+        return anotherUserReference;
     }
 
     public ProjectAssignment getProjectAssignment() {

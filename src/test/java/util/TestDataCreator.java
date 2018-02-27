@@ -47,8 +47,11 @@ public class TestDataCreator {
                 () -> createClient("another fixClientName"));
         testData.setAnotherClientId(anotherClient.getId());
 
-        User user = getOrCreate(testData.getUserId(), harvest.users(), this::createUser);
+        User user = getOrCreate(testData.getUserId(), harvest.users(), () -> createUser("first"));
         testData.setUserId(user.getId());
+
+        User anotherUser = getOrCreate(testData.getAnotherUserId(), harvest.users(), () -> createUser("another"));
+        testData.setAnotherUserId(anotherUser.getId());
 
         ClientContact clientContact = getOrCreate(testData.getClientContactId(), harvest.clientContacts(),
                 () -> createClientContact(client, "first client contact"));
@@ -146,11 +149,11 @@ public class TestDataCreator {
                 .build());
     }
 
-    private User createUser() {
+    private User createUser(String tag) {
         return harvest.users().create(ImmutableUser.builder()
-                .firstName("Mario")
+                .firstName("Mario" + tag)
                 .lastName("Muster " + getId())
-                .email("testFix" + getId() + "@example.com")
+                .email("testFix" + getId() + tag + "@example.com")
                 .build());
     }
 
