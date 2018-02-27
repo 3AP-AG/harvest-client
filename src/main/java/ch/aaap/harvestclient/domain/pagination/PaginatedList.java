@@ -49,6 +49,8 @@ public interface PaginatedList {
 
     List<InvoiceMessage> getInvoiceMessages();
 
+    List<UserAssignment> getUserAssignments();
+
     @Nullable
     Integer getPerPage();
 

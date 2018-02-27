@@ -77,6 +77,7 @@ public class Harvest {
     private final TasksApi tasksApi;
     private final TimesheetsApi timesheetsApi;
     private final UsersApi usersApi;
+    private final UserAssignmentsApi userAssignmentsApi;
     private final CompanyApi companyApi;
     private final ClientsApi clientsApi;
     private final ClientContactsApi clientContactsApi;
@@ -110,6 +111,7 @@ public class Harvest {
 
         TimeEntryService timeEntryService = retrofit.create(TimeEntryService.class);
         UserService userService = retrofit.create(UserService.class);
+        UserAssignmentService userAssignmentService = retrofit.create(UserAssignmentService.class);
         CompanyService companyService = retrofit.create(CompanyService.class);
         RoleService roleService = retrofit.create(RoleService.class);
         ProjectAssignmentService projectAssignmentService = retrofit.create(ProjectAssignmentService.class);
@@ -128,6 +130,7 @@ public class Harvest {
 
         timesheetsApi = new TimesheetsApiImpl(timeEntryService);
         usersApi = new UsersApiImpl(userService);
+        userAssignmentsApi = new UserAssignmentsApiImpl(userAssignmentService);
         companyApi = new CompanyApiImpl(companyService);
         rolesApi = new RolesApiImpl(roleService);
         projectAssignmentsApi = new ProjectAssignmentsApiImpl(projectAssignmentService);
@@ -202,6 +205,11 @@ public class Harvest {
 
     public UsersApi users() {
         return usersApi;
+    }
+
+    public UserAssignmentsApi userAssignments() {
+        return userAssignmentsApi;
+
     }
 
     public CompanyApi company() {
