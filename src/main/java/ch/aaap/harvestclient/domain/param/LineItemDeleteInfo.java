@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 @Gson.TypeAdapters(fieldNamingStrategy = true)
 @Value.Immutable
-public interface EstimateItemDeleteInfo {
+public interface LineItemDeleteInfo {
 
     @Value.Parameter
     Long getId();
@@ -17,5 +17,4 @@ public interface EstimateItemDeleteInfo {
     default Boolean getDestroy() {
         return true;
     }
-
 }

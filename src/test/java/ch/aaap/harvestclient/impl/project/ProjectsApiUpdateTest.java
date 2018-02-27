@@ -126,7 +126,8 @@ class ProjectsApiUpdateTest {
                 .overBudgetNotificationPercentage(90.)
                 .showBudgetToAll(true)
                 .costBudget(2000.)
-                .costBudgetIncludeExpenses(true)
+                // can only change this for TOTAL_PROJECT_FEES projects
+                // .costBudgetIncludeExpenses(true)
                 .notes("test notes")
                 .startsOn(start)
                 .endsOn(end)
@@ -135,10 +136,9 @@ class ProjectsApiUpdateTest {
         project = projectsApi.update(project, info);
 
         assertThat(project).isEqualToComparingOnlyGivenFields(info,
-                "billable", "name", "code",
-                "active", "fixedFee", "hourlyRate", "budget",
-                "notifyWhenOverBudget", "overBudgetNotificationPercentage", "showBudgetToAll", "costBudget",
-                "costBudgetIncludeExpenses", "notes", "startsOn", "endsOn");
+                "billable", "name", "code", "active", "fixedFee", "hourlyRate",
+                "budget", "notifyWhenOverBudget", "overBudgetNotificationPercentage", "showBudgetToAll", "costBudget",
+                "notes", "startsOn", "endsOn");
 
         assertThat(project.getClient().getId()).isEqualTo(info.getClient().getId());
 

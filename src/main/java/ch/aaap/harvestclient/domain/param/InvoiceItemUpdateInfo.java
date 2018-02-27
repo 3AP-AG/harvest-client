@@ -1,4 +1,4 @@
-package ch.aaap.harvestclient.domain;
+package ch.aaap.harvestclient.domain.param;
 
 import javax.annotation.Nullable;
 
@@ -7,11 +7,13 @@ import org.immutables.value.Value;
 
 import com.google.gson.annotations.SerializedName;
 
+import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
 @Gson.TypeAdapters(fieldNamingStrategy = true)
 @Value.Immutable
-public interface InvoiceLineItem {
+public interface InvoiceItemUpdateInfo {
+
     @Nullable
     Long getId();
 
@@ -19,6 +21,7 @@ public interface InvoiceLineItem {
     @SerializedName(value = "project_id", alternate = "project")
     Reference<Project> getProject();
 
+    @Nullable
     String getKind(); // Invoice Item Category
 
     @Nullable
@@ -38,4 +41,5 @@ public interface InvoiceLineItem {
 
     @Nullable
     Boolean getTaxed2();
+
 }

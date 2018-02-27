@@ -77,7 +77,7 @@ public class EstimatesApiImpl implements EstimatesApi {
             Reference<EstimateItem> estimateItemReference, EstimateItemUpdateInfo updateInfo) {
         log.debug("Updating estimate {}, item {} with {}", estimateReference, estimateItemReference, updateInfo);
 
-        EstimateItemInfoContainer changes = ImmutableEstimateItemInfoContainer.builder()
+        LineItemContainer changes = ImmutableLineItemContainer.builder()
                 .addLineItem(ImmutableEstimateItemUpdateInfo.builder()
                         .from(updateInfo)
                         .id(estimateItemReference.getId())
@@ -94,8 +94,8 @@ public class EstimatesApiImpl implements EstimatesApi {
             Reference<EstimateItem> estimateItemReference) {
         log.debug("Deleting {} in estimate {}", estimateItemReference, estimateReference);
 
-        EstimateItemInfoContainer changes = ImmutableEstimateItemInfoContainer.builder()
-                .addLineItem(ImmutableEstimateItemDeleteInfo.of(estimateItemReference.getId()))
+        LineItemContainer changes = ImmutableLineItemContainer.builder()
+                .addLineItem(ImmutableLineItemDeleteInfo.of(estimateItemReference.getId()))
                 .build();
 
         Call<Estimate> call = service.updateItem(estimateReference.getId(), changes);
@@ -131,7 +131,7 @@ public class EstimatesApiImpl implements EstimatesApi {
                         .build())
                 .collect(Collectors.toList());
 
-        EstimateItemInfoContainer changes = ImmutableEstimateItemInfoContainer.builder()
+        LineItemContainer changes = ImmutableLineItemContainer.builder()
                 .addAllLineItems(updateInfoListWithId)
                 .build();
 
@@ -146,11 +146,11 @@ public class EstimatesApiImpl implements EstimatesApi {
 
         estimateItemReferenceList.forEach(Objects::requireNonNull);
 
-        List<EstimateItemDeleteInfo> deleteList = estimateItemReferenceList.stream()
-                .map(ref -> ImmutableEstimateItemDeleteInfo.of(ref.getId()))
+        List<LineItemDeleteInfo> deleteList = estimateItemReferenceList.stream()
+                .map(ref -> ImmutableLineItemDeleteInfo.of(ref.getId()))
                 .collect(Collectors.toList());
 
-        EstimateItemInfoContainer changes = ImmutableEstimateItemInfoContainer.builder()
+        LineItemContainer changes = ImmutableLineItemContainer.builder()
                 .addAllLineItems(deleteList)
                 .build();
 

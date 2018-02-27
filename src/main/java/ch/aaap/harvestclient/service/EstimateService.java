@@ -4,8 +4,8 @@ import java.util.Map;
 
 import ch.aaap.harvestclient.domain.Estimate;
 import ch.aaap.harvestclient.domain.pagination.PaginatedList;
-import ch.aaap.harvestclient.domain.param.EstimateItemInfoContainer;
 import ch.aaap.harvestclient.domain.param.EstimateUpdateInfo;
+import ch.aaap.harvestclient.domain.param.LineItemContainer;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -30,6 +30,6 @@ public interface EstimateService {
     Call<Void> delete(@Path(id) long estimateId);
 
     @PATCH(path)
-    Call<Estimate> updateItem(@Path(id) long estimateId, @Body EstimateItemInfoContainer updateInfo);
+    Call<Estimate> updateItem(@Path(id) long estimateId, @Body LineItemContainer updateInfo);
 
 }
