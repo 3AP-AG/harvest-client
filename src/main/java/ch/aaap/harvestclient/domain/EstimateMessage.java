@@ -47,7 +47,7 @@ public interface EstimateMessage extends BaseObject<EstimateMessage> {
     String getSentFromEmail();
 
     @SerializedName("recipients")
-    List<EstimateMessageRecipient> getEstimateMessageRecipients();
+    List<MessageRecipient> getMessageRecipients();
 
     @Nullable
     String getSubject();

@@ -7,9 +7,11 @@ import org.immutables.value.Value;
 
 @Gson.TypeAdapters(fieldNamingStrategy = true)
 @Value.Immutable
-public interface InvoiceMessageRecipient {
+public interface MessageRecipient {
     @Nullable
+    @Value.Parameter(order = 1)
     String getName();
 
+    @Value.Parameter(order = 2)
     String getEmail();
 }

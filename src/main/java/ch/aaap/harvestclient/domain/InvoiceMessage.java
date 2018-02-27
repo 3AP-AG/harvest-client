@@ -8,9 +8,35 @@ import javax.annotation.Nullable;
 import org.immutables.gson.Gson;
 import org.immutables.value.Value;
 
+import com.google.gson.annotations.SerializedName;
+
 @Gson.TypeAdapters(fieldNamingStrategy = true)
 @Value.Immutable
+@Value.Style.Depluralize
 public interface InvoiceMessage extends BaseObject<InvoiceMessage> {
+
+    enum EventType {
+
+        @SerializedName("send")
+        SEND,
+
+        /**
+         * Write off the invoice
+         */
+        @SerializedName("close")
+        CLOSE,
+
+        @SerializedName("draft")
+        DRAFT,
+
+        @SerializedName("re-open")
+        RE_OPEN,
+
+        @SerializedName("view")
+        VIEW
+
+    }
+
     @Nullable
     String getSentBy();
 
@@ -23,7 +49,8 @@ public interface InvoiceMessage extends BaseObject<InvoiceMessage> {
     @Nullable
     String getSentFromEmail();
 
-    List<InvoiceMessageRecipient> getInvoiceMessageRecipients();
+    @SerializedName("recipients")
+    List<MessageRecipient> getMessageRecipients();
 
     @Nullable
     String getSubject();
@@ -44,7 +71,7 @@ public interface InvoiceMessage extends BaseObject<InvoiceMessage> {
     Boolean getThankYou();
 
     @Nullable
-    Boolean getEventType();
+    EventType getEventType();
 
     @Nullable
     Boolean getReminder();

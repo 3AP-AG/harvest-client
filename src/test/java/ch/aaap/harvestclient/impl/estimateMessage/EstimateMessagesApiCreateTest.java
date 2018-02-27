@@ -18,7 +18,7 @@ import util.TestSetupUtil;
 
 public class EstimateMessagesApiCreateTest {
 
-    private static final EstimateMessageRecipient testRecipient = ImmutableEstimateMessageRecipient.of("Marco",
+    private static final MessageRecipient testRecipient = ImmutableMessageRecipient.of("Marco",
             TestSetupUtil.getDevNullEmail());
 
     private static final Harvest harvest = TestSetupUtil.getAdminAccess();
@@ -56,7 +56,7 @@ public class EstimateMessagesApiCreateTest {
     void createDefault() {
 
         EstimateMessage creationInfo = ImmutableEstimateMessage.builder()
-                .addEstimateMessageRecipient(testRecipient)
+                .addMessageRecipient(testRecipient)
                 .subject("test subject")
                 // body is required
                 .body("test body")
@@ -70,7 +70,7 @@ public class EstimateMessagesApiCreateTest {
     void createAllOptions() {
 
         EstimateMessage creationInfo = ImmutableEstimateMessage.builder()
-                .addEstimateMessageRecipient(testRecipient)
+                .addMessageRecipient(testRecipient)
                 .subject("test subject")
                 .body("This is the body")
                 .sendMeACopy(true)
@@ -79,8 +79,8 @@ public class EstimateMessagesApiCreateTest {
         estimateMessage = api.create(estimate, creationInfo);
 
         assertThat(estimateMessage).isEqualToComparingOnlyGivenFields(creationInfo, "subject", "body");
-        assertThat(estimateMessage.getEstimateMessageRecipients()).contains(testRecipient);
-        assertThat(estimateMessage.getEstimateMessageRecipients()).hasSize(2);
+        assertThat(estimateMessage.getMessageRecipients()).contains(testRecipient);
+        assertThat(estimateMessage.getMessageRecipients()).hasSize(2);
     }
 
     @EnumSource(value = EstimateMessage.EventType.class, names = { "RE_OPEN", "VIEW", "INVOICE" })
@@ -94,7 +94,7 @@ public class EstimateMessagesApiCreateTest {
     void accept() {
 
         EstimateMessage creationInfo = ImmutableEstimateMessage.builder()
-                .addEstimateMessageRecipient(testRecipient)
+                .addMessageRecipient(testRecipient)
                 .subject("test subject")
                 .body("This is the body")
                 .sendMeACopy(true)
@@ -113,7 +113,7 @@ public class EstimateMessagesApiCreateTest {
     void send() {
 
         EstimateMessage creationInfo = ImmutableEstimateMessage.builder()
-                .addEstimateMessageRecipient(testRecipient)
+                .addMessageRecipient(testRecipient)
                 .subject("test subject")
                 .body("This is the body")
                 .sendMeACopy(true)

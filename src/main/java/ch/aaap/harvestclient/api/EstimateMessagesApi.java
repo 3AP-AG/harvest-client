@@ -52,7 +52,7 @@ public interface EstimateMessagesApi extends Api.GetNested<Estimate, EstimateMes
     EstimateMessage get(Reference<Estimate> estimateReference, Reference<EstimateMessage> estimateMessageReference);
 
     /**
-     * Create a new EstimateMessage c
+     * Create a new EstimateMessage
      * 
      * @param estimateReference
      *            the estimate that will contain the message

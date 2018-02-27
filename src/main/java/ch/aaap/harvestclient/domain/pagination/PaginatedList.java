@@ -47,6 +47,8 @@ public interface PaginatedList {
 
     List<InvoicePayment> getInvoicePayments();
 
+    List<InvoiceMessage> getInvoiceMessages();
+
     @Nullable
     Integer getPerPage();
 
@@ -64,5 +66,4 @@ public interface PaginatedList {
 
     @Nullable
     PaginationLinks getLinks();
-
 }
