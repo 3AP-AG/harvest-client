@@ -32,11 +32,16 @@ public class HarvestHttpException extends HarvestRuntimeException {
     }
 
     public static String initMessage(ResponseBody responseBody) {
-        Gson gson = GsonConfiguration.getConfiguration();
+        try {
 
-        RequestProcessingErrorMessage parsedMessage = gson.fromJson(responseBody.charStream(),
-                RequestProcessingErrorMessage.class);
+            Gson gson = GsonConfiguration.getConfiguration();
 
-        return parsedMessage.getMessage();
+            RequestProcessingErrorMessage parsedMessage = gson.fromJson(responseBody.charStream(),
+                    RequestProcessingErrorMessage.class);
+
+            return parsedMessage.getMessage();
+        } catch (Exception e) {
+            return "Error message was not in JSON format";
+        }
     }
 }

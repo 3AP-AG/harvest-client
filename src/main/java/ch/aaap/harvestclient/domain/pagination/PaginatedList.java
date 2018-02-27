@@ -45,6 +45,8 @@ public interface PaginatedList {
 
     List<Invoice> getInvoices();
 
+    List<InvoicePayment> getInvoicePayments();
+
     @Nullable
     Integer getPerPage();
 

@@ -12,7 +12,7 @@ import org.immutables.value.Value;
 @Value.Immutable
 public interface InvoicePayment extends BaseObject<InvoicePayment> {
 
-    String getAmount();
+    Double getAmount();
 
     @Nullable
     Instant getPaidAt();

@@ -58,7 +58,7 @@ public interface EstimateMessagesApi extends Api.GetNested<Estimate, EstimateMes
      *            the estimate that will contain the message
      * @param creationInfo
      *            creation information
-     * @return the created Task
+     * @return the created EstimateMessage
      */
     EstimateMessage create(Reference<Estimate> estimateReference, EstimateMessage creationInfo);
 
