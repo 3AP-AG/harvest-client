@@ -45,7 +45,7 @@ jobs:
       - run: ./gradlew junitPlatformJacocoReport
 
       # upload report to codecov.io
-      - run: bash <(curl -s https://codecov.io/bash)
+      - run: bash <(curl -s https://codecov.io/bash) -f build/reports/jacoco/junitPlatformJacocoReport/junitPlatformJacocoReport.xml
 
       # store test result
       - run:
