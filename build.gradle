@@ -65,7 +65,7 @@ afterEvaluate {
                 executionData junitPlatformTestTask
                 reports {
                     xml.enabled true
-                    html.enabled true
+                    html.enabled false
                 }
             })
 }
