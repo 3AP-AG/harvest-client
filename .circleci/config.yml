@@ -42,7 +42,7 @@ jobs:
       - run: ./gradlew junitPlatformTest
 
       # generate test coverage report
-      - run: ./gradlew jacocoTestReport
+      - run: ./gradlew junitPlatformJacocoReport
 
       # upload report to codecov.io
       - run: bash <(curl -s https://codecov.io/bash)
