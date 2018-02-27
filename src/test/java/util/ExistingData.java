@@ -25,7 +25,7 @@ public class ExistingData {
     /**
      * Set this to true to generate new TestData and verify the current one
      */
-    private static final boolean checkValid = true;
+    private static final boolean checkValid = false;
 
     private final Reference<Task> taskReference;
     private final Reference<Task> anotherTaskReference;
@@ -77,7 +77,9 @@ public class ExistingData {
             invoiceItemCategory = ImmutableInvoiceItem.Category.builder().name("Product").build();
             anotherInvoiceItemCategory = ImmutableInvoiceItem.Category.builder().name("Service").build();
 
-            // TODO this is manual, need UserProjectAssignmentsapi
+            // create assignment
+            harvest.userAssignments().create(projectReference, ImmutableUserAssignment.builder()
+                    .user(userReference).build());
             projectAssignment = harvest.projectAssignments().list(userReference).get(0);
 
         } catch (Throwable t) {

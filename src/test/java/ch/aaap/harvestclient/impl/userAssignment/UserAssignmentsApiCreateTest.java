@@ -24,7 +24,7 @@ class UserAssignmentsApiCreateTest {
     private static final UserAssignmentsApi userAssignmentApi = harvest.userAssignments();
 
     private static final Reference<Project> projectReference = ExistingData.getInstance().getProjectReference();
-    private static final Reference<User> userReference = ExistingData.getInstance().getUserReference();
+    private static final Reference<User> userReference = ExistingData.getInstance().getUnassignedUser();
 
     private UserAssignment userAssignment;
 
