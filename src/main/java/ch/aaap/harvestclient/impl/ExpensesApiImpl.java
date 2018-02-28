@@ -1,5 +1,10 @@
 package ch.aaap.harvestclient.impl;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -12,7 +17,11 @@ import ch.aaap.harvestclient.domain.pagination.PaginatedList;
 import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.ExpenseUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
+import ch.aaap.harvestclient.exception.HarvestRuntimeException;
 import ch.aaap.harvestclient.service.ExpenseService;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 
 public class ExpensesApiImpl implements ExpensesApi {
@@ -57,6 +66,41 @@ public class ExpensesApiImpl implements ExpensesApi {
     public Expense update(Reference<Expense> expenseReference, ExpenseUpdateInfo toChange) {
         log.debug("Updating {} with {}", expenseReference, toChange);
         Call<Expense> call = service.update(expenseReference.getId(), toChange);
+        return ExceptionHandler.callOrThrow(call);
+    }
+
+    @Override
+    public Expense attachReceipt(Reference<Expense> expenseReference, InputStream inputStream,
+            String fileName) throws IOException {
+
+        Path filePath = null;
+        try {
+
+            Path tempDirectory = Files.createTempDirectory("harvest-client");
+            filePath = tempDirectory.resolve(fileName);
+            if (!filePath.toAbsolutePath().startsWith(tempDirectory)) {
+                throw new HarvestRuntimeException("Invalid filename: " + fileName);
+            }
+            Files.copy(inputStream, filePath);
+
+            return attachReceipt(expenseReference, filePath.toFile());
+        } finally {
+            if (filePath != null) {
+                Files.delete(filePath);
+            }
+        }
+    }
+
+    @Override
+    public Expense attachReceipt(Reference<Expense> expenseReference, File file) {
+
+        // prepare Part
+        MediaType type = MediaType.parse("image/*");
+        RequestBody body = RequestBody.create(type, file);
+        MultipartBody.Part part = MultipartBody.Part.createFormData("receipt", file.getName(), body);
+
+        log.debug("Attaching file {} to expense {}", file, expenseReference);
+        Call<Expense> call = service.attachFile(expenseReference.getId(), part);
         return ExceptionHandler.callOrThrow(call);
     }
 

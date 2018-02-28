@@ -5,6 +5,7 @@ import java.util.Map;
 import ch.aaap.harvestclient.domain.Expense;
 import ch.aaap.harvestclient.domain.pagination.PaginatedList;
 import ch.aaap.harvestclient.domain.param.ExpenseUpdateInfo;
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -25,6 +26,10 @@ public interface ExpenseService {
 
     @PATCH(path)
     Call<Expense> update(@Path(id) long expenseId, @Body ExpenseUpdateInfo updateInfo);
+
+    @Multipart
+    @PATCH(path)
+    Call<Expense> attachFile(@Path(id) long expenseId, @Part MultipartBody.Part receipt);
 
     @DELETE(path)
     Call<Void> delete(@Path(id) long expenseId);

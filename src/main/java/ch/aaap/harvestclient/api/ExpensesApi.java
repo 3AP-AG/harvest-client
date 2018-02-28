@@ -1,11 +1,15 @@
 package ch.aaap.harvestclient.api;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import ch.aaap.harvestclient.api.filter.ExpenseFilter;
 import ch.aaap.harvestclient.domain.Expense;
 import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.ExpenseUpdateInfo;
+import ch.aaap.harvestclient.domain.param.ImmutableExpenseUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
 public interface ExpensesApi extends Api.Simple<Expense> {
@@ -67,6 +71,47 @@ public interface ExpensesApi extends Api.Simple<Expense> {
      * @return the updated Expense
      */
     Expense update(Reference<Expense> expenseReference, ExpenseUpdateInfo toChange);
+
+    /**
+     * Attach a file as a receipt for an Expense
+     *
+     * @param expenseReference
+     *            An existing Expense to be updated
+     * @param inputStream
+     *            a receipt inputstream (allowed filetypes: png, gif, pdf, jpeg,
+     *            jpg). Calling code is responsible for closing the stream
+     * @param fileName
+     *            a filename for Harvest (optional)
+     * @return the updated Expense
+     */
+    Expense attachReceipt(Reference<Expense> expenseReference, InputStream inputStream, String fileName)
+            throws IOException;
+
+    /**
+     * Attach a file as a receipt for an Expense
+     * 
+     * @param expenseReference
+     *            An existing Expense to be updated
+     * @param file
+     *            a receipt file (allowed extensions: png, gif, pdf, jpeg, jpg)
+     * @return the updated Expense
+     */
+    Expense attachReceipt(Reference<Expense> expenseReference, File file);
+
+    /**
+     * Remove a receipt from an Expense, if one is currently present. Note that
+     * attachReceipt can be used even if a receipt is already set, no need to call
+     * this first
+     * 
+     * @param expenseReference
+     *            the expense from which to remove the receipt
+     * @return the updated Expense
+     */
+    default Expense removeReceipt(Reference<Expense> expenseReference) {
+        return update(expenseReference, ImmutableExpenseUpdateInfo.builder()
+                .deleteReceipt(true)
+                .build());
+    }
 
     /**
      * Delete an existing Expense. Only possible if no time entries are associated
