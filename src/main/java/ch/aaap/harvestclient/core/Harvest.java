@@ -89,6 +89,7 @@ public class Harvest {
     private final InvoicePaymentsApi invoicePaymentsApi;
     private final InvoiceMessagesApi invoiceMessagesApi;
     private final ExpenseCategoriesApi expenseCategoriesApi;
+    private final ExpensesApi expensesApi;
 
     public Harvest(Config config) {
 
@@ -129,6 +130,7 @@ public class Harvest {
         InvoicePaymentService invoicePaymentService = retrofit.create(InvoicePaymentService.class);
         InvoiceMessagesService invoiceMessagesService = retrofit.create(InvoiceMessagesService.class);
         ExpenseCategoryService expenseCategoryService = retrofit.create(ExpenseCategoryService.class);
+        ExpenseService expenseService = retrofit.create(ExpenseService.class);
 
         timesheetsApi = new TimesheetsApiImpl(timeEntryService);
         usersApi = new UsersApiImpl(userService);
@@ -149,6 +151,7 @@ public class Harvest {
         invoicePaymentsApi = new InvoicePaymentsApiImpl(invoicePaymentService);
         invoiceMessagesApi = new InvoiceMessagesApiImpl(invoiceMessagesService);
         expenseCategoriesApi = new ExpenseCategoriesApiImpl(expenseCategoryService);
+        expensesApi = new ExpensesApiImpl(expenseService);
 
         log.debug("Harvest client initialized");
 
@@ -279,6 +282,10 @@ public class Harvest {
         return expenseCategoriesApi;
     }
 
+    public ExpensesApi expenses() {
+        return expensesApi;
+    }
+
     public String getBaseUrl() {
         return baseUrl;
     }
@@ -302,5 +309,4 @@ public class Harvest {
     public CurrencyConfiguration getCurrencyConfiguration() {
         return currencyConfiguration;
     }
-
 }

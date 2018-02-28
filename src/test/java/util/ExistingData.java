@@ -9,10 +9,6 @@ import ch.aaap.harvestclient.domain.reference.Reference;
 
 public class ExistingData {
 
-    public EstimateItem.Category getAnotherEstimateItemCategory() {
-        return anotherEstimateItemCategory;
-    }
-
     /**
      * https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom
      */
@@ -47,6 +43,8 @@ public class ExistingData {
 
     private final ProjectAssignment projectAssignment;
 
+    private final Reference<ExpenseCategory> expenseCategory;
+
     private ExistingData(Harvest harvest) {
         try {
             log.debug("Getting Existing Data for tests");
@@ -77,6 +75,8 @@ public class ExistingData {
             invoiceItemCategory = ImmutableInvoiceItem.Category.builder().name("Product").build();
             anotherInvoiceItemCategory = ImmutableInvoiceItem.Category.builder().name("Service").build();
 
+            expenseCategory = new GenericReference<>(data.getExpenseCategoryId());
+
             // create assignment
             harvest.userAssignments().create(projectReference, ImmutableUserAssignment.builder()
                     .user(userReference).build());
@@ -105,6 +105,7 @@ public class ExistingData {
         data.setTaskId(9316038);
         data.setAnotherTaskId(9316039);
         data.setTaskAssignmentId(179269102);
+        data.setExpenseCategoryId(4698548);
         return data;
     }
 
@@ -166,5 +167,13 @@ public class ExistingData {
 
     public InvoiceItem.Category getAnotherInvoiceItemCategory() {
         return anotherInvoiceItemCategory;
+    }
+
+    public EstimateItem.Category getAnotherEstimateItemCategory() {
+        return anotherEstimateItemCategory;
+    }
+
+    public Reference<ExpenseCategory> getExpenseCategory() {
+        return expenseCategory;
     }
 }

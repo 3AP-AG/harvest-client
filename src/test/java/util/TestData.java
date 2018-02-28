@@ -20,6 +20,8 @@ public class TestData {
     private long taskAssignmentId;
     private long anotherUserId;
 
+    private long expenseCategoryId;
+
     public long getTimeEntryId() {
         return timeEntryId;
     }
@@ -116,6 +118,14 @@ public class TestData {
         this.anotherUserId = anotherUserId;
     }
 
+    public long getExpenseCategoryId() {
+        return expenseCategoryId;
+    }
+
+    public void setExpenseCategoryId(long expenseCategoryId) {
+        this.expenseCategoryId = expenseCategoryId;
+    }
+
     @Override
     public String toString() {
         return "TestData{" +
@@ -131,6 +141,7 @@ public class TestData {
                 ", anotherTaskId=" + anotherTaskId +
                 ", taskAssignmentId=" + taskAssignmentId +
                 ", anotherUserId=" + anotherUserId +
+                ", expenseCategoryId=" + expenseCategoryId +
                 '}';
     }
 }

@@ -53,6 +53,8 @@ public interface PaginatedList {
 
     List<ExpenseCategory> getExpenseCategories();
 
+    List<Expense> getExpenses();
+
     @Nullable
     Integer getPerPage();
 
