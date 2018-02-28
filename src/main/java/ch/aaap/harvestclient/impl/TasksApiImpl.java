@@ -32,11 +32,8 @@ public class TasksApiImpl implements TasksApi {
     @Override
     public Pagination<Task> list(TaskFilter filter, int page, int perPage) {
         log.debug("Getting page {} of Task list", page);
-
         Call<PaginatedList> call = service.list(filter.toMap(page, perPage));
-
         PaginatedList pagination = ExceptionHandler.callOrThrow(call);
-
         return Pagination.of(pagination, pagination.getTasks());
     }
 

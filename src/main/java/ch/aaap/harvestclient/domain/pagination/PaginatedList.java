@@ -51,6 +51,8 @@ public interface PaginatedList {
 
     List<UserAssignment> getUserAssignments();
 
+    List<ExpenseCategory> getExpenseCategories();
+
     @Nullable
     Integer getPerPage();
 
@@ -68,4 +70,5 @@ public interface PaginatedList {
 
     @Nullable
     PaginationLinks getLinks();
+
 }
