@@ -8,6 +8,7 @@ import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.ProjectUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
+@Api.Permission(Api.Role.PROJECT_MANAGER)
 public interface ProjectsApi extends Api.Simple<Project> {
 
     /**

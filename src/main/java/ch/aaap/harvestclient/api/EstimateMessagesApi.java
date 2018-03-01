@@ -8,6 +8,7 @@ import ch.aaap.harvestclient.domain.EstimateMessage;
 import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
+@Api.Permission(Api.Role.ADMIN)
 public interface EstimateMessagesApi extends Api.GetNested<Estimate, EstimateMessage> {
 
     /**

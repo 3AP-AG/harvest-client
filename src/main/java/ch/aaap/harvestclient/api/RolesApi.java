@@ -8,6 +8,10 @@ import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.RoleInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
+/**
+ * Also needs Team Feature enabled
+ */
+@Api.Permission(Api.Role.ADMIN)
 public interface RolesApi {
 
     /**
