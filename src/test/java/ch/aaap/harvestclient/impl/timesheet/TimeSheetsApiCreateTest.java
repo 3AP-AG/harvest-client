@@ -6,16 +6,15 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.TimesheetsApi;
+import ch.aaap.harvestclient.core.Harvest;
+import ch.aaap.harvestclient.core.TimezoneConfiguration;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.Task;
 import ch.aaap.harvestclient.domain.TimeEntry;
@@ -29,7 +28,8 @@ import util.TestSetupUtil;
 @HarvestTest
 class TimeSheetsApiCreateTest {
 
-    private static final TimesheetsApi api = TestSetupUtil.getAdminAccess().timesheets();
+    private static final Harvest harvest = TestSetupUtil.getAdminAccess();
+    private static final TimesheetsApi api = harvest.timesheets();
 
     private static final Reference<Project> project = ExistingData.getInstance().getProjectReference();
     private static final Reference<User> user = ExistingData.getInstance().getUserReference();
@@ -37,9 +37,14 @@ class TimeSheetsApiCreateTest {
 
     private static TimeEntry timeEntry;
 
-    // TODO this test relies on the local timezone to be the same as the harvest one
-    // fix by reading the harvest timezone and adjusting the test
-    private static final ZoneId companyTimeZone = ZoneId.of("Europe/Berlin");
+    private static ZoneId userTimeZone;
+
+    @BeforeAll
+    static void beforeAll() {
+        User tempUser = harvest.users().get(user);
+        TimezoneConfiguration timezoneConfiguration = harvest.getTimezoneConfiguration();
+        userTimeZone = timezoneConfiguration.getZoneId(tempUser.getTimezone()).get();
+    }
 
     @AfterEach
     void afterEach() {
@@ -85,7 +90,7 @@ class TimeSheetsApiCreateTest {
         LocalDate date = LocalDate.now();
         String notes = "TimeEntry created by " + testInfo.getDisplayName();
         // harvest does not store seconds in started_time
-        LocalTime startedTime = LocalTime.now(companyTimeZone).truncatedTo(ChronoUnit.MINUTES);
+        LocalTime startedTime = LocalTime.now(userTimeZone).truncatedTo(ChronoUnit.MINUTES);
 
         TimeEntryCreationInfoTimestamp creationInfo = new TimeEntryCreationInfoTimestamp(project,
                 task, date);
@@ -118,12 +123,11 @@ class TimeSheetsApiCreateTest {
         creationInfo.setUserReference(user);
         // not setting anything specific
 
-        // TODO create Task assignment to assign task to project in existing data
         timeEntry = api.create(creationInfo);
 
         assertThat(timeEntry.getTimerStartedAt()).isNotNull();
 
-        ZonedDateTime timerStartedAt = timeEntry.getTimerStartedAt().atZone(companyTimeZone);
+        ZonedDateTime timerStartedAt = timeEntry.getTimerStartedAt().atZone(userTimeZone);
 
         assertThat(timeEntry.getStartedTime()).isEqualToIgnoringSeconds(timerStartedAt.toLocalTime());
         assertThat(timeEntry.getRunning()).isTrue();
@@ -150,7 +154,7 @@ class TimeSheetsApiCreateTest {
 
         assertThat(timeEntry.getTimerStartedAt()).isNotNull();
 
-        ZonedDateTime timerStartedAt = timeEntry.getTimerStartedAt().atZone(companyTimeZone);
+        ZonedDateTime timerStartedAt = timeEntry.getTimerStartedAt().atZone(userTimeZone);
 
         assertThat(timeEntry.getStartedTime()).isEqualToIgnoringSeconds(timerStartedAt.toLocalTime());
         assertThat(timeEntry.getRunning()).isTrue();
@@ -164,7 +168,7 @@ class TimeSheetsApiCreateTest {
         LocalDate date = LocalDate.now();
         String notes = "TimeEntry created by " + testInfo.getDisplayName();
         // harvest does not store seconds in started_time
-        LocalTime startedTime = LocalTime.now(companyTimeZone).truncatedTo(ChronoUnit.MINUTES);
+        LocalTime startedTime = LocalTime.now(userTimeZone).truncatedTo(ChronoUnit.MINUTES);
 
         TimeEntryCreationInfoTimestamp creationInfo = new TimeEntryCreationInfoTimestamp(project,
                 task, date);
@@ -180,7 +184,7 @@ class TimeSheetsApiCreateTest {
         assertThat(timeEntry.getStartedTime()).isEqualTo(startedTime);
 
         // check timer_started_at is in sync at least up to hour and minute
-        ZonedDateTime zonedDateTime = timeEntry.getTimerStartedAt().atZone(companyTimeZone);
+        ZonedDateTime zonedDateTime = timeEntry.getTimerStartedAt().atZone(userTimeZone);
         assertThat(timeEntry.getStartedTime()).isEqualToIgnoringSeconds(zonedDateTime.toLocalTime());
 
         assertThat(timeEntry.getRunning()).isTrue();
