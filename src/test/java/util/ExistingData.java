@@ -89,7 +89,8 @@ public class ExistingData {
     }
 
     private TestData loadFromFile() {
-        // TODO implement file loading
+        // this could be save to disk
+        // for now it is just a bit of copy paste when setting up a new Harvest account
         TestData data = new TestData();
         data.setTimeEntryId(750333887);
         data.setUserId(2040413);

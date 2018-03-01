@@ -66,8 +66,6 @@ class ExpensesApiCreateTest {
                 .totalCost(22.)
                 .notes("test notes")
                 .billable(false)
-                // TODO need multipart
-                // .receipt()
                 .build();
         expense = expensesApi.create(creationInfo);
 

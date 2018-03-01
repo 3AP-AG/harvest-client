@@ -65,8 +65,7 @@ public class RolesApiImpl implements RolesApi {
     @Override
     public Role addUser(Reference<Role> roleReference, Reference<User> userReference) {
 
-        // TODO PERF could be optimized if we already receive a Role
-        Role role = get(roleReference);
+        Role role = getIfNeeded(roleReference);
 
         RoleInfo roleInfo = new RoleInfo(role.getName());
         List<Long> userIds = role.getUserReferences().stream().map(Reference::getId).collect(Collectors.toList());
@@ -80,8 +79,7 @@ public class RolesApiImpl implements RolesApi {
     @Override
     public Role removeUser(Reference<Role> roleReference, Reference<User> userReference) {
 
-        // TODO PERF could be optimized if we already receive a Role
-        Role role = get(roleReference);
+        Role role = getIfNeeded(roleReference);
 
         RoleInfo roleInfo = new RoleInfo(role.getName());
         List<Long> userIds = role.getUserReferences().stream().map(Reference::getId).collect(Collectors.toList());
@@ -96,5 +94,12 @@ public class RolesApiImpl implements RolesApi {
         log.debug("Deleting role {}", roleReference);
         Call<Void> call = service.delete(roleReference.getId());
         ExceptionHandler.callOrThrow(call);
+    }
+
+    private Role getIfNeeded(Reference<Role> roleReference) {
+        if (roleReference instanceof Role) {
+            return (Role) roleReference;
+        }
+        return get(roleReference);
     }
 }

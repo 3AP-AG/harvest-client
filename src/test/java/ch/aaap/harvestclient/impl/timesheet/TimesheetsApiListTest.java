@@ -41,7 +41,6 @@ class TimesheetsApiListTest {
         TimeEntryFilter filter = new TimeEntryFilter();
         filter.setUserReference(harvest.users().getSelf());
 
-        // TODO timeentry should be for the ExistingData user
         List<TimeEntry> entries = api.list(filter);
 
         assertTrue(entries.size() > 0);

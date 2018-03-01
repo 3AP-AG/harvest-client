@@ -118,7 +118,6 @@ class TimeSheetsApiCreateTest {
         creationInfo.setUserReference(user);
         // not setting anything specific
 
-        // TODO create Task assignment to assign task to project in existing data
         timeEntry = api.create(creationInfo);
 
         assertThat(timeEntry.getTimerStartedAt()).isNotNull();
