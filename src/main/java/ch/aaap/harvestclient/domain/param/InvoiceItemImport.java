@@ -14,6 +14,7 @@ import ch.aaap.harvestclient.domain.reference.Reference;
 
 @Gson.TypeAdapters(fieldNamingStrategy = true)
 @Value.Immutable
+@Value.Style.Depluralize
 public interface InvoiceItemImport {
 
     @SerializedName("project_ids")

@@ -35,7 +35,7 @@ public interface ExpenseCommon {
     Receipt getReceipt();
 
     @Nullable
-    Invoice getInvoice();
+    Reference<Invoice> getInvoice();
 
     @Nullable
     String getNotes();
