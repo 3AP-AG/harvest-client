@@ -1,6 +1,5 @@
 package ch.aaap.harvestclient.impl.expense;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -14,10 +13,7 @@ import ch.aaap.harvestclient.api.filter.ExpenseFilter;
 import ch.aaap.harvestclient.core.Harvest;
 import ch.aaap.harvestclient.domain.*;
 import ch.aaap.harvestclient.domain.pagination.Pagination;
-import ch.aaap.harvestclient.domain.param.ImmutableInvoiceExpenseImport;
-import ch.aaap.harvestclient.domain.param.ImmutableInvoiceImportInfo;
-import ch.aaap.harvestclient.domain.param.ImmutableInvoiceItemImport;
-import ch.aaap.harvestclient.domain.param.InvoiceExpenseImport;
+import ch.aaap.harvestclient.domain.param.*;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import util.ExistingData;
 import util.TestSetupUtil;
@@ -139,9 +135,8 @@ class ExpensesApiListTest {
     }
 
     @Test
-    void listByUpdatedSince() {
+    void listByUpdatedSince() throws InterruptedException {
 
-        Instant creationTime = Instant.now().minusSeconds(1);
         Expense creationInfo = ImmutableExpense.builder()
                 .project(existingProject)
                 .expenseCategory(expenseCategory)
@@ -151,8 +146,17 @@ class ExpensesApiListTest {
                 .build();
         expense = expensesApi.create(creationInfo);
 
+        if (fixExpense.getUpdatedAt().equals(expense.getUpdatedAt())) {
+            // we need at least one second difference
+            Thread.sleep(1_000);
+            // do an update to change the updatedAt field
+            expensesApi.update(expense, ImmutableExpenseUpdateInfo.builder()
+                    .totalCost(11.)
+                    .build());
+        }
+
         ExpenseFilter filter = new ExpenseFilter();
-        filter.setUpdatedSince(creationTime);
+        filter.setUpdatedSince(expense.getUpdatedAt().minusSeconds(1));
 
         List<Expense> expenses = expensesApi.list(filter);
 
