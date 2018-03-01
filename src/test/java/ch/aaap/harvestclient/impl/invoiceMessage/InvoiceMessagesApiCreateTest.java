@@ -130,7 +130,7 @@ public class InvoiceMessagesApiCreateTest {
 
         api.markAs(invoice, InvoiceMessage.EventType.DRAFT);
 
-        // TODO how to check for draft?
+        // TODO how to check for draft? -> wait on Harvest response
 
     }
 

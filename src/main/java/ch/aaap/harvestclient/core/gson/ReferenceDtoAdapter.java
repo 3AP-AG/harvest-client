@@ -1,8 +1,8 @@
 package ch.aaap.harvestclient.core.gson;
 
 import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +27,8 @@ public class ReferenceDtoAdapter implements TypeAdapterFactory {
 
     private static final Logger log = LoggerFactory.getLogger(ReferenceDtoAdapter.class);
 
+    private static final String DTO_SUFFIX = "ReferenceDto";
+
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
 
@@ -37,16 +39,16 @@ public class ReferenceDtoAdapter implements TypeAdapterFactory {
             return null;
         }
 
-        try {
-            Class<?> elementClass = parseReferenceType(type);
+        Class<?> elementClass = parseReferenceType(type);
+        String simpleName = elementClass.getSimpleName();
+        String expectedClassName = simpleName + DTO_SUFFIX;
 
-            // TODO document convention
-            Class<?> dtoClass = Class.forName(
-                    BaseReferenceDto.class.getPackage().getName() + "." + elementClass.getSimpleName()
-                            + "ReferenceDto");
+        try {
+
+            Class<?> dtoClass = Class.forName(BaseReferenceDto.class.getPackage().getName() + "." + expectedClassName);
             log.trace("Got Dto class {}", dtoClass);
 
-            TypeAdapter<?> delegate = gson.getDelegateAdapter(this, TypeToken.get(dtoClass));
+            TypeAdapter<?> delegate = gson.getAdapter(dtoClass);
             log.trace("Returning type adapter for {}", type);
 
             return new TypeAdapter<T>() {
@@ -67,28 +69,27 @@ public class ReferenceDtoAdapter implements TypeAdapterFactory {
                 }
             };
         } catch (ClassNotFoundException e) {
-            throw new HarvestRuntimeException("Could not find ReferenceDto", e);
+            throw new HarvestRuntimeException("Could not find ReferenceDto. Reference<" + simpleName
+                    + "> needs a class named " + expectedClassName + " to existing in the same package as ReferenceDto",
+                    e);
         }
     }
 
     /**
-     * Given a type for {@code Reference<T>}, return T
+     * Given a typeToken for {@code Reference<T>}, return T
      * 
-     * @param type
+     * @param typeToken
+     *            TypeToken representing Reference<T>
      * @param <T>
-     * @return
-     * @throws ClassNotFoundException
+     *            the element class
+     * @return a Class<T> object
      */
-    private <T> Class<?> parseReferenceType(TypeToken<T> type) throws ClassNotFoundException {
-        // TODO ugly hack
-        Pattern pattern = Pattern.compile("([^<>]+)<([^<>]+)>");
-        log.trace("Matching on {}", type.toString());
-        Matcher matcher = pattern.matcher(type.toString());
-        if (!matcher.matches()) {
-            throw new HarvestRuntimeException("Something wrong here");
-        }
-        String elementTypeName = matcher.group(2);
-        return Class.forName(elementTypeName);
+    private <T> Class<?> parseReferenceType(TypeToken<T> typeToken) {
+
+        // Reference is parametrized
+        Type type = typeToken.getType();
+        Type elementType = ((ParameterizedType) type).getActualTypeArguments()[0];
+        return TypeToken.get(elementType).getRawType();
     }
 
 }
