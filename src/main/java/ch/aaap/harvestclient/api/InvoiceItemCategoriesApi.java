@@ -9,6 +9,7 @@ import ch.aaap.harvestclient.domain.InvoiceItem;
 import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
+@Api.Permission(Api.Role.PROJECT_MANAGER)
 public interface InvoiceItemCategoriesApi extends Api.Simple<InvoiceItem.Category> {
 
     /**

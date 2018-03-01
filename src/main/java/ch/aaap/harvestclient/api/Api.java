@@ -8,6 +8,40 @@ import ch.aaap.harvestclient.domain.reference.Reference;
 public interface Api {
 
     /**
+     * Types of permissions needed to use a certain api
+     */
+    enum Role {
+        /**
+         * Normal User
+         */
+        NONE,
+
+        /**
+         * Project Manager for the specific project
+         */
+        PROJECT_MANAGER,
+
+        /**
+         * Harvest admin
+         */
+        ADMIN
+    }
+
+    /**
+     * Describes the kind of role the user of the api needs.
+     */
+    @interface Permission {
+        Role value();
+
+        /**
+         * If true, a user can only read/write information about himself: needs admin
+         * permissions to change objects for other users
+         * 
+         */
+        boolean onlySelf() default false;
+    }
+
+    /**
      * Common interface for simple rest objects
      * 
      * @param <T>

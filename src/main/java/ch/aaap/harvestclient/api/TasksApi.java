@@ -8,6 +8,7 @@ import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.TaskUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
+@Api.Permission(Api.Role.ADMIN)
 public interface TasksApi extends Api.Simple<Task> {
     /**
      *

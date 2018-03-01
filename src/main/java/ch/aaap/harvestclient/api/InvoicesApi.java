@@ -11,6 +11,7 @@ import ch.aaap.harvestclient.domain.param.InvoiceItemUpdateInfo;
 import ch.aaap.harvestclient.domain.param.InvoiceUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
+@Api.Permission(Api.Role.PROJECT_MANAGER)
 public interface InvoicesApi extends Api.Simple<Invoice> {
 
     /**

@@ -12,6 +12,7 @@ import ch.aaap.harvestclient.domain.reference.Reference;
 /**
  * API for UserAssignments. All methods are specific to a given project
  */
+@Api.Permission(Api.Role.PROJECT_MANAGER)
 public interface UserAssignmentsApi extends Api.GetNested<Project, UserAssignment> {
 
     /**

@@ -12,6 +12,7 @@ import ch.aaap.harvestclient.domain.reference.Reference;
  * Admin permissions required, except when retrieving the currently
  * authenticated user’s project assignments.
  */
+@Api.Permission(value = Api.Role.ADMIN, onlySelf = true)
 public interface ProjectAssignmentsApi {
 
     /**

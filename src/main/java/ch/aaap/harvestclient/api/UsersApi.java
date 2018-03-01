@@ -8,6 +8,7 @@ import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.UserUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
+@Api.Permission(value = Api.Role.ADMIN)
 public interface UsersApi extends Api.Simple<User> {
 
     /**
@@ -69,6 +70,7 @@ public interface UsersApi extends Api.Simple<User> {
      *
      * @return the currently authenticated user
      */
+    @Api.Permission(value = Api.Role.NONE)
     User getSelf();
 
     /**

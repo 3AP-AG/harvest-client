@@ -2,6 +2,7 @@ package ch.aaap.harvestclient.api;
 
 import ch.aaap.harvestclient.domain.Company;
 
+@Api.Permission(Api.Role.NONE)
 public interface CompanyApi {
 
     /**
