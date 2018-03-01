@@ -1,4 +1,4 @@
-package ch.aaap.harvestclient.domain;
+package ch.aaap.harvestclient.domain.param;
 
 import javax.annotation.Nullable;
 
@@ -9,8 +9,9 @@ import com.google.gson.annotations.SerializedName;
 
 @Gson.TypeAdapters(fieldNamingStrategy = true)
 @Value.Immutable
-public interface ExpenseCategory extends BaseObject<ExpenseCategory> {
+public interface ExpenseCategoryUpdateInfo {
 
+    @Nullable
     String getName();
 
     @Nullable
@@ -20,9 +21,7 @@ public interface ExpenseCategory extends BaseObject<ExpenseCategory> {
     Double getUnitPrice();
 
     @SerializedName("is_active")
-    @Value.Default
-    default Boolean getActive() {
-        return true;
-    }
+    @Nullable
+    Boolean getActive();
 
 }

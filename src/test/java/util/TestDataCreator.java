@@ -83,6 +83,10 @@ public class TestDataCreator {
         TimeEntry timeEntry = getOrCreate(testData.getTimeEntryId(), harvest.timesheets(),
                 () -> createTimeEntry(project, task));
         testData.setTimeEntryId(timeEntry.getId());
+
+        ExpenseCategory expenseCategory = getOrCreate(testData.getExpenseCategoryId(), harvest.expenseCategories(),
+                this::createExpenseCategory);
+        testData.setExpenseCategoryId(expenseCategory.getId());
     }
 
     private <T> T getOrCreate(long id, Api.Get<T> api, Supplier<T> creationFunction) {
@@ -106,6 +110,11 @@ public class TestDataCreator {
             log.debug("Created value {}", value);
         }
         return value;
+    }
+
+    private ExpenseCategory createExpenseCategory() {
+        return harvest.expenseCategories().create(ImmutableExpenseCategory.builder()
+                .name("test category" + getId()).build());
     }
 
     private ClientContact createClientContact(Client client, String firstName) {
