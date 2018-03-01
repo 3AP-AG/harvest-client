@@ -4,12 +4,16 @@ import java.time.Instant;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.ProjectAssignmentsApi;
+import ch.aaap.harvestclient.api.filter.UserAssignmentFilter;
 import ch.aaap.harvestclient.core.Harvest;
+import ch.aaap.harvestclient.domain.ImmutableProject;
+import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.ProjectAssignment;
 import ch.aaap.harvestclient.domain.User;
 import ch.aaap.harvestclient.domain.reference.Reference;
@@ -58,13 +62,36 @@ class ProjectAssignmentsApiImplTest {
     }
 
     @Test
-    void listSelf() {
+    void listSelf(TestInfo testInfo) {
 
-        List<ProjectAssignment> projectAssignments = projectAssignmentsApi.listSelf();
+        Project project = null;
+        try {
+            final Project tempProject = harvest.projects().create(ImmutableProject.builder()
+                    .name("Project for " + testInfo.getDisplayName())
+                    .billBy(Project.BillingMethod.PROJECT)
+                    .budgetBy(Project.BudgetMethod.HOURS_PER_PROJECT)
+                    .billable(false)
+                    .client(ExistingData.getInstance().getClientReference())
+                    .build());
+            project = tempProject;
 
-        // TODO add a project we are not on, check for that missing here
-        // could use the UserAssignment API
+            User self = harvest.users().getSelf();
 
-        assertThat(projectAssignments).isNotEmpty();
+            // remove self from tempProject
+            harvest.userAssignments().list(project, new UserAssignmentFilter()).stream()
+                    .filter(ua -> ua.getUser().getId().equals(self.getId()))
+                    .forEach(ua -> harvest.userAssignments().delete(tempProject, ua));
+
+            List<ProjectAssignment> projectAssignments = projectAssignmentsApi.listSelf();
+
+            assertThat(projectAssignments).isNotEmpty();
+            assertThat(projectAssignments).extracting("project").extracting("id").doesNotContain(tempProject.getId());
+        }
+
+        finally {
+            if (project != null) {
+                harvest.projects().delete(project);
+            }
+        }
     }
 }
