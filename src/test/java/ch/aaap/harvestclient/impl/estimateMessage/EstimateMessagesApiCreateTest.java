@@ -57,9 +57,6 @@ public class EstimateMessagesApiCreateTest {
 
         EstimateMessage creationInfo = ImmutableEstimateMessage.builder()
                 .addMessageRecipient(testRecipient)
-                .subject("test subject")
-                // body is required
-                .body("test body")
                 .build();
         estimateMessage = api.create(estimate, creationInfo);
 
