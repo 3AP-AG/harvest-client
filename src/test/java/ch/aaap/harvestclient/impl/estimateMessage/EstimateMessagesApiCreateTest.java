@@ -57,9 +57,6 @@ public class EstimateMessagesApiCreateTest {
 
         EstimateMessage creationInfo = ImmutableEstimateMessage.builder()
                 .addMessageRecipient(testRecipient)
-                .subject("test subject")
-                // body is required
-                .body("test body")
                 .build();
         estimateMessage = api.create(estimate, creationInfo);
 
@@ -107,6 +104,7 @@ public class EstimateMessagesApiCreateTest {
         // refresh estimate
         estimate = harvest.estimates().get(estimate);
         assertThat(estimate.getAcceptedAt()).isNotNull();
+        assertThat(estimate.getState() == Estimate.State.ACCEPTED);
     }
 
     @Test
@@ -126,6 +124,7 @@ public class EstimateMessagesApiCreateTest {
         // refresh estimate
         estimate = harvest.estimates().get(estimate);
         assertThat(estimate.getSentAt()).isNotNull();
+        assertThat(estimate.getState() == Estimate.State.OPEN);
     }
 
     @Test
@@ -134,10 +133,12 @@ public class EstimateMessagesApiCreateTest {
         api.markAs(estimate, EstimateMessage.EventType.SEND);
         refreshEstimate();
         assertThat(estimate.getSentAt()).isNotNull();
+        assertThat(estimate.getState() == Estimate.State.OPEN);
 
         api.markAs(estimate, EstimateMessage.EventType.ACCEPT);
         refreshEstimate();
         assertThat(estimate.getAcceptedAt()).isNotNull();
+        assertThat(estimate.getState() == Estimate.State.ACCEPTED);
 
     }
 
@@ -147,11 +148,14 @@ public class EstimateMessagesApiCreateTest {
         api.markAs(estimate, EstimateMessage.EventType.ACCEPT);
         refreshEstimate();
         assertThat(estimate.getAcceptedAt()).isNotNull();
+        assertThat(estimate.getState() == Estimate.State.ACCEPTED);
 
         // sending directly will not work, we need to reopen the estimate
         assertThrows(RequestProcessingException.class, () -> api.markAs(estimate, EstimateMessage.EventType.SEND));
 
         api.markAs(estimate, EstimateMessage.EventType.RE_OPEN);
+        assertThat(estimate.getState() == Estimate.State.OPEN);
+
         api.markAs(estimate, EstimateMessage.EventType.SEND);
         refreshEstimate();
         assertThat(estimate.getSentAt()).isNotNull();
@@ -161,6 +165,7 @@ public class EstimateMessagesApiCreateTest {
 
         refreshEstimate();
         assertThat(estimate.getAcceptedAt()).isNotNull();
+        assertThat(estimate.getState() == Estimate.State.ACCEPTED);
 
     }
 
@@ -175,6 +180,7 @@ public class EstimateMessagesApiCreateTest {
         api.delete(estimate, message);
         refreshEstimate();
         assertThat(estimate.getAcceptedAt()).isNotNull();
+        assertThat(estimate.getState() == Estimate.State.ACCEPTED);
 
         // still cannot decline
         assertThrows(RequestProcessingException.class, () -> api.markAs(estimate, EstimateMessage.EventType.DECLINE));

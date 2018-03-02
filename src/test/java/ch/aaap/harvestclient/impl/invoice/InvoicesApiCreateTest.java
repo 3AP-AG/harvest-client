@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.InvoicesApi;
+import ch.aaap.harvestclient.core.Harvest;
 import ch.aaap.harvestclient.domain.*;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import util.ExistingData;
@@ -18,7 +19,8 @@ import util.TestSetupUtil;
 @HarvestTest
 class InvoicesApiCreateTest {
 
-    private static final InvoicesApi invoicesApi = TestSetupUtil.getAdminAccess().invoices();
+    private static final Harvest harvest = TestSetupUtil.getAdminAccess();
+    private static final InvoicesApi invoicesApi = harvest.invoices();
     private Invoice invoice;
     private Reference<Client> clientReference = ExistingData.getInstance().getClientReference();
     private InvoiceItem.Category category = ExistingData.getInstance().getInvoiceItemCategory();
@@ -42,6 +44,7 @@ class InvoicesApiCreateTest {
         invoice = invoicesApi.create(creationInfo);
 
         assertThat(invoice.getClient().getId()).isEqualTo(clientReference.getId());
+        assertThat(invoice.getState(harvest.getSelfTimezone())).isEqualTo(Invoice.State.DRAFT);
 
     }
 

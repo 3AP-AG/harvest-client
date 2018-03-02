@@ -49,6 +49,9 @@ public interface TimeEntry extends BaseObject<TimeEntry> {
     @Nullable
     Double getHours();
 
+    /**
+     * max length = 16,777,215
+     */
     @Nullable
     String getNotes();
 

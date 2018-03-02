@@ -37,6 +37,9 @@ public interface ExpenseCommon {
     @Nullable
     Reference<Invoice> getInvoice();
 
+    /**
+     * max length = 16,777,215
+     */
     @Nullable
     String getNotes();
 
