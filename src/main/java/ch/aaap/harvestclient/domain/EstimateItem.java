@@ -32,6 +32,9 @@ public interface EstimateItem extends Reference<EstimateItem> {
      */
     String getKind();
 
+    /**
+     * max length = 65,535
+     */
     @Nullable
     String getDescription();
 

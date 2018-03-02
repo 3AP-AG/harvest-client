@@ -26,6 +26,9 @@ public interface InvoicePayment extends BaseObject<InvoicePayment> {
     @Nullable
     String getRecordedByEmail();
 
+    /**
+     * max length = 16,777,215
+     */
     @Nullable
     String getNotes();
 

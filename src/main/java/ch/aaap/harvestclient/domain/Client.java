@@ -18,6 +18,9 @@ public interface Client extends BaseObject<Client> {
     @Nullable
     Boolean getActive();
 
+    /**
+     * max length = 65,535
+     */
     @Nullable
     String getAddress();
 

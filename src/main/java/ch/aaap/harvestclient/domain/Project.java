@@ -126,6 +126,9 @@ public interface Project extends BaseObject<Project> {
     @Nullable
     Double getFee();
 
+    /**
+     * max length = 65,535
+     */
     @Nullable
     String getNotes();
 
