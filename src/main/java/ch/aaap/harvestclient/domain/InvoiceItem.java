@@ -46,6 +46,9 @@ public interface InvoiceItem extends Reference<InvoiceItem> {
 
     String getKind(); // Invoice Item Category
 
+    /**
+     * max length = 65,535
+     */
     @Nullable
     String getDescription();
 

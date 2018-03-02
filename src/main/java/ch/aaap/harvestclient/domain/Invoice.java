@@ -69,6 +69,9 @@ public interface Invoice extends BaseObject<Invoice> {
     @Nullable
     String getSubject();
 
+    /**
+     * max length = 65,535
+     */
     @Nullable
     String getNotes();
 

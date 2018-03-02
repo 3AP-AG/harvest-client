@@ -64,6 +64,9 @@ public interface Estimate extends BaseObject<Estimate> {
     @Nullable
     String getSubject();
 
+    /**
+     * max length = 65,535
+     */
     @Nullable
     String getNotes();
 
