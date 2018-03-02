@@ -2,6 +2,7 @@ package ch.aaap.harvestclient.core;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.ZoneId;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,8 @@ import com.typesafe.config.ConfigFactory;
 
 import ch.aaap.harvestclient.api.*;
 import ch.aaap.harvestclient.core.gson.GsonConfiguration;
+import ch.aaap.harvestclient.domain.User;
+import ch.aaap.harvestclient.exception.HarvestRuntimeException;
 import ch.aaap.harvestclient.impl.*;
 import ch.aaap.harvestclient.service.*;
 import ch.aaap.harvestclient.vendor.okhttp.HttpLoggingInterceptor;
@@ -203,6 +206,15 @@ public class Harvest {
         // if someone is setting this to TRACE, they probably want all the information
         debugInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         return debugInterceptor;
+    }
+
+    /**
+     * @return the ZoneId of the currently authenticated User
+     */
+    public ZoneId getSelfTimezone() {
+        User self = users().getSelf();
+        return getTimezoneConfiguration().getZoneId(self.getTimezone()).orElseThrow(
+                () -> new HarvestRuntimeException("invalid timezone for user " + self));
     }
 
     public TimesheetsApi timesheets() {

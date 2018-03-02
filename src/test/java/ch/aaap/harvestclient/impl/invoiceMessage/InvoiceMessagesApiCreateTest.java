@@ -1,5 +1,7 @@
 package ch.aaap.harvestclient.impl.invoiceMessage;
 
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,6 +38,7 @@ public class InvoiceMessagesApiCreateTest {
     void beforeEach() {
         Invoice creationInfo = ImmutableInvoice.builder()
                 .client(ExistingData.getInstance().getClientReference())
+                .dueDate(LocalDate.now().plusWeeks(3))
                 .build();
         invoice = harvest.invoices().create(creationInfo);
     }
@@ -94,12 +97,15 @@ public class InvoiceMessagesApiCreateTest {
     void close() {
 
         api.markAs(invoice, InvoiceMessage.EventType.SEND);
+        invoice = harvest.invoices().get(invoice);
+        assertThat(invoice.getState(harvest.getSelfTimezone())).isEqualTo(Invoice.State.OPEN);
 
         api.markAs(invoice, InvoiceMessage.EventType.CLOSE);
 
         // refresh invoice
         invoice = harvest.invoices().get(invoice);
         assertThat(invoice.getClosedAt()).isNotNull();
+        assertThat(invoice.getState(harvest.getSelfTimezone())).isEqualTo(Invoice.State.CLOSED);
     }
 
     @Test
@@ -119,6 +125,7 @@ public class InvoiceMessagesApiCreateTest {
         // refresh invoice
         invoice = harvest.invoices().get(invoice);
         assertThat(invoice.getSentAt()).isNotNull();
+        assertThat(invoice.getState(harvest.getSelfTimezone())).isEqualTo(Invoice.State.OPEN);
     }
 
     @Test
@@ -127,10 +134,12 @@ public class InvoiceMessagesApiCreateTest {
         api.markAs(invoice, InvoiceMessage.EventType.SEND);
         refreshInvoice();
         assertThat(invoice.getSentAt()).isNotNull();
+        assertThat(invoice.getState(harvest.getSelfTimezone())).isEqualTo(Invoice.State.OPEN);
 
         api.markAs(invoice, InvoiceMessage.EventType.DRAFT);
 
-        // TODO how to check for draft? -> wait on Harvest response
+        refreshInvoice();
+        assertThat(invoice.getState(harvest.getSelfTimezone())).isEqualTo(Invoice.State.DRAFT);
 
     }
 

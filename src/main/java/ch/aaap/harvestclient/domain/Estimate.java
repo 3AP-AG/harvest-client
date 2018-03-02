@@ -18,6 +18,45 @@ import ch.aaap.harvestclient.domain.reference.Reference;
 @Value.Style.Depluralize
 public interface Estimate extends BaseObject<Estimate> {
 
+    /**
+     * Not documented online: got this from Harvest:
+     * <p>
+     * In the mean time you should be able to use the estimate's sent_at,
+     * accepted_at, and declined_at fields to determine the estimate's state.
+     * <ul>
+     * <li>If all three are empty, the estimate is a draft</li>
+     * <li>If only sent_at is present, the estimate is open (or sent)</li>
+     * <li>If accepted_at is present, the estimate is accepted</li>
+     * <li>If declined_at is present, the estimate is declined (accepted_at and
+     * declined_at are mutually exclusive)</li>
+     * </ul>
+     *
+     */
+    enum State {
+
+        DRAFT,
+
+        OPEN,
+
+        ACCEPTED,
+
+        DECLINED
+    }
+
+    default State getState() {
+
+        if (getAcceptedAt() != null) {
+            return State.ACCEPTED;
+        }
+        if (getDeclinedAt() != null) {
+            return State.DECLINED;
+        }
+        if (getSentAt() != null) {
+            return State.OPEN;
+        }
+        return State.DRAFT;
+    }
+
     @SerializedName(value = "client_id", alternate = "client")
     Reference<Client> getClient();
 

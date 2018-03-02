@@ -42,7 +42,7 @@ class EstimatesApiCreateTest {
         estimate = estimatesApi.create(creationInfo);
 
         assertThat(estimate.getClient().getId()).isEqualTo(clientReference.getId());
-
+        assertThat(estimate.getState() == Estimate.State.DRAFT);
     }
 
     @Test
@@ -69,6 +69,7 @@ class EstimatesApiCreateTest {
 
         assertThat(estimate).usingComparatorForType((x, y) -> (int) (y.getId() - x.getId()), Reference.class)
                 .isEqualToIgnoringNullFields(creationInfo);
+        assertThat(estimate.getState() == Estimate.State.DRAFT);
     }
 
     @Test
@@ -99,6 +100,7 @@ class EstimatesApiCreateTest {
         assertThat(items.get(0).getKind()).isEqualTo(kind);
         assertThat(items.get(1).getQuantity()).isEqualTo(quantity);
         assertThat(items.get(1).getAmount()).isEqualTo(quantity * unitPrice);
+        assertThat(estimate.getState() == Estimate.State.DRAFT);
 
     }
 
