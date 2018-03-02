@@ -23,7 +23,11 @@ for (User user : users) {
     log.debug("Found user: {}", user);
 }
 // create new user
-UserCreationInfo userInfo = new UserCreationInfo.Builder("testFirst", "testLast", "test@test.ch").build();
+User userInfo = ImmutableUser.builder()
+                .firstName("first")
+                .lastName("last")
+                .email("test@example.com")
+                .build();
 
 User newUser = harvest.users().create(userInfo);
 ```
