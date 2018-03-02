@@ -153,6 +153,8 @@ class ExpensesApiListTest {
             expensesApi.update(expense, ImmutableExpenseUpdateInfo.builder()
                     .totalCost(11.)
                     .build());
+            // refresh expense
+            expense = expensesApi.get(expense);
         }
 
         ExpenseFilter filter = new ExpenseFilter();
