@@ -112,7 +112,7 @@ public class ExistingData {
             data.setTaskId(9316038);
             data.setAnotherTaskId(9316039);
             data.setTaskAssignmentId(179269102);
-            data.setExpenseCategoryId(4698548);
+            data.setExpenseCategoryId(4685470);
         }
         // second account, 12h format
         else if (accountNumber == 2) {

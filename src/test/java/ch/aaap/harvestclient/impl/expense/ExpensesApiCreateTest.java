@@ -15,8 +15,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.ExpensesApi;
+import ch.aaap.harvestclient.core.Harvest;
 import ch.aaap.harvestclient.domain.*;
 import ch.aaap.harvestclient.domain.reference.Reference;
+import ch.aaap.harvestclient.domain.reference.dto.ExpenseCategoryReferenceDto;
 import ch.aaap.harvestclient.exception.RequestProcessingException;
 import util.ExistingData;
 import util.TestSetupUtil;
@@ -24,7 +26,8 @@ import util.TestSetupUtil;
 @HarvestTest
 class ExpensesApiCreateTest {
 
-    private static final ExpensesApi expensesApi = TestSetupUtil.getAdminAccess().expenses();
+    private static final Harvest harvest = TestSetupUtil.getAdminAccess();
+    private static final ExpensesApi expensesApi = harvest.expenses();
     private final Reference<Project> project = ExistingData.getInstance().getProjectReference();
     private final Reference<User> user = ExistingData.getInstance().getUserReference();
     private final Reference<ExpenseCategory> expenseCategory = ExistingData.getInstance().getExpenseCategory();
@@ -52,6 +55,10 @@ class ExpensesApiCreateTest {
 
         assertThat(expense).usingComparatorForType(Comparator.comparing(Reference::getId), Reference.class)
                 .isEqualToIgnoringNullFields(creationInfo);
+        ExpenseCategoryReferenceDto expenseCategoryDto = (ExpenseCategoryReferenceDto) expense.getExpenseCategory();
+
+        ExpenseCategory expectedCategory = harvest.expenseCategories().get(expenseCategory);
+        assertThat(expenseCategoryDto).isEqualToComparingOnlyGivenFields(expectedCategory, "unitName", "unitPrice");
     }
 
     @Test
