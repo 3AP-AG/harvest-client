@@ -12,7 +12,6 @@ import ch.aaap.harvestclient.api.TimesheetsApi;
 import ch.aaap.harvestclient.api.filter.TimeEntryFilter;
 import ch.aaap.harvestclient.core.Harvest;
 import ch.aaap.harvestclient.domain.TimeEntry;
-import ch.aaap.harvestclient.domain.User;
 import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import util.ExistingData;
@@ -25,7 +24,6 @@ class TimesheetsApiListTest {
     private static final TimesheetsApi api = harvest.timesheets();
 
     private static final Reference<TimeEntry> fixEntryReference = ExistingData.getInstance().getTimeEntryReference();
-    private static final Reference<User> user = ExistingData.getInstance().getUserReference();
 
     @Test
     void testList() {
