@@ -22,13 +22,15 @@ import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.Task;
 import ch.aaap.harvestclient.domain.TimeEntry;
 import ch.aaap.harvestclient.domain.User;
+import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoDuration;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoTimestamp;
+import ch.aaap.harvestclient.domain.param.TimeEntryUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import util.ExistingData;
 import util.TestSetupUtil;
 
 @HarvestTest
-class TimeSheetsApiCreateWithStartTimeTest {
+class TimeSheetsApiWithStartTimeTest {
 
     private static final Harvest harvest = TestSetupUtil.getAnotherAdminAccess();
     private static final TimesheetsApi api = harvest.timesheets();
@@ -110,6 +112,30 @@ class TimeSheetsApiCreateWithStartTimeTest {
         assertThat(timeEntry.getStartedTime()).isEqualToIgnoringSeconds(zonedDateTime.toLocalTime());
 
         assertThat(timeEntry.getRunning()).isTrue();
+    }
+
+    @Test
+    void testChangeStartedTime(TestInfo testInfo) {
+
+        LocalDate date = LocalDate.now();
+        String notes = "Timeentry created for " + testInfo.getDisplayName();
+
+        TimeEntryCreationInfoDuration creationInfo = new TimeEntryCreationInfoDuration(project, task, date);
+        creationInfo.setNotes(notes);
+        creationInfo.setUserReference(user);
+        creationInfo.setHours(1.);
+
+        timeEntry = api.create(creationInfo);
+
+        assertThat(timeEntry.getStartedTime()).isNotNull();
+
+        LocalTime startedTime = LocalTime.of(13, 13);
+        TimeEntryUpdateInfo updateInfo = new TimeEntryUpdateInfo();
+        updateInfo.setStartedTime(startedTime);
+
+        TimeEntry updatedEntry = api.update(timeEntry, updateInfo);
+
+        assertThat(updatedEntry.getStartedTime()).isEqualTo(startedTime);
     }
 
 }

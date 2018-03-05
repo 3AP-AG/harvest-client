@@ -1,10 +1,12 @@
 package ch.aaap.harvestclient.impl.timesheet;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,33 +80,6 @@ class TimeSheetsApiUpdateTest {
         TimeEntry updatedEntry = api.update(entry, updateInfo);
 
         assertThat(updatedEntry.getNotes()).isEqualTo(newNotes);
-    }
-
-    @Test
-    @Disabled("needs second test account")
-    void testChangeStartedTime(TestInfo testInfo) {
-
-        log.debug("Creating entry for test " + testInfo.getDisplayName());
-
-        LocalDate date = LocalDate.now();
-        String notes = "Timeentry created for " + testInfo.getDisplayName();
-
-        TimeEntryCreationInfoDuration creationInfo = new TimeEntryCreationInfoDuration(project, task, date);
-        creationInfo.setNotes(notes);
-        creationInfo.setUserReference(user);
-        creationInfo.setHours(1.);
-
-        entry = api.create(creationInfo);
-
-        assertThat(entry.getStartedTime()).isNotNull();
-
-        LocalTime startedTime = LocalTime.of(13, 13);
-        TimeEntryUpdateInfo updateInfo = new TimeEntryUpdateInfo();
-        updateInfo.setStartedTime(startedTime);
-
-        TimeEntry updatedEntry = api.update(entry, updateInfo);
-
-        assertThat(updatedEntry.getStartedTime()).isEqualTo(startedTime);
     }
 
     @Test
