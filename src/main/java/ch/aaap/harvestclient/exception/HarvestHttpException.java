@@ -34,7 +34,8 @@ public class HarvestHttpException extends HarvestRuntimeException {
     public static String initMessage(ResponseBody responseBody) {
         try {
 
-            Gson gson = GsonConfiguration.getConfiguration();
+            // LocalTime settings do not matter here
+            Gson gson = GsonConfiguration.getConfiguration(true);
 
             RequestProcessingErrorMessage parsedMessage = gson.fromJson(responseBody.charStream(),
                     RequestProcessingErrorMessage.class);

@@ -109,7 +109,12 @@ public class Harvest {
         Interceptor debugInterceptor = initHttpLogging();
         Interceptor authenticationInterceptor = initAuthentication();
 
-        Retrofit retrofit = initRetrofit(debugInterceptor, authenticationInterceptor);
+        Retrofit retrofit = initRetrofit(debugInterceptor, authenticationInterceptor, false);
+        boolean use12HoursFormat = getCompanyClockFormat(retrofit);
+        // reinitialize with correct format if needed
+        if (use12HoursFormat) {
+            retrofit = initRetrofit(debugInterceptor, authenticationInterceptor, true);
+        }
 
         timezoneConfiguration = new TimezoneConfiguration(openConfiguredStream("harvest.timezones_path"));
         currencyConfiguration = new CurrencyConfiguration(openConfiguredStream("harvest.currencies_path"));
@@ -160,19 +165,28 @@ public class Harvest {
 
     }
 
+    private boolean getCompanyClockFormat(Retrofit retrofit) {
+        CompanyApi tempCompanyApi = new CompanyApiImpl(retrofit.create(CompanyService.class));
+        String clock = tempCompanyApi.get().getClock();
+        return clock.equals("12h");
+    }
+
     private InputStream openConfiguredStream(String configName) {
         String resourcePath = config.getString(configName);
         return Harvest.class.getResourceAsStream(resourcePath);
     }
 
-    private Retrofit initRetrofit(Interceptor debugInterceptor, Interceptor authenticationInterceptor) {
+    private Retrofit initRetrofit(Interceptor debugInterceptor, Interceptor authenticationInterceptor,
+            boolean use12HoursFormat) {
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(authenticationInterceptor)
                 // debug interceptor goes last
                 .addInterceptor(debugInterceptor)
                 .build();
 
-        Gson gson = GsonConfiguration.getConfiguration();
+        // we need to start with something to be able to start retrofit and get the
+        // right settings
+        Gson gson = GsonConfiguration.getConfiguration(use12HoursFormat);
 
         return new Retrofit.Builder()
                 .baseUrl(baseUrl)

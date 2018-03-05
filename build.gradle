@@ -44,12 +44,6 @@ junitPlatform {
 // Unfortunately necessary to set a system property for the junitPlatform task
 afterEvaluate {
     def junitPlatformTestTask = tasks.getByName('junitPlatformTest')
-    if (System.getenv("HARVEST_AUTH_TOKEN") != null) {
-        junitPlatformTestTask.systemProperty "harvest.auth.token", System.getenv("HARVEST_AUTH_TOKEN")
-    }
-    if (System.getenv("HARVEST_ACCOUNT_ID")) {
-        junitPlatformTestTask.systemProperty "harvest.auth.accountId", System.getenv("HARVEST_ACCOUNT_ID")
-    }
     // configure jacoco to analyze the junitPlatformTest task
     jacoco {
         // this tool version is compatible with

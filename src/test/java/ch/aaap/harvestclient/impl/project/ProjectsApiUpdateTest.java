@@ -2,7 +2,10 @@ package ch.aaap.harvestclient.impl.project;
 
 import java.time.LocalDate;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +41,7 @@ class ProjectsApiUpdateTest {
         String name = "Project for test " + testInfo.getDisplayName();
         boolean billable = true;
         Project.BillingMethod billBy = Project.BillingMethod.PROJECT;
-        Project.BudgetMethod budgetBy = Project.BudgetMethod.HOURS_PER_PROJECT;
+        Project.BudgetMethod budgetBy = Project.BudgetMethod.HOURS_PER_TASK;
 
         Project creationInfo = ImmutableProject.builder()
                 .client(clientReference)
@@ -71,38 +74,37 @@ class ProjectsApiUpdateTest {
     }
 
     @Test
-    @Disabled("Harvest bug change project budgetBy")
     void changeBudgetBy() {
 
-        assertThat(project.getBudgetBy()).isEqualTo(Project.BudgetMethod.HOURS_PER_PROJECT);
-
         ProjectUpdateInfo info = ImmutableProjectUpdateInfo.builder()
-                .budgetBy(Project.BudgetMethod.HOURS_PER_PERSON)
+                .budgetBy(Project.BudgetMethod.HOURS_PER_PROJECT)
                 .hourlyRate(240.)
                 .budget(120.)
                 .notifyWhenOverBudget(true)
                 .overBudgetNotificationPercentage(90.)
                 .showBudgetToAll(true)
                 .costBudget(2000.)
-                .costBudgetIncludeExpenses(true)
+                // can't set this for this type of projects
+                // .costBudgetIncludeExpenses(true)
                 .build();
 
         project = projectsApi.update(project, info);
 
-        assertThat(project).isEqualToIgnoringNullFields(info);
+        assertThat(project).isEqualToComparingOnlyGivenFields(info, "budgetBy", "hourlyRate", "budget",
+                "notifyWhenOverBudget", "overBudgetNotificationPercentage", "showBudgetToAll", "costBudget");
     }
 
     @Test
-    @Disabled("Harvest bug change project budgetBy")
-    void changeBudgetByLess() {
+    void changeBudgetByMinimal() {
 
         ProjectUpdateInfo info = ImmutableProjectUpdateInfo.builder()
-                .budgetBy(Project.BudgetMethod.HOURS_PER_PERSON)
+                .budgetBy(Project.BudgetMethod.HOURS_PER_PROJECT)
+                .budget(22.)
                 .build();
 
         project = projectsApi.update(project, info);
 
-        assertThat(project).isEqualToIgnoringNullFields(info);
+        assertThat(project).isEqualToComparingOnlyGivenFields(info, "budgetBy", "budget");
     }
 
     @Test
@@ -121,11 +123,9 @@ class ProjectsApiUpdateTest {
                 // see other test for fixedFee = true
                 .fixedFee(false)
                 .hourlyRate(240.)
-                .budget(120.)
                 .notifyWhenOverBudget(true)
                 .overBudgetNotificationPercentage(90.)
                 .showBudgetToAll(true)
-                .costBudget(2000.)
                 // can only change this for TOTAL_PROJECT_FEES projects
                 // .costBudgetIncludeExpenses(true)
                 .notes("test notes")
@@ -137,8 +137,8 @@ class ProjectsApiUpdateTest {
 
         assertThat(project).isEqualToComparingOnlyGivenFields(info,
                 "billable", "name", "code", "active", "fixedFee", "hourlyRate",
-                "budget", "notifyWhenOverBudget", "overBudgetNotificationPercentage", "showBudgetToAll", "costBudget",
-                "notes", "startsOn", "endsOn");
+                "notifyWhenOverBudget", "overBudgetNotificationPercentage", "showBudgetToAll", "notes", "startsOn",
+                "endsOn");
 
         assertThat(project.getClient().getId()).isEqualTo(info.getClient().getId());
 
