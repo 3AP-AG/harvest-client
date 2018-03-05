@@ -43,15 +43,6 @@ public class InvoiceMessagesApiImpl implements InvoiceMessagesApi {
     }
 
     @Override
-    public InvoiceMessage get(Reference<Invoice> invoiceReference,
-            Reference<InvoiceMessage> invoiceMessageReference) {
-        Call<InvoiceMessage> call = service.get(invoiceReference.getId(), invoiceMessageReference.getId());
-        InvoiceMessage invoiceMessage = ExceptionHandler.callOrThrow(call);
-        log.debug("Gotten {}", invoiceMessage);
-        return invoiceMessage;
-    }
-
-    @Override
     public InvoiceMessage create(Reference<Invoice> invoiceReference, InvoiceMessage creationInfo) {
         Call<InvoiceMessage> call = service.create(invoiceReference.getId(), creationInfo);
         InvoiceMessage invoiceMessage = ExceptionHandler.callOrThrow(call);

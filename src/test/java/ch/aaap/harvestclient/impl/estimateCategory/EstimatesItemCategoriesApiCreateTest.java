@@ -35,6 +35,9 @@ class EstimatesItemCategoriesApiCreateTest {
 
         assertThat(category.getName()).isEqualTo(creationInfo.getName());
 
+        EstimateItem.Category gotten = api.get(category);
+        assertThat(gotten).isEqualTo(category);
+
     }
 
 }

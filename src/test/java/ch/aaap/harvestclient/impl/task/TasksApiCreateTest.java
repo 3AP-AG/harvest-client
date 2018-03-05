@@ -33,6 +33,8 @@ class TasksApiCreateTest {
         task = tasksApi.create(creationInfo);
 
         assertThat(task.getName()).isEqualTo(name);
+        Task gotten = tasksApi.get(task);
+        assertThat(gotten).isEqualTo(task);
     }
 
     @Test

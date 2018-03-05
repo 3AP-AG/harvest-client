@@ -33,6 +33,9 @@ class ClientsApiCreateTest {
         client = clientsApi.create(creationInfo);
 
         assertThat(client.getName()).isEqualTo(name);
+
+        Client gottenClient = clientsApi.get(client);
+        assertThat(gottenClient).isEqualTo(gottenClient);
     }
 
     @Test

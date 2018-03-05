@@ -32,6 +32,8 @@ class InvoiceItemCategoriesApiCreateTest {
         category = api.create(creationInfo);
 
         assertThat(category.getName()).isEqualTo(creationInfo.getName());
+        InvoiceItem.Category gotten = api.get(category);
+        assertThat(gotten).isEqualTo(category);
 
     }
 

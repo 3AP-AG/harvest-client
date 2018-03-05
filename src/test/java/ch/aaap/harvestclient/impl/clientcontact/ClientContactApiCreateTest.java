@@ -42,6 +42,9 @@ class ClientContactContactApiCreateTest {
         clientContact = clientContactsApi.create(creationInfo);
 
         assertThat(clientContact.getFirstName()).isEqualTo(firstName);
+
+        ClientContact gotten = clientContactsApi.get(clientContact);
+        assertThat(gotten).isEqualTo(clientContact);
     }
 
     @Test
