@@ -9,12 +9,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.domain.pagination.PaginatedList;
+import ch.aaap.harvestclient.domain.reference.Reference;
+import ch.aaap.harvestclient.exception.HarvestRuntimeException;
 
 /**
  * Here we can test deserialization for various Java objects
@@ -63,6 +67,24 @@ class GsonTest {
         String timeString = gson.toJson(time);
 
         assertThat(timeString).isEqualTo("\"13:04\"");
+
+    }
+
+    @Test
+    void testReferenceAdapterDto() {
+
+        ReferenceDtoAdapter referenceDtoAdapter = new ReferenceDtoAdapter();
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+
+        // create a token for Reference<String>, which does not have a corresponding
+        // ReferenceDTO class
+        TypeToken<?> token = TypeToken.getParameterized(Reference.class, String.class);
+
+        HarvestRuntimeException e = assertThrows(HarvestRuntimeException.class,
+                () -> referenceDtoAdapter.create(gson, token));
+
+        assertThat(e.getCause()).isOfAnyClassIn(ClassNotFoundException.class);
 
     }
 }

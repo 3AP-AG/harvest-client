@@ -16,5 +16,8 @@ class CurrencyConfigurationTest {
         CurrencyConfiguration configuration = new CurrencyConfiguration(in);
 
         assertThat(configuration.isValidCode("CHF")).isTrue();
+
+        assertThat(configuration.getCurrencyName("CHF").get()).isEqualTo("Swiss Franc");
+
     }
 }
