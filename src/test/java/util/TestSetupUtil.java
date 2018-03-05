@@ -20,8 +20,18 @@ public class TestSetupUtil {
     private static final Logger log = LoggerFactory.getLogger(TestSetupUtil.class);
     private static final Random random = new Random();
 
+    private static class LazyHolder {
+        static final Harvest adminAccess = new Harvest(ConfigFactory.load("admin1"));
+        static final Harvest anotherAdminAccess = new Harvest(ConfigFactory.load("admin2"));
+
+    }
+
     public static Harvest getAdminAccess() {
-        return new Harvest(ConfigFactory.load("admin"));
+        return LazyHolder.adminAccess;
+    }
+
+    public static Harvest getAnotherAdminAccess() {
+        return LazyHolder.anotherAdminAccess;
     }
 
     public static User getRandomUserCreationInfo() {

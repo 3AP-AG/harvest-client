@@ -12,9 +12,12 @@ public class ExistingData {
     /**
      * https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom
      */
-    private static class LazyHolder {
+    private static class LazyHolder1 {
+        static final ExistingData INSTANCE = new ExistingData(TestSetupUtil.getAdminAccess(), 1);
+    }
 
-        static final ExistingData INSTANCE = new ExistingData(TestSetupUtil.getAdminAccess());
+    private static class LazyHolder2 {
+        static final ExistingData ANOTHER_INSTANCE = new ExistingData(TestSetupUtil.getAnotherAdminAccess(), 2);
     }
 
     private static final Logger log = LoggerFactory.getLogger(ExistingData.class);
@@ -45,13 +48,13 @@ public class ExistingData {
 
     private final Reference<ExpenseCategory> expenseCategory;
 
-    private ExistingData(Harvest harvest) {
+    private ExistingData(Harvest harvest, int accountNumber) {
         try {
             log.debug("Getting Existing Data for tests");
 
-            TestData data = loadFromFile();
+            TestData data = loadFromFile(accountNumber);
             if (checkValid) {
-                new TestDataCreator(TestSetupUtil.getAdminAccess()).getOrCreateAll(data);
+                new TestDataCreator(harvest).getOrCreateAll(data);
             }
             log.info("TestData is {}", data);
 
@@ -88,30 +91,57 @@ public class ExistingData {
         }
     }
 
-    private TestData loadFromFile() {
-        // this could be save to disk
-        // for now it is just a bit of copy paste when setting up a new Harvest account
+    private TestData loadFromFile(int accountNumber) {
         TestData data = new TestData();
-        data.setTimeEntryId(750333887);
-        data.setUserId(2040413);
-        data.setAnotherUserId(2044275);
+        log.debug("Loading data for account {}", accountNumber);
+        // default account, 24h format
+        if (accountNumber == 1) {
+            // this could be save to disk
+            // for now it is just a bit of copy paste when setting up a new Harvest account
+            data.setTimeEntryId(750333887);
+            data.setUserId(2040413);
+            data.setAnotherUserId(2044275);
 
-        data.setClientId(6537932);
-        data.setAnotherClientId(6537933);
+            data.setClientId(6537932);
+            data.setAnotherClientId(6537933);
 
-        data.setClientContactId(5054209);
-        data.setAnotherClientContactId(5054210);
-        data.setProjectId(16561328);
-        data.setAnotherProjectId(16561329);
-        data.setTaskId(9316038);
-        data.setAnotherTaskId(9316039);
-        data.setTaskAssignmentId(179269102);
-        data.setExpenseCategoryId(4698548);
+            data.setClientContactId(5054209);
+            data.setAnotherClientContactId(5054210);
+            data.setProjectId(16561328);
+            data.setAnotherProjectId(16561329);
+            data.setTaskId(9316038);
+            data.setAnotherTaskId(9316039);
+            data.setTaskAssignmentId(179269102);
+            data.setExpenseCategoryId(4698548);
+        }
+        // second account, 12h format
+        else if (accountNumber == 2) {
+
+            data.setTimeEntryId(754461897);
+            data.setUserId(2048381);
+            data.setAnotherUserId(2048382);
+
+            data.setClientId(6563532);
+            data.setAnotherClientId(6563533);
+
+            data.setClientContactId(5066638);
+            data.setAnotherClientContactId(5066640);
+            data.setProjectId(16649159);
+            data.setAnotherProjectId(16649161);
+            data.setTaskId(9360794);
+            data.setAnotherTaskId(9360795);
+            data.setTaskAssignmentId(180166287);
+            data.setExpenseCategoryId(4706173);
+        }
         return data;
     }
 
     public static ExistingData getInstance() {
-        return LazyHolder.INSTANCE;
+        return LazyHolder1.INSTANCE;
+    }
+
+    public static ExistingData getAnotherInstance() {
+        return LazyHolder2.ANOTHER_INSTANCE;
     }
 
     public Reference<User> getUnassignedUser() {
