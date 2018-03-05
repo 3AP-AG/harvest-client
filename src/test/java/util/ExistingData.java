@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import ch.aaap.harvestclient.core.Harvest;
 import ch.aaap.harvestclient.domain.*;
 import ch.aaap.harvestclient.domain.reference.Reference;
+import ch.aaap.harvestclient.exception.NotFoundException;
 
 public class ExistingData {
 
@@ -81,9 +82,15 @@ public class ExistingData {
             expenseCategory = new GenericReference<>(data.getExpenseCategoryId());
 
             // create assignment
-            harvest.userAssignments().create(projectReference, ImmutableUserAssignment.builder()
-                    .user(userReference).build());
-            projectAssignment = harvest.projectAssignments().list(userReference).get(0);
+            try {
+                harvest.userAssignments().create(projectReference, ImmutableUserAssignment.builder()
+                        .user(userReference).build());
+                projectAssignment = harvest.projectAssignments().list(userReference).get(0);
+            } catch (NotFoundException e) {
+                log.error("", e);
+                // project should exist, try to confirm for debug reasons
+                Project project = harvest.projects().get(projectReference);
+            }
 
         } catch (Throwable t) {
             log.error("", t);
