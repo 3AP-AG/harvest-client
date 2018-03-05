@@ -1,29 +1,13 @@
 package ch.aaap.harvestclient.domain.reference.dto;
 
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
+
 import ch.aaap.harvestclient.domain.Estimate;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
-public class EstimateReferenceDto implements Reference<Estimate> {
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+public interface EstimateReferenceDto extends Reference<Estimate> {
 
-    private Long id;
-
-    public EstimateReferenceDto(long id) {
-        this.id = id;
-    }
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "EstimateReferenceDto{" +
-                "id=" + id +
-                '}';
-    }
 }

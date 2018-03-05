@@ -1,13 +1,14 @@
 package ch.aaap.harvestclient.domain.reference.dto;
 
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
+
 import ch.aaap.harvestclient.domain.Invoice;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
-public class InvoiceReferenceDto extends BaseReferenceDto implements Reference<Invoice> {
-    public InvoiceReferenceDto() {
-    }
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+public interface InvoiceReferenceDto extends Reference<Invoice> {
 
-    public InvoiceReferenceDto(long id) {
-        super(id);
-    }
+    Long getNumber();
 }
