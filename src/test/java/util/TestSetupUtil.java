@@ -22,8 +22,10 @@ public class TestSetupUtil {
 
     private static class LazyHolder {
         static final Harvest adminAccess = new Harvest(ConfigFactory.load("admin1"));
-        static final Harvest anotherAdminAccess = new Harvest(ConfigFactory.load("admin2"));
+    }
 
+    private static class LazyHolder2 {
+        static final Harvest anotherAdminAccess = new Harvest(ConfigFactory.load("admin2"));
     }
 
     public static Harvest getAdminAccess() {
@@ -31,7 +33,7 @@ public class TestSetupUtil {
     }
 
     public static Harvest getAnotherAdminAccess() {
-        return LazyHolder.anotherAdminAccess;
+        return LazyHolder2.anotherAdminAccess;
     }
 
     public static User getRandomUserCreationInfo() {
