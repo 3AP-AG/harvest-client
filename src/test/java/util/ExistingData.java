@@ -90,6 +90,7 @@ public class ExistingData {
                 log.error("", e);
                 // project should exist, try to confirm for debug reasons
                 Project project = harvest.projects().get(projectReference);
+                throw e;
             }
 
         } catch (Throwable t) {
