@@ -97,10 +97,6 @@ public class Harvest {
     public Harvest(Config config) {
 
         this.config = config;
-
-        // TODO we might need to allow missing account id for oauth2
-        config.checkValid(ConfigFactory.defaultReference(), "harvest");
-
         this.baseUrl = config.getString("harvest.baseUrl");
         this.userAgent = config.getString("harvest.userAgent");
         this.authToken = config.getString("harvest.auth.token");
@@ -205,7 +201,10 @@ public class Harvest {
             public okhttp3.Response intercept(Chain chain) throws IOException {
                 Request.Builder ongoing = chain.request().newBuilder();
                 ongoing.addHeader("Authorization", "Bearer " + authToken);
-                ongoing.addHeader("Harvest-Account-id", accountId);
+                // optional, only needed for personal tokens
+                if (!accountId.isEmpty()) {
+                    ongoing.addHeader("Harvest-Account-id", accountId);
+                }
                 ongoing.addHeader("User-Agent", userAgent);
                 return chain.proceed(ongoing.build());
             }
