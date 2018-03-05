@@ -18,7 +18,7 @@ public class UsersApiExample {
 
     private static final Logger log = LoggerFactory.getLogger(UsersApiExample.class);
 
-    private final Harvest harvest = new Harvest(ConfigFactory.load("admin"));
+    private final Harvest harvest = new Harvest(ConfigFactory.load("admin1"));
 
     @Test
     public void listUsers() {
