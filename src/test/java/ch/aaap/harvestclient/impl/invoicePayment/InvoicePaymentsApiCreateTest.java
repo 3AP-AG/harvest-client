@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.InvoicePaymentsApi;
 import ch.aaap.harvestclient.core.Harvest;
 import ch.aaap.harvestclient.domain.ImmutableInvoice;
@@ -20,6 +21,7 @@ import ch.aaap.harvestclient.domain.InvoicePayment;
 import util.ExistingData;
 import util.TestSetupUtil;
 
+@HarvestTest
 public class InvoicePaymentsApiCreateTest {
 
     private static final Harvest harvest = TestSetupUtil.getAdminAccess();

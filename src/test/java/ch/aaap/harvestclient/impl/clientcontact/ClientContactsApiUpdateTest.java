@@ -19,7 +19,7 @@ import util.ExistingData;
 import util.TestSetupUtil;
 
 @HarvestTest
-class ClientContactContactApiUpdateTest {
+class ClientContactsApiUpdateTest {
 
     private static final ClientContactsApi clientContactsApi = TestSetupUtil.getAdminAccess().clientContacts();
     private ClientContact clientContact;
