@@ -1,6 +1,7 @@
 package ch.aaap.harvestclient.impl.invoice;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
@@ -11,9 +12,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.InvoicesApi;
 import ch.aaap.harvestclient.api.filter.InvoiceFilter;
-import ch.aaap.harvestclient.domain.Client;
-import ch.aaap.harvestclient.domain.ImmutableInvoice;
-import ch.aaap.harvestclient.domain.Invoice;
+import ch.aaap.harvestclient.core.Harvest;
+import ch.aaap.harvestclient.domain.*;
 import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import util.ExistingData;
@@ -22,7 +22,8 @@ import util.TestSetupUtil;
 @HarvestTest
 class InvoicesApiListTest {
 
-    private static final InvoicesApi invoicesApi = TestSetupUtil.getAdminAccess().invoices();
+    private static final Harvest harvest = TestSetupUtil.getAdminAccess();
+    private static final InvoicesApi invoicesApi = harvest.invoices();
     private Invoice anotherInvoice;
     private Invoice invoice;
     private Reference<Client> clientReference = ExistingData.getInstance().getClientReference();
@@ -111,4 +112,77 @@ class InvoicesApiListTest {
 
     }
 
+    @Test
+    void listByProject() {
+        Reference<Project> project = ExistingData.getInstance().getProjectReference();
+
+        Invoice creationInfo = ImmutableInvoice.builder()
+                .client(clientReference)
+                .addInvoiceItem(ImmutableInvoiceItem.builder()
+                        .kind(ExistingData.getInstance().getInvoiceItemCategory().getName())
+                        .unitPrice(1.)
+                        .project(project)
+                        .build())
+                .build();
+        invoice = invoicesApi.create(creationInfo);
+
+        Invoice anotherCreationInfo = ImmutableInvoice.builder()
+                .client(clientReference)
+                .build();
+        anotherInvoice = invoicesApi.create(anotherCreationInfo);
+
+        InvoiceFilter filter = new InvoiceFilter();
+        filter.setProjectReference(project);
+
+        List<Invoice> invoices = invoicesApi.list(filter);
+        assertThat(invoices).contains(invoice);
+        assertThat(invoices).doesNotContain(anotherInvoice);
+
+    }
+
+    @Test
+    void listByDateRange() {
+
+        Reference<Project> project = ExistingData.getInstance().getProjectReference();
+
+        Invoice creationInfo = ImmutableInvoice.builder()
+                .client(clientReference)
+                .addInvoiceItem(ImmutableInvoiceItem.builder()
+                        .kind(ExistingData.getInstance().getInvoiceItemCategory().getName())
+                        .unitPrice(1.)
+                        .project(project)
+                        .build())
+                .issueDate(LocalDate.of(2000, 1, 5))
+                .build();
+        invoice = invoicesApi.create(creationInfo);
+
+        Invoice anotherCreationInfo = ImmutableInvoice.builder()
+                .client(clientReference)
+                .issueDate(LocalDate.of(2000, 1, 10))
+                .build();
+        anotherInvoice = invoicesApi.create(anotherCreationInfo);
+
+        InvoiceFilter filter = new InvoiceFilter();
+        filter.setFrom(LocalDate.of(2000, 1, 4));
+        List<Invoice> invoices = invoicesApi.list(filter);
+
+        assertThat(invoices).contains(invoice);
+        assertThat(invoices).contains(anotherInvoice);
+
+        filter.setFrom(LocalDate.of(2000, 1, 6));
+        invoices = invoicesApi.list(filter);
+        assertThat(invoices).doesNotContain(invoice);
+        assertThat(invoices).contains(anotherInvoice);
+
+        filter.setTo(LocalDate.of(2000, 1, 9));
+        invoices = invoicesApi.list(filter);
+        assertThat(invoices).doesNotContain(invoice);
+        assertThat(invoices).doesNotContain(anotherInvoice);
+
+        filter.setTo(LocalDate.of(2000, 1, 11));
+        invoices = invoicesApi.list(filter);
+        assertThat(invoices).doesNotContain(invoice);
+        assertThat(invoices).contains(anotherInvoice);
+
+    }
 }
