@@ -74,7 +74,7 @@ class ProjectsApiListTest {
     @Test
     void listByActive(TestInfo testInfo) {
 
-        project = harvest.projects().create(ImmutableProject.builder()
+        project = projectsApi.create(ImmutableProject.builder()
                 .name("Project for " + testInfo.getDisplayName())
                 .billable(true)
                 .billBy(Project.BillingMethod.PROJECT)
@@ -94,7 +94,7 @@ class ProjectsApiListTest {
     @Test
     void listByClient(TestInfo testInfo) {
 
-        project = harvest.projects().create(ImmutableProject.builder()
+        project = projectsApi.create(ImmutableProject.builder()
                 .name("Project for " + testInfo.getDisplayName())
                 .billable(true)
                 .billBy(Project.BillingMethod.PROJECT)

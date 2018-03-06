@@ -33,11 +33,14 @@ public class ExistingData {
     private final Reference<Client> anotherClientReference;
 
     private final Reference<Project> projectReference;
-    private final Reference<User> userReference;
 
+    private final Reference<Project> anotherProjectReference;
+
+    private final Reference<User> userReference;
     private final Reference<User> anotherUserReference;
 
     private final Reference<TimeEntry> timeEntryReference;
+
     private final EstimateItem.Category estimateItemCategory;
     private final EstimateItem.Category anotherEstimateItemCategory;
 
@@ -65,6 +68,8 @@ public class ExistingData {
             anotherClientReference = new GenericReference<>(data.getAnotherClientId());
 
             projectReference = new GenericReference<>(data.getProjectId());
+            anotherProjectReference = new GenericReference<>(data.getAnotherProjectId());
+
             userReference = new GenericReference<>(data.getUserId());
             anotherUserReference = new GenericReference<>(data.getAnotherUserId());
 
@@ -206,5 +211,9 @@ public class ExistingData {
 
     public Reference<ExpenseCategory> getExpenseCategory() {
         return expenseCategory;
+    }
+
+    public Reference<Project> getAnotherProjectReference() {
+        return anotherProjectReference;
     }
 }
