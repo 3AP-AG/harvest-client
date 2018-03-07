@@ -4,11 +4,17 @@ import java.util.List;
 
 import ch.aaap.harvestclient.api.filter.TaskFilter;
 import ch.aaap.harvestclient.domain.Task;
-import ch.aaap.harvestclient.domain.param.TaskCreationInfo;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.TaskUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
-public interface TasksApi {
+/**
+ * @see <a href= "https://help.getharvest.com/api-v2/tasks-api/tasks/tasks/">
+ *      Tasks API on Harvest</a>
+ *
+ */
+@Api.Permission(Api.Role.ADMIN)
+public interface TasksApi extends Api.Simple<Task> {
     /**
      *
      * @param filter
@@ -19,22 +25,42 @@ public interface TasksApi {
     List<Task> list(TaskFilter filter);
 
     /**
+     * @param filter
+     *            filtering options
+     * @param page
+     *            the page number
+     * @param perPage
+     *            how many results to return for one page. Max 100
+     * @return a list of all Tasks in the account, sorted by creation date, newest
+     *         first.
+     */
+    Pagination<Task> list(TaskFilter filter, int page, int perPage);
+
+    /**
      * Return an existing Task.
      *
      * @param taskReference
      *            a reference to an existing Task
      * @return the full Task object
      */
+    @Override
     Task get(Reference<Task> taskReference);
 
     /**
-     * Create a new Task
+     * Create a new Task. Example:
+     * 
+     * <pre>
+     * Task task = harvest.tasks().create(ImmutableTask.builder()
+     *         .name("task name")
+     *         .build());
+     * </pre>
      *
      * @param creationInfo
      *            creation information
      * @return the created Task
      */
-    Task create(TaskCreationInfo creationInfo);
+    @Override
+    Task create(Task creationInfo);
 
     /**
      * Updates the specific task by setting the values of the parameters passed. Any
@@ -55,6 +81,7 @@ public interface TasksApi {
      * @param taskReference
      *            a reference to the Task to be deleted
      */
+    @Override
     void delete(Reference<Task> taskReference);
 
 }

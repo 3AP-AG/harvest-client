@@ -4,11 +4,17 @@ import java.util.List;
 
 import ch.aaap.harvestclient.api.filter.ClientFilter;
 import ch.aaap.harvestclient.domain.Client;
-import ch.aaap.harvestclient.domain.param.ClientCreationInfo;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.ClientUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
-public interface ClientsApi {
+/**
+ * @see <a href=
+ *      "https://help.getharvest.com/api-v2/clients-api/clients/clients/">Clients
+ *      API on Harvest</a>
+ */
+@Api.Permission(Api.Role.ADMIN)
+public interface ClientsApi extends Api.Simple<Client> {
 
     /**
      *
@@ -20,12 +26,28 @@ public interface ClientsApi {
     List<Client> list(ClientFilter filter);
 
     /**
+     * Return a list of clients, sorted by creation date, newest first. Use the
+     * filter object to filter the list. Page and perPage allow controlling how many
+     * results to return.
+     *
+     * @param filter
+     *            filtering options
+     * @param page
+     *            the page number
+     * @param perPage
+     *            how many results to return for one page. Max 100
+     * @return a (filtered) list of Client
+     */
+    Pagination<Client> list(ClientFilter filter, int page, int perPage);
+
+    /**
      * Return an existing Client.
      *
      * @param clientReference
      *            a reference to an existing Client
      * @return the full Client object
      */
+    @Override
     Client get(Reference<Client> clientReference);
 
     /**
@@ -35,7 +57,8 @@ public interface ClientsApi {
      *            creation information
      * @return the created Client
      */
-    Client create(ClientCreationInfo creationInfo);
+    @Override
+    Client create(Client creationInfo);
 
     /**
      * Updates the specific client by setting the values of the parameters passed.
@@ -55,6 +78,7 @@ public interface ClientsApi {
      * @param clientReference
      *            a reference to the Client to be deleted
      */
+    @Override
     void delete(Reference<Client> clientReference);
 
 }

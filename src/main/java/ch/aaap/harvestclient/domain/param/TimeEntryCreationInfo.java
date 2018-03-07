@@ -2,66 +2,34 @@ package ch.aaap.harvestclient.domain.param;
 
 import java.time.LocalDate;
 
+import javax.annotation.Nullable;
+
+import com.google.gson.annotations.SerializedName;
+
+import ch.aaap.harvestclient.domain.ExternalService;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.Task;
 import ch.aaap.harvestclient.domain.User;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
-public abstract class TimeEntryCreationInfo {
+public interface TimeEntryCreationInfo {
 
-    private Long userId;
+    @Nullable
+    @SerializedName(value = "user_id", alternate = "user")
+    Reference<User> getUserReference();
 
-    private Long projectId;
+    @SerializedName(value = "project_id", alternate = "project")
+    Reference<Project> getProjectReference();
 
-    private Long taskId;
+    @SerializedName(value = "task_id", alternate = "task")
+    Reference<Task> getTaskReference();
 
-    private LocalDate spentDate;
+    LocalDate getSpentDate();
 
-    private String notes;
+    @Nullable
+    String getNotes();
 
-    private Object externalReference;
-
-    public TimeEntryCreationInfo(Reference<Project> projectReference, Reference<Task> taskReference,
-            LocalDate spentDate) {
-        projectId = projectReference.getId();
-        taskId = taskReference.getId();
-        this.spentDate = spentDate;
-    }
-
-    public void setUserReference(Reference<User> userReference) {
-        userId = userReference.getId();
-    }
-
-    public void setProjectReference(Reference<Project> projectReference) {
-        projectId = projectReference.getId();
-    }
-
-    public void setTaskReference(Reference<Task> taskReference) {
-        taskId = taskReference.getId();
-    }
-
-    public LocalDate getSpentDate() {
-        return spentDate;
-    }
-
-    public void setSpentDate(LocalDate spentDate) {
-        this.spentDate = spentDate;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public Object getExternalReference() {
-        return externalReference;
-    }
-
-    public void setExternalReference(Object externalReference) {
-        this.externalReference = externalReference;
-    }
+    @Nullable
+    ExternalService getExternalReference();
 
 }

@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
+import ch.aaap.harvestclient.api.filter.base.ListFilter;
 import ch.aaap.harvestclient.domain.Client;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
@@ -11,7 +12,7 @@ import ch.aaap.harvestclient.domain.reference.Reference;
  * Ways to filter a Project list. Not setting a field means no filtering on the
  * field will be done.
  */
-public class ProjectFilter {
+public class ProjectFilter implements ListFilter {
 
     /**
      * Pass true to only return active projects and false to return inactive
@@ -29,6 +30,7 @@ public class ProjectFilter {
      */
     private Instant updatedSince;
 
+    @Override
     public Map<String, Object> toMap() {
 
         Map<String, Object> map = new HashMap<>();

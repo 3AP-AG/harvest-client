@@ -3,15 +3,15 @@ package ch.aaap.harvestclient.service;
 import java.time.Instant;
 
 import ch.aaap.harvestclient.domain.User;
-import ch.aaap.harvestclient.domain.pagination.PaginatedUser;
-import ch.aaap.harvestclient.domain.param.UserCreationInfo;
+import ch.aaap.harvestclient.domain.pagination.PaginatedList;
+import ch.aaap.harvestclient.domain.param.UserUpdateInfo;
 import retrofit2.Call;
 import retrofit2.http.*;
 
 public interface UserService {
 
     @GET("users")
-    Call<PaginatedUser> list(@Query("is_active") Boolean isActive, @Query("updated_since") Instant updatedSince,
+    Call<PaginatedList> list(@Query("is_active") Boolean isActive, @Query("updated_since") Instant updatedSince,
             @Query("page") int page, @Query("per_page") int perPage);
 
     @GET("users/{userId}")
@@ -21,10 +21,10 @@ public interface UserService {
     Call<User> getSelf();
 
     @POST("users")
-    Call<User> create(@Body UserCreationInfo userCreationInfo);
+    Call<User> create(@Body User userCreationInfo);
 
     @PATCH("users/{userId}")
-    Call<User> update(@Path("userId") long userId, @Body User toChange);
+    Call<User> update(@Path("userId") long userId, @Body UserUpdateInfo toChange);
 
     @DELETE("users/{userId}")
     Call<Void> delete(@Path("userId") long userId);

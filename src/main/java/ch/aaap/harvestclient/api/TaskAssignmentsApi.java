@@ -5,14 +5,20 @@ import java.util.List;
 import ch.aaap.harvestclient.api.filter.TaskAssignmentFilter;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.TaskAssignment;
-import ch.aaap.harvestclient.domain.param.TaskAssignmentCreationInfo;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.TaskAssignmentUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
 /**
  * API for TaskAssignments. All methods are specific to a given project
+ * 
+ * @see <a href=
+ *      "https://help.getharvest.com/api-v2/projects-api/projects/task-assignments/">
+ *      Project Task Assignments API on Harvest</a>
+ *
  */
-public interface TaskAssignmentsApi {
+@Api.Permission(Api.Role.PROJECT_MANAGER)
+public interface TaskAssignmentsApi extends Api.GetNested<Project, TaskAssignment> {
 
     /**
      *
@@ -26,6 +32,22 @@ public interface TaskAssignmentsApi {
     List<TaskAssignment> list(Reference<Project> projectReference, TaskAssignmentFilter filter);
 
     /**
+     *
+     * @param filter
+     *            filtering options
+     * @param projectReference
+     *            the project containing the assignments
+     * @param page
+     *            the page number
+     * @param perPage
+     *            how many results to return for one page. Max 100
+     * @return a list of all TaskAssignments in the project, sorted by creation
+     *         date, newest first.
+     */
+    Pagination<TaskAssignment> list(Reference<Project> projectReference, TaskAssignmentFilter filter, int page,
+            int perPage);
+
+    /**
      * Return an existing TaskAssignment.
      * 
      * @param projectReference
@@ -34,6 +56,7 @@ public interface TaskAssignmentsApi {
      *            a reference to an existing TaskAssignment
      * @return the full TaskAssignment object
      */
+    @Override
     TaskAssignment get(Reference<Project> projectReference, Reference<TaskAssignment> taskAssignmentReference);
 
     /**
@@ -45,7 +68,7 @@ public interface TaskAssignmentsApi {
      *            creation information
      * @return the created Task
      */
-    TaskAssignment create(Reference<Project> projectReference, TaskAssignmentCreationInfo creationInfo);
+    TaskAssignment create(Reference<Project> projectReference, TaskAssignment creationInfo);
 
     /**
      * Updates the specific TaskAssignment by setting the values of the parameters
@@ -63,9 +86,8 @@ public interface TaskAssignmentsApi {
             TaskAssignmentUpdateInfo updateInfo);
 
     /**
-     * Delete an existing Task. Only possible if no time entries are associated with
-     * it
-     * 
+     * Delete an existing TaskAssignment.
+     *
      * @param projectReference
      *            the project that contains the assignment
      * @param taskAssignmentReference

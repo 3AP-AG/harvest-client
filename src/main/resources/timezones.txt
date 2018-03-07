@@ -1,0 +1,150 @@
+American Samoa	Pacific/Pago_Pago	-11:00	-11:00
+International Date Line West	Pacific/Midway	-11:00	-11:00
+Midway Island	Pacific/Midway	-11:00	-11:00
+Hawaii	Pacific/Honolulu	-10:00	-10:00
+Alaska	America/Juneau	-09:00	-08:00
+Pacific Time (US & Canada)	America/Los_Angeles	-08:00	-07:00
+Tijuana	America/Tijuana	-08:00	-07:00
+Arizona	America/Phoenix	-07:00	-07:00
+Chihuahua	America/Chihuahua	-07:00	-06:00
+Mazatlan	America/Mazatlan	-07:00	-06:00
+Mountain Time (US & Canada)	America/Denver	-07:00	-06:00
+Central America	America/Guatemala	-06:00	-06:00
+Central Time (US & Canada)	America/Chicago	-06:00	-05:00
+Guadalajara	America/Mexico_City	-06:00	-05:00
+Mexico City	America/Mexico_City	-06:00	-05:00
+Monterrey	America/Monterrey	-06:00	-05:00
+Saskatchewan	America/Regina	-06:00	-06:00
+Bogota	America/Bogota	-05:00	-05:00
+Eastern Time (US & Canada)	America/New_York	-05:00	-04:00
+Indiana (East)	America/Indiana/Indianapolis	-05:00	-04:00
+Lima	America/Lima	-05:00	-05:00
+Quito	America/Lima	-05:00	-05:00
+Atlantic Time (Canada)	America/Halifax	-04:00	-03:00
+Caracas	America/Caracas	-04:00	-04:00
+Georgetown	America/Guyana	-04:00	-04:00
+La Paz	America/La_Paz	-04:00	-04:00
+Santiago	America/Santiago	-03:00	-04:00
+Newfoundland	America/St_Johns	-03:30	-02:30
+Brasilia	America/Sao_Paulo	-02:00	-03:00
+Buenos Aires	America/Argentina/Buenos_Aires	-03:00	-03:00
+Greenland	America/Godthab	-03:00	-02:00
+Montevideo	America/Montevideo	-03:00	-03:00
+Mid-Atlantic	Atlantic/South_Georgia	-02:00	-02:00
+Azores	Atlantic/Azores	-01:00	+00:00
+Cape Verde Is.	Atlantic/Cape_Verde	-01:00	-01:00
+Casablanca	Africa/Casablanca	+00:00	+01:00
+Dublin	Europe/Dublin	+00:00	+01:00
+Edinburgh	Europe/London	+00:00	+01:00
+Lisbon	Europe/Lisbon	+00:00	+01:00
+London	Europe/London	+00:00	+01:00
+Monrovia	Africa/Monrovia	+00:00	+00:00
+UTC	Etc/UTC	+00:00	+00:00
+Amsterdam	Europe/Amsterdam	+01:00	+02:00
+Belgrade	Europe/Belgrade	+01:00	+02:00
+Berlin	Europe/Berlin	+01:00	+02:00
+Bern	Europe/Zurich	+01:00	+02:00
+Bratislava	Europe/Bratislava	+01:00	+02:00
+Brussels	Europe/Brussels	+01:00	+02:00
+Budapest	Europe/Budapest	+01:00	+02:00
+Copenhagen	Europe/Copenhagen	+01:00	+02:00
+Ljubljana	Europe/Ljubljana	+01:00	+02:00
+Madrid	Europe/Madrid	+01:00	+02:00
+Paris	Europe/Paris	+01:00	+02:00
+Prague	Europe/Prague	+01:00	+02:00
+Rome	Europe/Rome	+01:00	+02:00
+Sarajevo	Europe/Sarajevo	+01:00	+02:00
+Skopje	Europe/Skopje	+01:00	+02:00
+Stockholm	Europe/Stockholm	+01:00	+02:00
+Vienna	Europe/Vienna	+01:00	+02:00
+Warsaw	Europe/Warsaw	+01:00	+02:00
+West Central Africa	Africa/Algiers	+01:00	+01:00
+Zagreb	Europe/Zagreb	+01:00	+02:00
+Zurich	Europe/Zurich	+01:00	+02:00
+Athens	Europe/Athens	+02:00	+03:00
+Bucharest	Europe/Bucharest	+02:00	+03:00
+Cairo	Africa/Cairo	+02:00	+02:00
+Harare	Africa/Harare	+02:00	+02:00
+Helsinki	Europe/Helsinki	+02:00	+03:00
+Jerusalem	Asia/Jerusalem	+02:00	+03:00
+Kaliningrad	Europe/Kaliningrad	+02:00	+02:00
+Kyiv	Europe/Kiev	+02:00	+03:00
+Pretoria	Africa/Johannesburg	+02:00	+02:00
+Riga	Europe/Riga	+02:00	+03:00
+Sofia	Europe/Sofia	+02:00	+03:00
+Tallinn	Europe/Tallinn	+02:00	+03:00
+Vilnius	Europe/Vilnius	+02:00	+03:00
+Baghdad	Asia/Baghdad	+03:00	+03:00
+Istanbul	Europe/Istanbul	+03:00	+03:00
+Kuwait	Asia/Kuwait	+03:00	+03:00
+Minsk	Europe/Minsk	+03:00	+03:00
+Moscow	Europe/Moscow	+03:00	+03:00
+Nairobi	Africa/Nairobi	+03:00	+03:00
+Riyadh	Asia/Riyadh	+03:00	+03:00
+St. Petersburg	Europe/Moscow	+03:00	+03:00
+Volgograd	Europe/Volgograd	+03:00	+03:00
+Tehran	Asia/Tehran	+03:30	+04:30
+Abu Dhabi	Asia/Muscat	+04:00	+04:00
+Baku	Asia/Baku	+04:00	+04:00
+Muscat	Asia/Muscat	+04:00	+04:00
+Samara	Europe/Samara	+04:00	+04:00
+Tbilisi	Asia/Tbilisi	+04:00	+04:00
+Yerevan	Asia/Yerevan	+04:00	+04:00
+Kabul	Asia/Kabul	+04:30	+04:30
+Ekaterinburg	Asia/Yekaterinburg	+05:00	+05:00
+Islamabad	Asia/Karachi	+05:00	+05:00
+Karachi	Asia/Karachi	+05:00	+05:00
+Tashkent	Asia/Tashkent	+05:00	+05:00
+Chennai	Asia/Kolkata	+05:30	+05:30
+Kolkata	Asia/Kolkata	+05:30	+05:30
+Mumbai	Asia/Kolkata	+05:30	+05:30
+New Delhi	Asia/Kolkata	+05:30	+05:30
+Sri Jayawardenepura	Asia/Colombo	+05:30	+05:30
+Kathmandu	Asia/Kathmandu	+05:45	+05:45
+Almaty	Asia/Almaty	+06:00	+06:00
+Astana	Asia/Dhaka	+06:00	+06:00
+Dhaka	Asia/Dhaka	+06:00	+06:00
+Urumqi	Asia/Urumqi	+06:00	+06:00
+Rangoon	Asia/Rangoon	+06:30	+06:30
+Bangkok	Asia/Bangkok	+07:00	+07:00
+Hanoi	Asia/Bangkok	+07:00	+07:00
+Jakarta	Asia/Jakarta	+07:00	+07:00
+Krasnoyarsk	Asia/Krasnoyarsk	+07:00	+07:00
+Novosibirsk	Asia/Novosibirsk	+07:00	+07:00
+Beijing	Asia/Shanghai	+08:00	+08:00
+Chongqing	Asia/Chongqing	+08:00	+08:00
+Hong Kong	Asia/Hong_Kong	+08:00	+08:00
+Irkutsk	Asia/Irkutsk	+08:00	+08:00
+Kuala Lumpur	Asia/Kuala_Lumpur	+08:00	+08:00
+Perth	Australia/Perth	+08:00	+08:00
+Singapore	Asia/Singapore	+08:00	+08:00
+Taipei	Asia/Taipei	+08:00	+08:00
+Ulaanbaatar	Asia/Ulaanbaatar	+08:00	+08:00
+Osaka	Asia/Tokyo	+09:00	+09:00
+Sapporo	Asia/Tokyo	+09:00	+09:00
+Seoul	Asia/Seoul	+09:00	+09:00
+Tokyo	Asia/Tokyo	+09:00	+09:00
+Yakutsk	Asia/Yakutsk	+09:00	+09:00
+Adelaide	Australia/Adelaide	+10:30	+09:30
+Darwin	Australia/Darwin	+09:30	+09:30
+Brisbane	Australia/Brisbane	+10:00	+10:00
+Canberra	Australia/Melbourne	+11:00	+10:00
+Guam	Pacific/Guam	+10:00	+10:00
+Hobart	Australia/Hobart	+11:00	+10:00
+Melbourne	Australia/Melbourne	+11:00	+10:00
+Port Moresby	Pacific/Port_Moresby	+10:00	+10:00
+Sydney	Australia/Sydney	+11:00	+10:00
+Vladivostok	Asia/Vladivostok	+10:00	+10:00
+Magadan	Asia/Magadan	+11:00	+11:00
+New Caledonia	Pacific/Noumea	+11:00	+11:00
+Solomon Is.	Pacific/Guadalcanal	+11:00	+11:00
+Srednekolymsk	Asia/Srednekolymsk	+11:00	+11:00
+Auckland	Pacific/Auckland	+13:00	+12:00
+Fiji	Pacific/Fiji	+13:00	+12:00
+Kamchatka	Asia/Kamchatka	+12:00	+12:00
+Marshall Is.	Pacific/Majuro	+12:00	+12:00
+Wellington	Pacific/Auckland	+13:00	+12:00
+Chatham Is.	Pacific/Chatham	+13:45	+12:45
+Nuku’alofa	Pacific/Tongatapu	+13:00	+13:00
+Samoa	Pacific/Apia	+14:00	+13:00
+Tokelau Is.	Pacific/Fakaofo	+13:00	+13:00

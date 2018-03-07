@@ -1,22 +1,69 @@
 package ch.aaap.harvestclient.domain;
 
-import java.time.Instant;
 import java.util.List;
 
-public class EstimateMessage {
-    private Long id;
-    private String sentBy;
-    private String sentByEmail;
-    private String sentFrom;
-    private String sentFromEmail;
-    private List<EstimateMessageRecipient> invoiceMessageRecipients;
+import javax.annotation.Nullable;
 
-    private String subject;
-    private String body;
-    private Boolean sendMeACopy;
-    private Boolean eventType;
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
 
-    private Instant createdAt;
-    private Instant updatedAt;
+import com.google.gson.annotations.SerializedName;
+
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+@Value.Style.Depluralize
+public interface EstimateMessage extends BaseObject<EstimateMessage> {
+    enum EventType {
+
+        @SerializedName("send")
+        SEND,
+
+        @SerializedName("accept")
+        ACCEPT,
+
+        @SerializedName("decline")
+        DECLINE,
+
+        @SerializedName("re-open")
+        RE_OPEN,
+
+        @SerializedName("view")
+        VIEW,
+
+        @SerializedName("invoice")
+        INVOICE
+    }
+
+    @Nullable
+    String getSentBy();
+
+    @Nullable
+    String getSentByEmail();
+
+    @Nullable
+    String getSentFrom();
+
+    @Nullable
+    String getSentFromEmail();
+
+    @SerializedName("recipients")
+    List<MessageRecipient> getMessageRecipients();
+
+    @Nullable
+    String getSubject();
+
+    /**
+     * max length = 16,777,215
+     * 
+     * @return the current value
+     */
+    @Nullable
+    String getBody();
+
+    @Nullable
+    Boolean getSendMeACopy();
+
+    @Nullable
+    EventType getEventType();
 
 }

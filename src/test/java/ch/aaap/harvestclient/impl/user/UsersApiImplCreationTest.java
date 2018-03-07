@@ -11,15 +11,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.UsersApi;
+import ch.aaap.harvestclient.domain.ImmutableUser;
 import ch.aaap.harvestclient.domain.User;
-import ch.aaap.harvestclient.domain.param.UserCreationInfo;
 import util.TestSetupUtil;
 
 @HarvestTest
 class UsersApiImplCreationTest {
 
     private static final UsersApi api = TestSetupUtil.getAdminAccess().users();
-    private UserCreationInfo randomUserCreationInfo;
+    private User randomUserCreationInfo;
     private User temporaryUser;
 
     @BeforeEach
@@ -50,11 +50,12 @@ class UsersApiImplCreationTest {
     @Test
     // fixed by Harvest on 29.1.18
     void createProjectManager() {
-        UserCreationInfo userInfo = randomUserCreationInfo;
-        userInfo.setProjectManager(true);
-        userInfo.setCanSeeRates(true);
-        userInfo.setCanCreateProjects(true);
-        userInfo.setCanCreateInvoices(true);
+        User userInfo = ImmutableUser.builder().from(randomUserCreationInfo)
+                .projectManager(true)
+                .canSeeRates(true)
+                .canCreateProjects(true)
+                .canCreateInvoices(true)
+                .build();
 
         User user = api.create(userInfo);
         // insure cleanup
@@ -69,18 +70,19 @@ class UsersApiImplCreationTest {
     @Test
     void createUserFullDetails() {
 
-        UserCreationInfo userInfo = randomUserCreationInfo;
-        userInfo.setTimezone("Alaska");
-        userInfo.setTelephone("0800 800 288");
-        userInfo.setHasAccessToAllFutureProjects(true);
-        userInfo.setProjectManager(false);
-        userInfo.setCanSeeRates(false);
-        userInfo.setCanCreateProjects(false);
-        userInfo.setCanCreateInvoices(false);
-        userInfo.setWeeklyCapacity(40, TimeUnit.HOURS);
-        userInfo.setDefaultHourlyRate(120.);
-        userInfo.setCostRate(220.);
-        userInfo.setRoles(Arrays.asList("developer", "manager"));
+        User userInfo = ImmutableUser.builder().from(randomUserCreationInfo)
+                .timezone("Alaska")
+                .telephone("0800 800 288")
+                .hasAccessToAllFutureProjects(true)
+                .projectManager(false)
+                .canSeeRates(false)
+                .canCreateProjects(false)
+                .canCreateInvoices(false)
+                .weeklyCapacity(TimeUnit.HOURS.toSeconds(40))
+                .defaultHourlyRate(120.)
+                .costRate(220.)
+                .roles(Arrays.asList("developer", "manager"))
+                .build();
 
         User user = api.create(userInfo);
         // insure cleanup

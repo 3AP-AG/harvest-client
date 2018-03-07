@@ -1,6 +1,5 @@
 package ch.aaap.harvestclient.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,7 +9,9 @@ import org.slf4j.LoggerFactory;
 import ch.aaap.harvestclient.api.RolesApi;
 import ch.aaap.harvestclient.domain.Role;
 import ch.aaap.harvestclient.domain.User;
-import ch.aaap.harvestclient.domain.pagination.PaginatedRole;
+import ch.aaap.harvestclient.domain.pagination.PaginatedList;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
+import ch.aaap.harvestclient.domain.param.ImmutableRoleInfo;
 import ch.aaap.harvestclient.domain.param.RoleInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.service.RoleService;
@@ -19,7 +20,6 @@ import retrofit2.Call;
 public class RolesApiImpl implements RolesApi {
 
     private static final Logger log = LoggerFactory.getLogger(RolesApiImpl.class);
-    private static final int PER_PAGE = 100;
 
     private final RoleService service;
 
@@ -29,21 +29,15 @@ public class RolesApiImpl implements RolesApi {
 
     @Override
     public List<Role> list() {
+        return Common.collect(this::list);
+    }
 
-        Integer nextPage = 1;
-
-        List<Role> roles = new ArrayList<>();
-
-        while (nextPage != null) {
-            log.debug("Getting page {} of roles list", nextPage);
-            Call<PaginatedRole> call = service.list(nextPage, PER_PAGE);
-            PaginatedRole paginatedRole = ExceptionHandler.callOrThrow(call);
-            roles.addAll(paginatedRole.getRoles());
-            nextPage = paginatedRole.getNextPage();
-        }
-
-        log.debug("Listed {} Roles: {}", roles.size(), roles);
-        return roles;
+    @Override
+    public Pagination<Role> list(int page, int perPage) {
+        log.debug("Getting page {} of roles list", page);
+        Call<PaginatedList> call = service.list(page, perPage);
+        PaginatedList pagination = ExceptionHandler.callOrThrow(call);
+        return Pagination.of(pagination, pagination.getRoles());
     }
 
     @Override
@@ -72,13 +66,14 @@ public class RolesApiImpl implements RolesApi {
     @Override
     public Role addUser(Reference<Role> roleReference, Reference<User> userReference) {
 
-        // TODO PERF could be optimized if we already receive a Role
-        Role role = get(roleReference);
+        Role role = getIfNeeded(roleReference);
 
-        RoleInfo roleInfo = new RoleInfo(role.getName());
-        List<Long> userIds = role.getUserIds().stream().map(Reference::getId).collect(Collectors.toList());
+        List<Long> userIds = role.getUserReferences().stream().map(Reference::getId).collect(Collectors.toList());
         userIds.add(userReference.getId());
-        roleInfo.setUserIds(userIds);
+        RoleInfo roleInfo = ImmutableRoleInfo.builder()
+                .name(role.getName())
+                .addAllUserIds(userIds)
+                .build();
 
         return update(roleReference, roleInfo);
 
@@ -87,13 +82,14 @@ public class RolesApiImpl implements RolesApi {
     @Override
     public Role removeUser(Reference<Role> roleReference, Reference<User> userReference) {
 
-        // TODO PERF could be optimized if we already receive a Role
-        Role role = get(roleReference);
+        Role role = getIfNeeded(roleReference);
 
-        RoleInfo roleInfo = new RoleInfo(role.getName());
-        List<Long> userIds = role.getUserIds().stream().map(Reference::getId).collect(Collectors.toList());
+        List<Long> userIds = role.getUserReferences().stream().map(Reference::getId).collect(Collectors.toList());
         userIds.remove(userReference.getId());
-        roleInfo.setUserIds(userIds);
+        RoleInfo roleInfo = ImmutableRoleInfo.builder()
+                .name(role.getName())
+                .addAllUserIds(userIds)
+                .build();
 
         return update(roleReference, roleInfo);
     }
@@ -103,5 +99,12 @@ public class RolesApiImpl implements RolesApi {
         log.debug("Deleting role {}", roleReference);
         Call<Void> call = service.delete(roleReference.getId());
         ExceptionHandler.callOrThrow(call);
+    }
+
+    private Role getIfNeeded(Reference<Role> roleReference) {
+        if (roleReference instanceof Role) {
+            return (Role) roleReference;
+        }
+        return get(roleReference);
     }
 }

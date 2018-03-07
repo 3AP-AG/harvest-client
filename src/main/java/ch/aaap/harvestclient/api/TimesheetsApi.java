@@ -4,12 +4,20 @@ import java.util.List;
 
 import ch.aaap.harvestclient.api.filter.TimeEntryFilter;
 import ch.aaap.harvestclient.domain.TimeEntry;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoDuration;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoTimestamp;
 import ch.aaap.harvestclient.domain.param.TimeEntryUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
-public interface TimesheetsApi {
+/**
+ * @see <a href=
+ *      "https://help.getharvest.com/api-v2/timesheets-api/timesheets/time-entries/">
+ *      Time Entries API on Harvest</a>
+ *
+ */
+@Api.Permission(value = Api.Role.NONE, onlySelf = true)
+public interface TimesheetsApi extends Api.Get<TimeEntry> {
 
     /**
      * Return a list of all TimeEntries, filtered by the TimeEntryFilter, sorted by
@@ -22,12 +30,28 @@ public interface TimesheetsApi {
     List<TimeEntry> list(TimeEntryFilter filter);
 
     /**
+     * Return a list of all TimeEntries, filtered by the TimeEntryFilter, sorted by
+     * creation date, newest first. Page and perPage allow controlling how many
+     * results to return.
+     * 
+     * @param filter
+     *            filtering options
+     * @param page
+     *            the page number
+     * @param perPage
+     *            how many results to return for one page. Max 100
+     * @return a list of all matching TimeEntry, newest first.
+     */
+    Pagination<TimeEntry> list(TimeEntryFilter filter, int page, int perPage);
+
+    /**
      * Retrieve an existing TimeEntry
      * 
      * @param timeEntryReference
      *            a reference to an the timeentry to retrieve
      * @return a Full TimeEntry object
      */
+    @Override
     TimeEntry get(Reference<TimeEntry> timeEntryReference);
 
     /**

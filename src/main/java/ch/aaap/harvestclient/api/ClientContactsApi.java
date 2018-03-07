@@ -4,16 +4,22 @@ import java.util.List;
 
 import ch.aaap.harvestclient.api.filter.ClientContactFilter;
 import ch.aaap.harvestclient.domain.ClientContact;
-import ch.aaap.harvestclient.domain.param.ClientContactCreationInfo;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.ClientContactUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
-public interface ClientContactsApi {
+/**
+ * @see <a href=
+ *      "https://help.getharvest.com/api-v2/clients-api/clients/contacts/">Client
+ *      Contacts API on Harvest</a>
+ */
+@Api.Permission(Api.Role.ADMIN)
+public interface ClientContactsApi extends Api.Simple<ClientContact> {
 
     /**
      * Return a list of clientContacts, sorted by creation date, newest first. Use
      * the filter object to filter the list.
-     *
+     * 
      * @param filter
      *            filtering options
      * @return a (filtered) list of ClientContacts
@@ -21,10 +27,26 @@ public interface ClientContactsApi {
     List<ClientContact> list(ClientContactFilter filter);
 
     /**
+     * Return a list of clientContacts, sorted by creation date, newest first. Use
+     * the filter object to filter the list. Page and perPage allow controlling how
+     * many results to return.
+     *
+     * @param filter
+     *            filtering options
+     * @param page
+     *            the page number
+     * @param perPage
+     *            how many results to return for one page. Max 100
+     * @return a (filtered) list of ClientContacts
+     */
+    Pagination<ClientContact> list(ClientContactFilter filter, int page, int perPage);
+
+    /**
      * @param clientContactReference
      *            a reference to an existing ClientContact
      * @return Return a full ClientContact object
      */
+    @Override
     ClientContact get(Reference<ClientContact> clientContactReference);
 
     /**
@@ -34,7 +56,8 @@ public interface ClientContactsApi {
      *            the creation options
      * @return the newly created ClientContact
      */
-    ClientContact create(ClientContactCreationInfo clientContactCreationInfo);
+    @Override
+    ClientContact create(ClientContact clientContactCreationInfo);
 
     /**
      * Updates an existing ClientContact with the properties set in
@@ -54,5 +77,6 @@ public interface ClientContactsApi {
      * @param clientContactReference
      *            a reference to an existing ClientContact to be deleted
      */
+    @Override
     void delete(Reference<ClientContact> clientContactReference);
 }

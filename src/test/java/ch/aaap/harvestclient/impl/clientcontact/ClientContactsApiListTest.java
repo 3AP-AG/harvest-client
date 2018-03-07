@@ -13,16 +13,18 @@ import ch.aaap.harvestclient.api.ClientContactsApi;
 import ch.aaap.harvestclient.api.filter.ClientContactFilter;
 import ch.aaap.harvestclient.domain.Client;
 import ch.aaap.harvestclient.domain.ClientContact;
-import ch.aaap.harvestclient.domain.param.ClientContactCreationInfo;
+import ch.aaap.harvestclient.domain.ImmutableClientContact;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import util.ExistingData;
 import util.TestSetupUtil;
 
 @HarvestTest
-class ClientContactContactsApiListTest {
+class ClientContactsApiListTest {
 
     private static final ClientContactsApi clientContactsApi = TestSetupUtil.getAdminAccess().clientContacts();
     private ClientContact clientContact;
-    private Client client = ExistingData.getInstance().getClient();
+    private Reference<Client> clientReference = ExistingData.getInstance().getClientReference();
 
     @AfterEach
     void afterEach() {
@@ -42,16 +44,33 @@ class ClientContactContactsApiListTest {
     }
 
     @Test
+    void listPaginated() {
+
+        Pagination<ClientContact> clientContacts = clientContactsApi.list(new ClientContactFilter(), 1, 1);
+
+        List<ClientContact> contacts = clientContacts.getList();
+
+        assertThat(contacts).hasSize(1);
+        assertThat(clientContacts.getNextPage()).isEqualTo(2);
+        assertThat(clientContacts.getPreviousPage()).isNull();
+        assertThat(clientContacts.getPerPage()).isEqualTo(1);
+        assertThat(clientContacts.getTotalPages()).isGreaterThanOrEqualTo(2);
+
+    }
+
+    @Test
     void listByClient() {
 
-        Client anotherClient = ExistingData.getInstance().getAnotherClient();
+        Reference<Client> anotherClientReference = ExistingData.getInstance().getAnotherClientReference();
 
-        ClientContactCreationInfo creationInfo = new ClientContactCreationInfo(anotherClient,
-                "inactive test ClientContact");
+        ClientContact creationInfo = ImmutableClientContact.builder()
+                .client(anotherClientReference)
+                .firstName("inactive test ClientContact")
+                .build();
         clientContact = clientContactsApi.create(creationInfo);
 
         ClientContactFilter filter = new ClientContactFilter();
-        filter.setClientReference(anotherClient);
+        filter.setClientReference(anotherClientReference);
 
         List<ClientContact> clientContacts = clientContactsApi.list(filter);
 
@@ -63,8 +82,10 @@ class ClientContactContactsApiListTest {
     void listByUpdatedSince() {
 
         Instant creationTime = Instant.now().minusSeconds(1);
-        ClientContactCreationInfo creationInfo = new ClientContactCreationInfo(client,
-                "newly created test ClientContact");
+        ClientContact creationInfo = ImmutableClientContact.builder()
+                .client(clientReference)
+                .firstName("newly created test ClientContact")
+                .build();
         clientContact = clientContactsApi.create(creationInfo);
 
         ClientContactFilter filter = new ClientContactFilter();

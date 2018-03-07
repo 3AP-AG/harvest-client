@@ -1,83 +1,76 @@
 package ch.aaap.harvestclient.domain.pagination;
 
-import com.google.gson.annotations.SerializedName;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
+
+import ch.aaap.harvestclient.domain.*;
 
 /**
- * Common functionality for paginated response. Cannot easily be made generic
- * because the Json key name for the list of objects depends on the type
+ * Holds any type of list from Harvest. We use the fact that missing JSON fields
+ * will be set to null
  */
-public class PaginatedList {
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+public interface PaginatedList {
 
-    Integer perPage;
+    List<Client> getClients();
 
-    Integer totalPages;
+    List<Task> getTasks();
 
-    Integer nextPage;
+    List<ClientContact> getContacts();
 
-    Integer previousPage;
+    List<Project> getProjects();
 
-    Integer page;
+    List<ProjectAssignment> getProjectAssignments();
 
-    @SerializedName("links")
-    PaginationLinks paginationLinks;
+    List<Role> getRoles();
 
-    public Integer getPerPage() {
-        return perPage;
-    }
+    List<TaskAssignment> getTaskAssignments();
 
-    public void setPerPage(Integer perPage) {
-        this.perPage = perPage;
-    }
+    List<TimeEntry> getTimeEntries();
 
-    public Integer getTotalPages() {
-        return totalPages;
-    }
+    List<User> getUsers();
 
-    public void setTotalPages(Integer totalPages) {
-        this.totalPages = totalPages;
-    }
+    List<Estimate> getEstimates();
 
-    public Integer getNextPage() {
-        return nextPage;
-    }
+    List<EstimateItem.Category> getEstimateItemCategories();
 
-    public void setNextPage(Integer nextPage) {
-        this.nextPage = nextPage;
-    }
+    List<EstimateMessage> getEstimateMessages();
 
-    public Integer getPreviousPage() {
-        return previousPage;
-    }
+    List<InvoiceItem.Category> getInvoiceItemCategories();
 
-    public void setPreviousPage(Integer previousPage) {
-        this.previousPage = previousPage;
-    }
+    List<Invoice> getInvoices();
 
-    public Integer getPage() {
-        return page;
-    }
+    List<InvoicePayment> getInvoicePayments();
 
-    public void setPage(Integer page) {
-        this.page = page;
-    }
+    List<InvoiceMessage> getInvoiceMessages();
 
-    public PaginationLinks getPaginationLinks() {
-        return paginationLinks;
-    }
+    List<UserAssignment> getUserAssignments();
 
-    public void setPaginationLinks(PaginationLinks paginationLinks) {
-        this.paginationLinks = paginationLinks;
-    }
+    List<ExpenseCategory> getExpenseCategories();
 
-    @Override
-    public String toString() {
-        return "Paginated{" +
-                ", perPage=" + perPage +
-                ", totalPages=" + totalPages +
-                ", nextPage=" + nextPage +
-                ", previousPage=" + previousPage +
-                ", page=" + page +
-                ", paginationLinks=" + paginationLinks +
-                '}';
-    }
+    List<Expense> getExpenses();
+
+    @Nullable
+    Integer getPerPage();
+
+    @Nullable
+    Integer getTotalPages();
+
+    @Nullable
+    Integer getNextPage();
+
+    @Nullable
+    Integer getPreviousPage();
+
+    @Nullable
+    Integer getPage();
+
+    @Nullable
+    PaginationLinks getLinks();
+
 }

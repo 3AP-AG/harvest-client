@@ -1,10 +1,19 @@
 package ch.aaap.harvestclient.domain;
 
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
+
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Only documented in comment
  */
-public class Receipt {
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+public interface Receipt {
 
-    private String url;
-    private String filename;
+    String getUrl();
+
+    @SerializedName("file_name")
+    String getFilename();
 }

@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+import ch.aaap.harvestclient.api.filter.base.ListFilter;
 import ch.aaap.harvestclient.domain.Client;
 import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.User;
@@ -15,7 +16,7 @@ import ch.aaap.harvestclient.domain.reference.Reference;
  * individual fields comes from the Harvest v2 API documentiation
  * 
  */
-public class TimeEntryFilter {
+public class TimeEntryFilter implements ListFilter {
 
     /**
      * Only return time entries belonging to given user.
@@ -63,6 +64,7 @@ public class TimeEntryFilter {
         return new TimeEntryFilter();
     }
 
+    @Override
     public Map<String, Object> toMap() {
 
         Map<String, Object> map = new HashMap<>();

@@ -1,23 +1,20 @@
 package ch.aaap.harvestclient.domain.reference.dto;
 
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
+
 import ch.aaap.harvestclient.domain.User;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
-public class UserReferenceDto extends BaseReferenceDto implements Reference<User> {
-
-    public UserReferenceDto() {
-    }
-
-    public UserReferenceDto(long id) {
-        super(id);
-    }
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+public interface UserReferenceDto extends BaseReferenceDto, Reference<User> {
 
     @Override
-    public String toString() {
-        return "UserReferenceDto{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
+    @Value.Parameter(order = 1)
+    Long getId();
 
+    @Override
+    @Value.Parameter(order = 2)
+    String getName();
 }

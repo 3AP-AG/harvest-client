@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.ClientsApi;
 import ch.aaap.harvestclient.domain.Client;
-import ch.aaap.harvestclient.domain.param.ClientCreationInfo;
+import ch.aaap.harvestclient.domain.ImmutableClient;
 import util.TestSetupUtil;
 
 @HarvestTest
@@ -29,10 +29,13 @@ class ClientsApiCreateTest {
     void create() {
 
         String name = "test Client";
-        ClientCreationInfo creationInfo = new ClientCreationInfo(name);
+        Client creationInfo = ImmutableClient.builder().name(name).build();
         client = clientsApi.create(creationInfo);
 
         assertThat(client.getName()).isEqualTo(name);
+
+        Client gottenClient = clientsApi.get(client);
+        assertThat(gottenClient).isEqualTo(gottenClient);
     }
 
     @Test
@@ -44,10 +47,12 @@ class ClientsApiCreateTest {
         String address = "Road 1,\n 9009 New Amsterdam";
         String currency = "EUR";
 
-        ClientCreationInfo creationInfo = new ClientCreationInfo(name);
-        creationInfo.setActive(active);
-        creationInfo.setAddress(address);
-        creationInfo.setCurrency(currency);
+        Client creationInfo = ImmutableClient.builder()
+                .name(name)
+                .active(active)
+                .address(address)
+                .currency(currency)
+                .build();
 
         client = clientsApi.create(creationInfo);
 
@@ -62,14 +67,16 @@ class ClientsApiCreateTest {
 
         String currency = "EU";
 
-        ClientCreationInfo creationInfo = new ClientCreationInfo("Test client");
-        creationInfo.setCurrency(currency);
+        Client creationInfo = ImmutableClient.builder().name("Test client")
+                .currency(currency)
+                .build();
 
         client = clientsApi.create(creationInfo);
 
-        // Company object does not expose currency
+        // Company object does not expose currency, this needs to be set to the test
+        // account default currency
         // setting an invalid one will set it to the company default
-        assertThat(client.getCurrency()).isEqualTo("CHF");
+        assertThat(client.getCurrency()).isEqualTo("USD");
     }
 
 }

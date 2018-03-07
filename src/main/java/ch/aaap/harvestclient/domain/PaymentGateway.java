@@ -1,9 +1,21 @@
 package ch.aaap.harvestclient.domain;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.annotation.Nullable;
 
-public class PaymentGateway {
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
 
-    private static final Logger log = LoggerFactory.getLogger(PaymentGateway.class);
+import ch.aaap.harvestclient.domain.reference.Reference;
+
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+public interface PaymentGateway extends Reference<PaymentGateway> {
+
+    @Override
+    @Nullable
+    Long getId();
+
+    @Nullable
+    String getName();
+
 }

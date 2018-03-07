@@ -1,9 +1,15 @@
 package ch.aaap.harvestclient.domain;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
 
-public class Retainer {
+import ch.aaap.harvestclient.domain.reference.Reference;
 
-    private static final Logger log = LoggerFactory.getLogger(Retainer.class);
+/**
+ * Harvest API does not expose more information about retainers
+ */
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+public interface Retainer extends Reference<Retainer> {
+
 }

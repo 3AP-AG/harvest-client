@@ -3,13 +3,13 @@ Title Harvest Data without Assignments nor Flattening
 class Company
 
 Invoice "1" ..> "1" Client
-Invoice o-- InvoiceLineItem
+Invoice o-- InvoiceItem
 Invoice ..> Estimate
 Invoice ..> Retainer
 Invoice --> Creator
 
-InvoiceLineItem ..> Invoice
-InvoiceLineItem ..> InvoiceItemCategory
+InvoiceItem ..> Invoice
+InvoiceItem ..> InvoiceItemCategory
 
 ' by endpoint
 Invoice o.. InvoiceMessage
@@ -23,13 +23,13 @@ Expense --> Receipt
 Expense ..> Invoice
 
 Estimate ..> Client
-Estimate o-- EstimateLineItem
+Estimate o-- EstimateItem
 Estimate --> Creator
 
 ' by endpoint
 Estimate o.. EstimateMessage
 
-EstimateLineItem ..> EstimateLineCategory
+EstimateItem ..> EstimateLineCategory
 
 EstimateMessage o-- EstimateMessageRecipient
 

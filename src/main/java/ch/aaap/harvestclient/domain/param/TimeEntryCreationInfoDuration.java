@@ -1,34 +1,19 @@
 package ch.aaap.harvestclient.domain.param;
 
-import java.time.LocalDate;
+import javax.annotation.Nullable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
 
-import ch.aaap.harvestclient.domain.Project;
-import ch.aaap.harvestclient.domain.Task;
-import ch.aaap.harvestclient.domain.reference.Reference;
-
-public class TimeEntryCreationInfoDuration extends TimeEntryCreationInfo {
-
-    private static final Logger log = LoggerFactory.getLogger(TimeEntryCreationInfoDuration.class);
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+public interface TimeEntryCreationInfoDuration extends TimeEntryCreationInfo {
 
     /**
-     * The current amount of time tracked. Defaults to 0.0. If set, is_running will
-     * be true, and false otherwise.
+     * @return The current amount of time tracked. Defaults to 0.0. If set,
+     *         is_running will be true, and false otherwise.
      */
-    private Double hours;
+    @Nullable
+    Double getHours();
 
-    public TimeEntryCreationInfoDuration(Reference<Project> projectReference,
-            Reference<Task> taskReference, LocalDate spentDate) {
-        super(projectReference, taskReference, spentDate);
-    }
-
-    public Double getHours() {
-        return hours;
-    }
-
-    public void setHours(Double hours) {
-        this.hours = hours;
-    }
 }

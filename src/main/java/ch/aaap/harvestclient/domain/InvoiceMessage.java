@@ -1,29 +1,87 @@
 package ch.aaap.harvestclient.domain;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
-public class InvoiceMessage {
+import javax.annotation.Nullable;
 
-    private Long id;
-    private String sentBy;
-    private String sentByEmail;
-    private String sentFrom;
-    private String sentFromEmail;
-    private List<InvoiceMessageRecipient> invoiceMessageRecipients;
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
 
-    private String subject;
-    private String body;
-    private Boolean includeLinkToClientInvoice;
-    private Boolean attachPdf;
-    private Boolean sendMeACopy;
-    private Boolean thankYou;
-    private Boolean eventType;
+import com.google.gson.annotations.SerializedName;
 
-    private Boolean reminder;
-    private LocalDate sendReminderOn;
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+@Value.Style.Depluralize
+public interface InvoiceMessage extends BaseObject<InvoiceMessage> {
 
-    private Instant createdAt;
-    private Instant updatedAt;
+    enum EventType {
+
+        @SerializedName("send")
+        SEND,
+
+        /**
+         * Write off the invoice
+         */
+        @SerializedName("close")
+        CLOSE,
+
+        @SerializedName("draft")
+        DRAFT,
+
+        @SerializedName("re-open")
+        RE_OPEN,
+
+        @SerializedName("view")
+        VIEW
+
+    }
+
+    @Nullable
+    String getSentBy();
+
+    @Nullable
+    String getSentByEmail();
+
+    @Nullable
+    String getSentFrom();
+
+    @Nullable
+    String getSentFromEmail();
+
+    @SerializedName("recipients")
+    List<MessageRecipient> getMessageRecipients();
+
+    @Nullable
+    String getSubject();
+
+    /**
+     * max length = 16,777,215
+     * 
+     * @return the current value
+     */
+    @Nullable
+    String getBody();
+
+    @Nullable
+    Boolean getIncludeLinkToClientInvoice();
+
+    @Nullable
+    Boolean getAttachPdf();
+
+    @Nullable
+    Boolean getSendMeACopy();
+
+    @Nullable
+    Boolean getThankYou();
+
+    @Nullable
+    EventType getEventType();
+
+    @Nullable
+    Boolean getReminder();
+
+    @Nullable
+    LocalDate getSendReminderOn();
+
 }

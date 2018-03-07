@@ -1,6 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- This configuration is to more easily report bugs to Harvest. Use TestSetupUtil.prepareForHarvestBugReport()
 to enable it-->
-<?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">

@@ -1,34 +1,33 @@
 package ch.aaap.harvestclient.domain;
 
-import java.time.Instant;
 import java.time.LocalDate;
 
-import ch.aaap.harvestclient.domain.reference.dto.ClientReferenceDto;
-import ch.aaap.harvestclient.domain.reference.dto.ProjectReferenceDto;
-import ch.aaap.harvestclient.domain.reference.dto.UserReferenceDto;
+import javax.annotation.Nullable;
 
-public class Expense {
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
 
-    private Long id;
-    private ClientReferenceDto clientReferenceDto;
-    private ProjectReferenceDto projectReferenceDto;
-    private ExpenseCategory expenseCategory;
-    private UserReferenceDto userReferenceDto;
+import com.google.gson.annotations.SerializedName;
 
-    private UserAssignment userAssignment;
+import ch.aaap.harvestclient.domain.reference.Reference;
 
-    private Receipt receipt;
-    private Invoice invoice;
-    private String notes;
-    private Boolean billable;
-    private Boolean closed;
-    private Boolean locked;
-    private Boolean billed;
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+public interface Expense extends BaseObject<Expense>, ExpenseCommon {
 
-    private String lockedReason;
-    private LocalDate spentDate;
+    @SerializedName(value = "user_id", alternate = "user")
+    @Nullable
+    Reference<User> getUser();
 
-    private Instant createdAt;
-    private Instant updatedAt;
+    @Override
+    @SerializedName(value = "project_id", alternate = "project")
+    Reference<Project> getProject();
+
+    @Override
+    @SerializedName(value = "expense_category_id", alternate = "expense_category")
+    Reference<ExpenseCategory> getExpenseCategory();
+
+    @Override
+    LocalDate getSpentDate();
 
 }

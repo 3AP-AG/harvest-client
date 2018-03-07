@@ -3,20 +3,41 @@ package ch.aaap.harvestclient.domain;
 import java.time.Instant;
 import java.time.LocalDate;
 
-public class InvoicePayment {
+import javax.annotation.Nullable;
 
-    private Long id;
-    private String amount;
-    private Instant paidAt;
-    private LocalDate paidDate;
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
 
-    private String recordedBy;
-    private String recordedByEmail;
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+public interface InvoicePayment extends BaseObject<InvoicePayment> {
 
-    private String notes;
-    private String transactionId;
-    private PaymentGateway paymentGateway;
+    Double getAmount();
 
-    private Instant createdAt;
-    private Instant updatedAt;
+    @Nullable
+    Instant getPaidAt();
+
+    @Nullable
+    LocalDate getPaidDate();
+
+    @Nullable
+    String getRecordedBy();
+
+    @Nullable
+    String getRecordedByEmail();
+
+    /**
+     * max length = 16,777,215
+     * 
+     * @return the current value
+     */
+    @Nullable
+    String getNotes();
+
+    @Nullable
+    String getTransactionId();
+
+    @Nullable
+    PaymentGateway getPaymentGateway();
+
 }

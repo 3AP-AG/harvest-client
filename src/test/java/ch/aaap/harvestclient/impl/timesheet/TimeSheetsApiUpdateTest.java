@@ -1,10 +1,12 @@
 package ch.aaap.harvestclient.impl.timesheet;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,9 +15,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.TimesheetsApi;
 import ch.aaap.harvestclient.api.filter.TimeEntryFilter;
+import ch.aaap.harvestclient.domain.Project;
+import ch.aaap.harvestclient.domain.Task;
 import ch.aaap.harvestclient.domain.TimeEntry;
+import ch.aaap.harvestclient.domain.User;
+import ch.aaap.harvestclient.domain.param.ImmutableTimeEntryCreationInfoDuration;
+import ch.aaap.harvestclient.domain.param.ImmutableTimeEntryUpdateInfo;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoDuration;
 import ch.aaap.harvestclient.domain.param.TimeEntryUpdateInfo;
+import ch.aaap.harvestclient.domain.reference.Reference;
 import util.ExistingData;
 import util.TestSetupUtil;
 
@@ -25,7 +33,9 @@ class TimeSheetsApiUpdateTest {
     private static final Logger log = LoggerFactory.getLogger(TimeSheetsApiUpdateTest.class);
 
     private static final TimesheetsApi api = TestSetupUtil.getAdminAccess().timesheets();
-    private static final TimeEntry fixEntry = ExistingData.getInstance().getTimeEntry();
+    private static final Reference<Project> project = ExistingData.getInstance().getProjectReference();
+    private static final Reference<User> user = ExistingData.getInstance().getUserReference();
+    private static final Reference<Task> task = ExistingData.getInstance().getTaskReference();
 
     private static TimeEntry entry;
 
@@ -37,12 +47,14 @@ class TimeSheetsApiUpdateTest {
         LocalDate date = LocalDate.now();
         String notes = "Timeentry created for " + testInfo.getDisplayName();
 
-        TimeEntryCreationInfoDuration creationInfo = new TimeEntryCreationInfoDuration(fixEntry.getProject(),
-                fixEntry.getTask(),
-                date);
-        creationInfo.setNotes(notes);
-        creationInfo.setUserReference(fixEntry.getUser());
-        creationInfo.setHours(1.);
+        TimeEntryCreationInfoDuration creationInfo = ImmutableTimeEntryCreationInfoDuration.builder()
+                .projectReference(project)
+                .taskReference(task)
+                .spentDate(date)
+                .userReference(user)
+                .notes(notes)
+                .hours(1.)
+                .build();
 
         entry = api.create(creationInfo);
     }
@@ -58,8 +70,9 @@ class TimeSheetsApiUpdateTest {
     @Test
     void testChangeDuration() {
 
-        TimeEntryUpdateInfo updateInfo = new TimeEntryUpdateInfo();
-        updateInfo.setHours(3.);
+        TimeEntryUpdateInfo updateInfo = ImmutableTimeEntryUpdateInfo.builder()
+                .hours(3.)
+                .build();
         TimeEntry updatedEntry = api.update(entry, updateInfo);
 
         assertThat(updatedEntry.getHours()).isEqualTo(3.);
@@ -69,40 +82,12 @@ class TimeSheetsApiUpdateTest {
     void testChangeNotes() {
 
         String newNotes = "This is an updated note";
-        TimeEntryUpdateInfo updateInfo = new TimeEntryUpdateInfo();
-        updateInfo.setNotes(newNotes);
+        TimeEntryUpdateInfo updateInfo = ImmutableTimeEntryUpdateInfo.builder()
+                .notes(newNotes)
+                .build();
         TimeEntry updatedEntry = api.update(entry, updateInfo);
 
         assertThat(updatedEntry.getNotes()).isEqualTo(newNotes);
-    }
-
-    @Test
-    @Disabled("needs second test account")
-    void testChangeStartedTime(TestInfo testInfo) {
-
-        log.debug("Creating entry for test " + testInfo.getDisplayName());
-
-        LocalDate date = LocalDate.now();
-        String notes = "Timeentry created for " + testInfo.getDisplayName();
-
-        TimeEntryCreationInfoDuration creationInfo = new TimeEntryCreationInfoDuration(fixEntry.getProject(),
-                fixEntry.getTask(),
-                date);
-        creationInfo.setNotes(notes);
-        creationInfo.setUserReference(fixEntry.getUser());
-        creationInfo.setHours(1.);
-
-        entry = api.create(creationInfo);
-
-        assertThat(entry.getStartedTime()).isNotNull();
-
-        LocalTime startedTime = LocalTime.of(13, 13);
-        TimeEntryUpdateInfo updateInfo = new TimeEntryUpdateInfo();
-        updateInfo.setStartedTime(startedTime);
-
-        TimeEntry updatedEntry = api.update(entry, updateInfo);
-
-        assertThat(updatedEntry.getStartedTime()).isEqualTo(startedTime);
     }
 
     @Test
@@ -112,10 +97,11 @@ class TimeSheetsApiUpdateTest {
         double hours = 5.;
         LocalDate spentDate = LocalDate.of(2018, 2, 2);
 
-        TimeEntryUpdateInfo updateInfo = new TimeEntryUpdateInfo();
-        updateInfo.setNotes(newNotes);
-        updateInfo.setHours(hours);
-        updateInfo.setSpentDate(spentDate);
+        TimeEntryUpdateInfo updateInfo = ImmutableTimeEntryUpdateInfo.builder()
+                .hours(hours)
+                .notes(newNotes)
+                .spentDate(spentDate)
+                .build();
 
         TimeEntry updatedEntry = api.update(entry, updateInfo);
 

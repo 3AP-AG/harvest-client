@@ -1,8 +1,6 @@
 package ch.aaap.harvestclient.impl;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,8 +8,8 @@ import org.slf4j.LoggerFactory;
 import ch.aaap.harvestclient.api.TasksApi;
 import ch.aaap.harvestclient.api.filter.TaskFilter;
 import ch.aaap.harvestclient.domain.Task;
-import ch.aaap.harvestclient.domain.pagination.PaginatedTask;
-import ch.aaap.harvestclient.domain.param.TaskCreationInfo;
+import ch.aaap.harvestclient.domain.pagination.PaginatedList;
+import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.TaskUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.service.TaskService;
@@ -20,7 +18,6 @@ import retrofit2.Call;
 public class TasksApiImpl implements TasksApi {
 
     private static final Logger log = LoggerFactory.getLogger(TasksApiImpl.class);
-    private static final int PER_PAGE = 100;
     private final TaskService service;
 
     public TasksApiImpl(TaskService service) {
@@ -29,32 +26,15 @@ public class TasksApiImpl implements TasksApi {
 
     @Override
     public List<Task> list(TaskFilter filter) {
+        return Common.collect((page, perPage) -> list(filter, page, perPage));
+    }
 
-        Integer nextPage = 1;
-
-        List<Task> result = new ArrayList<>();
-
-        while (nextPage != null)
-
-        {
-            log.debug("Getting page {} of Task list", nextPage);
-
-            Map<String, Object> filterMap = filter.toMap();
-            // add pagination settings
-            filterMap.put("page", nextPage);
-            filterMap.put("per_page", PER_PAGE);
-
-            Call<PaginatedTask> call = service.list(filterMap);
-
-            PaginatedTask pagination = ExceptionHandler.callOrThrow(call);
-
-            result.addAll(pagination.getTasks());
-            nextPage = pagination.getNextPage();
-        }
-
-        log.debug("Listed {} Task: {}", result.size(), result);
-
-        return result;
+    @Override
+    public Pagination<Task> list(TaskFilter filter, int page, int perPage) {
+        log.debug("Getting page {} of Task list", page);
+        Call<PaginatedList> call = service.list(filter.toMap(page, perPage));
+        PaginatedList pagination = ExceptionHandler.callOrThrow(call);
+        return Pagination.of(pagination, pagination.getTasks());
     }
 
     @Override
@@ -66,7 +46,7 @@ public class TasksApiImpl implements TasksApi {
     }
 
     @Override
-    public Task create(TaskCreationInfo creationInfo) {
+    public Task create(Task creationInfo) {
         Call<Task> call = service.create(creationInfo);
         Task task = ExceptionHandler.callOrThrow(call);
         log.debug("Created {}", task);

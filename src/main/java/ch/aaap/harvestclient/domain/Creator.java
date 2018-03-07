@@ -1,9 +1,14 @@
 package ch.aaap.harvestclient.domain;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
 
-public class Creator {
+import ch.aaap.harvestclient.domain.reference.Reference;
 
-    private static final Logger log = LoggerFactory.getLogger(Creator.class);
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+public interface Creator extends Reference<Creator> {
+
+    String getName();
+
 }

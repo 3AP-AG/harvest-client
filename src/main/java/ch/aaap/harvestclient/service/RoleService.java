@@ -1,7 +1,7 @@
 package ch.aaap.harvestclient.service;
 
 import ch.aaap.harvestclient.domain.Role;
-import ch.aaap.harvestclient.domain.pagination.PaginatedRole;
+import ch.aaap.harvestclient.domain.pagination.PaginatedList;
 import ch.aaap.harvestclient.domain.param.RoleInfo;
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -9,7 +9,7 @@ import retrofit2.http.*;
 public interface RoleService {
 
     @GET("roles")
-    Call<PaginatedRole> list(@Query("page") int page, @Query("per_page") int perPage);
+    Call<PaginatedList> list(@Query("page") int page, @Query("per_page") int perPage);
 
     @GET("roles/{roleId}")
     Call<Role> get(@Path("roleId") long roleId);

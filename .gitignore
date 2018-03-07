@@ -4,6 +4,10 @@
 # ignore local configuration
 /src/test/resources/*.conf
 
+# ignore generated classes
+src/main/generated/
+src/test/generated_tests/
+
 # Created by https://www.gitignore.io/api/gradle,eclipse,intellij
 
 ### Eclipse ###
