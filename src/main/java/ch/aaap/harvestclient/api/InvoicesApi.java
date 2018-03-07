@@ -11,6 +11,11 @@ import ch.aaap.harvestclient.domain.param.InvoiceItemUpdateInfo;
 import ch.aaap.harvestclient.domain.param.InvoiceUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
+/**
+ * @see <a href=
+ *      "https://help.getharvest.com/api-v2/invoices-api/invoices/invoices/">
+ *      Invoices API on Harvest</a>
+ */
 @Api.Permission(Api.Role.PROJECT_MANAGER)
 public interface InvoicesApi extends Api.Simple<Invoice> {
 

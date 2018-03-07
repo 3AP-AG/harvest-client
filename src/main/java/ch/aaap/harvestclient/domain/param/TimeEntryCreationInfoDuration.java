@@ -1,29 +1,19 @@
 package ch.aaap.harvestclient.domain.param;
 
-import java.time.LocalDate;
+import javax.annotation.Nullable;
 
-import ch.aaap.harvestclient.domain.Project;
-import ch.aaap.harvestclient.domain.Task;
-import ch.aaap.harvestclient.domain.reference.Reference;
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
 
-public class TimeEntryCreationInfoDuration extends TimeEntryCreationInfo {
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+public interface TimeEntryCreationInfoDuration extends TimeEntryCreationInfo {
 
     /**
      * The current amount of time tracked. Defaults to 0.0. If set, is_running will
      * be true, and false otherwise.
      */
-    private Double hours;
+    @Nullable
+    Double getHours();
 
-    public TimeEntryCreationInfoDuration(Reference<Project> projectReference,
-            Reference<Task> taskReference, LocalDate spentDate) {
-        super(projectReference, taskReference, spentDate);
-    }
-
-    public Double getHours() {
-        return hours;
-    }
-
-    public void setHours(Double hours) {
-        this.hours = hours;
-    }
 }

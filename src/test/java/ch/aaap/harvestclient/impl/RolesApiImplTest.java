@@ -16,6 +16,7 @@ import ch.aaap.harvestclient.api.UsersApi;
 import ch.aaap.harvestclient.core.Harvest;
 import ch.aaap.harvestclient.domain.Role;
 import ch.aaap.harvestclient.domain.User;
+import ch.aaap.harvestclient.domain.param.ImmutableRoleInfo;
 import ch.aaap.harvestclient.domain.param.RoleInfo;
 import ch.aaap.harvestclient.exception.RequestProcessingException;
 import util.TestSetupUtil;
@@ -34,7 +35,7 @@ class RolesApiImplTest {
     @BeforeAll
     static void beforeAll() {
 
-        RoleInfo roleInfo = new RoleInfo(TEST_ROLE_NAME);
+        RoleInfo roleInfo = ImmutableRoleInfo.of(TEST_ROLE_NAME);
 
         testRole = rolesApi.create(roleInfo);
     }
@@ -61,7 +62,7 @@ class RolesApiImplTest {
 
         assertThat(gottenRole).isEqualToComparingFieldByField(testRole);
 
-        RoleInfo roleInfo = new RoleInfo("new test name");
+        RoleInfo roleInfo = ImmutableRoleInfo.of("new test name");
 
         Role updatedRole = rolesApi.update(gottenRole, roleInfo);
 
@@ -71,7 +72,7 @@ class RolesApiImplTest {
 
     @Test
     void testCreateExistingFails() {
-        assertThrows(RequestProcessingException.class, () -> rolesApi.create(new RoleInfo(testRole.getName())));
+        assertThrows(RequestProcessingException.class, () -> rolesApi.create(ImmutableRoleInfo.of(testRole.getName())));
     }
 
     @Test
@@ -114,7 +115,7 @@ class RolesApiImplTest {
         assertThat(roles).extracting("name").doesNotContain(tempRoleName);
 
         // create role
-        RoleInfo roleInfo = new RoleInfo(tempRoleName);
+        RoleInfo roleInfo = ImmutableRoleInfo.of(tempRoleName);
         Role role = rolesApi.create(roleInfo);
 
         // list finds it

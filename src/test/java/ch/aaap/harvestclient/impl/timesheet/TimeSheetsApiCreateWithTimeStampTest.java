@@ -20,6 +20,8 @@ import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.Task;
 import ch.aaap.harvestclient.domain.TimeEntry;
 import ch.aaap.harvestclient.domain.User;
+import ch.aaap.harvestclient.domain.param.ImmutableTimeEntryCreationInfoDuration;
+import ch.aaap.harvestclient.domain.param.ImmutableTimeEntryCreationInfoTimestamp;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoDuration;
 import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoTimestamp;
 import ch.aaap.harvestclient.domain.reference.Reference;
@@ -63,11 +65,14 @@ class TimeSheetsApiCreateWithTimeStampTest {
         LocalDate date = LocalDate.now();
         String notes = "TimeEntry created by " + testInfo.getDisplayName();
 
-        TimeEntryCreationInfoDuration creationInfo = new TimeEntryCreationInfoDuration(project,
-                task, date);
-        creationInfo.setNotes(notes);
-        creationInfo.setUserReference(user);
-        creationInfo.setHours(2.);
+        TimeEntryCreationInfoDuration creationInfo = ImmutableTimeEntryCreationInfoDuration.builder()
+                .projectReference(project)
+                .taskReference(task)
+                .spentDate(date)
+                .notes(notes)
+                .userReference(user)
+                .hours(2.)
+                .build();
 
         timeEntry = api.create(creationInfo);
 
@@ -89,11 +94,13 @@ class TimeSheetsApiCreateWithTimeStampTest {
         LocalDate date = LocalDate.now();
         String notes = "TimeEntry created by " + testInfo.getDisplayName();
 
-        TimeEntryCreationInfoDuration creationInfo = new TimeEntryCreationInfoDuration(project,
-                task,
-                date);
-        creationInfo.setNotes(notes);
-        creationInfo.setUserReference(user);
+        TimeEntryCreationInfoDuration creationInfo = ImmutableTimeEntryCreationInfoDuration.builder()
+                .projectReference(project)
+                .taskReference(task)
+                .spentDate(date)
+                .notes(notes)
+                .userReference(user)
+                .build();
         // not setting anything specific
 
         timeEntry = api.create(creationInfo);
@@ -116,11 +123,13 @@ class TimeSheetsApiCreateWithTimeStampTest {
         LocalDate date = LocalDate.now();
         String notes = "TimeEntry created by " + testInfo.getDisplayName();
 
-        TimeEntryCreationInfoTimestamp creationInfo = new TimeEntryCreationInfoTimestamp(project,
-                task,
-                date);
-        creationInfo.setNotes(notes);
-        creationInfo.setUserReference(user);
+        TimeEntryCreationInfoTimestamp creationInfo = ImmutableTimeEntryCreationInfoTimestamp.builder()
+                .projectReference(project)
+                .taskReference(task)
+                .spentDate(date)
+                .notes(notes)
+                .userReference(user)
+                .build();
         // not setting anything specific
 
         timeEntry = api.create(creationInfo);

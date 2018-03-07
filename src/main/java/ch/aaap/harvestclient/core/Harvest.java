@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+import com.typesafe.config.ConfigValueFactory;
 
 import ch.aaap.harvestclient.api.*;
 import ch.aaap.harvestclient.core.gson.GsonConfiguration;
@@ -94,7 +95,46 @@ public class Harvest {
     private final ExpenseCategoriesApi expenseCategoriesApi;
     private final ExpensesApi expensesApi;
 
+    public Harvest() {
+        this(ConfigFactory.load());
+    }
+
+    /**
+     * Check reference.conf under src/main/resources for the default configuration.
+     * You can either create a application.conf file that you put in your own
+     * src/main/resources that will override the settings, or build a Config object
+     * from scratch with {@link ConfigFactory}
+     * <p>
+     * Example:
+     * 
+     * <pre>
+     * // use application.conf under src/main/resources
+     * Harvest harvest = new Harvest();
+     *
+     * // start from defaults
+     * Config config = ConfigFactory.defaultReference();
+     * config = config.withValue("harvest.auth.token", ConfigValueFactory.fromAnyRef("YOUR_TOKEN"));
+     * config = config.withValue("harvest.auth.accountId", ConfigValueFactory.fromAnyRef("YOUR_ACCOUNT_ID"));
+     * harvest = new Harvest(config)
+     * </pre>
+     * 
+     * @param config
+     *            the configuration to be used for this client.
+     *
+     * @throws ch.aaap.harvestclient.exception.HarvestHttpException
+     *             if we fail to get the Company object (to configure the clock
+     *             format)
+     *
+     * @see <a href="https://github.com/lightbend/config">Config library on
+     *      Github</a>
+     *
+     * @see <a href="https://id.getharvest.com/developers">Harvest auth token
+     *      page</a>
+     */
     public Harvest(Config config) {
+
+        Config config1 = ConfigFactory.defaultReference();
+        config1.withValue("harvest.auth.token", ConfigValueFactory.fromAnyRef("YOUR_TOKEN"));
 
         this.config = config;
         this.baseUrl = config.getString("harvest.baseUrl");
@@ -189,10 +229,6 @@ public class Harvest {
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
-    }
-
-    public Harvest() {
-        this(ConfigFactory.load());
     }
 
     private Interceptor initAuthentication() {

@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import ch.aaap.harvestclient.api.Api;
 import ch.aaap.harvestclient.core.Harvest;
 import ch.aaap.harvestclient.domain.*;
-import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoDuration;
+import ch.aaap.harvestclient.domain.param.ImmutableTimeEntryCreationInfoDuration;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.exception.NotFoundException;
 
@@ -125,8 +125,11 @@ public class TestDataCreator {
     }
 
     private TimeEntry createTimeEntry(Project project, Task task) {
-        return harvest.timesheets().create(new TimeEntryCreationInfoDuration(project, task,
-                LocalDate.now()));
+        return harvest.timesheets().create(ImmutableTimeEntryCreationInfoDuration.builder()
+                .projectReference(project)
+                .taskReference(task)
+                .spentDate(LocalDate.now())
+                .build());
     }
 
     private TaskAssignment createTaskAssignment(Project project, Task task) {

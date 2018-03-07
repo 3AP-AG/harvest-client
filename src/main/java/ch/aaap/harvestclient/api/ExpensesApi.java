@@ -12,6 +12,11 @@ import ch.aaap.harvestclient.domain.param.ExpenseUpdateInfo;
 import ch.aaap.harvestclient.domain.param.ImmutableExpenseUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
+/**
+ * @see <a href=
+ *      "https://help.getharvest.com/api-v2/expenses-api/expenses/expenses/">
+ *      Expenses API on Harvest</a>
+ */
 @Api.Permission(value = Api.Role.NONE, onlySelf = true)
 public interface ExpensesApi extends Api.Simple<Expense> {
     /**

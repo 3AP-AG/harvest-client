@@ -8,6 +8,11 @@ import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.ClientUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
+/**
+ * @see <a href=
+ *      "https://help.getharvest.com/api-v2/clients-api/clients/clients/">Clients
+ *      API on Harvest</a>
+ */
 @Api.Permission(Api.Role.ADMIN)
 public interface ClientsApi extends Api.Simple<Client> {
 

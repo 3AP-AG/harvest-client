@@ -8,6 +8,11 @@ import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.ExpenseCategoryUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
+/**
+ * @see <a href=
+ *      "https://help.getharvest.com/api-v2/expenses-api/expenses/expense-categories/">
+ *      Expense Categories API on Harvest</a>
+ */
 @Api.Permission(Api.Role.ADMIN)
 public interface ExpenseCategoriesApi extends Api.Simple<ExpenseCategory> {
     /**

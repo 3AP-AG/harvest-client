@@ -8,6 +8,11 @@ import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.ProjectUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
+/**
+ * @see <a href=
+ *      "https://help.getharvest.com/api-v2/projects-api/projects/projects/">
+ *      Projects API on Harvest</a>
+ */
 @Api.Permission(Api.Role.PROJECT_MANAGER)
 public interface ProjectsApi extends Api.Simple<Project> {
 

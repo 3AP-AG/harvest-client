@@ -9,6 +9,11 @@ import ch.aaap.harvestclient.domain.InvoiceItem;
 import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
+/**
+ * @see <a href=
+ *      "https://help.getharvest.com/api-v2/invoices-api/invoices/invoices/">
+ *      Invoices API on Harvest</a>
+ */
 @Api.Permission(Api.Role.PROJECT_MANAGER)
 public interface InvoiceItemCategoriesApi extends Api.Simple<InvoiceItem.Category> {
 
