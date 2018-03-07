@@ -121,6 +121,10 @@ public class Harvest {
      * @param config
      *            the configuration to be used for this client.
      *
+     * @throws ch.aaap.harvestclient.exception.HarvestHttpException
+     *             if we fail to get the Company object (to configure the clock
+     *             format)
+     *
      * @see <a href="https://github.com/lightbend/config">Config library on
      *      Github</a>
      *
