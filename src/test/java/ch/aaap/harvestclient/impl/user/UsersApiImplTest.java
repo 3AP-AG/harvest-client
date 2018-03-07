@@ -18,7 +18,7 @@ import ch.aaap.harvestclient.domain.ImmutableUser;
 import ch.aaap.harvestclient.domain.User;
 import ch.aaap.harvestclient.domain.param.ImmutableUserUpdateInfo;
 import ch.aaap.harvestclient.domain.param.UserUpdateInfo;
-import ch.aaap.harvestclient.domain.reference.dto.UserReferenceDto;
+import ch.aaap.harvestclient.domain.reference.dto.ImmutableUserReferenceDto;
 import ch.aaap.harvestclient.exception.NotFoundException;
 import ch.aaap.harvestclient.exception.RequestProcessingException;
 import util.TestSetupUtil;
@@ -87,7 +87,8 @@ class UsersApiImplTest {
 
     @Test
     void getUserNotExisting() {
-        NotFoundException e = assertThrows(NotFoundException.class, () -> api.get(new UserReferenceDto(1)));
+        NotFoundException e = assertThrows(NotFoundException.class,
+                () -> api.get(ImmutableUserReferenceDto.of(1L, "")));
         assertEquals(404, e.getHttpCode());
     }
 

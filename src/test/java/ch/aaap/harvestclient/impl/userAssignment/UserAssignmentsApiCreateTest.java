@@ -44,6 +44,9 @@ class UserAssignmentsApiCreateTest {
         assertThat(userAssignment).isNotNull();
         assertThat(userAssignment.getUser().getId()).isEqualTo(userReference.getId());
 
+        UserAssignment gotten = userAssignmentApi.get(projectReference, this.userAssignment);
+        assertThat(gotten).isEqualTo(userAssignment);
+
     }
 
     @Test

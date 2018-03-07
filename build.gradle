@@ -140,7 +140,8 @@ ext {
             retrofit  : '2.3.0',
             junit     : '5.1.0',
             log4j     : '2.10.0',
-            immutables: '2.5.6'
+            immutables: '2.5.6',
+            okhttp    : '3.10.0'
     ]
 }
 
@@ -148,10 +149,11 @@ dependencies {
 
     compile "com.squareup.retrofit2:retrofit:$ver.retrofit"
     compile "com.squareup.retrofit2:converter-gson:$ver.retrofit"
-    compile "com.squareup.okhttp3:logging-interceptor:3.10.0"
+    compile "com.squareup.okhttp3:logging-interceptor:$ver.okhttp"
     compile "com.fatboyindustrial.gson-javatime-serialisers:gson-javatime-serialisers:1.1.1"
     // logging
     compile "org.slf4j:slf4j-api:1.7.25"
+    compile group: 'org.slf4j', name: 'jul-to-slf4j', version: '1.7.25'
     compile group: "org.apache.logging.log4j", name: "log4j-api", version: "$ver.log4j"
     // use log4j for unittests
     runtime group: "org.apache.logging.log4j", name: "log4j-core",
@@ -175,6 +177,7 @@ dependencies {
 
     testCompile "org.mockito:mockito-core:2.15.0"
     testCompile "org.assertj:assertj-core:3.9.1"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$ver.okhttp"
     compile "org.assertj:assertj-joda-time:2.0.0"
 
 

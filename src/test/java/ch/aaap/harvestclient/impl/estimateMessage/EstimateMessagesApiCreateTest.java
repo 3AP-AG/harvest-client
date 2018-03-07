@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.EstimateMessagesApi;
 import ch.aaap.harvestclient.core.Harvest;
 import ch.aaap.harvestclient.domain.*;
@@ -16,6 +17,7 @@ import ch.aaap.harvestclient.exception.RequestProcessingException;
 import util.ExistingData;
 import util.TestSetupUtil;
 
+@HarvestTest
 public class EstimateMessagesApiCreateTest {
 
     private static final MessageRecipient testRecipient = ImmutableMessageRecipient.of("Marco",

@@ -17,7 +17,9 @@ public class Junit5Extension implements BeforeAllCallback, BeforeEachCallback, T
         // uncomment this line before copy pasting output for Harvest Bug Report
         // TestSetupUtil.prepareForHarvestBugReport();
 
-        log.debug("beforeAll for class {}", context.getDisplayName());
+        // create some spacing for logs
+        log.debug("\n\n");
+        log.debug("beforeAll for class [{}]", context.getDisplayName());
     }
 
     @Override
@@ -25,7 +27,8 @@ public class Junit5Extension implements BeforeAllCallback, BeforeEachCallback, T
 
         String testClassName = context.getRequiredTestClass().getName();
 
-        log.debug("beforeEach for {}.{}", testClassName, context.getDisplayName());
+        log.debug("\n");
+        log.debug("beforeEach for [{}.{}]", testClassName, context.getDisplayName());
     }
 
     @Override

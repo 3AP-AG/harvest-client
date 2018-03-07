@@ -17,7 +17,7 @@ import util.ExistingData;
 import util.TestSetupUtil;
 
 @HarvestTest
-class ClientContactContactApiCreateTest {
+class ClientContactsApiCreateTest {
 
     private static final ClientContactsApi clientContactsApi = TestSetupUtil.getAdminAccess().clientContacts();
     private ClientContact clientContact;
@@ -42,6 +42,9 @@ class ClientContactContactApiCreateTest {
         clientContact = clientContactsApi.create(creationInfo);
 
         assertThat(clientContact.getFirstName()).isEqualTo(firstName);
+
+        ClientContact gotten = clientContactsApi.get(clientContact);
+        assertThat(gotten).isEqualTo(clientContact);
     }
 
     @Test

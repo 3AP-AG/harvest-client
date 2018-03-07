@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.InvoicesApi;
 import ch.aaap.harvestclient.domain.*;
 import ch.aaap.harvestclient.domain.param.ImmutableInvoiceItemUpdateInfo;
@@ -21,6 +22,7 @@ import ch.aaap.harvestclient.domain.reference.Reference;
 import util.ExistingData;
 import util.TestSetupUtil;
 
+@HarvestTest
 public class InvoicesApiItemTest {
 
     private static final Logger log = LoggerFactory.getLogger(InvoicesApiItemTest.class);

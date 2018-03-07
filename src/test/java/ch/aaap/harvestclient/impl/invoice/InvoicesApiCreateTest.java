@@ -104,4 +104,49 @@ class InvoicesApiCreateTest {
 
     }
 
+    @Test
+    void createItemOnlyKindFailsSilent() {
+
+        long quantity = 20;
+        double unitPrice = 30;
+        String firstName = "test First";
+        Invoice creationInfo = ImmutableInvoice.builder()
+                .client(clientReference)
+                .addInvoiceItem(ImmutableInvoiceItem.builder()
+                        .kind(kind)
+                        .build())
+                .subject("test subject")
+                .build();
+        invoice = invoicesApi.create(creationInfo);
+
+        assertThat(invoice.getClient().getId()).isEqualTo(clientReference.getId());
+        List<InvoiceItem> items = invoice.getInvoiceItems();
+
+        // the item is not created, it is silently ignored!
+        // TODO it would be nice to prohibit this at compile time
+        assertThat(items).isEmpty();
+
+    }
+
+    @Test
+    void createWithMinimalLineItem() {
+
+        long quantity = 20;
+        double unitPrice = 30;
+        String firstName = "test First";
+        Invoice creationInfo = ImmutableInvoice.builder()
+                .client(clientReference)
+                .addInvoiceItem(ImmutableInvoiceItem.builder()
+                        .unitPrice(1.)
+                        .kind(kind)
+                        .build())
+                .subject("test subject")
+                .build();
+        invoice = invoicesApi.create(creationInfo);
+
+        assertThat(invoice.getClient().getId()).isEqualTo(clientReference.getId());
+        List<InvoiceItem> items = invoice.getInvoiceItems();
+        assertThat(items).isNotEmpty();
+        assertThat(items.get(0).getKind()).isEqualTo(kind);
+    }
 }

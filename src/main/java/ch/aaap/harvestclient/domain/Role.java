@@ -7,7 +7,7 @@ import org.immutables.gson.Gson;
 import org.immutables.value.Value;
 
 import ch.aaap.harvestclient.domain.reference.Reference;
-import ch.aaap.harvestclient.domain.reference.dto.UserReferenceDto;
+import ch.aaap.harvestclient.domain.reference.dto.ImmutableUserReferenceDto;
 
 @Gson.TypeAdapters(fieldNamingStrategy = true)
 @Value.Immutable
@@ -21,7 +21,12 @@ public abstract class Role implements BaseObject<Role> {
     public abstract List<Long> getUserIds();
 
     public List<Reference<User>> getUserReferences() {
-        return getUserIds().stream().map(UserReferenceDto::new).collect(Collectors.toList());
+        return getUserIds().stream()
+                .map(id -> ImmutableUserReferenceDto.builder()
+                        .id(id)
+                        .name("")
+                        .build())
+                .collect(Collectors.toList());
     }
 
 }

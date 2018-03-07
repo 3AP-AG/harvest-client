@@ -9,7 +9,7 @@ import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
 @Api.Permission(Api.Role.ADMIN)
-public interface InvoiceMessagesApi extends Api.GetNested<Invoice, InvoiceMessage> {
+public interface InvoiceMessagesApi {
 
     /**
      *
@@ -39,18 +39,6 @@ public interface InvoiceMessagesApi extends Api.GetNested<Invoice, InvoiceMessag
      */
     Pagination<InvoiceMessage> list(Reference<Invoice> invoiceReference, Instant updatedSince, int page,
             int perPage);
-
-    /**
-     * Return an existing InvoiceMessage.
-     *
-     * @param invoiceReference
-     *            the invoice containing the message
-     * @param invoiceMessageReference
-     *            a reference to an existing InvoiceMessage
-     * @return the full InvoiceMessage object
-     */
-    @Override
-    InvoiceMessage get(Reference<Invoice> invoiceReference, Reference<InvoiceMessage> invoiceMessageReference);
 
     /**
      * Create a new InvoiceMessage

@@ -115,6 +115,28 @@ class ExpensesApiCreateTest {
         }
     }
 
+    @Test
+    void attachReceiptInvalidFilename() {
+
+        assertThrows(RequestProcessingException.class, () -> {
+            try (InputStream in = getClass().getResourceAsStream("/minimal_files/pdf.pdf")) {
+
+                Expense creationInfo = ImmutableExpense.builder()
+                        .project(project)
+                        .expenseCategory(expenseCategory)
+                        .spentDate(LocalDate.now())
+                        .user(user)
+                        .totalCost(22.)
+                        .build();
+                expense = expensesApi.create(creationInfo);
+
+                expense = expensesApi.attachReceipt(expense, in, "test.txt");
+
+                Receipt receipt = expense.getReceipt();
+            }
+        });
+    }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "mp3.mp3"

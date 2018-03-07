@@ -44,7 +44,7 @@ public interface TimeEntry extends BaseObject<TimeEntry> {
     ExternalService getExternalService();
 
     @Nullable
-    Invoice getInvoice();
+    Reference<Invoice> getInvoice();
 
     @Nullable
     Double getHours();

@@ -33,6 +33,8 @@ class ExpenseCategoriesApiCreateTest {
         expenseCategory = expenseCategorysApi.create(creationInfo);
 
         assertThat(expenseCategory.getName()).isEqualTo(name);
+        ExpenseCategory gotten = expenseCategorysApi.get(this.expenseCategory);
+        assertThat(gotten).isEqualTo(expenseCategory);
     }
 
     @Test

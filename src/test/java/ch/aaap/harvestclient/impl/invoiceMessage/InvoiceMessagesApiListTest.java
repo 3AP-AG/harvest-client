@@ -10,6 +10,7 @@ import org.junit.jupiter.api.TestInfo;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import ch.aaap.harvestclient.HarvestTest;
 import ch.aaap.harvestclient.api.InvoiceMessagesApi;
 import ch.aaap.harvestclient.core.Harvest;
 import ch.aaap.harvestclient.domain.ImmutableInvoice;
@@ -19,6 +20,7 @@ import ch.aaap.harvestclient.domain.InvoiceMessage;
 import util.ExistingData;
 import util.TestSetupUtil;
 
+@HarvestTest
 public class InvoiceMessagesApiListTest {
 
     private static final Harvest harvest = TestSetupUtil.getAdminAccess();

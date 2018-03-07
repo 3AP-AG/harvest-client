@@ -1,33 +1,20 @@
 package ch.aaap.harvestclient.domain.reference.dto;
 
+import javax.annotation.Nullable;
+
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
+
 import ch.aaap.harvestclient.domain.ExpenseCategory;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
-public class ExpenseCategoryReferenceDto extends BaseReferenceDto implements Reference<ExpenseCategory> {
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+public interface ExpenseCategoryReferenceDto extends BaseReferenceDto, Reference<ExpenseCategory> {
+    @Nullable
+    Double getUnitPrice();
 
-    private Double unitPrice;
-    private String unitName;
+    @Nullable
+    String getUnitName();
 
-    public ExpenseCategoryReferenceDto() {
-    }
-
-    public ExpenseCategoryReferenceDto(long id) {
-        super(id);
-    }
-
-    public Double getUnitPrice() {
-        return unitPrice;
-    }
-
-    public void setUnitPrice(Double unitPrice) {
-        this.unitPrice = unitPrice;
-    }
-
-    public String getUnitName() {
-        return unitName;
-    }
-
-    public void setUnitName(String unitName) {
-        this.unitName = unitName;
-    }
 }

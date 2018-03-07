@@ -43,6 +43,8 @@ class TaskAssignmentsApiCreateTest {
 
         assertThat(taskAssignment).isNotNull();
         assertThat(taskAssignment.getTaskReference().getId()).isEqualTo(taskReference.getId());
+        TaskAssignment gotten = taskAssignmentApi.get(projectReference, this.taskAssignment);
+        assertThat(gotten).isEqualTo(taskAssignment);
 
     }
 

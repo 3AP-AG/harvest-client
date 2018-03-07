@@ -9,7 +9,7 @@ import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
 @Api.Permission(Api.Role.ADMIN)
-public interface EstimateMessagesApi extends Api.GetNested<Estimate, EstimateMessage> {
+public interface EstimateMessagesApi {
 
     /**
      *
@@ -39,18 +39,6 @@ public interface EstimateMessagesApi extends Api.GetNested<Estimate, EstimateMes
      */
     Pagination<EstimateMessage> list(Reference<Estimate> estimateReference, Instant updatedSince, int page,
             int perPage);
-
-    /**
-     * Return an existing EstimateMessage.
-     *
-     * @param estimateReference
-     *            the estimate containing the message
-     * @param estimateMessageReference
-     *            a reference to an existing EstimateMessage
-     * @return the full EstimateMessage object
-     */
-    @Override
-    EstimateMessage get(Reference<Estimate> estimateReference, Reference<EstimateMessage> estimateMessageReference);
 
     /**
      * Create a new EstimateMessage

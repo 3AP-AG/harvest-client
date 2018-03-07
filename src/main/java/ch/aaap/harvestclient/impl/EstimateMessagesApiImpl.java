@@ -43,15 +43,6 @@ public class EstimateMessagesApiImpl implements EstimateMessagesApi {
     }
 
     @Override
-    public EstimateMessage get(Reference<Estimate> estimateReference,
-            Reference<EstimateMessage> estimateMessageReference) {
-        Call<EstimateMessage> call = service.get(estimateReference.getId(), estimateMessageReference.getId());
-        EstimateMessage estimateMessage = ExceptionHandler.callOrThrow(call);
-        log.debug("Gotten {}", estimateMessage);
-        return estimateMessage;
-    }
-
-    @Override
     public EstimateMessage create(Reference<Estimate> estimateReference, EstimateMessage creationInfo) {
         Call<EstimateMessage> call = service.create(estimateReference.getId(), creationInfo);
         EstimateMessage estimateMessage = ExceptionHandler.callOrThrow(call);
