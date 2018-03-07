@@ -77,6 +77,8 @@ public interface EstimatesApi extends Api.Simple<Estimate> {
      *
      * @param estimateReference
      *            the estimate that contains the item
+     * @param estimateItemReference
+     *            a reference to the line item
      * @param updateInfo
      *            the line item to be updated
      * @return the updated Estimate

@@ -64,6 +64,7 @@ public interface InvoiceMessagesApi {
      *            the invoice against which to record the event
      * @param eventType
      *            the event you want to record for this invoice
+     * @return the InvoiceMessage that was used to do the marking
      */
     InvoiceMessage markAs(Reference<Invoice> invoiceReference, InvoiceMessage.EventType eventType);
 

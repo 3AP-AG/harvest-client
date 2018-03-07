@@ -88,6 +88,8 @@ public interface ExpensesApi extends Api.Simple<Expense> {
      *            jpg). Calling code is responsible for closing the stream
      * @param fileName
      *            a filename for Harvest
+     * @throws IOException
+     *             if there is a problem reading the inputStream
      * @return the updated Expense
      */
     Expense attachReceipt(Reference<Expense> expenseReference, InputStream inputStream, String fileName)

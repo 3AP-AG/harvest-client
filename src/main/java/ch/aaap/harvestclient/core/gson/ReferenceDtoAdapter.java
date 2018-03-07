@@ -21,7 +21,7 @@ import ch.aaap.harvestclient.exception.HarvestRuntimeException;
 /**
  * A {@code Reference<T>} field can be either a full object (like a Client) or a
  * ReferenceDto (e.g. ClientReferenceDto). When serializing, we only need an id
- * -> {@code client_id:123213}, while we deserialize expecting a ReferenceDto
+ * like {@code client_id:123213}, while we deserialize expecting a ReferenceDto
  */
 public class ReferenceDtoAdapter implements TypeAdapterFactory {
 

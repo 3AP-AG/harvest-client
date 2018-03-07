@@ -34,6 +34,8 @@ public interface EstimateItem extends Reference<EstimateItem> {
 
     /**
      * max length = 65,535
+     * 
+     * @return the current value
      */
     @Nullable
     String getDescription();

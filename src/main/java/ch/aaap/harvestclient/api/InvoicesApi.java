@@ -89,6 +89,8 @@ public interface InvoicesApi extends Api.Simple<Invoice> {
      *            the invoice that contains the item
      * @param updateInfo
      *            the line item to be updated
+     * @param invoiceItemReference
+     *            the line item to be deleted
      * @return the updated Invoice
      */
     Invoice updateLineItem(Reference<Invoice> invoiceReference, Reference<InvoiceItem> invoiceItemReference,

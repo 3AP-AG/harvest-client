@@ -27,10 +27,10 @@ public interface Invoice extends BaseObject<Invoice> {
      * and due_date fields to determine state:
      * <ul>
      * <li>If sent_at, paid_at, and closed_at are empty, the invoice is a draft</li>
-     * <li>If only sent_at is present and the current date is < due_date, the
-     * invoice is open</li>
-     * <li>If only sent_at is present and the current date is >= due_date, the
-     * invoice is late</li>
+     * <li>If only sent_at is present and the current date is {@literal <} due_date,
+     * the invoice is open</li>
+     * <li>If only sent_at is present and the current date is {@literal >=}
+     * due_date, the invoice is late</li>
      * <li>If paid_at is present, the invoice is paid</li>
      * <li>If closed_at is present, the invoice has been closed (or
      * written-off)</li>
@@ -129,6 +129,8 @@ public interface Invoice extends BaseObject<Invoice> {
 
     /**
      * max length = 65,535
+     * 
+     * @return the current value
      */
     @Nullable
     String getNotes();

@@ -16,7 +16,7 @@ public abstract class Role implements BaseObject<Role> {
     public abstract String getName();
 
     /**
-     * The IDs of the users assigned to this role.
+     * @return The IDs of the users assigned to this role.
      */
     public abstract List<Long> getUserIds();
 

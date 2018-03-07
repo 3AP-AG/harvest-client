@@ -57,6 +57,8 @@ public interface InvoiceMessage extends BaseObject<InvoiceMessage> {
 
     /**
      * max length = 16,777,215
+     * 
+     * @return the current value
      */
     @Nullable
     String getBody();

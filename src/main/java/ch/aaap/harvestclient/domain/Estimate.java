@@ -105,6 +105,8 @@ public interface Estimate extends BaseObject<Estimate> {
 
     /**
      * max length = 65,535
+     * 
+     * @return the current value
      */
     @Nullable
     String getNotes();

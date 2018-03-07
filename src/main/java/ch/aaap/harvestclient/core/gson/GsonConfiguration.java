@@ -23,6 +23,8 @@ public class GsonConfiguration {
     /**
      * Configure the GSON JSON parser for the specific formats used by Harvest
      * 
+     * @param use12HoursFormat
+     *            if true, convert LocalTime objects with '1:02pm' format
      * @return the global Gson configuration
      */
     public static Gson getConfiguration(boolean use12HoursFormat) {

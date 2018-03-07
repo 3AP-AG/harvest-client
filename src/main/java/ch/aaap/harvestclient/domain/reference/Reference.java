@@ -10,6 +10,10 @@ public interface Reference<T> {
      *
      * Example: {@code list.forEach(Reference::requireId); }
      * 
+     * @param <T>
+     *            the type of the reference
+     * @param ref
+     *            the reference
      * @throws NullPointerException
      *             if id is null
      */
