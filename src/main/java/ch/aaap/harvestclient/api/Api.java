@@ -37,6 +37,7 @@ public interface Api {
          * If true, a user can only read/write information about himself: needs admin
          * permissions to change objects for other users
          * 
+         * @return the current value
          */
         boolean onlySelf() default false;
     }

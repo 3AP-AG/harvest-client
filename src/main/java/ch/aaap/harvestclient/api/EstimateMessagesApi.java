@@ -64,6 +64,7 @@ public interface EstimateMessagesApi {
      *            the estimate against which to record the event
      * @param eventType
      *            the event you want to record for this estimate
+     * @return the updated Estimate
      */
     EstimateMessage markAs(Reference<Estimate> estimateReference, EstimateMessage.EventType eventType);
 

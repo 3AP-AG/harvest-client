@@ -48,6 +48,8 @@ public interface InvoiceItem extends Reference<InvoiceItem> {
 
     /**
      * max length = 65,535
+     * 
+     * @return the current value
      */
     @Nullable
     String getDescription();

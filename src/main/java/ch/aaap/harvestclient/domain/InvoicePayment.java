@@ -28,6 +28,8 @@ public interface InvoicePayment extends BaseObject<InvoicePayment> {
 
     /**
      * max length = 16,777,215
+     * 
+     * @return the current value
      */
     @Nullable
     String getNotes();

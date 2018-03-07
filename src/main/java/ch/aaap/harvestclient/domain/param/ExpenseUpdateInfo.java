@@ -34,6 +34,8 @@ public interface ExpenseUpdateInfo extends ExpenseCommon {
 
     /**
      * Set to true to delete an attached receipt
+     * 
+     * @return the current value
      */
     @Nullable
     Boolean getDeleteReceipt();

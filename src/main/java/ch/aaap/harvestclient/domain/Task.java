@@ -13,6 +13,8 @@ public interface Task extends BaseObject<Task> {
 
     /**
      * Max 255 characters
+     * 
+     * @return the current value
      */
     String getName();
 

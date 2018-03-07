@@ -10,8 +10,8 @@ import org.immutables.value.Value;
 public interface TimeEntryCreationInfoDuration extends TimeEntryCreationInfo {
 
     /**
-     * The current amount of time tracked. Defaults to 0.0. If set, is_running will
-     * be true, and false otherwise.
+     * @return The current amount of time tracked. Defaults to 0.0. If set,
+     *         is_running will be true, and false otherwise.
      */
     @Nullable
     Double getHours();

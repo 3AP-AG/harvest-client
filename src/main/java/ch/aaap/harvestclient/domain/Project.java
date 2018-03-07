@@ -65,8 +65,8 @@ public interface Project extends BaseObject<Project> {
     Boolean getBillable();
 
     /**
-     * Whether the project is a fixed-fee project or not. Setting this to true at
-     * creation will set billBy to NONE, regardless of input
+     * @return Whether the project is a fixed-fee project or not. Setting this to
+     *         true at creation will set billBy to NONE, regardless of input
      */
     @SerializedName("is_fixed_fee")
     @Nullable
@@ -75,14 +75,14 @@ public interface Project extends BaseObject<Project> {
     BillingMethod getBillBy();
 
     /**
-     * Rate for projects when billedBy is {@link BillingMethod#PROJECT}
+     * @return Rate for projects when billedBy is {@link BillingMethod#PROJECT}
      */
     @Nullable
     Double getHourlyRate();
 
     /**
-     * Budget in hours for project when budgetBy is
-     * {@link BudgetMethod#HOURS_PER_PROJECT}
+     * @return Budget in hours for project when budgetBy is
+     *         {@link BudgetMethod#HOURS_PER_PROJECT}
      */
     @Nullable
     Double getBudget();
@@ -99,35 +99,37 @@ public interface Project extends BaseObject<Project> {
     LocalDate getOverBudgetNotificationDate();
 
     /**
-     * Option to show project budget to all employees. Does not apply to Total
-     * Project Fee projects. Defaults to false.
+     * @return Option to show project budget to all employees. Does not apply to
+     *         Total Project Fee projects. Defaults to false.
      */
     @Nullable
     Boolean getShowBudgetToAll();
 
     /**
-     * The monetary budget for the project when budgetBy is
-     * {@link BudgetMethod#TOTAL_PROJECT_FEES}
+     * @return The monetary budget for the project when budgetBy is
+     *         {@link BudgetMethod#TOTAL_PROJECT_FEES}
      */
     @Nullable
     Double getCostBudget();
 
     /**
-     * Option for budget of Total Project Fees projects to include tracked expenses.
-     * Defaults to false.
+     * @return Option for budget of Total Project Fees projects to include tracked
+     *         expenses. Defaults to false.
      */
     @Nullable
     Boolean getCostBudgetIncludeExpenses();
 
     /**
-     * The amount you plan to invoice for the project. Only used by fixed-fee
-     * projects.
+     * @return The amount you plan to invoice for the project. Only used by
+     *         fixed-fee projects.
      */
     @Nullable
     Double getFee();
 
     /**
      * max length = 65,535
+     * 
+     * @return the current value
      */
     @Nullable
     String getNotes();
