@@ -10,6 +10,12 @@ import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoTimestamp;
 import ch.aaap.harvestclient.domain.param.TimeEntryUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
+/**
+ * @see <a href=
+ *      "https://help.getharvest.com/api-v2/timesheets-api/timesheets/time-entries/">
+ *      Time Entries API on Harvest</a>
+ *
+ */
 @Api.Permission(value = Api.Role.NONE, onlySelf = true)
 public interface TimesheetsApi extends Api.Get<TimeEntry> {
 

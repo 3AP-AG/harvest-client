@@ -10,6 +10,9 @@ import ch.aaap.harvestclient.domain.reference.Reference;
 
 /**
  * Also needs Team Feature enabled
+ * 
+ * @see <a href= "https://help.getharvest.com/api-v2/roles-api/roles/roles/">
+ *      Roles API on Harvest</a>
  */
 @Api.Permission(Api.Role.ADMIN)
 public interface RolesApi {

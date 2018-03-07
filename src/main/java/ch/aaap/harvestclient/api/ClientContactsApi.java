@@ -8,6 +8,11 @@ import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.ClientContactUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
+/**
+ * @see <a href=
+ *      "https://help.getharvest.com/api-v2/clients-api/clients/contacts/">Client
+ *      Contacts API on Harvest</a>
+ */
 @Api.Permission(Api.Role.ADMIN)
 public interface ClientContactsApi extends Api.Simple<ClientContact> {
 

@@ -10,6 +10,11 @@ import ch.aaap.harvestclient.domain.param.EstimateItemUpdateInfo;
 import ch.aaap.harvestclient.domain.param.EstimateUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
+/**
+ * @see <a href=
+ *      "https://help.getharvest.com/api-v2/estimates-api/estimates/estimates/">
+ *      Estimates API on Harvest</a>
+ */
 @Api.Permission(Api.Role.ADMIN)
 public interface EstimatesApi extends Api.Simple<Estimate> {
 

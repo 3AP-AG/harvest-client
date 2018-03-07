@@ -8,6 +8,13 @@ import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.UserUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
+/**
+ * API for UserAssignments. All methods are specific to a given project
+ *
+ * @see <a href= "https://help.getharvest.com/api-v2/users-api/users/users/">
+ *      Users API on Harvest</a>
+ *
+ */
 @Api.Permission(value = Api.Role.ADMIN)
 public interface UsersApi extends Api.Simple<User> {
 

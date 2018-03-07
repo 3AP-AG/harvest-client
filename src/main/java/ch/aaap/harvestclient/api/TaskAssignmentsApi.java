@@ -11,6 +11,11 @@ import ch.aaap.harvestclient.domain.reference.Reference;
 
 /**
  * API for TaskAssignments. All methods are specific to a given project
+ * 
+ * @see <a href=
+ *      "https://help.getharvest.com/api-v2/projects-api/projects/task-assignments/">
+ *      Project Task Assignments API on Harvest</a>
+ *
  */
 @Api.Permission(Api.Role.PROJECT_MANAGER)
 public interface TaskAssignmentsApi extends Api.GetNested<Project, TaskAssignment> {

@@ -8,6 +8,11 @@ import ch.aaap.harvestclient.domain.pagination.Pagination;
 import ch.aaap.harvestclient.domain.param.TaskUpdateInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
+/**
+ * @see <a href= "https://help.getharvest.com/api-v2/tasks-api/tasks/tasks/">
+ *      Tasks API on Harvest</a>
+ *
+ */
 @Api.Permission(Api.Role.ADMIN)
 public interface TasksApi extends Api.Simple<Task> {
     /**
