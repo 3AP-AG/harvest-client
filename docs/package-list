@@ -1,5 +1,6 @@
 ch.aaap.harvestclient.api
 ch.aaap.harvestclient.api.filter
+ch.aaap.harvestclient.api.filter.base
 ch.aaap.harvestclient.core
 ch.aaap.harvestclient.core.gson
 ch.aaap.harvestclient.domain
