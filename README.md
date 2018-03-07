@@ -14,7 +14,7 @@ harvest-client is a Java client for the Harvest REST API (https://help.getharves
 With harvest-client you can use the Harvest v2 API with a nice Java interface:
 
 ```java
-// Run with default configuration
+// Load configuration from application.conf in src/main/resources of your application
 Harvest harvest = new Harvest();
 // list all users
 List<User> users = harvest.users().list();
@@ -32,7 +32,8 @@ User userInfo = ImmutableUser.builder()
 User newUser = harvest.users().create(userInfo);
 ```
 
-Check out more [examples](https://github.com/3AP-AG/harvest-client/tree/develop/src/test/java/ch/aaap/harvestclient/examples) 
+Have a look in the test folders for [examples](https://github.com/3AP-AG/harvest-client/tree/develop/src/test/java/ch/aaap/harvestclient/impl/).
+Each API endpoint has a Create, List and Update test class. 
 
 ## Download
 

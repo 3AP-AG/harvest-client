@@ -94,6 +94,10 @@ public class Harvest {
     private final ExpenseCategoriesApi expenseCategoriesApi;
     private final ExpensesApi expensesApi;
 
+    public Harvest() {
+        this(ConfigFactory.load());
+    }
+
     public Harvest(Config config) {
 
         this.config = config;
@@ -189,10 +193,6 @@ public class Harvest {
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
-    }
-
-    public Harvest() {
-        this(ConfigFactory.load());
     }
 
     private Interceptor initAuthentication() {
