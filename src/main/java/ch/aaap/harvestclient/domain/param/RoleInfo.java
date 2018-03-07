@@ -2,40 +2,22 @@ package ch.aaap.harvestclient.domain.param;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
+import org.immutables.gson.Gson;
+import org.immutables.value.Value;
+
 /**
  * Represents a creation or update request for a Role
  */
-public class RoleInfo {
+@Gson.TypeAdapters(fieldNamingStrategy = true)
+@Value.Immutable
+@Value.Style.Depluralize
+public interface RoleInfo {
 
-    private String name;
+    @Value.Parameter
+    String getName();
 
-    private List<Long> userIds;
-
-    public RoleInfo(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Long> getUserIds() {
-        return userIds;
-    }
-
-    public void setUserIds(List<Long> userIds) {
-        this.userIds = userIds;
-    }
-
-    @Override
-    public String toString() {
-        return "RoleInfo{" +
-                "name='" + name + '\'' +
-                ", userIds=" + userIds +
-                '}';
-    }
+    @Nullable
+    List<Long> getUserIds();
 }

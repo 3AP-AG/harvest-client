@@ -11,6 +11,7 @@ import ch.aaap.harvestclient.domain.Role;
 import ch.aaap.harvestclient.domain.User;
 import ch.aaap.harvestclient.domain.pagination.PaginatedList;
 import ch.aaap.harvestclient.domain.pagination.Pagination;
+import ch.aaap.harvestclient.domain.param.ImmutableRoleInfo;
 import ch.aaap.harvestclient.domain.param.RoleInfo;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.service.RoleService;
@@ -67,10 +68,12 @@ public class RolesApiImpl implements RolesApi {
 
         Role role = getIfNeeded(roleReference);
 
-        RoleInfo roleInfo = new RoleInfo(role.getName());
         List<Long> userIds = role.getUserReferences().stream().map(Reference::getId).collect(Collectors.toList());
         userIds.add(userReference.getId());
-        roleInfo.setUserIds(userIds);
+        RoleInfo roleInfo = ImmutableRoleInfo.builder()
+                .name(role.getName())
+                .addAllUserIds(userIds)
+                .build();
 
         return update(roleReference, roleInfo);
 
@@ -81,10 +84,12 @@ public class RolesApiImpl implements RolesApi {
 
         Role role = getIfNeeded(roleReference);
 
-        RoleInfo roleInfo = new RoleInfo(role.getName());
         List<Long> userIds = role.getUserReferences().stream().map(Reference::getId).collect(Collectors.toList());
         userIds.remove(userReference.getId());
-        roleInfo.setUserIds(userIds);
+        RoleInfo roleInfo = ImmutableRoleInfo.builder()
+                .name(role.getName())
+                .addAllUserIds(userIds)
+                .build();
 
         return update(roleReference, roleInfo);
     }
