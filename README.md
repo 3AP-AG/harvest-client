@@ -83,6 +83,11 @@ You can see the actual HTTP request and response by setting the log level for _c
 ```
 
 
+### Found an Harvest Bug?
+
+Check out [TestSetupUtil.prepareForHarvestBugReport()](https://github.com/3AP-AG/harvest-client/blob/8f9dfda8fa07599de0939177e86f0126fdb1d9b7/src/test/java/util/TestSetupUtil.java#L81) for inspiration
+
+
 ### Contributing
 
 We welcome contributions in the form of pull requests or bug reports!
