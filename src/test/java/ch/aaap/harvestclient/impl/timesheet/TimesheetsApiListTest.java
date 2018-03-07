@@ -116,13 +116,21 @@ class TimesheetsApiListTest {
     @Test
     void listByUser() {
 
-        TimeEntryCreationInfoDuration creationInfo = new TimeEntryCreationInfoDuration(project, existingTask,
-                LocalDate.now());
-        creationInfo.setUserReference(user);
+        TimeEntryCreationInfoDuration creationInfo = ImmutableTimeEntryCreationInfoDuration.builder()
+                .projectReference(project)
+                .taskReference(existingTask)
+                .spentDate(LocalDate.now())
+                .userReference(user)
+                .build();
+
         timeEntry = api.create(creationInfo);
 
-        creationInfo = new TimeEntryCreationInfoDuration(project, existingTask, LocalDate.now());
-        creationInfo.setUserReference(anotherUser);
+        creationInfo = ImmutableTimeEntryCreationInfoDuration.builder()
+                .projectReference(project)
+                .taskReference(existingTask)
+                .spentDate(LocalDate.now())
+                .userReference(anotherUser)
+                .build();
         anotherTimeEntry = api.create(creationInfo);
 
         TimeEntryFilter filter = new TimeEntryFilter();
@@ -136,9 +144,12 @@ class TimesheetsApiListTest {
 
     @Test
     void listByProject() {
-        TimeEntryCreationInfoDuration creationInfo = new TimeEntryCreationInfoDuration(project, existingTask,
-                LocalDate.now());
-        creationInfo.setUserReference(user);
+        TimeEntryCreationInfoDuration creationInfo = ImmutableTimeEntryCreationInfoDuration.builder()
+                .projectReference(project)
+                .taskReference(existingTask)
+                .spentDate(LocalDate.now())
+                .userReference(user)
+                .build();
         timeEntry = api.create(creationInfo);
 
         taskAssignment = harvest.taskAssignments()
@@ -146,8 +157,12 @@ class TimesheetsApiListTest {
                         .taskReference(existingTask)
                         .build());
 
-        creationInfo = new TimeEntryCreationInfoDuration(anotherProject, existingTask, LocalDate.now());
-        creationInfo.setUserReference(anotherUser);
+        creationInfo = ImmutableTimeEntryCreationInfoDuration.builder()
+                .projectReference(anotherProject)
+                .taskReference(existingTask)
+                .spentDate(LocalDate.now())
+                .userReference(anotherUser)
+                .build();
         anotherTimeEntry = api.create(creationInfo);
 
         TimeEntryFilter filter = new TimeEntryFilter();
@@ -162,9 +177,12 @@ class TimesheetsApiListTest {
     @Test
     void listByClient() {
 
-        TimeEntryCreationInfoDuration creationInfo = new TimeEntryCreationInfoDuration(project, existingTask,
-                LocalDate.now());
-        creationInfo.setUserReference(user);
+        TimeEntryCreationInfoDuration creationInfo = ImmutableTimeEntryCreationInfoDuration.builder()
+                .projectReference(project)
+                .taskReference(existingTask)
+                .spentDate(LocalDate.now())
+                .userReference(user)
+                .build();
         timeEntry = api.create(creationInfo);
 
         taskAssignment = harvest.taskAssignments()
@@ -172,8 +190,12 @@ class TimesheetsApiListTest {
                         .taskReference(existingTask)
                         .build());
 
-        creationInfo = new TimeEntryCreationInfoDuration(anotherProject, existingTask, LocalDate.now());
-        creationInfo.setUserReference(anotherUser);
+        creationInfo = ImmutableTimeEntryCreationInfoDuration.builder()
+                .projectReference(anotherProject)
+                .taskReference(existingTask)
+                .spentDate(LocalDate.now())
+                .userReference(anotherUser)
+                .build();
         anotherTimeEntry = api.create(creationInfo);
 
         TimeEntryFilter filter = new TimeEntryFilter();
@@ -202,9 +224,13 @@ class TimesheetsApiListTest {
                 .hourlyRate(100.)
                 .build());
 
-        TimeEntryCreationInfoDuration creationInfo = new TimeEntryCreationInfoDuration(project, task, LocalDate.now());
-        creationInfo.setUserReference(user);
-        creationInfo.setHours(2.);
+        TimeEntryCreationInfoDuration creationInfo = ImmutableTimeEntryCreationInfoDuration.builder()
+                .projectReference(project)
+                .taskReference(task)
+                .spentDate(LocalDate.now())
+                .userReference(user)
+                .hours(2.)
+                .build();
         timeEntry = api.create(creationInfo);
 
         assertThat(timeEntries).isEmpty();
@@ -233,12 +259,15 @@ class TimesheetsApiListTest {
     @Test
     void listByRunning() {
 
-        TimeEntryCreationInfoDuration creationInfo = new TimeEntryCreationInfoDuration(project, existingTask,
-                LocalDate.now());
-        creationInfo.setUserReference(user);
+        TimeEntryCreationInfoDuration creationInfo = ImmutableTimeEntryCreationInfoDuration.builder()
+                .projectReference(project)
+                .taskReference(existingTask)
+                .spentDate(LocalDate.now())
+                .userReference(user)
+                .build();
         timeEntry = api.create(creationInfo);
 
-        creationInfo.setHours(2.);
+        creationInfo = ImmutableTimeEntryCreationInfoDuration.copyOf(creationInfo).withHours(2.);
         anotherTimeEntry = api.create(creationInfo);
 
         TimeEntryFilter filter = new TimeEntryFilter();
@@ -253,9 +282,12 @@ class TimesheetsApiListTest {
     @Test
     void listByUpdatedSince() {
 
-        TimeEntryCreationInfoDuration creationInfo = new TimeEntryCreationInfoDuration(project, existingTask,
-                LocalDate.now());
-        creationInfo.setUserReference(user);
+        TimeEntryCreationInfoDuration creationInfo = ImmutableTimeEntryCreationInfoDuration.builder()
+                .projectReference(project)
+                .taskReference(existingTask)
+                .spentDate(LocalDate.now())
+                .userReference(user)
+                .build();
         timeEntry = api.create(creationInfo);
         Instant creationTime = timeEntry.getUpdatedAt();
 
@@ -275,13 +307,20 @@ class TimesheetsApiListTest {
     @Test
     void listByDateRange() {
 
-        TimeEntryCreationInfoDuration creationInfo = new TimeEntryCreationInfoDuration(project, existingTask,
-                LocalDate.of(2000, 1, 5));
-        creationInfo.setUserReference(user);
+        TimeEntryCreationInfoDuration creationInfo = ImmutableTimeEntryCreationInfoDuration.builder()
+                .projectReference(project)
+                .taskReference(existingTask)
+                .spentDate(LocalDate.of(2000, 1, 5))
+                .userReference(user)
+                .build();
         timeEntry = api.create(creationInfo);
 
-        creationInfo = new TimeEntryCreationInfoDuration(project, existingTask, LocalDate.of(2000, 1, 10));
-        creationInfo.setUserReference(anotherUser);
+        creationInfo = ImmutableTimeEntryCreationInfoDuration.builder()
+                .projectReference(project)
+                .taskReference(existingTask)
+                .spentDate(LocalDate.of(2000, 1, 10))
+                .userReference(anotherUser)
+                .build();
         anotherTimeEntry = api.create(creationInfo);
 
         TimeEntryFilter filter = new TimeEntryFilter();

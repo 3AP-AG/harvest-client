@@ -22,9 +22,7 @@ import ch.aaap.harvestclient.domain.Project;
 import ch.aaap.harvestclient.domain.Task;
 import ch.aaap.harvestclient.domain.TimeEntry;
 import ch.aaap.harvestclient.domain.User;
-import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoDuration;
-import ch.aaap.harvestclient.domain.param.TimeEntryCreationInfoTimestamp;
-import ch.aaap.harvestclient.domain.param.TimeEntryUpdateInfo;
+import ch.aaap.harvestclient.domain.param.*;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import util.ExistingData;
 import util.TestSetupUtil;
@@ -68,12 +66,15 @@ class TimeSheetsApiWithStartTimeTest {
         // harvest does not store seconds in started_time
         LocalTime startedTime = LocalTime.now(userTimeZone).truncatedTo(ChronoUnit.MINUTES);
 
-        TimeEntryCreationInfoTimestamp creationInfo = new TimeEntryCreationInfoTimestamp(project,
-                task, date);
-        creationInfo.setNotes(notes);
-        creationInfo.setUserReference(user);
-        creationInfo.setStartedTime(startedTime);
-        creationInfo.setEndedTime(startedTime.plusHours(3));
+        TimeEntryCreationInfoTimestamp creationInfo = ImmutableTimeEntryCreationInfoTimestamp.builder()
+                .projectReference(project)
+                .taskReference(task)
+                .spentDate(date)
+                .notes(notes)
+                .userReference(user)
+                .startedTime(startedTime)
+                .endedTime(startedTime.plusHours(3))
+                .build();
 
         timeEntry = api.create(creationInfo);
 
@@ -94,11 +95,14 @@ class TimeSheetsApiWithStartTimeTest {
         // harvest does not store seconds in started_time
         LocalTime startedTime = LocalTime.now(userTimeZone).truncatedTo(ChronoUnit.MINUTES);
 
-        TimeEntryCreationInfoTimestamp creationInfo = new TimeEntryCreationInfoTimestamp(project,
-                task, date);
-        creationInfo.setNotes(notes);
-        creationInfo.setUserReference(user);
-        creationInfo.setStartedTime(startedTime);
+        TimeEntryCreationInfoTimestamp creationInfo = ImmutableTimeEntryCreationInfoTimestamp.builder()
+                .projectReference(project)
+                .taskReference(task)
+                .spentDate(date)
+                .notes(notes)
+                .userReference(user)
+                .startedTime(startedTime)
+                .build();
 
         timeEntry = api.create(creationInfo);
 
@@ -120,19 +124,24 @@ class TimeSheetsApiWithStartTimeTest {
         LocalDate date = LocalDate.now();
         String notes = "Timeentry created for " + testInfo.getDisplayName();
 
-        TimeEntryCreationInfoDuration creationInfo = new TimeEntryCreationInfoDuration(project, task, date);
-        creationInfo.setNotes(notes);
-        creationInfo.setUserReference(user);
-        creationInfo.setHours(1.);
+        TimeEntryCreationInfoDuration creationInfo = ImmutableTimeEntryCreationInfoDuration.builder()
+                .projectReference(project)
+                .taskReference(task)
+                .spentDate(date)
+                .notes(notes)
+                .userReference(user)
+                .hours(1.)
+                .build();
 
         timeEntry = api.create(creationInfo);
 
         assertThat(timeEntry.getStartedTime()).isNotNull();
 
         LocalTime startedTime = LocalTime.of(13, 13);
-        TimeEntryUpdateInfo updateInfo = new TimeEntryUpdateInfo();
-        updateInfo.setStartedTime(startedTime);
 
+        TimeEntryUpdateInfo updateInfo = ImmutableTimeEntryUpdateInfo.builder()
+                .startedTime(startedTime)
+                .build();
         TimeEntry updatedEntry = api.update(timeEntry, updateInfo);
 
         assertThat(updatedEntry.getStartedTime()).isEqualTo(startedTime);
