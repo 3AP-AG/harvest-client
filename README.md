@@ -63,11 +63,14 @@ compile 'ch.aaap:harvest-client:$version'
 * Get a personal access token [from Harvest](https://id.getharvest.com/developers)
     * Attention: unit tests assume admin access. Don't run them against a production account!
 * Configuring your Harvest account id and authentication token:
-    * Either copy [reference.conf](src/main/resources/reference.conf) to src/test/resources/admin.conf and insert your credentials
+    * You will need 2 Harvest accounts with admin access (it's a limitation of the current Harvest API)
+    * Either copy [reference.conf](src/main/resources/reference.conf) to src/test/resources/admin{1,2}.conf and insert your credentials
     * Or set the following environment properties:
     ```bash
-        $ export HARVEST_ACCOUNT_ID=YOUR_ACCT_ID
-        $ export HARVEST_AUTH_TOKEN=YOUR_AUTH_TOKEN
+        $ export HARVEST_ACCOUNT_ID_ADMIN1=YOUR_ACCT_ID_1
+        $ export HARVEST_AUTH_TOKEN_ADMIN1=YOUR_AUTH_TOKEN_1
+        $ export HARVEST_ACCOUNT_ID_ADMIN2=YOUR_ACCT_ID_2
+        $ export HARVEST_AUTH_TOKEN_ADMIN2=YOUR_AUTH_TOKEN_2
     ```   
 * Run ```gradle build``` in the root directory of the repository
 
