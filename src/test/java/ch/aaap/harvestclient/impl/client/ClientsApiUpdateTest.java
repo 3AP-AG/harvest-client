@@ -23,8 +23,9 @@ class ClientsApiUpdateTest {
 
     @BeforeEach
     void beforeEach(TestInfo testInfo) {
-        client = clientsApi
-                .create(ImmutableClient.builder().name("test Client for " + testInfo.getDisplayName()).build());
+        client = clientsApi.create(ImmutableClient.builder()
+                .name("test Client for " + testInfo.getDisplayName())
+                .build());
     }
 
     @AfterEach
