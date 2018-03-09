@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
-import com.typesafe.config.ConfigValueFactory;
 
 import ch.aaap.harvestclient.api.*;
 import ch.aaap.harvestclient.core.gson.GsonConfiguration;
@@ -132,9 +131,6 @@ public class Harvest {
      *      page</a>
      */
     public Harvest(Config config) {
-
-        Config config1 = ConfigFactory.defaultReference();
-        config1.withValue("harvest.auth.token", ConfigValueFactory.fromAnyRef("YOUR_TOKEN"));
 
         this.config = config;
         this.baseUrl = config.getString("harvest.baseUrl");

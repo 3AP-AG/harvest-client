@@ -141,7 +141,8 @@ ext {
             junit     : '5.1.0',
             log4j     : '2.10.0',
             immutables: '2.5.6',
-            okhttp    : '3.10.0'
+            okhttp    : '3.10.0',
+            slf4j     : '1.7.25'
     ]
 }
 
@@ -152,13 +153,12 @@ dependencies {
     compile "com.squareup.okhttp3:logging-interceptor:$ver.okhttp"
     compile "com.fatboyindustrial.gson-javatime-serialisers:gson-javatime-serialisers:1.1.1"
     // logging
-    compile "org.slf4j:slf4j-api:1.7.25"
-    compile group: 'org.slf4j', name: 'jul-to-slf4j', version: '1.7.25'
-    compile group: "org.apache.logging.log4j", name: "log4j-api", version: "$ver.log4j"
+    compile "org.slf4j:slf4j-api:$ver.slf4j"
+
     // use log4j for unittests
-    runtime group: "org.apache.logging.log4j", name: "log4j-core",
+    testRuntime group: "org.apache.logging.log4j", name: "log4j-core",
             version: "$ver.log4j"
-    compile group: "org.apache.logging.log4j", name: "log4j-slf4j-impl", version: "$ver.log4j"
+    testCompile group: "org.apache.logging.log4j", name: "log4j-slf4j-impl", version: "$ver.log4j"
 
     // immutable classes for domain objects
     // this will force gson 2.8 also for other dependencies
@@ -175,10 +175,11 @@ dependencies {
     testCompile("org.junit.jupiter:junit-jupiter-params:$ver.junit")
     testRuntime("org.junit.jupiter:junit-jupiter-engine:$ver.junit")
 
+    testCompile group: 'org.slf4j', name: 'jul-to-slf4j', version: "$ver.slf4j"
     testCompile "org.mockito:mockito-core:2.15.0"
     testCompile "org.assertj:assertj-core:3.9.1"
     testImplementation "com.squareup.okhttp3:mockwebserver:$ver.okhttp"
-    compile "org.assertj:assertj-joda-time:2.0.0"
+    testCompile "org.assertj:assertj-joda-time:2.0.0"
 
 
 }
