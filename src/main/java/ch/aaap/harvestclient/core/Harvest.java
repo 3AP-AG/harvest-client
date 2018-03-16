@@ -13,6 +13,7 @@ import com.typesafe.config.ConfigFactory;
 
 import ch.aaap.harvestclient.api.*;
 import ch.aaap.harvestclient.core.gson.GsonConfiguration;
+import ch.aaap.harvestclient.core.ratelimit.RateLimitInterceptor;
 import ch.aaap.harvestclient.domain.User;
 import ch.aaap.harvestclient.exception.HarvestRuntimeException;
 import ch.aaap.harvestclient.impl.*;
@@ -213,6 +214,7 @@ public class Harvest {
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(authenticationInterceptor)
                 // debug interceptor goes last
+                .addNetworkInterceptor(new RateLimitInterceptor())
                 .addInterceptor(debugInterceptor)
                 .build();
 
