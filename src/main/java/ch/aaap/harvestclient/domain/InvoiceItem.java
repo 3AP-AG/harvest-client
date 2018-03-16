@@ -55,7 +55,7 @@ public interface InvoiceItem extends Reference<InvoiceItem> {
     String getDescription();
 
     @Nullable
-    Long getQuantity();
+    Double getQuantity();
 
     @Nullable
     Double getUnitPrice();
