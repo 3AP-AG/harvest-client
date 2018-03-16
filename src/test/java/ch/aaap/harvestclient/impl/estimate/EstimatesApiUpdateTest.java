@@ -88,13 +88,13 @@ class EstimatesApiUpdateTest {
     @Test
     void changeLineItem() {
 
-        long quantity = 20;
+        double quantity = 20;
         double unitPrice = 30;
         String firstName = "test First";
         Estimate creationInfo = ImmutableEstimate.builder()
                 .client(clientReference)
                 .addEstimateItem(ImmutableEstimateItem.builder()
-                        .quantity(10L)
+                        .quantity(10.)
                         .unitPrice(1.)
                         .kind(kind)
                         .build())
@@ -109,7 +109,7 @@ class EstimatesApiUpdateTest {
 
         EstimateUpdateInfo changes = ImmutableEstimateUpdateInfo.builder()
                 .addEstimateItem(ImmutableEstimateItem.builder()
-                        .quantity(20L)
+                        .quantity(quantity)
                         .unitPrice(2.)
                         .kind(kind)
                         .build())
