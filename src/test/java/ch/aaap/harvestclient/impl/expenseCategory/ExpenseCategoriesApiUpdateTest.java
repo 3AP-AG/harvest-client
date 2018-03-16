@@ -40,7 +40,7 @@ class ExpenseCategoriesApiUpdateTest {
     @Test
     void changeName() {
         ExpenseCategoryUpdateInfo changes = ImmutableExpenseCategoryUpdateInfo.builder()
-                .name("new expenseCategory name")
+                .name("new expenseCategory name" + TestSetupUtil.getTestRunId())
                 .build();
         ExpenseCategory updatedExpenseCategory = expenseCategorysApi.update(expenseCategory, changes);
 
@@ -51,7 +51,7 @@ class ExpenseCategoriesApiUpdateTest {
     void changeAll() {
 
         ExpenseCategoryUpdateInfo changes = ImmutableExpenseCategoryUpdateInfo.builder()
-                .name("expense category 2")
+                .name("expense category 2" + TestSetupUtil.getTestRunId())
                 .active(false)
                 .unitName("chunk")
                 .unitPrice(23.)

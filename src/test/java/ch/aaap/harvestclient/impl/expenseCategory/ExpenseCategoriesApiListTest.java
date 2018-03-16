@@ -69,7 +69,7 @@ class ExpenseCategoriesApiListTest {
 
         List<ExpenseCategory> expenseCategorys = expenseCategoriesApi.list(filter);
 
-        assertThat(expenseCategorys).usingFieldByFieldElementComparator().containsExactly(expenseCategory);
+        assertThat(expenseCategorys).usingFieldByFieldElementComparator().contains(expenseCategory);
 
     }
 
