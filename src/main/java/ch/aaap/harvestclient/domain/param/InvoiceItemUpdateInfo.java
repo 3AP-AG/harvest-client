@@ -28,7 +28,7 @@ public interface InvoiceItemUpdateInfo {
     String getDescription();
 
     @Nullable
-    Long getQuantity();
+    Double getQuantity();
 
     @Nullable
     Double getUnitPrice();

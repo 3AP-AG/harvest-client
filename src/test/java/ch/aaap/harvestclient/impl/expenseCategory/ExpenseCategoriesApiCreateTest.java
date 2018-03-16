@@ -28,7 +28,7 @@ class ExpenseCategoriesApiCreateTest {
     @Test
     void create() {
 
-        String name = "test ExpenseCategory";
+        String name = "test ExpenseCategory " + TestSetupUtil.getTestRunId();
         ExpenseCategory creationInfo = ImmutableExpenseCategory.builder().name(name).build();
         expenseCategory = expenseCategorysApi.create(creationInfo);
 
@@ -41,7 +41,7 @@ class ExpenseCategoriesApiCreateTest {
     void createAllOptions() {
 
         ExpenseCategory creationInfo = ImmutableExpenseCategory.builder()
-                .name("expense category 2")
+                .name("expense category 2 " + TestSetupUtil.getTestRunId())
                 .active(false)
                 .unitName("chunk")
                 .unitPrice(23.)

@@ -68,6 +68,22 @@ public class InvoicesApiItemTest {
     }
 
     @Test
+    void createDoubleQuantityItem() {
+
+        InvoiceItem creationInfo = ImmutableInvoiceItem.builder()
+                .kind(kind)
+                .unitPrice(1.)
+                .quantity(1.5)
+                .build();
+        invoice = api.addLineItem(invoice, creationInfo);
+
+        assertThat(invoice.getInvoiceItems()).isNotEmpty();
+        InvoiceItem invoiceItem = invoice.getInvoiceItems().get(0);
+
+        assertThat(invoiceItem).isEqualToIgnoringNullFields(creationInfo);
+    }
+
+    @Test
     void createMultipleItems() {
 
         List<InvoiceItem> creationInfoList = new ArrayList<>();
@@ -121,7 +137,7 @@ public class InvoicesApiItemTest {
             InvoiceItemUpdateInfo updateInfo = ImmutableInvoiceItemUpdateInfo.builder()
                     .kind(anotherKind)
                     .description("updated description")
-                    .quantity(22L)
+                    .quantity(22.)
                     .unitPrice(33.)
                     .taxed(true)
                     .taxed2(true)
@@ -148,7 +164,7 @@ public class InvoicesApiItemTest {
             updateInfoList.add(ImmutableInvoiceItemUpdateInfo.builder()
                     .kind(anotherKind)
                     .description("updated description")
-                    .quantity(22L)
+                    .quantity(22.)
                     .unitPrice(33.)
                     .taxed(true)
                     .taxed2(true)
@@ -156,7 +172,7 @@ public class InvoicesApiItemTest {
             updateInfoList.add(ImmutableInvoiceItemUpdateInfo.builder()
                     .kind(anotherKind)
                     .description("updated description 2")
-                    .quantity(2L)
+                    .quantity(2.)
                     .unitPrice(3.)
                     .taxed(false)
                     .taxed2(true)

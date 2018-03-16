@@ -41,7 +41,7 @@ public interface EstimateItem extends Reference<EstimateItem> {
     String getDescription();
 
     @Nullable
-    Long getQuantity();
+    Double getQuantity();
 
     Double getUnitPrice();
 

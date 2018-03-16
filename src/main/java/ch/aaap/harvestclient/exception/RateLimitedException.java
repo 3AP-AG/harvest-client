@@ -9,4 +9,8 @@ public class RateLimitedException extends HarvestHttpException {
     public RateLimitedException(ResponseBody responseBody) {
         super(responseBody, 429);
     }
+
+    public RateLimitedException(ResponseBody responseBody, String message) {
+        super(responseBody, 429, message);
+    }
 }
