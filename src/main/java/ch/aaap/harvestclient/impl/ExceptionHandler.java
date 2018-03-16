@@ -22,7 +22,11 @@ public class ExceptionHandler {
     private static final Logger log = LoggerFactory.getLogger(ExceptionHandler.class);
 
     private static final int MAX_RETRY_COUNT = 3;
-    private static final int MAX_WAIT = 30;
+    /**
+     * If we get a Retry-After higher than this, throw directly (we don't want to
+     * wait longer)
+     */
+    private static final int MAX_WAIT_SECONDS = 5 * 60;
 
     public static <T> T callOrThrow(Call<T> call) {
         return callOrThrow(call, 1);
@@ -75,7 +79,11 @@ public class ExceptionHandler {
         int wait = 0;
         if (failedResponse.code() == 429) {
             int secondsToWait = parseRetryAfter(failedResponse);
-            wait = Math.min(secondsToWait, MAX_WAIT);
+            if (secondsToWait > MAX_WAIT_SECONDS) {
+                throw new RateLimitedException(failedResponse.errorBody(), "Retry after of " + secondsToWait
+                        + "s is higher than configured MAX_WAIT_SECONDS of " + MAX_WAIT_SECONDS + "s");
+            }
+            wait = secondsToWait;
         }
 
         try {
