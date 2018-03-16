@@ -14,7 +14,7 @@ public class RateLimitInterceptor implements Interceptor {
     /**
      * Stay a bit below the published limit
      */
-    private static final int MAX_REQUEST_PER_WINDOW = 95;
+    private static final int MAX_REQUEST_PER_WINDOW = 50;
 
     private static final int WINDOW_SECONDS = 15;
 

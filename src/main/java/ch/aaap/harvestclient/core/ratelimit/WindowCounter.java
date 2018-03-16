@@ -32,7 +32,9 @@ public class WindowCounter {
 
     public void waitUntilBelow(int totalCount) throws InterruptedException {
 
-        if (events.size() < totalCount) {
+        int currentSize = events.size();
+        log.debug("Request in the last {}s are {}", window.getSeconds(), currentSize);
+        if (currentSize < totalCount) {
             return;
         }
         update();
