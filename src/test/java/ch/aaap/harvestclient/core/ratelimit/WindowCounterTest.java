@@ -1,4 +1,4 @@
-package ch.aaap.harvestclient.impl;
+package ch.aaap.harvestclient.core.ratelimit;
 
 import java.time.Duration;
 import java.util.concurrent.*;
@@ -11,23 +11,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 
 import ch.aaap.harvestclient.HarvestTest;
-import ch.aaap.harvestclient.core.Harvest;
-import ch.aaap.harvestclient.domain.User;
-import util.TestSetupUtil;
 
 @HarvestTest
-class RateLimitTest {
+class WindowCounterTest {
 
     private static class Task implements Runnable {
 
         private static final Logger log = LoggerFactory.getLogger(Task.class);
         private final int id;
-        private final Harvest harvest;
+        private WindowCounter counter;
         private final ConcurrentMap<Integer, Throwable> report;
 
-        Task(int id, Harvest harvest, ConcurrentMap<Integer, Throwable> report) {
+        Task(int id, WindowCounter counter, ConcurrentMap<Integer, Throwable> report) {
             this.id = id;
-            this.harvest = harvest;
+            this.counter = counter;
             this.report = report;
         }
 
@@ -35,7 +32,9 @@ class RateLimitTest {
         public void run() {
             log.debug("Running task {}", id);
             try {
-                User self = harvest.users().getSelf();
+                counter.mark();
+                counter.waitUntilBelow(100);
+                counter.mark();
             } catch (Exception e) {
                 report.put(id, e);
             }
@@ -43,11 +42,11 @@ class RateLimitTest {
     }
 
     @Test
-    void testGetLimit() {
+    void testThreadSafety() {
 
-        assertTimeoutPreemptively(Duration.ofMinutes(5), () -> {
+        assertTimeoutPreemptively(Duration.ofMinutes(1), () -> {
 
-            Harvest harvest = TestSetupUtil.getAdminAccess();
+            WindowCounter counter = new WindowCounter(1);
 
             ExecutorService executorService = Executors.newFixedThreadPool(10);
             ConcurrentMap<Integer, Throwable> report = new ConcurrentHashMap<>();
@@ -55,7 +54,7 @@ class RateLimitTest {
             // don't make this too high
             int iterationCount = 150;
             for (int i = 0; i < iterationCount; i++) {
-                executorService.execute(new Task(i, harvest, report));
+                executorService.execute(new Task(i, counter, report));
             }
 
             executorService.shutdown();

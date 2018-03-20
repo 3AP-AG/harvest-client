@@ -23,6 +23,8 @@ public class TestSetupUtil {
     private static final Logger log = LoggerFactory.getLogger(TestSetupUtil.class);
     private static final Random random = new Random();
 
+    private static final int testRunId = random.nextInt(1_000_000_000);
+
     private static class LazyHolder {
         static final Harvest adminAccess = new Harvest(loadConfiguration("admin1"));
     }
@@ -100,5 +102,9 @@ public class TestSetupUtil {
      */
     public static String getDevNullEmail() {
         return "marco.nembrini.co+devnull@gmail.com";
+    }
+
+    public static int getTestRunId() {
+        return testRunId;
     }
 }

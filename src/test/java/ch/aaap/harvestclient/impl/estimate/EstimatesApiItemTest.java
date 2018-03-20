@@ -68,6 +68,22 @@ public class EstimatesApiItemTest {
     }
 
     @Test
+    void createItemWithFractionalQuantity() {
+
+        EstimateItem creationInfo = ImmutableEstimateItem.builder()
+                .kind(kind)
+                .unitPrice(1.)
+                .quantity(1.5)
+                .build();
+        estimate = api.addLineItem(estimate, creationInfo);
+
+        assertThat(estimate.getEstimateItems()).isNotEmpty();
+        EstimateItem estimateItem = estimate.getEstimateItems().get(0);
+
+        assertThat(estimateItem).isEqualToIgnoringNullFields(creationInfo);
+    }
+
+    @Test
     void createMultipleItems() {
 
         List<EstimateItem> creationInfoList = new ArrayList<>();
@@ -121,7 +137,7 @@ public class EstimatesApiItemTest {
             EstimateItemUpdateInfo updateInfo = ImmutableEstimateItemUpdateInfo.builder()
                     .kind(anotherKind)
                     .description("updated description")
-                    .quantity(22L)
+                    .quantity(22.)
                     .unitPrice(33.)
                     .taxed(true)
                     .taxed2(true)
@@ -148,7 +164,7 @@ public class EstimatesApiItemTest {
             updateInfoList.add(ImmutableEstimateItemUpdateInfo.builder()
                     .kind(anotherKind)
                     .description("updated description")
-                    .quantity(22L)
+                    .quantity(22.)
                     .unitPrice(33.)
                     .taxed(true)
                     .taxed2(true)
@@ -156,7 +172,7 @@ public class EstimatesApiItemTest {
             updateInfoList.add(ImmutableEstimateItemUpdateInfo.builder()
                     .kind(anotherKind)
                     .description("updated description 2")
-                    .quantity(2L)
+                    .quantity(2.)
                     .unitPrice(3.)
                     .taxed(false)
                     .taxed2(true)

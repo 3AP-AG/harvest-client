@@ -13,6 +13,7 @@ import com.typesafe.config.ConfigFactory;
 
 import ch.aaap.harvestclient.api.*;
 import ch.aaap.harvestclient.core.gson.GsonConfiguration;
+import ch.aaap.harvestclient.core.ratelimit.RateLimitInterceptor;
 import ch.aaap.harvestclient.domain.User;
 import ch.aaap.harvestclient.exception.HarvestRuntimeException;
 import ch.aaap.harvestclient.impl.*;
@@ -141,11 +142,15 @@ public class Harvest {
         Interceptor debugInterceptor = initHttpLogging();
         Interceptor authenticationInterceptor = initAuthentication();
 
-        Retrofit retrofit = initRetrofit(debugInterceptor, authenticationInterceptor, false);
+        int maxRequestWindow = config.getInt("harvest.max_request_per_window");
+        int windowSize = config.getInt("harvest.window_size_seconds");
+        Interceptor rateLimitInterceptor = new RateLimitInterceptor(maxRequestWindow, windowSize);
+
+        Retrofit retrofit = initRetrofit(debugInterceptor, authenticationInterceptor, rateLimitInterceptor, false);
         boolean use12HoursFormat = getCompanyClockFormat(retrofit);
         // reinitialize with correct format if needed
         if (use12HoursFormat) {
-            retrofit = initRetrofit(debugInterceptor, authenticationInterceptor, true);
+            retrofit = initRetrofit(debugInterceptor, authenticationInterceptor, rateLimitInterceptor, true);
         }
 
         timezoneConfiguration = new TimezoneConfiguration(openConfiguredStream("harvest.timezones_path"));
@@ -193,7 +198,8 @@ public class Harvest {
         expenseCategoriesApi = new ExpenseCategoriesApiImpl(expenseCategoryService);
         expensesApi = new ExpensesApiImpl(expenseService);
 
-        log.debug("Harvest client initialized");
+        log.debug("Harvest client initialized with: baseUrl=[{}], UA=[{}], accountID=[{}], rate limiting: {}r/{}s",
+                baseUrl, userAgent, accountId, maxRequestWindow, windowSize);
 
     }
 
@@ -209,9 +215,10 @@ public class Harvest {
     }
 
     private Retrofit initRetrofit(Interceptor debugInterceptor, Interceptor authenticationInterceptor,
-            boolean use12HoursFormat) {
+            Interceptor rateLimitInterceptor, boolean use12HoursFormat) {
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(authenticationInterceptor)
+                .addNetworkInterceptor(rateLimitInterceptor)
                 // debug interceptor goes last
                 .addInterceptor(debugInterceptor)
                 .build();

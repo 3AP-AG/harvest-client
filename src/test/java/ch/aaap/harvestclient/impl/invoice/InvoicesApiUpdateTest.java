@@ -88,13 +88,13 @@ class InvoicesApiUpdateTest {
     @Test
     void changeLineItem() {
 
-        long quantity = 20;
+        double quantity = 20;
         double unitPrice = 30;
         String firstName = "test First";
         Invoice creationInfo = ImmutableInvoice.builder()
                 .client(clientReference)
                 .addInvoiceItem(ImmutableInvoiceItem.builder()
-                        .quantity(10L)
+                        .quantity(10.)
                         .unitPrice(1.)
                         .kind(kind)
                         .build())
@@ -109,7 +109,7 @@ class InvoicesApiUpdateTest {
 
         InvoiceUpdateInfo changes = ImmutableInvoiceUpdateInfo.builder()
                 .addInvoiceItem(ImmutableInvoiceItem.builder()
-                        .quantity(20L)
+                        .quantity(20.)
                         .unitPrice(2.)
                         .kind(kind)
                         .build())
