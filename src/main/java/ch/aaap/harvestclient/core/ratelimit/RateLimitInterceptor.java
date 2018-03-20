@@ -11,23 +11,35 @@ import okhttp3.Response;
 public class RateLimitInterceptor implements Interceptor {
 
     private static final Logger log = LoggerFactory.getLogger(RateLimitInterceptor.class);
-    /**
-     * Stay a bit below the published limit
-     */
-    private static final int MAX_REQUEST_PER_WINDOW = 50;
 
-    private static final int WINDOW_SECONDS = 15;
+    private final WindowCounter counter;
+    private final int maxRequestPerWindow;
 
-    private final WindowCounter counter = new WindowCounter(WINDOW_SECONDS);
+    private final int windowSeconds;
+
+    public RateLimitInterceptor(int maxRequestPerWindow, int windowSeconds) {
+
+        this.maxRequestPerWindow = maxRequestPerWindow;
+        this.windowSeconds = windowSeconds;
+        counter = new WindowCounter(windowSeconds);
+    }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
         try {
-            counter.waitUntilBelow(MAX_REQUEST_PER_WINDOW);
+            counter.waitUntilBelow(maxRequestPerWindow);
             counter.mark();
         } catch (InterruptedException e) {
             log.error("Interrupted", e);
         }
         return chain.proceed(chain.request());
+    }
+
+    public int getMaxRequestPerWindow() {
+        return maxRequestPerWindow;
+    }
+
+    public int getWindowSeconds() {
+        return windowSeconds;
     }
 }
