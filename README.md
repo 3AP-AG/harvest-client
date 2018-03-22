@@ -94,7 +94,7 @@ Check out [TestSetupUtil.prepareForHarvestBugReport()](https://github.com/3AP-AG
 ### Contributing
 
 We welcome contributions in the form of pull requests or bug reports!
-Please read [Developers](wiki/Developers) before submitting a pull request. If you plan a big change, please
+Please read [Developers](https://github.com/3AP-AG/harvest-client/wiki/Developers) before submitting a pull request. If you plan a big change, please
 open an issue first so you can get early feedback on your design. 
 
    
