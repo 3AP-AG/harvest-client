@@ -130,6 +130,7 @@ public class TestDataCreator {
                 .projectReference(project)
                 .taskReference(task)
                 .spentDate(LocalDate.now())
+                .hours(2.)
                 .build());
     }
 

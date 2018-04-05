@@ -102,23 +102,23 @@ public class ExistingData {
         log.debug("Loading data for account {}", accountNumber);
         // default account, 24h format
         if (accountNumber == 1) {
-            // this could be save to disk
+            // this could be saved to disk
             // for now it is just a bit of copy paste when setting up a new Harvest account
-            data.setTimeEntryId(750333887);
-            data.setUserId(2040413);
-            data.setAnotherUserId(2044275);
+            data.setTimeEntryId(772005972);
+            data.setUserId(2082952);
+            data.setAnotherUserId(2082953);
 
-            data.setClientId(6537932);
-            data.setAnotherClientId(6537933);
+            data.setClientId(6675516);
+            data.setAnotherClientId(6675517);
 
-            data.setClientContactId(5054209);
-            data.setAnotherClientContactId(5054210);
-            data.setProjectId(16561328);
-            data.setAnotherProjectId(16561329);
-            data.setTaskId(9316038);
-            data.setAnotherTaskId(9316039);
-            data.setTaskAssignmentId(179269102);
-            data.setExpenseCategoryId(4685470);
+            data.setClientContactId(5119206);
+            data.setAnotherClientContactId(5119207);
+            data.setProjectId(16987728);
+            data.setAnotherProjectId(16987729);
+            data.setTaskId(9562469);
+            data.setAnotherTaskId(9562470);
+            data.setTaskAssignmentId(183755758);
+            data.setExpenseCategoryId(4793096);
         }
         // second account, 12h format
         else if (accountNumber == 2) {
