@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import ch.aaap.harvestclient.core.Harvest;
 import ch.aaap.harvestclient.domain.*;
+import ch.aaap.harvestclient.domain.reference.GenericReference;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
 public class ExistingData {
@@ -61,19 +62,19 @@ public class ExistingData {
             }
             log.info("TestData is {}", data);
 
-            taskReference = new GenericReference<>(data.getTaskId());
-            anotherTaskReference = new GenericReference<>(data.getAnotherTaskId());
+            taskReference = GenericReference.of(data.getTaskId());
+            anotherTaskReference = GenericReference.of(data.getAnotherTaskId());
 
-            clientReference = new GenericReference<>(data.getClientId());
-            anotherClientReference = new GenericReference<>(data.getAnotherClientId());
+            clientReference = GenericReference.of(data.getClientId());
+            anotherClientReference = GenericReference.of(data.getAnotherClientId());
 
-            projectReference = new GenericReference<>(data.getProjectId());
-            anotherProjectReference = new GenericReference<>(data.getAnotherProjectId());
+            projectReference = GenericReference.of(data.getProjectId());
+            anotherProjectReference = GenericReference.of(data.getAnotherProjectId());
 
-            userReference = new GenericReference<>(data.getUserId());
-            anotherUserReference = new GenericReference<>(data.getAnotherUserId());
+            userReference = GenericReference.of(data.getUserId());
+            anotherUserReference = GenericReference.of(data.getAnotherUserId());
 
-            timeEntryReference = new GenericReference<>(data.getTimeEntryId());
+            timeEntryReference = GenericReference.of(data.getTimeEntryId());
 
             // default categories
             estimateItemCategory = ImmutableEstimateItem.Category.builder().name("Product").build();
@@ -83,7 +84,7 @@ public class ExistingData {
             invoiceItemCategory = ImmutableInvoiceItem.Category.builder().name("Product").build();
             anotherInvoiceItemCategory = ImmutableInvoiceItem.Category.builder().name("Service").build();
 
-            expenseCategory = new GenericReference<>(data.getExpenseCategoryId());
+            expenseCategory = GenericReference.of(data.getExpenseCategoryId());
 
             // create assignment
             harvest.userAssignments().create(projectReference, ImmutableUserAssignment.builder()
