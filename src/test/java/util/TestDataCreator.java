@@ -12,6 +12,7 @@ import ch.aaap.harvestclient.api.Api;
 import ch.aaap.harvestclient.core.Harvest;
 import ch.aaap.harvestclient.domain.*;
 import ch.aaap.harvestclient.domain.param.ImmutableTimeEntryCreationInfoDuration;
+import ch.aaap.harvestclient.domain.reference.GenericReference;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.exception.NotFoundException;
 
@@ -92,7 +93,7 @@ public class TestDataCreator {
     private <T> T getOrCreate(long id, Api.Get<T> api, Supplier<T> creationFunction) {
         T value;
         try {
-            value = api.get(new GenericReference<>(id));
+            value = api.get(GenericReference.of(id));
         } catch (NotFoundException e) {
             value = creationFunction.get();
             log.debug("Created value {}", value);
@@ -104,7 +105,7 @@ public class TestDataCreator {
             Function<C, T> creationFunction, C context) {
         T value;
         try {
-            value = api.get(context, new GenericReference<>(id));
+            value = api.get(context, GenericReference.of(id));
         } catch (NotFoundException e) {
             value = creationFunction.apply(context);
             log.debug("Created value {}", value);
@@ -129,6 +130,7 @@ public class TestDataCreator {
                 .projectReference(project)
                 .taskReference(task)
                 .spentDate(LocalDate.now())
+                .hours(2.)
                 .build());
     }
 

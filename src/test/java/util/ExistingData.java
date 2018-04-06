@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import ch.aaap.harvestclient.core.Harvest;
 import ch.aaap.harvestclient.domain.*;
+import ch.aaap.harvestclient.domain.reference.GenericReference;
 import ch.aaap.harvestclient.domain.reference.Reference;
 
 public class ExistingData {
@@ -61,19 +62,19 @@ public class ExistingData {
             }
             log.info("TestData is {}", data);
 
-            taskReference = new GenericReference<>(data.getTaskId());
-            anotherTaskReference = new GenericReference<>(data.getAnotherTaskId());
+            taskReference = GenericReference.of(data.getTaskId());
+            anotherTaskReference = GenericReference.of(data.getAnotherTaskId());
 
-            clientReference = new GenericReference<>(data.getClientId());
-            anotherClientReference = new GenericReference<>(data.getAnotherClientId());
+            clientReference = GenericReference.of(data.getClientId());
+            anotherClientReference = GenericReference.of(data.getAnotherClientId());
 
-            projectReference = new GenericReference<>(data.getProjectId());
-            anotherProjectReference = new GenericReference<>(data.getAnotherProjectId());
+            projectReference = GenericReference.of(data.getProjectId());
+            anotherProjectReference = GenericReference.of(data.getAnotherProjectId());
 
-            userReference = new GenericReference<>(data.getUserId());
-            anotherUserReference = new GenericReference<>(data.getAnotherUserId());
+            userReference = GenericReference.of(data.getUserId());
+            anotherUserReference = GenericReference.of(data.getAnotherUserId());
 
-            timeEntryReference = new GenericReference<>(data.getTimeEntryId());
+            timeEntryReference = GenericReference.of(data.getTimeEntryId());
 
             // default categories
             estimateItemCategory = ImmutableEstimateItem.Category.builder().name("Product").build();
@@ -83,7 +84,7 @@ public class ExistingData {
             invoiceItemCategory = ImmutableInvoiceItem.Category.builder().name("Product").build();
             anotherInvoiceItemCategory = ImmutableInvoiceItem.Category.builder().name("Service").build();
 
-            expenseCategory = new GenericReference<>(data.getExpenseCategoryId());
+            expenseCategory = GenericReference.of(data.getExpenseCategoryId());
 
             // create assignment
             harvest.userAssignments().create(projectReference, ImmutableUserAssignment.builder()
@@ -101,42 +102,42 @@ public class ExistingData {
         log.debug("Loading data for account {}", accountNumber);
         // default account, 24h format
         if (accountNumber == 1) {
-            // this could be save to disk
+            // this could be saved to disk
             // for now it is just a bit of copy paste when setting up a new Harvest account
-            data.setTimeEntryId(750333887);
-            data.setUserId(2040413);
-            data.setAnotherUserId(2044275);
+            data.setTimeEntryId(772005972);
+            data.setUserId(2082952);
+            data.setAnotherUserId(2082953);
 
-            data.setClientId(6537932);
-            data.setAnotherClientId(6537933);
+            data.setClientId(6675516);
+            data.setAnotherClientId(6675517);
 
-            data.setClientContactId(5054209);
-            data.setAnotherClientContactId(5054210);
-            data.setProjectId(16561328);
-            data.setAnotherProjectId(16561329);
-            data.setTaskId(9316038);
-            data.setAnotherTaskId(9316039);
-            data.setTaskAssignmentId(179269102);
-            data.setExpenseCategoryId(4685470);
+            data.setClientContactId(5119206);
+            data.setAnotherClientContactId(5119207);
+            data.setProjectId(16987728);
+            data.setAnotherProjectId(16987729);
+            data.setTaskId(9562469);
+            data.setAnotherTaskId(9562470);
+            data.setTaskAssignmentId(183755758);
+            data.setExpenseCategoryId(4793096);
         }
         // second account, 12h format
         else if (accountNumber == 2) {
 
-            data.setTimeEntryId(754461897);
-            data.setUserId(2048381);
-            data.setAnotherUserId(2048382);
+            data.setTimeEntryId(772669116);
+            data.setUserId(2084141);
+            data.setAnotherUserId(2084142);
 
-            data.setClientId(6563532);
-            data.setAnotherClientId(6563533);
+            data.setClientId(6679480);
+            data.setAnotherClientId(6679481);
 
-            data.setClientContactId(5066638);
-            data.setAnotherClientContactId(5066640);
-            data.setProjectId(16649159);
-            data.setAnotherProjectId(16649161);
-            data.setTaskId(9360794);
-            data.setAnotherTaskId(9360795);
-            data.setTaskAssignmentId(180166287);
-            data.setExpenseCategoryId(4706173);
+            data.setClientContactId(5120986);
+            data.setAnotherClientContactId(5120987);
+            data.setProjectId(17004414);
+            data.setAnotherProjectId(17004415);
+            data.setTaskId(9569328);
+            data.setAnotherTaskId(9569329);
+            data.setTaskAssignmentId(183909577);
+            data.setExpenseCategoryId(4795806);
         }
         return data;
     }
