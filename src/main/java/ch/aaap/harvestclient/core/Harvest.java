@@ -58,10 +58,10 @@ public class Harvest {
      * personal token or a OAuth2 token, see
      * https://help.getharvest.com/api-v2/authentication-api/authentication/authentication
      */
-    private final String authToken;
+    private String authToken;
 
     /** Account id. Only needed for personal tokens */
-    private final String accountId;
+    private String accountId;
 
     private final Config config;
 
@@ -138,6 +138,16 @@ public class Harvest {
         this.userAgent = config.getString("harvest.userAgent");
         this.authToken = config.getString("harvest.auth.token");
         this.accountId = config.getString("harvest.auth.accountId");
+
+        String authTokenEnv = System.getenv("HARVEST_AUTH");
+        String accountId = System.getenv("HARVEST_ID");
+
+        if(null != authTokenEnv && !authTokenEnv.trim().isEmpty()){
+            this.authToken = authTokenEnv;
+        }
+        if(null != accountId && !accountId.trim().isEmpty()){
+            this.accountId = accountId;
+        }
 
         Interceptor debugInterceptor = initHttpLogging();
         Interceptor authenticationInterceptor = initAuthentication();
