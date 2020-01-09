@@ -369,6 +369,6 @@ class TimesheetsApiListTest {
         filter.setTo(LocalDate.of(2000,1,6));
         List<TimeEntry> timeEntries = api.list(filter);
         TimeEntry timeEntry = timeEntries.stream().filter(te -> te.getExternalService() != null).findAny().orElse(null);
-        assertThat(timeEntry != null && timeEntry.getExternalService() != null && timeEntry.getExternalService().getGroupId().equalsIgnoreCase("sample"));
+        assertTrue(timeEntry != null && timeEntry.getExternalService() != null && timeEntry.getExternalService().getGroupId().equalsIgnoreCase("sample"));
     }
 }
