@@ -13,7 +13,7 @@ import ch.aaap.harvestclient.domain.reference.Reference;
 @Value.Immutable
 public interface ExternalService extends Reference<ExternalService> {
 
-    Long getGroupId();
+    String getGroupId();
 
     String getPermalink();
 

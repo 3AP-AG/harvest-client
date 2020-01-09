@@ -346,4 +346,29 @@ class TimesheetsApiListTest {
         assertThat(timeEntries).contains(anotherTimeEntry);
 
     }
+
+    @Test
+    void testExternalService(){
+        ExternalService externalService = ImmutableExternalService.builder()
+            .groupId("sample")
+            .id(1L)
+            .service("http://test.com")
+            .serviceIconUrl("http://iconurl.com")
+            .permalink("http://permalink.com")
+            .build();
+        TimeEntryCreationInfoDuration creationInfo = ImmutableTimeEntryCreationInfoDuration.builder()
+            .projectReference(project)
+            .taskReference(existingTask)
+            .spentDate(LocalDate.of(2000, 1, 5))
+            .userReference(user)
+            .externalReference(externalService)
+            .build();
+
+        timeEntry = api.create(creationInfo);
+        TimeEntryFilter filter = new TimeEntryFilter();
+        filter.setTo(LocalDate.of(2000,1,6));
+        List<TimeEntry> timeEntries = api.list(filter);
+        TimeEntry timeEntry = timeEntries.stream().filter(te -> te.getExternalService() != null).findAny().orElse(null);
+        assertTrue(timeEntry != null && timeEntry.getExternalService() != null && timeEntry.getExternalService().getGroupId().equalsIgnoreCase("sample"));
+    }
 }
