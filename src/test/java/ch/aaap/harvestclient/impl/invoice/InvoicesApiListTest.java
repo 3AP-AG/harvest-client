@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -141,6 +142,7 @@ class InvoicesApiListTest {
     }
 
     @Test
+    @Disabled("See https://github.com/3AP-AG/harvest-client/issues/5")
     void listByDateRange() {
 
         Reference<Project> project = ExistingData.getInstance().getProjectReference();

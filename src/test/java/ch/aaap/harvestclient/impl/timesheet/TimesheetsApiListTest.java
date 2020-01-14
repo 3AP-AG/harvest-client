@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 
@@ -98,6 +99,7 @@ class TimesheetsApiListTest {
     }
 
     @Test
+    @Disabled("See https://github.com/3AP-AG/harvest-client/issues/5")
     void listPaginated() {
 
         Pagination<TimeEntry> pagination = api.list(new TimeEntryFilter(), 1, 1);
@@ -348,27 +350,28 @@ class TimesheetsApiListTest {
     }
 
     @Test
-    void testExternalService(){
+    void testExternalService() {
         ExternalService externalService = ImmutableExternalService.builder()
-            .groupId("sample")
-            .id(1L)
-            .service("http://test.com")
-            .serviceIconUrl("http://iconurl.com")
-            .permalink("http://permalink.com")
-            .build();
+                .groupId("sample")
+                .id(1L)
+                .service("http://test.com")
+                .serviceIconUrl("http://iconurl.com")
+                .permalink("http://permalink.com")
+                .build();
         TimeEntryCreationInfoDuration creationInfo = ImmutableTimeEntryCreationInfoDuration.builder()
-            .projectReference(project)
-            .taskReference(existingTask)
-            .spentDate(LocalDate.of(2000, 1, 5))
-            .userReference(user)
-            .externalReference(externalService)
-            .build();
+                .projectReference(project)
+                .taskReference(existingTask)
+                .spentDate(LocalDate.of(2000, 1, 5))
+                .userReference(user)
+                .externalReference(externalService)
+                .build();
 
         timeEntry = api.create(creationInfo);
         TimeEntryFilter filter = new TimeEntryFilter();
-        filter.setTo(LocalDate.of(2000,1,6));
+        filter.setTo(LocalDate.of(2000, 1, 6));
         List<TimeEntry> timeEntries = api.list(filter);
         TimeEntry timeEntry = timeEntries.stream().filter(te -> te.getExternalService() != null).findAny().orElse(null);
-        assertTrue(timeEntry != null && timeEntry.getExternalService() != null && timeEntry.getExternalService().getGroupId().equalsIgnoreCase("sample"));
+        assertTrue(timeEntry != null && timeEntry.getExternalService() != null && timeEntry.getExternalService()
+                .getGroupId().equalsIgnoreCase("sample"));
     }
 }

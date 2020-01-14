@@ -25,7 +25,7 @@ public class ExistingData {
     /**
      * Set this to true to generate new TestData and verify the current one
      */
-    private static final boolean checkValid = false;
+    private static final boolean checkValid = true;
 
     private final Reference<Task> taskReference;
     private final Reference<Task> anotherTaskReference;
@@ -104,21 +104,21 @@ public class ExistingData {
         if (accountNumber == 1) {
             // this could be saved to disk
             // for now it is just a bit of copy paste when setting up a new Harvest account
-            data.setTimeEntryId(772005972);
-            data.setUserId(2082952);
-            data.setAnotherUserId(2082953);
+            data.setTimeEntryId(1150900259);
+            data.setUserId(3097812);
+            data.setAnotherUserId(3097813);
 
-            data.setClientId(6675516);
-            data.setAnotherClientId(6675517);
+            data.setClientId(9016972);
+            data.setAnotherClientId(7714343);
 
-            data.setClientContactId(5119206);
+            data.setClientContactId(7714342);
             data.setAnotherClientContactId(5119207);
-            data.setProjectId(16987728);
-            data.setAnotherProjectId(16987729);
-            data.setTaskId(9562469);
-            data.setAnotherTaskId(9562470);
-            data.setTaskAssignmentId(183755758);
-            data.setExpenseCategoryId(4793096);
+            data.setProjectId(23588657);
+            data.setAnotherProjectId(23588660);
+            data.setTaskId(13607369);
+            data.setAnotherTaskId(13607370);
+            data.setTaskAssignmentId(253865833);
+            data.setExpenseCategoryId(6643383);
         }
         // second account, 12h format
         else if (accountNumber == 2) {
