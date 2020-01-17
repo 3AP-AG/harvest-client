@@ -1,6 +1,7 @@
 package ch.aaap.harvestclient.impl.userAssignment;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,6 +51,7 @@ class UserAssignmentsApiCreateTest {
     }
 
     @Test
+    @Disabled("See https://github.com/3AP-AG/harvest-client/issues/5")
     void createAllOptions() {
 
         UserAssignment creationInfo = ImmutableUserAssignment.builder()
