@@ -2,10 +2,7 @@ package ch.aaap.harvestclient.impl.project;
 
 import java.time.LocalDate;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -95,6 +92,7 @@ class ProjectsApiUpdateTest {
     }
 
     @Test
+    @Disabled("See https://github.com/3AP-AG/harvest-client/issues/5")
     void changeBudgetByMinimal() {
 
         ProjectUpdateInfo info = ImmutableProjectUpdateInfo.builder()
