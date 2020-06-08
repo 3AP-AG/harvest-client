@@ -24,6 +24,5 @@ public class FormatUtil {
     return new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern(pattern).toFormatter(
         Locale.ENGLISH);
   }
-
-
 }
+

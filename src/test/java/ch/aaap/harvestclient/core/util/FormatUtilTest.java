@@ -1,19 +1,18 @@
 package ch.aaap.harvestclient.core.util;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAccessor;
 import org.junit.jupiter.api.Test;
-import retrofit2.http.FormUrlEncoded;
 
 class FormatUtilTest {
 
 
   @Test
-  public void should_parse_lowercase_correctly() {
+  public void shouldParseLowercaseCorrectly() {
 
     String timeString = "12:01pm";
     DateTimeFormatter formatter = FormatUtil.getDateTimeFormatter(true);
@@ -23,7 +22,7 @@ class FormatUtilTest {
   }
 
   @Test
-  public void should_parse_uppercase_correctly() {
+  public void shouldParseUppercaseCorrectly() {
 
     String timeString = "12:01PM";
     DateTimeFormatter formatter = FormatUtil.getDateTimeFormatter(true);
@@ -33,7 +32,7 @@ class FormatUtilTest {
   }
 
   @Test
-  public void should_parse_without_correctly() {
+  public void shouldParseWithoutCorrectly() {
 
     String timeString = "12:01";
     DateTimeFormatter formatter = FormatUtil.getDateTimeFormatter(false);
