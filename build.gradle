@@ -39,6 +39,8 @@ junitPlatform {
     reportsDir file('build/test-results/junit-platform')
 }
 
+compileJava.options.encoding = 'UTF-8'
+
 // Unfortunately necessary to set a system property for the junitPlatform task
 afterEvaluate {
     def junitPlatformTestTask = tasks.getByName('junitPlatformTest')
@@ -104,6 +106,7 @@ task javadocJar(type: Jar) {
 
 javadoc {
     // github is set to publish this folder
+    options.encoding = 'UTF-8'
     destinationDir file("docs")
     options.optionFiles << file('gradle/javadoc.options')
 }
