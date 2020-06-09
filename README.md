@@ -74,6 +74,14 @@ compile 'ch.aaap:harvest-client:$version'
     ```   
 * Run ```gradle build``` in the root directory of the repository
 
+### Creating a test Harvest account
+go through creating a new account.
+My Profile -> link under work email to your Harvest ID settings -> Developers -> create new personal Token (name does not matter)
+Account ID and token are needed for authentication
+
+Update CircleCI with these Id and tokens
+
+
 ### Debugging
 
 You can see the actual HTTP request and response by setting the log level for _ch.aaap.harvestclient.core.Harvest.http_ to TRACE
