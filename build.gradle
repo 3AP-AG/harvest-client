@@ -10,9 +10,6 @@ buildscript {
     }
 }
 plugins {
-    // uploading to jcenter.bintray.com
-    // see https://github.com/bintray/gradle-bintray-plugin
-    id "com.jfrog.bintray" version "1.8.5"
     id "java"
     id 'java-library'
     id 'maven-publish'
@@ -26,6 +23,7 @@ plugins {
     id "net.ltgt.apt-idea" version "0.14"
     id "net.ltgt.apt-eclipse" version "0.14"
 }
+
 // plugin for junit 5
 apply plugin: 'org.junit.platform.gradle.plugin'
 apply plugin: 'eclipse'
@@ -119,10 +117,23 @@ sourceSets {
 }
 
 // Create the publication with the pom configuration:
+
 publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            String owner = '3ap-ag'
+            String repo = 'harvest-client'
+            url = uri("https://maven.pkg.github.com/${owner}/${repo}")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GH_USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("GH_TOKEN")
+            }
+        }
+    }
     publications {
-        all(MavenPublication) {
-            from components.java
+        gpr(MavenPublication) {
+            from(components.java)
             artifact sourceJar
             artifact javadocJar
             // version, groupId and artifact Id taken from the project
@@ -184,47 +195,5 @@ dependencies {
     testImplementation "com.squareup.okhttp3:mockwebserver:$ver.okhttp"
     testCompile "org.assertj:assertj-joda-time:2.0.0"
 
-
-}
-
-bintray {
-
-    user = System.getenv('BINTRAY_USER')
-    key = System.getenv('BINTRAY_KEY')
-
-    // what to publish
-    publications = ['all']
-
-    pkg {
-        repo = '3ap'
-        name = 'harvest-client'
-        // TODO register 3ap on bintray
-        //userOrg = '3ap'
-        publish true
-        licenses = ['MIT']
-        vcsUrl = 'https://github.com/3AP-AG/harvest-client.git'
-        version {
-            name = project.version
-            desc = 'Harvest Client ' + project.version
-            released = new Date()
-            vcsTag = 'v' + project.version
-
-            // maven central requires gpg signing. Use the bintray key
-            gpg {
-                sign = true
-            }
-            mavenCentralSync {
-                sync = true
-                // username and password on https://issues.sonatype.org/secure/Dashboard.jspa
-                user = System.getenv('MAVENCENTRAL_USER')
-                password = System.getenv('MAVENCENTRAL_KEY')
-                //Optional property.
-                // By default the staging repository is closed and artifacts are released to Maven Central.
-                // You can optionally turn this behaviour off (by puting 0 as value) and release the version manually.
-                close = '1'
-            }
-        }
-
-    }
 
 }

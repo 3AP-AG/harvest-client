@@ -86,7 +86,7 @@ jobs:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
-      - run: ./gradlew bintrayUpload
+      - run: ./gradlew publish
 workflows:
   version: 2
   build_and_deploy:
