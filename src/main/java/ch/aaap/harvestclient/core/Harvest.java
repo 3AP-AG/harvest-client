@@ -94,6 +94,7 @@ public class Harvest {
     private final InvoiceMessagesApi invoiceMessagesApi;
     private final ExpenseCategoriesApi expenseCategoriesApi;
     private final ExpensesApi expensesApi;
+    private final TeamReportsApi teamReportsApi;
 
     public Harvest() {
         this(ConfigFactory.load());
@@ -176,6 +177,7 @@ public class Harvest {
         InvoiceMessagesService invoiceMessagesService = retrofit.create(InvoiceMessagesService.class);
         ExpenseCategoryService expenseCategoryService = retrofit.create(ExpenseCategoryService.class);
         ExpenseService expenseService = retrofit.create(ExpenseService.class);
+        TeamReportService teamReportService = retrofit.create(TeamReportService.class);
 
         timesheetsApi = new TimesheetsApiImpl(timeEntryService);
         usersApi = new UsersApiImpl(userService);
@@ -197,6 +199,7 @@ public class Harvest {
         invoiceMessagesApi = new InvoiceMessagesApiImpl(invoiceMessagesService);
         expenseCategoriesApi = new ExpenseCategoriesApiImpl(expenseCategoryService);
         expensesApi = new ExpensesApiImpl(expenseService);
+        teamReportsApi = new TeamReportApiImpl(teamReportService);
 
         log.debug("Harvest client initialized with: baseUrl=[{}], UA=[{}], accountID=[{}], rate limiting: {}r/{}s",
                 baseUrl, userAgent, accountId, maxRequestWindow, windowSize);
@@ -349,6 +352,8 @@ public class Harvest {
     public ExpensesApi expenses() {
         return expensesApi;
     }
+
+    public TeamReportsApi teamReports() { return teamReportsApi; }
 
     public String getBaseUrl() {
         return baseUrl;

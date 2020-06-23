@@ -60,6 +60,7 @@ Packages for this project are first pushed to Github Package Registry (and then 
 To use it as a dependency from there:
 
 1. add the following to your build.gradle file:
+#### Gradle
 ```groovy
 repositories {
     maven {
@@ -76,6 +77,17 @@ repositories {
         }
 }
 ```
+#### maven
+```xml
+    <server>
+      <id>github</id>
+      <username>GH_USERNAME</username>
+      <password>GH_TOKEN</password>
+    </server>
+```
+
+or check the [link](https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-apache-maven-for-use-with-github-packages#authenticating-to-github-packages).
+
 Using Github package repositories need authentication: see [Installing a Package from Github Registry](https://help.github.com/en/packages/publishing-and-managing-packages/installing-a-package)
 2. You need to create a personal github token with the permissions: `read:packages`
 
