@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import util.TestSetupUtil;
 
 @HarvestTest
-class ReportApiImplTest {
+class TeamReportApiImplTest {
 
     @Test
     void testGet() {

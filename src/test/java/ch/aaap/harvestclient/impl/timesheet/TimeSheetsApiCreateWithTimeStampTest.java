@@ -80,6 +80,7 @@ class TimeSheetsApiCreateWithTimeStampTest {
         assertEquals(notes, timeEntry.getNotes());
         assertThat(timeEntry.getRunning()).isFalse();
         assertThat(timeEntry.getHours()).isEqualTo(2.);
+        assertThat(timeEntry.getRoundedHours()).isEqualTo(2.);
 
         // if hours is set there is no timer
         assertThat(timeEntry.getTimerStartedAt()).isNull();
