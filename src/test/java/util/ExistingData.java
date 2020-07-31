@@ -1,7 +1,12 @@
 package util;
 
+import java.io.*;
+
+import org.assertj.core.util.Files;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.gson.Gson;
 
 import ch.aaap.harvestclient.core.Harvest;
 import ch.aaap.harvestclient.domain.*;
@@ -22,10 +27,6 @@ public class ExistingData {
     }
 
     private static final Logger log = LoggerFactory.getLogger(ExistingData.class);
-    /**
-     * Set this to true to generate new TestData and verify the current one
-     */
-    private static final boolean checkValid = true;
 
     private final Reference<Task> taskReference;
     private final Reference<Task> anotherTaskReference;
@@ -57,10 +58,9 @@ public class ExistingData {
             log.debug("Getting Existing Data for tests");
 
             TestData data = loadFromFile(accountNumber);
-            if (checkValid) {
-                new TestDataCreator(harvest).getOrCreateAll(data);
-            }
+            new TestDataCreator(harvest).getOrCreateAll(data);
             log.info("TestData is {}", data);
+            saveToFile(accountNumber, data);
 
             taskReference = GenericReference.of(data.getTaskId());
             anotherTaskReference = GenericReference.of(data.getAnotherTaskId());
@@ -97,49 +97,43 @@ public class ExistingData {
         }
     }
 
+    private void saveToFile(int accountNumber, TestData data) {
+        Gson gson = new Gson();
+        File testDataFile = findTestDataFile(accountNumber);
+        try (FileWriter writer = new FileWriter(testDataFile)) {
+            gson.toJson(data, writer);
+        } catch (IOException e) {
+            log.error("Problem writing test data file", e);
+        }
+
+    }
+
     private TestData loadFromFile(int accountNumber) {
-        TestData data = new TestData();
-        log.debug("Loading data for account {}", accountNumber);
-        // default account, 24h format
-        if (accountNumber == 1) {
-            // this could be saved to disk
-            // for now it is just a bit of copy paste when setting up a new Harvest account
-            data.setTimeEntryId(1150900259);
-            data.setUserId(3097812);
-            data.setAnotherUserId(3097813);
 
-            data.setClientId(9016972);
-            data.setAnotherClientId(7714343);
+        File testDataFile = findTestDataFile(accountNumber);
 
-            data.setClientContactId(7714342);
-            data.setAnotherClientContactId(5119207);
-            data.setProjectId(23588657);
-            data.setAnotherProjectId(23588660);
-            data.setTaskId(13607369);
-            data.setAnotherTaskId(13607370);
-            data.setTaskAssignmentId(253865833);
-            data.setExpenseCategoryId(6643383);
+        Gson gson = new Gson();
+        try (FileReader reader = new FileReader(testDataFile)) {
+            log.debug("Loading data for account {}", accountNumber);
+            TestData parsedData = gson.fromJson(reader, TestData.class);
+            if (parsedData == null) {
+                parsedData = new TestData();
+            }
+            return parsedData;
+        } catch (FileNotFoundException e) {
+            log.info("test data file not present");
+            return new TestData();
+        } catch (IOException e) {
+            log.error("Problem reading test file", e);
+            return new TestData();
         }
-        // second account, 12h format
-        else if (accountNumber == 2) {
+    }
 
-            data.setTimeEntryId(772669116);
-            data.setUserId(2084141);
-            data.setAnotherUserId(2084142);
-
-            data.setClientId(6679480);
-            data.setAnotherClientId(6679481);
-
-            data.setClientContactId(5120986);
-            data.setAnotherClientContactId(5120987);
-            data.setProjectId(17004414);
-            data.setAnotherProjectId(17004415);
-            data.setTaskId(9569328);
-            data.setAnotherTaskId(9569329);
-            data.setTaskAssignmentId(183909577);
-            data.setExpenseCategoryId(4795806);
-        }
-        return data;
+    private File findTestDataFile(int accountNumber) {
+        String tmpFolder = Files.temporaryFolderPath();
+        File testDataFile = new File(String.format("%sharvest-client-e2etest%s.json", tmpFolder, accountNumber));
+        log.info("Using testdata file at {}", testDataFile.toString());
+        return testDataFile;
     }
 
     public static ExistingData getInstance() {
