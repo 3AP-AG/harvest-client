@@ -82,9 +82,10 @@ Select "Next Step" until the end.
 Top left on your name -> My Profile -> link under work email to your Harvest ID settings -> Developers -> create new personal Token (name does not matter)
 Account ID and token are needed for authentication
 
-Add your token to the local files admin1.conf and admin2.conf
+Add your token to the local files admin1.conf and admin2.conf under src/test/resources/admin*.conf
 
-Update CircleCI with these Id and tokens
+Update the CircleCI project environment variables with these Id and tokens here:
+https://app.circleci.com/settings/project/github/3AP-AG/harvest-client/environment-variables
 
 
 ### Debugging
