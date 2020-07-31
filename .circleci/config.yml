@@ -17,7 +17,7 @@ jobs:
     working_directory: ~/repo
 
     environment:
-      # Customize the JVM maximum heap limit
+      # customize the JVM maximum heap limit
       JVM_OPTS: -Xmx3200m
       TERM: dumb
 
@@ -27,9 +27,9 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "build.gradle" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "build.gradle" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
 
       - run: ./gradlew dependencies
 
@@ -38,8 +38,11 @@ jobs:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
-      # run tests!
-      - run: ./gradlew junitPlatformTest
+      # dependencies for the lock script
+      - run: sudo apt-get update && sudo apt-get install jq
+
+      # run tests while waiting for other builds
+      - run: ./scripts/lock.sh ./gradlew junitPlatformTest
 
       # generate test coverage report
       - run: ./gradlew junitPlatformJacocoReport
@@ -75,9 +78,9 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "build.gradle" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "build.gradle" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
 
       - run: ./gradlew dependencies
 
@@ -86,16 +89,12 @@ jobs:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
-      - run: ./gradlew bintrayUpload
+      - run: ./gradlew publish
 workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - hold:
-          type: approval
-      - build:
-          requires:
-            - hold
+      - build
       - publish:
           requires:
             - build

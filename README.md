@@ -54,6 +54,48 @@ compile 'ch.aaap:harvest-client:$version'
 
 ## Getting started with Development
 
+### Using a build published on Github Packages
+
+Packages for this project are first pushed to Github Package Registry (and then to maven central, not implemented yet).
+To use it as a dependency from there:
+
+1. add the following to your build.gradle file:
+```groovy
+repositories {
+    maven {
+          name = "GitHubPackages"
+          url = uri("https://maven.pkg.github.com/3ap-ag/harvest-client")
+          credentials {
+            username = project.findProperty("gpr.user") ?: System.getenv("GH_USERNAME")
+            password = project.findProperty("gpr.key") ?: System.getenv("GH_TOKEN")
+          }
+          content {
+            // this repository *only* contains artifacts with this group
+            includeGroup "ch.aaap"
+          }
+        }
+}
+```
+Using Github package repositories need authentication: see [Installing a Package from Github Registry](https://help.github.com/en/packages/publishing-and-managing-packages/installing-a-package)
+2. You need to create a personal github token with the permissions: `read:packages`
+
+3. Then have it defined either as env. variables in `GH_USERNAME` and `GH_TOKEN` or you can add it as gradle properties,
+e.g. in ~/.gradle/gradle.properties using `gpr.user` and `gpr.key`.
+
+4. Add the dependency, e.g. add to build.gradle: 
+
+```groovy
+dependencies {
+    implementation 'ch.aaap:harvest-client:1.1.2.001'
+}
+```
+
+### Publishing a new version manually
+
+1. Set new project.version in build.gradle
+2. Use a github token with at least these permissions: `write:packages`. See [About Tokens](https://help.github.com/en/packages/publishing-and-managing-packages/about-github-packages#about-tokens)
+3. Run `gradle publish`
+
 ### Prerequisites
 * Java 8 (or higher)
 * Gradle
@@ -73,6 +115,24 @@ compile 'ch.aaap:harvest-client:$version'
         $ export HARVEST_AUTH_TOKEN_ADMIN2=YOUR_AUTH_TOKEN_2
     ```   
 * Run ```gradle build``` in the root directory of the repository
+
+### Creating a test Harvest account
+Go to https://www.getharvest.com/signup
+Use your 3ap email with a "+<month><year>" added to the name, e.g. marco+Jul2020@3ap.ch (this way you can create a filter in gmail to archive the emails you get)
+Choose "Me and my team"
+Select "Next Step" until the end.
+Go to "Settings" -> "Chose Modules" -> Tick all modules
+Only for the second account: 
+Go to "Settings" -> "Edit Preferences" -> Set Time Mode to "Track time via start and end time"
+
+Top left on your name -> My Profile -> link under work email to your Harvest ID settings -> Developers -> create new personal Token (name does not matter)
+Account ID and token are needed for authentication
+
+Add your token to the local files admin1.conf and admin2.conf under src/test/resources/admin*.conf
+
+Update the CircleCI project environment variables with these Id and tokens here:
+https://app.circleci.com/settings/project/github/3AP-AG/harvest-client/environment-variables
+
 
 ### Debugging
 

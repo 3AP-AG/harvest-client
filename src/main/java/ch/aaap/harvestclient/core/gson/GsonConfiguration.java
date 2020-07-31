@@ -1,7 +1,10 @@
 package ch.aaap.harvestclient.core.gson;
 
+import ch.aaap.harvestclient.core.util.FormatUtil;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.util.Locale;
 import java.util.ServiceLoader;
 
 import org.slf4j.Logger;
@@ -33,7 +36,7 @@ public class GsonConfiguration {
         GsonBuilder gsonBuilder = Converters.registerAll(new GsonBuilder());
         // override parsing for LocalTime (it looks like '4:04pm' or '16:04' depending
         // on Company settings
-        DateTimeFormatter dateTimeFormatter = chooseLocalTimeFormat(use12HoursFormat);
+        DateTimeFormatter dateTimeFormatter = FormatUtil.getDateTimeFormatter(use12HoursFormat);
 
         gsonBuilder.registerTypeAdapter(LocalTime.class, new LocalTimeConverter(dateTimeFormatter));
 
@@ -54,13 +57,4 @@ public class GsonConfiguration {
 
     }
 
-    private static DateTimeFormatter chooseLocalTimeFormat(boolean use12HoursFormat) {
-
-        if (use12HoursFormat) {
-            return DateTimeFormatter.ofPattern("h:mma");
-        } else {
-            return DateTimeFormatter.ofPattern("H:mm");
-        }
-
-    }
 }
