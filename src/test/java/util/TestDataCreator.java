@@ -44,17 +44,20 @@ public class TestDataCreator {
                 () -> createClient("client name"));
         testData.setClientId(client.getId());
 
-        Client anotherClient = getOrCreate(testData.getAnotherClientId(), harvest.clients(),
+        Client anotherClient = getOrCreate(testData.getAnotherClientId(),
+                harvest.clients(),
                 () -> createClient("another fixClientName"));
         testData.setAnotherClientId(anotherClient.getId());
 
         User user = getOrCreate(testData.getUserId(), harvest.users(), () -> createUser("first"));
         testData.setUserId(user.getId());
 
-        User anotherUser = getOrCreate(testData.getAnotherUserId(), harvest.users(), () -> createUser("another"));
+        User anotherUser = getOrCreate(testData.getAnotherUserId(), harvest.users(),
+                () -> createUser("another"));
         testData.setAnotherUserId(anotherUser.getId());
 
-        ClientContact clientContact = getOrCreate(testData.getClientContactId(), harvest.clientContacts(),
+        ClientContact clientContact = getOrCreate(testData.getClientContactId(),
+                harvest.clientContacts(),
                 () -> createClientContact(client, "first client contact"));
         testData.setClientContactId(clientContact.getId());
 
@@ -65,7 +68,8 @@ public class TestDataCreator {
         Project project = getOrCreate(testData.getProjectId(), harvest.projects(), () -> createProject(client));
         testData.setProjectId(project.getId());
 
-        Project anotherProject = getOrCreate(testData.getAnotherProjectId(), harvest.projects(),
+        Project anotherProject = getOrCreate(testData.getAnotherProjectId(),
+                harvest.projects(),
                 () -> createProject(anotherClient));
         testData.setAnotherProjectId(anotherProject.getId());
 
@@ -81,7 +85,8 @@ public class TestDataCreator {
                 (p) -> createTaskAssignment(p, task), project);
         testData.setTaskAssignmentId(taskAssignment.getId());
 
-        TimeEntry timeEntry = getOrCreate(testData.getTimeEntryId(), harvest.timesheets(),
+        TimeEntry timeEntry = getOrCreate(testData.getTimeEntryId(),
+                harvest.timesheets(),
                 () -> createTimeEntry(project, task));
         testData.setTimeEntryId(timeEntry.getId());
 
