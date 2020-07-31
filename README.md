@@ -117,11 +117,21 @@ dependencies {
 * Run ```gradle build``` in the root directory of the repository
 
 ### Creating a test Harvest account
-go through creating a new account.
-My Profile -> link under work email to your Harvest ID settings -> Developers -> create new personal Token (name does not matter)
+Go to https://www.getharvest.com/signup
+Use your 3ap email with a "+<month><year>" added to the name, e.g. marco+Jul2020@3ap.ch (this way you can create a filter in gmail to archive the emails you get)
+Choose "Me and my team"
+Select "Next Step" until the end.
+Go to "Settings" -> "Chose Modules" -> Tick all modules
+Only for the second account: 
+Go to "Settings" -> "Edit Preferences" -> Set Time Mode to "Track time via start and end time"
+
+Top left on your name -> My Profile -> link under work email to your Harvest ID settings -> Developers -> create new personal Token (name does not matter)
 Account ID and token are needed for authentication
 
-Update CircleCI with these Id and tokens
+Add your token to the local files admin1.conf and admin2.conf under src/test/resources/admin*.conf
+
+Update the CircleCI project environment variables with these Id and tokens here:
+https://app.circleci.com/settings/project/github/3AP-AG/harvest-client/environment-variables
 
 
 ### Debugging
