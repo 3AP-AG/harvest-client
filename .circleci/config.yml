@@ -38,7 +38,7 @@ jobs:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
-      # dependency for the lock script
+      # dependencies for the lock script
       - run: sudo apt-get update && sudo apt-get install jq
 
       # run tests while waiting for other builds
