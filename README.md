@@ -1,7 +1,6 @@
 # A Harvest Java Client
 
 [![CircleCI](https://circleci.com/gh/3AP-AG/harvest-client.svg?style=svg)](https://circleci.com/gh/3AP-AG/harvest-client)
-[![Download](https://api.bintray.com/packages/mnembrini/3ap/harvest-client/images/download.svg) ](https://bintray.com/mnembrini/3ap/harvest-client/_latestVersion)
 [![codecov](https://codecov.io/gh/3AP-AG/harvest-client/branch/develop/graph/badge.svg)](https://codecov.io/gh/3AP-AG/harvest-client)
 [![Known Vulnerabilities](https://snyk.io/test/github/3ap-ag/harvest-client/badge.svg?targetFile=build.gradle)](https://snyk.io/test/github/3ap-ag/harvest-client?targetFile=build.gradle)
 
@@ -37,11 +36,13 @@ Each API endpoint has a Create, List and Update test class.
 
 ## Download
 
-[![Download](https://api.bintray.com/packages/mnembrini/3ap/harvest-client/images/download.svg) ](https://bintray.com/mnembrini/3ap/harvest-client/_latestVersion)
+We use github package registry to publish this project
+
+[Packages](https://github.com/3AP-AG/harvest-client/packages/261886) 
 
 ### Gradle
 ```groovy
-compile 'ch.aaap:harvest-client:$version'
+implementation 'ch.aaap:harvest-client:$version'
 ```
 ### Maven
 ```xml
@@ -86,7 +87,7 @@ e.g. in ~/.gradle/gradle.properties using `gpr.user` and `gpr.key`.
 
 ```groovy
 dependencies {
-    implementation 'ch.aaap:harvest-client:1.1.2.001'
+    implementation 'ch.aaap:harvest-client:1.1.4'
 }
 ```
 
