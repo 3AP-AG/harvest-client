@@ -2,7 +2,8 @@
 /.idea/
 
 # ignore local configuration
-/src/test/resources/*.conf
+/src/test/resources/admin1.conf
+/src/test/resources/admin2.conf
 
 # ignore generated classes
 src/main/generated/
