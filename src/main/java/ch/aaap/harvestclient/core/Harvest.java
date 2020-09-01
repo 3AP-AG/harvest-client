@@ -257,7 +257,7 @@ public class Harvest {
         // fictional http package
         Logger httpLogger = LoggerFactory.getLogger(Harvest.class.getName() + ".http");
 
-        HttpLoggingInterceptor debugInterceptor = new HttpLoggingInterceptor(httpLogger::trace);
+        HttpLoggingInterceptor debugInterceptor = new HttpLoggingInterceptor(httpLogger::debug);
         // if someone is setting this to TRACE, they probably want all the information
         debugInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         return debugInterceptor;
