@@ -1,5 +1,6 @@
 package ch.aaap.harvestclient.domain.pagination;
 
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -54,6 +55,9 @@ public interface PaginatedList {
     List<ExpenseCategory> getExpenseCategories();
 
     List<Expense> getExpenses();
+
+    @SerializedName("results")
+    List<TeamReport> getTeamReport();
 
     @Nullable
     Integer getPerPage();

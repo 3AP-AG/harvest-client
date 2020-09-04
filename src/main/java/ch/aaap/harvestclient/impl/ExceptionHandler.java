@@ -46,6 +46,8 @@ public class ExceptionHandler {
                 log.warn("Failure -> {}", code);
                 ResponseBody errorBody = response.errorBody();
                 switch (code) {
+                    case 400:
+                        throw new BadRequestException(errorBody);
                     case 401:
                         throw new InvalidAuthorizationException(errorBody);
                     case 403:

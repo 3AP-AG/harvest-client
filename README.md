@@ -1,6 +1,7 @@
 # A Harvest Java Client
 
 [![CircleCI](https://circleci.com/gh/3AP-AG/harvest-client.svg?style=svg)](https://circleci.com/gh/3AP-AG/harvest-client)
+[![Download](https://api.bintray.com/packages/mnembrini/3ap/harvest-client/images/download.svg) ](https://bintray.com/mnembrini/3ap/harvest-client/_latestVersion)
 [![codecov](https://codecov.io/gh/3AP-AG/harvest-client/branch/develop/graph/badge.svg)](https://codecov.io/gh/3AP-AG/harvest-client)
 [![Known Vulnerabilities](https://snyk.io/test/github/3ap-ag/harvest-client/badge.svg?targetFile=build.gradle)](https://snyk.io/test/github/3ap-ag/harvest-client?targetFile=build.gradle)
 
@@ -36,13 +37,11 @@ Each API endpoint has a Create, List and Update test class.
 
 ## Download
 
-We use github package registry to publish this project
-
-[Packages](https://github.com/3AP-AG/harvest-client/packages/261886) 
+[![Download](https://api.bintray.com/packages/mnembrini/3ap/harvest-client/images/download.svg) ](https://bintray.com/mnembrini/3ap/harvest-client/_latestVersion)
 
 ### Gradle
 ```groovy
-implementation 'ch.aaap:harvest-client:$version'
+compile 'ch.aaap:harvest-client:$version'
 ```
 ### Maven
 ```xml
@@ -61,6 +60,7 @@ Packages for this project are first pushed to Github Package Registry (and then 
 To use it as a dependency from there:
 
 1. add the following to your build.gradle file:
+#### Gradle
 ```groovy
 repositories {
     maven {
@@ -77,6 +77,17 @@ repositories {
         }
 }
 ```
+#### maven
+```xml
+    <server>
+      <id>github</id>
+      <username>GH_USERNAME</username>
+      <password>GH_TOKEN</password>
+    </server>
+```
+
+or check the [link](https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-apache-maven-for-use-with-github-packages#authenticating-to-github-packages).
+
 Using Github package repositories need authentication: see [Installing a Package from Github Registry](https://help.github.com/en/packages/publishing-and-managing-packages/installing-a-package)
 2. You need to create a personal github token with the permissions: `read:packages`
 
@@ -87,7 +98,7 @@ e.g. in ~/.gradle/gradle.properties using `gpr.user` and `gpr.key`.
 
 ```groovy
 dependencies {
-    implementation 'ch.aaap:harvest-client:1.1.4'
+    implementation 'ch.aaap:harvest-client:1.1.2.001'
 }
 ```
 
@@ -117,23 +128,49 @@ dependencies {
     ```   
 * Run ```gradle build``` in the root directory of the repository
 
+#### Caution when running tests locally
+Harvest API uses Rate limiting. API v2 limits are documented [here](https://help.getharvest.com/api-v2/introduction/overview/general/#rate-limiting).
+
+The rate limiting is bound to your IP address (client address). No matter how many Harvest trial accounts you use, your requests will be counted and you might get blocked.    
+
+There are two variants of rate limiting, depending on the API type (general API, reports API).  
+Reports API is more restrictive (our expense and invoice tests depend on it). 
+
+The admin.conf file allows to configure the throttling on the client side (we limit how often we hit the Harvest API), 
+however currently there's only one setting, that applies to general API.
+```
+// max number of requests to send in the given time window
+max_request_per_window: 95
+// size of the rate limit window in seconds
+window_size_seconds: 15
+```  
+We can't control the report API at the moment (has to be implemented on our side), so this may lead to API request failures, returning HTTP 429.
+
 ### Creating a test Harvest account
 Go to https://www.getharvest.com/signup
-Use your 3ap email with a "+<month><year>" added to the name, e.g. marco+Jul2020@3ap.ch (this way you can create a filter in gmail to archive the emails you get)
-Choose "Me and my team"
-Select "Next Step" until the end.
+
+Use your 3ap email with a "+<month><year>" added to the name, e.g. marco+Jul2020@3ap.ch (this way you can create a filter in gmail to archive the emails you get).
+
+Choose "Me and my team"  
+Select "Next Step" until the end.  
+
+Setting for both accounts:  
 Go to "Settings" -> "Chose Modules" -> Tick all modules
-Only for the second account: 
+
+Setting only for the second account:   
 Go to "Settings" -> "Edit Preferences" -> Set Time Mode to "Track time via start and end time"
 
-Top left on your name -> My Profile -> link under work email to your Harvest ID settings -> Developers -> create new personal Token (name does not matter)
-Account ID and token are needed for authentication
+_The default Time Mode is the Duration mode. Keep that for your first account, as there are tests that require this._
+
+#### Getting an API key
+Account ID and token are needed for authentication. You can generate these by navigating to your profile.  
+My Profile -> link under work email to your Harvest ID settings -> Developers -> create new personal Token (name does not matter).  
+
 
 Add your token to the local files admin1.conf and admin2.conf under src/test/resources/admin*.conf
 
 Update the CircleCI project environment variables with these Id and tokens here:
 https://app.circleci.com/settings/project/github/3AP-AG/harvest-client/environment-variables
-
 
 ### Debugging
 

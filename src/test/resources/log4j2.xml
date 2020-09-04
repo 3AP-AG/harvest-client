@@ -7,7 +7,7 @@
     </Appenders>
     <Loggers>
         <!-- set Trace level for debugging HTTP request and response -->
-        <Logger name="ch.aaap.harvestclient.core.Harvest.http" level="trace" additivity="false">
+        <Logger name="ch.aaap.harvestclient.core.Harvest.http" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
         <Root level="debug">

@@ -60,6 +60,7 @@ afterEvaluate {
                 reports {
                     xml.enabled true
                     html.enabled false
+
                 }
             })
 }
