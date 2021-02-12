@@ -14,7 +14,7 @@ plugins {
 }
 
 group 'ch.aaap'
-version '1.1.2'
+version '1.1.5'
 
 sourceCompatibility = 1.8
 
