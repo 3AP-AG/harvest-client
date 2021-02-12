@@ -95,7 +95,7 @@ jobs:
             echo 'export ORG_GRADLE_PROJECT_signingKey=$(echo $ORG_GRADLE_PROJECT_signingKey_base64 | base64 --decode)' >> $BASH_ENV
             source $BASH_ENV
 
-      - run: ./gradlew publish closeAndReleaseRepository
+      - run: ./gradlew publishAllPublicationsToSonatypeRepository closeAndReleaseRepository
 workflows:
   version: 2
   build_and_deploy:
