@@ -63,33 +63,33 @@ jobs:
           path: ~/junit
 
 
-publish:
-  docker:
-    - image: circleci/openjdk:8-jdk
-  working_directory: ~/repo
+  publish:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/repo
 
-  environment:
-    JVM_OPTS: -Xmx3200m
-    TERM: dumb
+    environment:
+      JVM_OPTS: -Xmx3200m
+      TERM: dumb
 
-  steps:
-    - checkout
+    steps:
+      - checkout
 
-    # Download and cache dependencies
-    - restore_cache:
-        keys:
-          - v1-dependencies-{{ checksum "build.gradle" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "build.gradle" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
 
-    - run: ./gradlew dependencies
+      - run: ./gradlew dependencies
 
-    - save_cache:
-        paths:
-          - ~/.gradle
-        key: v1-dependencies-{{ checksum "build.gradle" }}
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: v1-dependencies-{{ checksum "build.gradle" }}
 
-    - run: ./gradlew publish closeAndReleaseRepository
+      - run: ./gradlew publish closeAndReleaseRepository
 workflows:
   version: 2
   build_and_deploy:
