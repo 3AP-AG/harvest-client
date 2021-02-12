@@ -89,6 +89,12 @@ jobs:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
+      - run:
+          name: Decode the signing key (Circle cannot handle multiple lines)
+          command: |
+            echo 'export ORG_GRADLE_PROJECT_signingKey=$(echo $ORG_GRADLE_PROJECT_signingKey_base64 | base64 --decode)' >> $BASH_ENV
+            source $BASH_ENV
+
       - run: ./gradlew publish closeAndReleaseRepository
 workflows:
   version: 2
