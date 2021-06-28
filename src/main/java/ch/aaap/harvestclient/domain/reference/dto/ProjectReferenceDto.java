@@ -10,4 +10,6 @@ import ch.aaap.harvestclient.domain.reference.Reference;
 @Value.Immutable
 public interface ProjectReferenceDto extends BaseReferenceDto, Reference<Project> {
 
+   String getCode();
+
 }
