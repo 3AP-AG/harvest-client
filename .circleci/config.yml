@@ -96,6 +96,8 @@ workflows:
     jobs:
       - build
       - publish:
+          context:
+            - harvest-client-publishing
           requires:
             - build
           filters:
