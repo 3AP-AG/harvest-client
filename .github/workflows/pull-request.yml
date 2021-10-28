@@ -30,7 +30,6 @@ jobs:
       with:
         gradle-version: 7.2
         arguments: build
-        cache-disabled: true
 
     - name: Generate test coverage report
       run: |-
