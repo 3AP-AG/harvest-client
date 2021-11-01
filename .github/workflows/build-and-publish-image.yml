@@ -1,0 +1,53 @@
+name: Publish Docker image
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build-and-publish-image:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Cheeckout
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: 17
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle
+
+      - name: Build with gradle
+        uses: gradle/gradle-build-action@v2
+        env:
+          HARVEST_ACCOUNT_ID_ADMIN1: ${{ secrets.HARVEST_ACCOUNT_ID_ADMIN1 }}
+          HARVEST_AUTH_TOKEN_ADMIN1: ${{ secrets.HARVEST_AUTH_TOKEN_ADMIN1 }}
+          HARVEST_ACCOUNT_ID_ADMIN2: ${{ secrets.HARVEST_ACCOUNT_ID_ADMIN2 }}
+          HARVEST_AUTH_TOKEN_ADMIN2: ${{ secrets.HARVEST_AUTH_TOKEN_ADMIN2 }}
+        with:
+          gradle-version: 7.2
+          arguments: build
+
+      - name: Decode the signing key
+        run: |-
+          echo 'export ORG_GRADLE_PROJECT_signingKey=$(echo $ORG_GRADLE_PROJECT_SIGNING_KEY_BASE64 | base64 --decode)' >> $GITHUB_ENV
+        env:
+          ORG_GRADLE_PROJECT_SIGNING_KEY_BASE64: ${{ secrets.ORG_GRADLE_PROJECT_SIGNING_KEY_BASE64 }}
+
+      - name: Publish image
+        run: |-
+          ./gradlew publishAllPublicationsToSonatypeRepository closeAndReleaseRepository
+        env:
+          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ORG_GRADLE_PROJECT_SIGNING_PASSWORD }}
+          ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPE_USERNAME }}
+          ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPE_PASSWORD }}
