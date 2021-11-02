@@ -1,16 +1,16 @@
-name: Publish Docker image
+name: Publish jar to Maven Central
 
 on:
   push:
     branches:
-      - develop
+      - master
 
 jobs:
   build-and-publish-image:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Cheeckout
+      - name: Checkout
         uses: actions/checkout@v2
 
       - name: Set up JDK 17
@@ -20,7 +20,6 @@ jobs:
           distribution: 'temurin'
           cache: 'gradle'
 
-
       - name: Build with gradle
         uses: gradle/gradle-build-action@v2
         env:
@@ -29,7 +28,7 @@ jobs:
           HARVEST_ACCOUNT_ID_ADMIN2: ${{ secrets.HARVEST_ACCOUNT_ID_ADMIN2 }}
           HARVEST_AUTH_TOKEN_ADMIN2: ${{ secrets.HARVEST_AUTH_TOKEN_ADMIN2 }}
         with:
-          gradle-version: 7.2
+          gradle-version: wrapper
           arguments: build
 
       - name: Decode the signing key
@@ -39,9 +38,13 @@ jobs:
           ORG_GRADLE_PROJECT_SIGNING_KEY_BASE64: ${{ secrets.ORG_GRADLE_PROJECT_SIGNING_KEY_BASE64 }}
 
       - name: Publish image
-        run: |-
-          ./gradlew publishAllPublicationsToSonatypeRepository closeAndReleaseRepository
+        uses: gradle/gradle-build-action@v2
         env:
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ORG_GRADLE_PROJECT_SIGNING_PASSWORD }}
           ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPE_USERNAME }}
           ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPE_PASSWORD }}
+        with:
+          gradle-version: wrapper
+          arguments: |
+            publishAllPublicationsToSonatypeRepository
+            closeAndReleaseRepository

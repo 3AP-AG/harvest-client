@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - name: Cheeckout
+    - name: Checkout
       uses: actions/checkout@v2
 
     - name: Set up JDK 17
@@ -28,7 +28,7 @@ jobs:
         HARVEST_ACCOUNT_ID_ADMIN2: ${{ secrets.HARVEST_ACCOUNT_ID_ADMIN2 }}
         HARVEST_AUTH_TOKEN_ADMIN2: ${{ secrets.HARVEST_AUTH_TOKEN_ADMIN2 }}
       with:
-        gradle-version: 7.2
+        gradle-version: wrapper
         arguments: build
 
     - name: Generate test coverage report
