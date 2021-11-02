@@ -32,9 +32,10 @@ jobs:
         arguments: build
 
     - name: Generate test coverage report
-      run: |-
-        echo "Generating test coverage report"
-        ./gradlew jacocoTestReport
+      uses: gradle/gradle-build-action@v2
+      with:
+        gradle-version: wrapper
+        arguments: jacocoTestReport
 
     - name: Upload report to codecov.io
       run: |-
