@@ -41,9 +41,3 @@ jobs:
       run: |-
         echo "Uploading report..."
         bash <(curl -s https://codecov.io/bash) -f build/reports/jacoco/test/jacocoTestReport.xml
-
-    - name: Publish Unit Test Results
-      uses: EnricoMi/publish-unit-test-result-action@v1
-      if: always()
-      with:
-        files: test-results/**/*.xml
