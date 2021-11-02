@@ -1,8 +1,8 @@
 # A Harvest Java Client
 
+![PullRequest](https://github.com/3ap-ag/harvest-client/actions/workflows/pull-request.yml/badge.svg?branch=develop)
 [![codecov](https://codecov.io/gh/3AP-AG/harvest-client/branch/develop/graph/badge.svg)](https://codecov.io/gh/3AP-AG/harvest-client)
 [![Known Vulnerabilities](https://snyk.io/test/github/3ap-ag/harvest-client/badge.svg?targetFile=build.gradle)](https://snyk.io/test/github/3ap-ag/harvest-client?targetFile=build.gradle)
-![PullRequest](https://github.com/3ap-ag/harvest-client/actions/workflows/pull-request.yml/badge.svg?branch=develop)
 
 harvest-client is a Java client for the Harvest REST API (https://help.getharvest.com/api-v2/)
 
