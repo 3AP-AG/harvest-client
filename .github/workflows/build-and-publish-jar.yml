@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-      - hostfix/fix-release
+      - hotfix/fix-release
 
 jobs:
   build-and-publish-image:
