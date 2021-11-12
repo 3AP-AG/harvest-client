@@ -13,7 +13,10 @@ jobs:
 
 
       - name: Decode the signing key
-        run: echo "ORG_GRADLE_PROJECT_signingKey='$(echo $ORG_GRADLE_PROJECT_SIGNINGKEY_BASE64 | base64 --decode)'" >> $GITHUB_ENV
+        run: |
+          echo 'ORG_GRADLE_PROJECT_signingKey<<EOF' >> $GITHUB_ENV
+          echo $ORG_GRADLE_PROJECT_SIGNINGKEY_BASE64 | base64 --decode >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
         env:
           ORG_GRADLE_PROJECT_SIGNINGKEY_BASE64: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY_BASE64 }}
 
