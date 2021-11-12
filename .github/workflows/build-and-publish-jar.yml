@@ -33,14 +33,12 @@ jobs:
           arguments: build
 
       - name: Decode the signing key
-        run: |-
-          echo 'export ORG_GRADLE_PROJECT_signingKey=$(echo $ORG_GRADLE_PROJECT_SIGNING_KEY_BASE64 | base64 --decode)' >> $GITHUB_ENV
+        run: echo "export ORG_GRADLE_PROJECT_signingKey=$(echo $ORG_GRADLE_PROJECT_SIGNING_KEY_BASE64 | base64 --decode)" >> $GITHUB_ENV
         env:
           ORG_GRADLE_PROJECT_SIGNING_KEY_BASE64: ${{ secrets.ORG_GRADLE_PROJECT_SIGNING_KEY_BASE64 }}
 
       - name: Logging
-        run: |-
-          echo $ORG_GRADLE_PROJECT_signingKey
+        run: echo ${{ env.ORG_GRADLE_PROJECT_signingKey }}
 
       - name: Publish image
         uses: gradle/gradle-build-action@v2
