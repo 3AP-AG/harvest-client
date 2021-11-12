@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - hostfix/fix-release
 
 jobs:
   build-and-publish-image:
@@ -36,6 +37,10 @@ jobs:
           echo 'export ORG_GRADLE_PROJECT_signingKey=$(echo $ORG_GRADLE_PROJECT_SIGNING_KEY_BASE64 | base64 --decode)' >> $GITHUB_ENV
         env:
           ORG_GRADLE_PROJECT_SIGNING_KEY_BASE64: ${{ secrets.ORG_GRADLE_PROJECT_SIGNING_KEY_BASE64 }}
+
+      - name: Logging
+        run: |-
+          echo $ORG_GRADLE_PROJECT_signingKey
 
       - name: Publish image
         uses: gradle/gradle-build-action@v2
