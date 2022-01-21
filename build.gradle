@@ -165,10 +165,11 @@ dependencies {
     testImplementation group: "org.apache.logging.log4j", name: "log4j-slf4j-impl", version: "$log4jVersion"
 
     // immutable classes for domain objects
-    // this will force gson 2.8 also for other dependencies
     implementation "org.immutables:gson:$immutablesVersion"
     compileOnly "org.immutables:value:$immutablesVersion"
     annotationProcessor "org.immutables:value:$immutablesVersion"
+
+    implementation "com.google.code.gson:gson:$gsonVersion"
 
     implementation group: "com.google.code.findbugs", name: "jsr305", version: "3.0.2"
 
