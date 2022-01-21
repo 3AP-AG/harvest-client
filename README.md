@@ -118,7 +118,7 @@ dependencies {
 * Run ```gradle build``` in the root directory of the repository
 
 ### Creating a test Harvest account
-Go to https://www.getharvest.com/signup
+Go to [Harvest Sign up](https://www.getharvest.com/signup)
 - Use your 3ap email with a "+<month><year>" added to the name, e.g. marco+Jul2020@3ap.ch (this way you can create a filter in gmail to archive the emails you get)
 - Choose "Me and my team"
 - Select "Next Step" until the end.
