@@ -1,4 +1,4 @@
-name: Publish jar to Maven Central
+name: Publish jar to GitHub Packages
 
 on:
   push:
@@ -8,6 +8,9 @@ on:
 jobs:
   build-and-publish-image:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
 
       - name: Checkout
@@ -28,18 +31,9 @@ jobs:
           HARVEST_AUTH_TOKEN_ADMIN2: ${{ secrets.HARVEST_AUTH_TOKEN_ADMIN2 }}
         run: ./gradlew build
 
-      - name: Decode the signing key
-        run: |
-          echo 'ORG_GRADLE_PROJECT_signingKey<<EOF' >> $GITHUB_ENV
-          echo $ORG_GRADLE_PROJECT_SIGNINGKEY_BASE64 | base64 --decode >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
+      - name: Publish to GitHub Packages
         env:
-          ORG_GRADLE_PROJECT_SIGNINGKEY_BASE64: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY_BASE64 }}
-
-      - name: Publish image
-        env:
-          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
-          ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPEUSERNAME }}
-          ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPEPASSWORD }}
+          GH_USERNAME: ${{ github.actor }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          ./gradlew publishAllPublicationsToSonatypeRepository closeAndReleaseRepository
+          ./gradlew publishGprPublicationToGitHubPackagesRepository

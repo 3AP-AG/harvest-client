@@ -6,11 +6,6 @@ plugins {
     // test coverage
     id 'jacoco'
     id 'eclipse'
-
-    // publishing to Maven Central
-    id "signing" // maven central requirement
-    id "io.codearte.nexus-staging" version "0.22.0"
-    id "de.marcphilipp.nexus-publish" version "0.4.0"
 }
 
 group 'ch.aaap'
@@ -110,53 +105,6 @@ publishing {
             }
         }
     }
-}
-
-def hasSigningKey = project.hasProperty("signingKeyId") || project.hasProperty("signingKey")
-if (hasSigningKey) {
-    sign(project)
-}
-
-void sign(Project project) {
-    project.signing {
-        required { project.gradle.taskGraph.hasTask("publish") }
-        def signingKeyId = project.findProperty("signingKeyId")
-        def signingKey = project.findProperty("signingKey")
-        def signingPassword = project.findProperty("signingPassword")
-        if (signingKeyId) {
-            useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
-        } else if (signingKey) {
-            useInMemoryPgpKeys(signingKey, signingPassword)
-        }
-        sign publishing.publications.gpr
-    }
-}
-
-nexusStaging {
-    if (project.hasProperty("sonatypeUsername")) {
-        username = project.sonatypeUsername
-    }
-    if (project.hasProperty("sonatypePassword")) {
-        password = project.sonatypePassword
-    }
-    repositoryDescription = "Release ${project.group} ${project.name} ${project.version}"
-}
-
-nexusPublishing {
-    repositories {
-        sonatype {
-            if (project.hasProperty("sonatypeUsername")) {
-                username = project.sonatypeUsername
-            }
-            if (project.hasProperty("sonatypePassword")) {
-                password = project.sonatypePassword
-            }
-        }
-    }
-    // these are not strictly required. The default timeouts are set to 1 minute. But Sonatype can be really slow.
-    // If you get the error "java.net.SocketTimeoutException: timeout", these lines will help.
-    connectTimeout = Duration.ofMinutes(5)
-    clientTimeout = Duration.ofMinutes(5)
 }
 
 dependencies {
