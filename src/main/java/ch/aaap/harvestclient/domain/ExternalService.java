@@ -1,5 +1,7 @@
 package ch.aaap.harvestclient.domain;
 
+import javax.annotation.Nullable;
+
 import org.immutables.gson.Gson;
 import org.immutables.value.Value;
 
@@ -13,6 +15,7 @@ import ch.aaap.harvestclient.domain.reference.Reference;
 @Value.Immutable
 public interface ExternalService extends Reference<ExternalService> {
 
+    @Nullable
     String getGroupId();
 
     String getPermalink();
