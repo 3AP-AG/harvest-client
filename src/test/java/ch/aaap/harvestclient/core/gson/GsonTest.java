@@ -16,6 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import ch.aaap.harvestclient.HarvestTest;
+import ch.aaap.harvestclient.domain.ExternalService;
 import ch.aaap.harvestclient.domain.pagination.PaginatedList;
 import ch.aaap.harvestclient.domain.reference.Reference;
 import ch.aaap.harvestclient.exception.HarvestRuntimeException;
@@ -45,6 +46,22 @@ class GsonTest {
                 list.getLinks().getFirst());
 
         Assertions.assertEquals("George", list.getUsers().get(0).getFirstName());
+
+    }
+
+    @Test
+    void testExternalServiceWithNullGroupId() {
+
+        Gson gson = GsonConfiguration.getConfiguration(true);
+
+        // Harvest may return a null group_id inside a time entry's external_reference,
+        // which must not fail deserialization (see GsonAdaptersExternalService)
+        String message = "{\"id\":12345,\"group_id\":null,\"permalink\":\"https://example.com/1\",\"service\":\"trello.com\",\"service_icon_url\":\"https://example.com/icon.png\"}";
+
+        ExternalService externalService = gson.fromJson(message, ExternalService.class);
+
+        assertThat(externalService.getGroupId()).isNull();
+        assertThat(externalService.getService()).isEqualTo("trello.com");
 
     }
 
