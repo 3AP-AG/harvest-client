@@ -14,7 +14,7 @@ plugins {
 }
 
 group 'ch.aaap'
-version '1.1.7'
+version '1.1.8'
 
 compileJava.options.encoding = 'UTF-8'
 
@@ -31,6 +31,14 @@ jacocoTestReport {
 
 test {
     useJUnitPlatform()
+
+    // Integration tests under ch.aaap.harvestclient.impl.** run against a live
+    // Harvest account (via TestSetupUtil) and require valid API credentials.
+    // They are disabled until further notice because the shared test account is
+    // no longer usable in CI. The offline tests (core.** and ExceptionsTest,
+    // including Gson (de)serialization coverage) still run.
+    // To re-enable, remove this exclude and provide the HARVEST_* secrets.
+    exclude '**/impl/**'
 }
 repositories {
     mavenCentral()
