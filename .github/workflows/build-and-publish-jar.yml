@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - master
+  # Allows a manual run (e.g. against develop) to validate the full
+  # publish pipeline without cutting a release. With USER_MANAGED uploads
+  # nothing is published until it is released in the Portal UI.
+  workflow_dispatch:
 
 jobs:
   build-and-publish-image:
@@ -36,10 +40,27 @@ jobs:
         env:
           ORG_GRADLE_PROJECT_SIGNINGKEY_BASE64: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY_BASE64 }}
 
-      - name: Publish image
+      - name: Publish signed artifacts to local staging repo
         env:
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
-          ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPEUSERNAME }}
-          ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPEPASSWORD }}
+        run: ./gradlew publish
+
+      - name: Assemble Central Portal bundle
         run: |
-          ./gradlew publishAllPublicationsToSonatypeRepository closeAndReleaseRepository
+          cd build/staging-deploy
+          zip -r ../central-bundle.zip ch -x '*maven-metadata*'
+
+      - name: Upload bundle to Central Portal
+        env:
+          CENTRAL_USERNAME: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
+          CENTRAL_PASSWORD: ${{ secrets.CENTRAL_TOKEN_PASSWORD }}
+        run: |
+          # publishingType=USER_MANAGED: after validation, release manually in the
+          # Portal UI. Switch to AUTOMATIC once the pipeline is proven to auto-release.
+          TOKEN=$(printf '%s:%s' "$CENTRAL_USERNAME" "$CENTRAL_PASSWORD" | base64 -w0)
+          DEPLOYMENT_ID=$(curl -sS --fail-with-body -X POST \
+            "https://central.sonatype.com/api/v1/publisher/upload?name=harvest-client-run-${{ github.run_number }}&publishingType=USER_MANAGED" \
+            -H "Authorization: Bearer ${TOKEN}" \
+            -F "bundle=@build/central-bundle.zip")
+          echo "Central Portal deployment id: ${DEPLOYMENT_ID}"
+          echo "Validate and release it at https://central.sonatype.com/publishing/deployments"
