@@ -2,8 +2,11 @@ name: Publish jar to Maven Central
 
 on:
   push:
-    branches:
-      - master
+    # Publish only when a release tag is pushed (e.g. v1.1.9). Pushing plain
+    # commits to master (docs, javadoc regen, merge-backs) no longer re-runs
+    # the publish pipeline against an already-released version.
+    tags:
+      - 'v*'
   # Allows a manual run (e.g. against develop) to validate the full
   # publish pipeline without cutting a release. With USER_MANAGED uploads
   # nothing is published until it is released in the Portal UI.
@@ -16,6 +19,21 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v6
+
+      # Guard against publishing a version that doesn't match the tag, e.g.
+      # a stale build.gradle. Only enforced on tag pushes (v1.1.9 -> 1.1.9);
+      # skipped on manual workflow_dispatch validation runs.
+      - name: Verify tag matches project version
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          PROJECT_VERSION=$(grep -oE "^version '[^']+'" build.gradle | sed "s/version '//;s/'//")
+          echo "Tag version:     ${TAG_VERSION}"
+          echo "Project version: ${PROJECT_VERSION}"
+          if [ "${TAG_VERSION}" != "${PROJECT_VERSION}" ]; then
+            echo "::error::Tag ${GITHUB_REF_NAME} does not match build.gradle version ${PROJECT_VERSION}"
+            exit 1
+          fi
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -59,7 +77,7 @@ jobs:
           # Portal UI. Switch to AUTOMATIC once the pipeline is proven to auto-release.
           TOKEN=$(printf '%s:%s' "$CENTRAL_USERNAME" "$CENTRAL_PASSWORD" | base64 -w0)
           DEPLOYMENT_ID=$(curl -sS --fail-with-body -X POST \
-            "https://central.sonatype.com/api/v1/publisher/upload?name=harvest-client-run-${{ github.run_number }}&publishingType=USER_MANAGED" \
+            "https://central.sonatype.com/api/v1/publisher/upload?name=harvest-client-${{ github.ref_name }}-run-${{ github.run_number }}&publishingType=USER_MANAGED" \
             -H "Authorization: Bearer ${TOKEN}" \
             -F "bundle=@build/central-bundle.zip")
           echo "Central Portal deployment id: ${DEPLOYMENT_ID}"
