@@ -12,7 +12,7 @@ plugins {
 }
 
 group 'ch.aaap'
-version '1.1.6'
+version '1.1.9'
 
 compileJava.options.encoding = 'UTF-8'
 
@@ -55,6 +55,11 @@ def pomConfig = {
             id "mnembrini"
             name "Marco Nembrini"
             email "marco.nembrini.co@gmail.com"
+        }
+        developer {
+            id "tamas-3ap"
+            name "Tamas Katona"
+            email "tamas@3ap.ch"
         }
     }
 
