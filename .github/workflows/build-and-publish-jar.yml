@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - master
+  # Allows a manual run (e.g. against develop) to validate the full
+  # publish pipeline without cutting a release. With USER_MANAGED uploads
+  # nothing is published until it is released in the Portal UI.
+  workflow_dispatch:
 
 jobs:
   build-and-publish-image:
